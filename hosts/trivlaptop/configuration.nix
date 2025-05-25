@@ -52,7 +52,6 @@
   ];
 
   services.openssh.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "trivaris" ];
 
   system.stateVersion = "25.05";
