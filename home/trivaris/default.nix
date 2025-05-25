@@ -10,11 +10,6 @@
     ./credentials.nix
   ];
 
-  features = {
-    cli = {
-      fish.enable = true;
-      fzf.enable = true;
-    };
-  };
+  features = import ./features.nix { inherit config; };
 
 }

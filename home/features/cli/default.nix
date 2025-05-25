@@ -6,6 +6,7 @@
   imports = [
     ./fish.nix
     ./fzf.nix
+    ./fastfetch.nix
     ./cli-packages.nix
   ];
 

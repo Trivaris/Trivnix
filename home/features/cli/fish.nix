@@ -8,7 +8,7 @@ with lib; let
   cfg = config.features.cli.fish;
 in {
 
-  options.features.cli.fish.enable = mkEnableOption "enable extended fish configuration";
+  options.features.cli.fish.enable = mkEnableOption "extended fish configuration";
 
   config = mkIf cfg.enable {
     programs.fish = {
@@ -46,8 +46,8 @@ in {
         echo "Updating and rebuilding from flake: $flakePath"
         begin
           cd $flakePath
-          git pull
-          sudo nixos-rebuild switch --flake $flakePath#trivlaptop;"
+          sudo git pull
+          sudo nixos-rebuild switch --flake $flakePath#trivlaptop
         end
       '';
     };
