@@ -12,6 +12,10 @@
 
   home.packages = with pkgs; [
     cowsay
+
+    ghostty
+    rofi
+
   ];
 
   home.file = {
