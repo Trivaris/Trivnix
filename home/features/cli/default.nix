@@ -5,6 +5,7 @@
 
   imports = [
     ./fish.nix
+    ./fzf.nix
     ./cli-packages.nix
   ];
 

@@ -6,6 +6,7 @@
 with lib; let
   cfg = config.features.cli.fzf;
 in {
+
   options.features.cli.fzf.enable = mkEnableOption "enable fuzzy finder";
 
   config = mkIf cfg.enable {
@@ -35,4 +36,5 @@ in {
       changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
     };
   };
+  
 }
