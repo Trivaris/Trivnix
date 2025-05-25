@@ -15,7 +15,7 @@
     useUserPackages = true;
     extraSpecialArgs = { 
       inherit inputs outputs; 
-      flakePath = toString ./../..;
+      flakePath = toString /etc/nixos;
     };
     backupFileExtension = "backup";
   };
