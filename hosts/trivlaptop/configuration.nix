@@ -51,8 +51,16 @@
     git
   ];
 
-  services.openssh.enable = true;
-  nix.settings.trusted-users = [ "root" "trivaris" ];
+  services.openssh = {
+    enable = true;
+    settings.PermitRootLogin = "no";
+    allowSFTP = true;
+  };
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   system.stateVersion = "25.05";
 
