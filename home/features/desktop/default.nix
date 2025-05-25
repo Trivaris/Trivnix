@@ -5,7 +5,7 @@
 
   imports = [
     ./wayland.nix
-    ./hyprland.nix
+    ./hyprland
   ];
 
   home.packages = with pkgs; [
