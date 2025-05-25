@@ -20,6 +20,9 @@ in {
 
         start-hyprland
       '';
+      interactiveShellInit = ''
+        fastfetch
+      '';
       shellAbbrs = {
         ".." = "cd ..";
         "..." = "cd ../../";

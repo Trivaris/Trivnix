@@ -4,7 +4,8 @@
 }: {
 
   imports = [
-    ./trivaris.nix
+    ./cli
+    ./desktop
   ];
 
 }

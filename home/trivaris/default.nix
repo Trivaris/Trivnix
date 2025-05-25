@@ -5,7 +5,7 @@
   
   imports = [
     ../common
-    ../features/cli
+    ../features
     ./home.nix
     ./credentials.nix
   ];
