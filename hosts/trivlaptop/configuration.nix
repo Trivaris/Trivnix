@@ -62,8 +62,6 @@
     xwayland.enable = true;
   };
 
-  programs.fish.enable = true;
-
   system.stateVersion = "25.05";
 
 }

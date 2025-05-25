@@ -5,6 +5,7 @@
 
   imports = [
     ./fish.nix
+    ./cli-packages.nix
   ];
 
   programs.zoxide = {
@@ -22,16 +23,5 @@
   programs.bat = {
     enable = true;
   };
-
-  home.packages = with pkgs; [
-    coreutils
-    httpie
-    fd
-    btop
-    procs
-    ripgrep
-    tldr
-    zip
-  ];
 
 }

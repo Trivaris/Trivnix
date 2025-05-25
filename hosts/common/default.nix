@@ -13,7 +13,10 @@
 
   home-manager = {
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = { 
+      inherit inputs outputs; 
+      flakePath = toString ./../..;
+    };
     backupFileExtension = "backup";
   };
   
@@ -46,6 +49,8 @@
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
     nixPath = [ "/etc/nix/path" ];
   };
+  
+  programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
 
 }
