@@ -24,10 +24,10 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcDawyUNp6CxabcDaK7J1y9Vedj2ifub1OHFYHgeNq+ trivaris@TrivDesktop"
     ];
-      packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
+    packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
 
   };
   home-manager.users.trivaris =
-    import trivaris/${config.networking.hostName}.nix;
+    import ../../../home/trivaris/${config.networking.hostName}.nix;
 
 }
