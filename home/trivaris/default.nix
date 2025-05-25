@@ -10,4 +10,10 @@
     ./credentials.nix
   ];
 
+  features = {
+    cli = {
+      fish.enable = true;
+    };
+  };
+
 }
