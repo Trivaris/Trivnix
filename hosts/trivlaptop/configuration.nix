@@ -12,7 +12,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "trivlaptop";
-  networking.wireless.enable = true;
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
