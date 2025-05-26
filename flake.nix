@@ -11,12 +11,17 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    dotfiles = {
+      url = "github:trivaris/dotfiles";
+      flake = false;
+    };
   };
 
   outputs = {
     self,
     home-manager,
     nixpkgs,
+    dotfiles,
     ...
   } @ inputs: let
     inherit (self) outputs;
