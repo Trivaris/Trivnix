@@ -46,12 +46,12 @@ in {
       '';
       functions.nix-rebuild = ''
         set flakePath ${flakePath}
-        set currentPath ./
-        echo "Updating and rebuilding from flake: $flakePath"
+        set currentPath (pwd)
+
         begin
           cd $flakePath
           sudo git pull
-          nix flake lock --update-input dotfiles
+          nix flake update dotfiles
           sudo nixos-rebuild switch --flake $flakePath#trivlaptop
           cd $currentPath
         end
