@@ -15,9 +15,9 @@
     "$mainMod, M, exit,"
 
     # keybindings
-    "$mainMod, Return, exec, ghostty --gtk-single-instance=true"
-    "ALT, Return, exec, [float; size 1111 700] ghostty"
-    "$mainMod SHIFT, Return, exec, [fullscreen] ghostty"
+    "$mainMod, Return, exec, $terminal --gtk-single-instance=true"
+    "ALT, Return, exec, [float; size 1111 700] $terminal"
+    "$mainMod SHIFT, Return, exec, [fullscreen] $terminal"
     # "$mainMod, B, exec, hyprctl dispatch exec '[workspace 1 silent] zen-beta'"
     "$mainMod, C, killactive,"
     "$mainMod, F, fullscreen, 0"

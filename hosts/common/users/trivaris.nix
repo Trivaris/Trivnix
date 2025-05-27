@@ -5,9 +5,11 @@
   ...
 }: {
 
-  users.users.trivaris = {
+  users.users."trivaris" = {
     initialHashedPassword = "$y$j9T$F0vD5H2XbmMLxbb9X7Z5L1$vD9TLGi6l/yKBsiAIobtQuL3/md/TFIt0PdGDjyyUb7";
     isNormalUser = true;
+    createHome = true;
+    home = "/home/trivaris";
     description = "trivaris";
     extraGroups = [
       "wheel"
@@ -27,6 +29,7 @@
     ];
 
   };
+  
   home-manager.users.trivaris =
     import ../../../home/trivaris;
 

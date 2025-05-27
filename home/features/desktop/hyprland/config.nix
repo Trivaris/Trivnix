@@ -18,7 +18,7 @@ in {
 
       general = {
         "$mainMod" = "SUPER";
-        "$terminal" = "ghostty";
+        "$terminal" = "wezterm";
         layout = "dwindle";
         gaps_in = 6;
         gaps_out = 12;
