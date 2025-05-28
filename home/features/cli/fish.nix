@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  flakePath,
+  inputs,
   ...
 }:
 with lib; let
@@ -45,16 +45,20 @@ in {
         end
       '';
       functions.nix-rebuild = ''
-        set flakePath ${flakePath}
+        set flakePath /etc/nixos
         set currentPath (pwd)
+        echo flakePath: $flakePath
 
         begin
           cd $flakePath
           sudo git pull
-          nix flake update dotfiles
+          sudo nix flake update dotfiles
           sudo nixos-rebuild switch --flake $flakePath#trivlaptop
           cd $currentPath
         end
+      '';
+      functions.get-flakepath = ''
+        echo ${inputs.self}
       '';
     };
   };

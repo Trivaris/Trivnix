@@ -9,6 +9,7 @@ with lib; let
 in {
 
   imports = [
+    ./hyprpaper.nix
     ./config.nix
   ];
 

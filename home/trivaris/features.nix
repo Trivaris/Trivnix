@@ -4,9 +4,9 @@
 }: {
 
   cli = {
+    cli-tools.enable = true;
     fish.enable = true;
     fzf.enable = true;
-    fastfetch.enable = true;
   };
 
   desktop = {
