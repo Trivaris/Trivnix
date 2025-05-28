@@ -15,16 +15,21 @@
       url = "github:trivaris/dotfiles";
       flake = false;
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
-    home-manager,
     nixpkgs,
-    dotfiles,
+    home-manager,
+    disko, dotfiles,
     ...
   } @ inputs: let
     inherit (self) outputs;
+
     systems = [
       "aarch64-linux"
       "i686-linux"
@@ -33,23 +38,40 @@
       "x86_64-darwin"
     ];
     forAllSystems = nixpkgs.lib.genAttrs systems;
+
+    hosts = [
+      {
+        name = "trivlaptop";
+        system = "x86_64-linux";
+        users = [ "trivaris" ];
+      }
+    ];
+
+    nixosConfigurations = builtins.listToAttrs (
+      map (host: {
+        name = host.name;
+        value = nixpkgs.lib.nixosSystem {
+          system = host.system;
+          specialArgs = {
+            inherit inputs outputs;
+            hostInfo = host;
+          };
+          modules = [
+            ./hosts/${host.name}
+            disko.nixosModules.disko
+          ];
+        };
+      }) hosts
+    );
+
   in {
-    packages =
-      forAllSystems ( system: import ./pkgs nixpkgs.legacyPackages.${system} );
+    inherit nixosConfigurations;
+
+    packages = forAllSystems (system:
+      import ./pkgs nixpkgs.legacyPackages.${system}
+    );
+
     overlays = import ./overlays { inherit inputs; };
-    nixosConfigurations = {
-      trivlaptop = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/trivlaptop ];
-      };
-    };
-    homeConfigurations = {
-      "trivaris@trivlaptop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./home/trivaris/trivlaptop.nix ];
-      };
-    };
   };
-  
+
 }

@@ -1,10 +1,9 @@
 {
   pkgs,
+  hostInfo,
   ...
 }: {
 
-  imports = [
-    ./trivaris.nix
-  ];
+  imports = map (user: ././${user}.nix) hostInfo.users;
 
 }
