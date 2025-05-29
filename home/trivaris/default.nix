@@ -4,13 +4,10 @@
 }: { 
   
   imports = [
-    ../common
-    ../features
+    ../common/themes/material-green.nix
     ./home.nix
     ./credentials.nix
     ./dotfiles
   ];
-
-  features = import ./features.nix { inherit config; };
 
 }

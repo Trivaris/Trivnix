@@ -1,4 +1,8 @@
 {
+  config,
+  inputs,
+  ...
+}: {
 
   imports = [ 
     ../common
@@ -8,5 +12,5 @@
     ./keymap.nix
     ./system-packages.nix
   ];
-  
+
 }

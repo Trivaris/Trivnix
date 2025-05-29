@@ -9,13 +9,13 @@ pkgs.rustPlatform.buildRustPackage {
   version = "0.1.5";
 
   src = pkgs.fetchFromGitHub {
-    owner = "roberte777";
+    owner = "Ethan Wilkes";
     repo = "rbonsai";
-    rev = "v0.1.5";
-    sha256 = "sha256-69MArXaMZLchKURM0koLACKWhm3NO+ZVoZsiHt9PkjQ=";
+    rev = "368d0a28c347510a6db909f8019c47d459746e84";
+    sha256 = "sha256-TwWg31l796K2aX0CZ+3D0FPuUqQ8hu1QpXMsMZgZqjo=";
   };
 
-  cargoHash = "sha256-78vOnu5RZgIR71x8fXbWmoeRDzRgaZBQXJ6nugLNij0=";
+  cargoHash = "sha256-PGQNxvoltpWRi4svK2NK+HFbu2vR7BJstDilAe1k748=";
 
   meta = {
     description = "A terminal bonsai tree generator";

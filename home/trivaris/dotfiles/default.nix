@@ -4,8 +4,8 @@
 }: {
 
   imports = [
-    ./nvim.nix
-    ./bat.nix
+    ./cli
+    ./desktop
   ];
 
 }
