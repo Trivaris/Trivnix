@@ -42,7 +42,8 @@
 
   in {
 
-    packages = forAllSystems ( system: import (inputs.self + "/pkgs/") nixpkgs.legacyPackages.${system} );
+    packages = forAllSystems ( system: import ./pkgs nixpkgs.legacyPackages.${system} );
+
     overlays = import ./overlays { inherit inputs; };
     
     nixosConfigurations.trivlaptop = nixpkgs.lib.nixosSystem {

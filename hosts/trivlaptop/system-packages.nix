@@ -1,10 +1,12 @@
 {
   pkgs,
+  inputs,
+  outputs,
   ...
 }:{
 
   nixpkgs.config.allowUnfree = true;
-  
+
   environment.systemPackages = with pkgs; [
     neovim
     git

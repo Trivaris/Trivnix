@@ -14,9 +14,9 @@
     zip
     bat
     fastfetch
-    r-matrix
+    #r-matrix
     pipes-rs
-    rbonsai
+    #rbonsai
     rsclock
   ];
 
