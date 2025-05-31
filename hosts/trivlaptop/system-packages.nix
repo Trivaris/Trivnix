@@ -14,7 +14,7 @@
 
   services.openssh = {
     enable = true;
-    settings.PermitRootLogin = "no";
+    settings.PermitRootLogin = "yes";
     settings.KbdInteractiveAuthentication = false;
     allowSFTP = true;
   };

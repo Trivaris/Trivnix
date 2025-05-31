@@ -12,7 +12,21 @@
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
-
+    coreutils
+    httpie
+    fd
+    btop
+    procs
+    ripgrep
+    tldr
+    zip
+    bat
+    fastfetch
+    rofi
+    #r-matrix
+    pipes-rs
+    #rbonsai
+    rsclock
   ];
 
   home.file = {

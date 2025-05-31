@@ -1,0 +1,11 @@
+{
+  inputs,
+  ...
+}: {
+
+  imports = [
+    ./cli
+    ./desktop
+  ];
+
+}
