@@ -114,7 +114,7 @@
             inherit inputs outputs pair;
             legacyPkgs = legacyPkgsFor pair.host.system;
           };
-          modules = [ ./home/${pair.user.name}.nix ];
+          modules = [ ./home/${pair.user.name}/${pair.host.name}.nix ];
         };
 
     in

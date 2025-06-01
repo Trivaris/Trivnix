@@ -1,4 +1,5 @@
 {
+  host,
   inputs,
   ...
 }:
@@ -29,6 +30,6 @@
     ];
   };
 
-  home-manager.users.trivaris = import (inputs.self + "/home/trivaris");
+  home-manager.users.trivaris = import (inputs.self + "/home/trivaris/${host.name}");
 
 }

@@ -9,6 +9,8 @@
 
   imports = [
     ./users
+    ./garbage-collect.nix
+    ./update.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
