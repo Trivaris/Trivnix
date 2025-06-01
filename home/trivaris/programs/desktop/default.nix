@@ -1,7 +1,5 @@
+{ ... }:
 {
-  pkgs, 
-  ...
-}: {
 
   imports = [
     ./fonts.nix
@@ -9,6 +7,7 @@
     ./hyprland
     ./wezterm
     ./rofi.nix
+    ./vscodium.nix
   ];
-  
+
 }

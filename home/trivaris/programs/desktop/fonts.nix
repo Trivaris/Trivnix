@@ -1,9 +1,8 @@
 {
-  config,
-  lib,
   pkgs,
   ...
-}: {
+}:
+{
 
   home.packages = with pkgs; [
     fira-code-symbols

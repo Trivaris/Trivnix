@@ -1,8 +1,8 @@
 {
-  pkgs,
   inputs,
   ...
-}: {
+}:
+{
 
   programs.zoxide = {
     enable = true;
@@ -13,7 +13,12 @@
     enable = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
-    extraOptions = [ "-l" "--icons" "--git" "-a" ];
+    extraOptions = [
+      "-l"
+      "--icons"
+      "--git"
+      "-a"
+    ];
   };
 
   programs.fastfetch = {
@@ -24,5 +29,5 @@
     source = "${inputs.dotfiles}/nvim";
     recursive = true;
   };
-    
+
 }

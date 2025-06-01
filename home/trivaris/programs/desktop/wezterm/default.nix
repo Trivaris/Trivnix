@@ -1,9 +1,9 @@
-{ 
-  config, 
-  lib, 
-  pkgs,
-  ... 
-}: with config.colors; {
+{
+  config,
+  ...
+}:
+with config.colors;
+{
 
   programs.wezterm = {
     enable = true;

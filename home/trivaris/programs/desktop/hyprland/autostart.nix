@@ -1,12 +1,15 @@
 {
   lib,
   ...
-}: {
+}:
+{
 
-  wayland.windowManager.hyprland.settings = lib.mkMerge [{
-    exec-once = [
-      "waybar"
-    ];
-  }];
+  wayland.windowManager.hyprland.settings = lib.mkMerge [
+    {
+      exec-once = [
+        "waybar"
+      ];
+    }
+  ];
 
 }

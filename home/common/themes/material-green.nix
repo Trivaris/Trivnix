@@ -1,14 +1,15 @@
 {
-  config,
   lib,
   inputs,
   ...
-}:let
-  jsonPath = inputs.self + "/resources/material-green.json"; 
+}:
+let
+  jsonPath = inputs.self + "/resources/material-green.json";
   jsonraw = builtins.readFile jsonPath;
   jsonText = builtins.unsafeDiscardStringContext jsonraw;
   json = builtins.fromJSON jsonText;
-in {
+in
+{
 
   options.colors = lib.mkOption {
     type = lib.types.attrsOf (lib.types.attrsOf lib.types.str);
@@ -17,5 +18,5 @@ in {
   };
 
   config = { };
-  
+
 }

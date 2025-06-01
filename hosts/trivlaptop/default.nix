@@ -1,10 +1,7 @@
+{ ... }:
 {
-  config,
-  inputs,
-  ...
-}: {
 
-  imports = [ 
+  imports = [
     ../common
     ./disko-config.nix
     ./hardware-configuration.nix

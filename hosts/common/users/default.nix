@@ -1,7 +1,5 @@
+{ ... }:
 {
-  pkgs,
-  ...
-}: {
 
   imports = [
     ./trivaris.nix

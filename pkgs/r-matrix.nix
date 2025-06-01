@@ -2,9 +2,9 @@
   pkgs,
   ...
 }:
-  
+
 pkgs.rustPlatform.buildRustPackage {
-  
+
   pname = "r-matrix";
   version = "0.2.7";
 

@@ -1,7 +1,6 @@
-{ 
-  ... 
-}: { 
-  
+{ ... }:
+{
+
   imports = [
     ../common/themes/material-green.nix
     ./home.nix

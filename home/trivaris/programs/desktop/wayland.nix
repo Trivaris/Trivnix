@@ -1,9 +1,8 @@
 {
-config,
-lib,
-pkgs,
-...
-}: {
+  pkgs,
+  ...
+}:
+{
 
   programs.waybar = {
     enable = true;
@@ -177,8 +176,12 @@ pkgs,
         passthrough = false;
         gtk-layer-shell = true;
         height = 0;
-        modules-left = ["clock" "custom/weather" "hyprland/workspaces"];
-        modules-center = ["hyprland/window"];
+        modules-left = [
+          "clock"
+          "custom/weather"
+          "hyprland/workspaces"
+        ];
+        modules-center = [ "hyprland/window" ];
         modules-right = [
           "tray"
         ];
@@ -204,10 +207,10 @@ pkgs,
             "7" = "";
           };
           persistent_workspaces = {
-            "1" = [];
-            "2" = [];
-            "3" = [];
-            "4" = [];
+            "1" = [ ];
+            "2" = [ ];
+            "3" = [ ];
+            "4" = [ ];
           };
         };
         "custom/weather" = {

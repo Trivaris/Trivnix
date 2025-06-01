@@ -1,10 +1,10 @@
-{ 
-  config, 
-  lib, 
+{
+  config,
+  lib,
   pkgs,
-  inputs,
-  ... 
-}: {
+  ...
+}:
+{
 
   home.username = lib.mkDefault "trivaris";
   home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
@@ -24,12 +24,11 @@
     bat
     fastfetch
     rofi
-    #r-matrix
     pipes-rs
-    #rbonsai
     rsclock
-    vscodium
-    nodejs_20
+
+    #r-matrix
+    #rbonsai
   ];
 
   home.file = {

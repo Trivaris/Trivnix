@@ -1,9 +1,8 @@
 {
-  config,
-  pkgs,
   inputs,
   ...
-}: {
+}:
+{
 
   users.users."trivaris" = {
     initialHashedPassword = "$y$j9T$F0vD5H2XbmMLxbb9X7Z5L1$vD9TLGi6l/yKBsiAIobtQuL3/md/TFIt0PdGDjyyUb7";

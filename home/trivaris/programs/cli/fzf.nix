@@ -1,8 +1,5 @@
+{ ... }:
 {
-  config,
-  lib,
-  ...
-}: {
 
   programs.fzf = {
     enable = true;
@@ -29,5 +26,5 @@
     defaultCommand = "fd --type f --exclude .git --follow --hidden";
     changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
   };
-  
+
 }
