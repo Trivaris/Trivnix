@@ -11,9 +11,12 @@
     git
   ];
 
+  services.printing.enable = true;
+  hardware.bluetooth.enable = true;
+
   services.openssh = {
     enable = true;
-    settings.PermitRootLogin = "yes";
+    settings.PermitRootLogin = "prohibit-password";
     settings.KbdInteractiveAuthentication = false;
     allowSFTP = true;
   };

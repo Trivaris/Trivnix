@@ -1,7 +1,6 @@
 {
 
   description = ''
-
     Trivaris' NixOS Config. Built on top of m3tam3re's series.
   '';
 
@@ -12,8 +11,6 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-legacy.url = "github:NixOS/nixpkgs/0f2efa91a6b70089b92480ba613571e92322f753";
-
     dotfiles = {
       url = "github:trivaris/dotfiles";
       flake = false;
@@ -22,6 +19,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs.sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -45,13 +43,6 @@
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      legacyPkgsFor =
-        system:
-        import inputs.nixpkgs-legacy {
-          inherit system;
-          config.permittedInsecurePackages = [ "nodejs-10.24.1" ];
-        };
-
       hosts = {
         trivlaptop = {
           name = "trivlaptop";
@@ -71,7 +62,7 @@
           host:
           builtins.map (user: {
             name = "${user.name}@${host.name}";
-            value = { inherit host; };
+            value = { inherit host user; };
           }) host.users
         ) (builtins.attrValues hosts)
       );
@@ -81,13 +72,11 @@
           config = {
             home-manager.extraSpecialArgs = {
               inherit inputs outputs host;
-              legacyPkgs = legacyPkgsFor host.system;
             };
           };
         };
         nixos = {
           inherit inputs outputs host;
-          legacyPkgs = legacyPkgsFor host.system;
         };
       };
 
@@ -112,7 +101,6 @@
           pkgs = nixpkgs.legacyPackages.${pair.host.system};
           extraSpecialArgs = {
             inherit inputs outputs pair;
-            legacyPkgs = legacyPkgsFor pair.host.system;
           };
           modules = [ ./home/${pair.user.name}/${pair.host.name}.nix ];
         };

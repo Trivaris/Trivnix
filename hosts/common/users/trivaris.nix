@@ -1,12 +1,13 @@
 {
   host,
+  config,
   inputs,
   ...
 }:
 {
 
   users.users."trivaris" = {
-    initialHashedPassword = "$y$j9T$F0vD5H2XbmMLxbb9X7Z5L1$vD9TLGi6l/yKBsiAIobtQuL3/md/TFIt0PdGDjyyUb7";
+    hashedPasswordFile = config.sops.secrets.trivaris-password.path;
     isNormalUser = true;
     createHome = true;
     home = "/home/trivaris";
@@ -30,6 +31,7 @@
     ];
   };
 
-  home-manager.users.trivaris = import (inputs.self + "/home/trivaris/${host.name}");
+  home-manager.users.trivaris = import (inputs.self + "/home/trivaris/${host.name}.nix");
 
 }
+  

@@ -1,16 +1,19 @@
 {
+  host,
   pkgs,
   lib,
-  inputs,
   outputs,
+  inputs,
   ...
 }:
+let
+  users = builtins.map (user: user.name) host.users;
+in
 {
 
   imports = [
     ./users
-    ./garbage-collect.nix
-    ./update.nix
+    ./sops.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -34,23 +37,21 @@
   };
 
   nix = {
-    settings = {
-      experimental-features = "nix-command flakes";
-      trusted-users = [
-        "root"
-        "trivaris"
-      ];
-    };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
-    };
+    settings.experimental-features = "nix-command flakes";
+    settings.trusted-users = users ++ [ "root" ];
+    gc.automatic = true;
+    gc.dates = "daily";
+    gc.options = "--delete-older-than 7d";
+    settings.auto-optimise-store = true;
     optimise.automatic = true;
     registry = (lib.mapAttrs (_: flake: { inherit flake; })) (
       (lib.filterAttrs (_: lib.isType "flake")) inputs
     );
-    nixPath = [ "/etc/nix/path" ];
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   };
+
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.dates = "weekly";
 
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;

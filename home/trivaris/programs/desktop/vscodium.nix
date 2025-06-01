@@ -26,16 +26,15 @@
         };
         "options" = {
           "nixos" = {
-              "expr" = "(builtins.getFlake \"/home/trivaris/trivnix\").nixosConfigurations.trivlaptop.options";
+            "expr" = "(builtins.getFlake \"/home/trivaris/trivnix\").nixosConfigurations.trivlaptop.options";
           };
           "home-manager" = {
-              "expr" = "(builtins.getFlake \"/home/trivaris/trivnix\").homeConfigurations.\"trivaris@trivlaptop\".options";
+            "expr" =
+              "(builtins.getFlake \"/home/trivaris/trivnix\").homeConfigurations.\"trivaris@trivlaptop\".options";
           };
         };
       };
     };
   };
-
-  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
 }
