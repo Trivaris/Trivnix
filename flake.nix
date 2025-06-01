@@ -11,6 +11,8 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-legacy.url = "github:NixOS/nixpkgs/0f2efa91a6b70089b92480ba613571e92322f753";
+
     dotfiles = {
       url = "github:trivaris/dotfiles";
       flake = false;
@@ -30,6 +32,7 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
+    inherit (inputs) nixpkgs nixpkgs-legacy;
 
     systems = [
       "aarch64-linux"
@@ -40,22 +43,49 @@
     ];
     forAllSystems = nixpkgs.lib.genAttrs systems;
 
-  in {
+    legacyPkgsFor = system: import inputs.nixpkgs-legacy {
+      inherit system;
+      config.permittedInsecurePackages = [ "nodejs-10.24.1" ];
+    };
 
-    packages = forAllSystems ( system: import ./pkgs nixpkgs.legacyPackages.${system} );
-
-    overlays = import ./overlays { inherit inputs; };
-    
-    nixosConfigurations.trivlaptop = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs outputs;
+    hosts = {
+      trivlaptop = {
+        name = "trivlaptop";
+        users = [ "trivaris" ];
+        system = "x86_64-linux";
       };
+    };
+
+    extraArgsModule = host: {
+      home-manager = {
+        config = {
+          home-manager.extraSpecialArgs = {
+            inherit inputs outputs host;
+            legacyPkgs = legacyPkgsFor host.system;
+          };
+        };
+      };
+      nixos = {
+        inherit inputs outputs host;
+        legacyPkgs = legacyPkgsFor host.system;
+      };
+    };
+
+    nixosConfiguration = host: let
+      extraArgs = extraArgsModule host;
+    in nixpkgs.lib.nixosSystem {
+      specialArgs = extraArgs.nixos;
       modules = [
-        ./hosts/trivlaptop
+        ./hosts/${host.name}
         disko.nixosModules.disko
+        (extraArgs.home-manager)
       ];
     };
 
+  in {
+    packages = forAllSystems ( system: import ./pkgs nixpkgs.legacyPackages.${system} );
+    overlays = import ./overlays { inherit inputs; };
+    nixosConfigurations = builtins.mapAttrs (_: nixosConfiguration) hosts;
   };
 
 }

@@ -1,7 +1,8 @@
 { 
   config, 
   lib, 
-  pkgs, 
+  pkgs,
+  inputs,
   ... 
 }: {
 
@@ -27,6 +28,8 @@
     pipes-rs
     #rbonsai
     rsclock
+    vscodium
+    nodejs_20
   ];
 
   home.file = {
