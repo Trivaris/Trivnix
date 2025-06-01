@@ -1,8 +1,8 @@
 {
 
   description = ''
-    
-        Trivaris' NixOS Config. Built on top of m3tam3re's series.
+
+    Trivaris' NixOS Config. Built on top of m3tam3re's series.
   '';
 
   inputs = {
@@ -55,10 +55,26 @@
       hosts = {
         trivlaptop = {
           name = "trivlaptop";
-          users = [ "trivaris" ];
+          users = [ users.trivaris ];
           system = "x86_64-linux";
         };
       };
+
+      users = {
+        trivaris = {
+          name = "trivaris";
+        };
+      };
+
+      userHostPairs = builtins.listToAttrs (
+        builtins.concatMap (
+          host:
+          builtins.map (user: {
+            name = "${user.name}@${host.name}";
+            value = { inherit host; };
+          }) host.users
+        ) (builtins.attrValues hosts)
+      );
 
       extraArgsModule = host: {
         home-manager = {
@@ -90,11 +106,23 @@
           ];
         };
 
+      homeConfiguration =
+        pair:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${pair.host.system};
+          extraSpecialArgs = {
+            inherit inputs outputs pair;
+            legacyPkgs = legacyPkgsFor pair.host.system;
+          };
+          modules = [ ./home/${pair.user.name}.nix ];
+        };
+
     in
     {
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = builtins.mapAttrs (_: nixosConfiguration) hosts;
+      homeConfigurations = builtins.mapAttrs (_: homeConfiguration) userHostPairs;
     };
 
 }
