@@ -5,29 +5,42 @@
   '';
 
   inputs = {
+    # Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+
+    # Nix Community
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    dotfiles = {
-      url = "github:trivaris/dotfiles";
-      flake = false;
     };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    inputs.sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Personal
+    dotfiles = {
+      url = "github:trivaris/dotfiles";
+      flake = false;
+    };
   };
 
   outputs =
     {
       self,
-      home-manager,
+
       nixpkgs,
+      nixpkgs-stable,
+      
+      home-manager,
       disko,
+      sops-nix,
+
       dotfiles,
       ...
     }@inputs:
@@ -43,74 +56,53 @@
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      hosts = {
-        trivlaptop = {
-          name = "trivlaptop";
-          users = [ users.trivaris ];
-          system = "x86_64-linux";
-        };
+      # NixOS Config Preset
+      nixosConfiguration = {
+        hostname, 
+        system, 
+        users
+      }: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs hostname users system; };
+        modules = [
+          ./hosts/${hostname}
+          disko.nixosModules.disko
+          home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
+          { config.home-manager.extraSpecialArgs = { inherit inputs outputs hostname system; }; }
+        ];
       };
 
-      users = {
-        trivaris = {
-          name = "trivaris";
-        };
+      # Home Config Preset
+      homeConfiguration = {
+        hostname, 
+        system, 
+        username
+      }: home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = { inherit inputs outputs hostname username system; };
+        modules = [
+          sops-nix.nixosModules.sops
+          ./home/${username}/${hostname}.nix
+        ];
       };
-
-      userHostPairs = builtins.listToAttrs (
-        builtins.concatMap (
-          host:
-          builtins.map (user: {
-            name = "${user.name}@${host.name}";
-            value = { inherit host user; };
-          }) host.users
-        ) (builtins.attrValues hosts)
-      );
-
-      extraArgsModule = host: {
-        home-manager = {
-          config = {
-            home-manager.extraSpecialArgs = {
-              inherit inputs outputs host;
-            };
-          };
-        };
-        nixos = {
-          inherit inputs outputs host;
-        };
-      };
-
-      nixosConfiguration =
-        host:
-        let
-          extraArgs = extraArgsModule host;
-        in
-        nixpkgs.lib.nixosSystem {
-          specialArgs = extraArgs.nixos;
-          modules = [
-            ./hosts/${host.name}
-            disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            (extraArgs.home-manager)
-          ];
-        };
-
-      homeConfiguration =
-        pair:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${pair.host.system};
-          extraSpecialArgs = {
-            inherit inputs outputs pair;
-          };
-          modules = [ ./home/${pair.user.name}/${pair.host.name}.nix ];
-        };
 
     in
     {
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       overlays = import ./overlays { inherit inputs; };
-      nixosConfigurations = builtins.mapAttrs (_: nixosConfiguration) hosts;
-      homeConfigurations = builtins.mapAttrs (_: homeConfiguration) userHostPairs;
+
+      nixosConfigurations."trivlaptop" = nixosConfiguration {
+        hostname = "trivlaptop";
+        system = "x86_64-linux";
+        users = [ "trivaris" ];
+      };
+
+      homeConfigurations."trivaris@trivlaptop" = homeConfiguration {
+        hostname = "trivlaptop";
+        system = "x86_64-linux";
+        username = "trivaris";
+      };
+
     };
 
 }

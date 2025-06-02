@@ -1,20 +1,16 @@
 {
-  host,
+  users,
   pkgs,
   lib,
   outputs,
   inputs,
   ...
 }:
-let
-  users = builtins.map (user: user.name) host.users;
-in
 {
 
   imports = [
-    ./users
-    ./sops.nix
     inputs.home-manager.nixosModules.home-manager
+    ./users
   ];
 
   home-manager = {

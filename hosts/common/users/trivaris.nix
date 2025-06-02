@@ -1,17 +1,23 @@
 {
-  host,
+  hostname,
   config,
+  lib,
+  pkgs,
   inputs,
+  system,
   ...
 }:
+let
+  username = "trivaris";
+in
 {
 
-  users.users."trivaris" = {
-    hashedPasswordFile = config.sops.secrets.trivaris-password.path;
+  users.users.${username} = {
+    hashedPasswordFile = "$y$j9T$e5w7wxGxa5WsOmwq1QyBo.$DwqslvRdBguctbD2KZAOgub7yjChIorXejNfWQwmV11";
     isNormalUser = true;
     createHome = true;
-    home = "/home/trivaris";
-    description = "trivaris";
+    home = "/home/${username}";
+    description = username;
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -31,7 +37,9 @@
     ];
   };
 
-  home-manager.users.trivaris = import (inputs.self + "/home/trivaris/${host.name}.nix");
+  home-manager.users.${username} = import (inputs.self + "/home/${username}/${hostname}.nix") {
+    inherit inputs config lib pkgs username system; 
+  };
 
 }
   
