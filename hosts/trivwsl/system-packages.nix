@@ -4,19 +4,13 @@
 }:
 {
 
-  services.printing.enable = true;
-  hardware.bluetooth.enable = true;
-
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "prohibit-password";
     settings.KbdInteractiveAuthentication = false;
+    settings.PasswordAuthentication = false;
     allowSFTP = true;
-  };
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
+    openFirewall = false;
   };
 
 }

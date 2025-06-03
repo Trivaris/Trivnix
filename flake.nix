@@ -59,27 +59,28 @@
       # NixOS Config Preset
       nixosConfiguration = {
         hostname, 
-        system, 
-        users
+        systemArchitechture ? "x86_64-linux", 
+        userNames ? [ "trivaris" ],
+        isWsl ? false
       }: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs hostname users system; };
+        specialArgs = { inherit inputs outputs hostname userNames systemArchitechture isWsl; };
         modules = [
           ./hosts/${hostname}
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
-          { config.home-manager.extraSpecialArgs = { inherit inputs outputs hostname system; }; }
+          { config.home-manager.extraSpecialArgs = { inherit inputs outputs hostname systemArchitechture isWsl; }; }
         ];
       };
 
       # Home Config Preset
       homeConfiguration = {
         hostname, 
-        system, 
+        systemArchitechture ? "x86_64-linux", 
         username
       }: home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = { inherit inputs outputs hostname username system; };
+        pkgs = nixpkgs.legacyPackages.${systemArchitechture};
+        extraSpecialArgs = { inherit inputs outputs hostname username systemArchitechture; };
         modules = [
           sops-nix.nixosModules.sops
           ./home/${username}/${hostname}.nix
@@ -88,18 +89,20 @@
 
     in
     {
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (systemArchitechture: import ./pkgs nixpkgs.legacyPackages.${systemArchitechture});
       overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations."trivlaptop" = nixosConfiguration {
         hostname = "trivlaptop";
-        system = "x86_64-linux";
-        users = [ "trivaris" ];
+      };
+
+      nixosConfigurations."trivwsl" = nixosConfiguration {
+        hostname = "trivwsl";
+        isWsl = true;
       };
 
       homeConfigurations."trivaris@trivlaptop" = homeConfiguration {
         hostname = "trivlaptop";
-        system = "x86_64-linux";
         username = "trivaris";
       };
 

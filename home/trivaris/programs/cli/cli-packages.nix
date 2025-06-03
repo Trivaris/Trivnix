@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -19,10 +20,6 @@
       "--git"
       "-a"
     ];
-  };
-
-  programs.fastfetch = {
-    enable = true;
   };
 
   home.file.".config/nvim" = {

@@ -3,9 +3,8 @@
 
   imports = [
     ../common
-    ./disko-config.nix
-    ./hardware-configuration.nix
     ./system-packages.nix
+    #./hardware-configuration.nix
     ./configuration.nix
   ];
 

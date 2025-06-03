@@ -7,9 +7,9 @@
 
   home.packages = with pkgs; [
     vscodium
-    nodejs_20
     nixd
     nixfmt-rfc-style
+    nix-ld
   ];
 
   home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON {
