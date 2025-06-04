@@ -2,6 +2,7 @@
   pkgs,
   configname,
   inputs,
+  config,
   ...
 }:
 let
@@ -19,7 +20,7 @@ in
     };
 
   users.users.${username} = {
-    hashedPassword = "$y$j9T$e5w7wxGxa5WsOmwq1QyBo.$DwqslvRdBguctbD2KZAOgub7yjChIorXejNfWQwmV11";
+    hashedPasswordFile = config.sops.secrets."user-passwords/${username}".path;
     isNormalUser = true;
     createHome = true;
     home = "/home/${username}";
@@ -38,7 +39,7 @@ in
       "kvm"
       "qemu-libvirtd"
     ];
-    openssh.authorizedKeys.keys = import ./authorized-keys.nix;
+    openssh.authorizedKeys.keys = import ./authorized-keys.nix { inherit inputs; };
   };
 
 }

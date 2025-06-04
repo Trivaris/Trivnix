@@ -1,4 +1,9 @@
-{ username, ... }:
+{
+  username,
+  config,
+  configname,
+  ...
+}:
 {
 
   programs.git = {
@@ -10,11 +15,10 @@
 
   programs.ssh = {
     enable = true;
-    #startAgent = true;
     addKeysToAgent = "yes";
-    #extraConfig = ''
-    #  IdentityFile ${config.sops.secrets.ssh-private-key.path}
-    #'';
+    extraConfig = ''
+      IdentityFile ${config.sops.secrets."ssh-private-keys/${configname}".path}
+    '';
   };
 
   programs.keychain = {

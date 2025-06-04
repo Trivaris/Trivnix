@@ -48,6 +48,20 @@
     let
       inherit (self) outputs;
 
+      hosts = {
+        wsl = {
+          name = "trivwsl";
+        };
+        #desktop = {
+        #  name = "trivdesktop";
+        #};
+        laptop = {
+          name = "trivlaptop";
+        };
+      };
+
+      users = [ "trivaris" ];
+
       systems = [
         "aarch64-linux"
         "i686-linux"
@@ -119,10 +133,32 @@
               ;
           };
           modules = [
-            sops-nix.nixosModules.sops
+            #sops-nix.nixosModules.sops
             ./home/${username}/${configname}.nix
           ];
         };
+
+      nixosConfigurations = builtins.mapAttrs
+      (host: cfg: nixosConfiguration {
+        hostname = cfg.name;
+        configname = host;
+        inherit (cfg) isWsl;
+      })
+      hosts;
+
+      homeConfigurations = builtins.listToAttrs (
+      builtins.concatMap
+        (username:
+          builtins.map (configname: {
+            name = "${username}@${hosts.${configname}.name}";
+            value = homeConfiguration {
+              hostname = hosts.${configname}.name;
+              inherit configname username;
+            };
+          }) (builtins.attrNames hosts)
+        )
+        users
+    );
 
     in
     {
@@ -131,22 +167,7 @@
       );
       overlays = import ./overlays { inherit inputs; };
 
-      nixosConfigurations.laptop = nixosConfiguration {
-        hostname = "trivlaptop";
-        configname = "laptop";
-      };
-
-      nixosConfigurations.wsl = nixosConfiguration {
-        hostname = "trivwsl";
-        configname = "wsl";
-        isWsl = true;
-      };
-
-      homeConfigurations."trivaris@trivlaptop" = homeConfiguration {
-        hostname = "trivlaptop";
-        configname = "laptop";
-        username = "trivaris";
-      };
+      inherit nixosConfigurations homeConfigurations;
 
     };
 
