@@ -5,7 +5,7 @@
     ../common
     ./disko-config.nix
     ./hardware-configuration.nix
-    ./system-packages.nix
+    ../../modules/nixos/hardware/laptop.nix
     ./configuration.nix
   ];
 

@@ -2,11 +2,11 @@
 {
 
   imports = [
-    ../common/themes/material-green.nix
-    ./secrets.nix
-    ./home.nix
-    ./credentials.nix
-    ./programs
+    ../../modules/home/common/theme.nix
+    ../../modules/home/trivaris/secrets.nix
+    ../../modules/home/trivaris/credentials.nix
+    ../../modules/home/trivaris/base.nix
+    ../../modules/home/common/programs
   ];
 
 }
