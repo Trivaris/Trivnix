@@ -1,0 +1,11 @@
+keys:
+  - &users: 
+    - &trivaris age1g24xxtf3hxldudfedy74gtzg25ygrzjzd5zr9g0m3pw8vegxydeqvs5xxm
+  - &hosts:
+    - &trivwsl age1z0zu80qx8xrgkjm4hmwevmz8acmye3wstef5mx9lsfd3xsz09a8szkxjg7
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+      - age:
+        - *trivaris
+        - *trivwsl

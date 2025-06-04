@@ -1,10 +1,10 @@
-{ ... }:
+{ hostname, ... }:
 {
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "trivlaptop";
+  networking.hostName = hostname;
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";

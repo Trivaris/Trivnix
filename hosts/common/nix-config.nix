@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, userNames, ... }:
+{ inputs, outputs, lib, usernames, ... }:
 {
   
   nixpkgs = {
@@ -14,7 +14,7 @@
 
   nix = {
     settings.experimental-features = "nix-command flakes";
-    settings.trusted-users = userNames ++ [ "root" ];
+    settings.trusted-users = usernames ++ [ "root" ];
     gc.automatic = true;
     gc.dates = "daily";
     gc.options = "--delete-older-than 7d";

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, hostname, ... }:
 {
 
   programs.fish = {
@@ -44,7 +44,7 @@
         cd $flakePath
         sudo git pull
         sudo nix flake update dotfiles
-        sudo nixos-rebuild switch --flake $flakePath#trivlaptop
+        sudo nixos-rebuild switch --flake $flakePath#hostname
         cd $currentPath
       end
     '';

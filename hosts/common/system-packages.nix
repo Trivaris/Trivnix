@@ -13,6 +13,7 @@
     fish
     wget
     sops
+    age
     
     r-matrix
     rbonsai

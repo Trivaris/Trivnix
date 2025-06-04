@@ -1,11 +1,14 @@
-{ hostname, config, lib, pkgs, inputs, systemArchitechture, ... }:
+{pkgs, configname, inputs, ... }:
 let
   username = "trivaris";
 in
 {
 
-  home-manager.users.${username} = import (inputs.self + "/home/${username}/${hostname}.nix") {
-    inherit inputs config lib pkgs username systemArchitechture;
+  home-manager.users.${username} = { ... }: {
+     _module.args.username = username;
+    imports = [
+      "${inputs.self}/home/${username}/${configname}.nix"
+    ];
   };
 
   users.users.${username} = {
@@ -28,11 +31,7 @@ in
       "kvm"
       "qemu-libvirtd"
     ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHfeJK7INUQiwhkv+k5JBg9yWzEZOJ3uLpoCZULXkmPu trivaris@trivdesktop"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIICZc1kVtfzflynwpzbTHFoUIrHGSYJte6yoZ1CMsFke trivaris@trivlaptop"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKfOiSGvvuk5bpc/q5g7Xkg2ORs2Grt1dYF4ZGJkVFAe trivaris@trivwsl"
-    ];
+    openssh.authorizedKeys.keys = import ./authorized-keys.nix;
   };
 
 

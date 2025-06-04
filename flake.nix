@@ -58,32 +58,34 @@
 
       # NixOS Config Preset
       nixosConfiguration = {
+        configname,
         hostname, 
         systemArchitechture ? "x86_64-linux", 
-        userNames ? [ "trivaris" ],
+        usernames ? [ "trivaris" ],
         isWsl ? false
       }: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs hostname userNames systemArchitechture isWsl; };
+        specialArgs = { inherit inputs outputs hostname configname usernames isWsl systemArchitechture; };
         modules = [
-          ./hosts/${hostname}
+          ./hosts/${configname}
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
-          { config.home-manager.extraSpecialArgs = { inherit inputs outputs hostname systemArchitechture isWsl; }; }
+          { config.home-manager.extraSpecialArgs = { inherit inputs outputs hostname configname isWsl systemArchitechture; }; }
         ];
       };
 
       # Home Config Preset
       homeConfiguration = {
+        configname,
         hostname, 
         systemArchitechture ? "x86_64-linux", 
         username
       }: home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${systemArchitechture};
-        extraSpecialArgs = { inherit inputs outputs hostname username systemArchitechture; };
+        extraSpecialArgs = { inherit inputs outputs hostname username systemArchitechture configname; };
         modules = [
           sops-nix.nixosModules.sops
-          ./home/${username}/${hostname}.nix
+          ./home/${username}/${configname}.nix
         ];
       };
 
@@ -92,17 +94,20 @@
       packages = forAllSystems (systemArchitechture: import ./pkgs nixpkgs.legacyPackages.${systemArchitechture});
       overlays = import ./overlays { inherit inputs; };
 
-      nixosConfigurations."trivlaptop" = nixosConfiguration {
+      nixosConfigurations.laptop = nixosConfiguration {
         hostname = "trivlaptop";
+        configname = "laptop";
       };
 
-      nixosConfigurations."trivwsl" = nixosConfiguration {
+      nixosConfigurations.wsl = nixosConfiguration {
         hostname = "trivwsl";
+        configname = "wsl";
         isWsl = true;
       };
 
       homeConfigurations."trivaris@trivlaptop" = homeConfiguration {
         hostname = "trivlaptop";
+        configname = "laptop";
         username = "trivaris";
       };
 

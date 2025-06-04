@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, hostname, ... }:
 {
 
   home.packages = with pkgs; [
@@ -20,15 +20,15 @@
           "command" = [ "nixfmt" ];
         };
         "nixpkgs" = {
-          "expr" = "import (builtins.getFlake \"/home/trivaris/trivnix\").inputs.nixpkgs { } ";
+          "expr" = "import (builtins.getFlake \"/home/${username}/trivnix\").inputs.nixpkgs { } ";
         };
         "options" = {
           "nixos" = {
-            "expr" = "(builtins.getFlake \"/home/trivaris/trivnix\").nixosConfigurations.trivlaptop.options";
+            "expr" = "(builtins.getFlake \"/home/${username}/trivnix\").nixosConfigurations.${hostname}.options";
           };
           "home-manager" = {
             "expr" =
-              "(builtins.getFlake \"/home/trivaris/trivnix\").homeConfigurations.\"trivaris@trivlaptop\".options";
+              "(builtins.getFlake \"/home/${username}/trivnix\").homeConfigurations.\"${username}@${hostname}\".options";
           };
         };
       };

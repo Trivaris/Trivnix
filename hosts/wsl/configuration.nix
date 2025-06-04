@@ -1,4 +1,4 @@
-{ lib, userNames, systemArchitechture, ... }:
+{ lib, usernames, systemArchitechture, hostname, ... }:
 {
 
   imports = [
@@ -6,7 +6,8 @@
   ];
 
   wsl.enable = true;
-  wsl.defaultUser = builtins.head userNames;
+  wsl.defaultUser = builtins.head usernames;
+  wsl.wslConf.network.hostname = hostname;
 
   networking.useDHCP = lib.mkDefault true;
 
