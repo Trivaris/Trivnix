@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 {
 
   home.username = lib.mkDefault "trivaris";
@@ -18,9 +13,6 @@
     fastfetch
     pipes-rs
     rsclock
-
-    #r-matrix
-    #rbonsai
   ];
 
   home.file = {

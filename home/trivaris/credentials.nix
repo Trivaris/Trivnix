@@ -1,8 +1,4 @@
-{ 
-  inputs,
-  config,
-  ... 
-}:
+{ ... }:
 {
 
   programs.git = {

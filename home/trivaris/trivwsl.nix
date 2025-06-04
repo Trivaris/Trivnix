@@ -6,6 +6,7 @@
     ./home.nix
     ./credentials.nix
     ./programs/cli
+    ./programs/desktop/vscodium.nix
   ];
 
 }

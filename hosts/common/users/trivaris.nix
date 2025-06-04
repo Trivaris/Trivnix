@@ -1,12 +1,4 @@
-{
-  hostname,
-  config,
-  lib,
-  pkgs,
-  inputs,
-  systemArchitechture,
-  ...
-}:
+{ hostname, config, lib, pkgs, inputs, systemArchitechture, ... }:
 let
   username = "trivaris";
 in
@@ -17,7 +9,7 @@ in
   };
 
   users.users.${username} = {
-    hashedPasswordFile = "$y$j9T$e5w7wxGxa5WsOmwq1QyBo.$DwqslvRdBguctbD2KZAOgub7yjChIorXejNfWQwmV11";
+    hashedPassword = "$y$j9T$e5w7wxGxa5WsOmwq1QyBo.$DwqslvRdBguctbD2KZAOgub7yjChIorXejNfWQwmV11";
     isNormalUser = true;
     createHome = true;
     home = "/home/${username}";

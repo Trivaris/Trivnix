@@ -1,8 +1,4 @@
-{
-  lib,
-  inputs,
-  ...
-}:
+{ lib, inputs, ... }:
 let
   jsonPath = inputs.self + "/resources/material-green.json";
   jsonraw = builtins.readFile jsonPath;

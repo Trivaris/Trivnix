@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 {
 
   wayland.windowManager.hyprland.settings = lib.mkMerge [

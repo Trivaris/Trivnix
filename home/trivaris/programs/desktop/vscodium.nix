@@ -1,15 +1,13 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, ... }:
 {
 
   home.packages = with pkgs; [
     vscodium
     nixd
+    nodejs_20
     nixfmt-rfc-style
     nix-ld
+    vscode-extensions.jnoortheen.nix-ide
   ];
 
   home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON {

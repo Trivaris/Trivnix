@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}:
+{ config, ... }:
 with config.colors;
 let
   inherit (config.lib.formats.rasi) mkLiteral;

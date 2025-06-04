@@ -1,9 +1,4 @@
-{
-  lib,
-  outputs,
-  pkgs,
-  ...
-}:
+{ lib, outputs, pkgs, ... }:
 {
 
   nixpkgs = {

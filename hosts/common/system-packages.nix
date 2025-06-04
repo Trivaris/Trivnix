@@ -13,6 +13,9 @@
     fish
     wget
     sops
+    
+    r-matrix
+    rbonsai
   ];
 
 }

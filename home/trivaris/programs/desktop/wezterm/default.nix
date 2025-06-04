@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}:
+{ config, ...}:
 with config.colors;
 {
 

@@ -1,5 +1,6 @@
-{ config, lib, pkgs, userNames, systemArchitechture, ... }:
+{ lib, userNames, systemArchitechture, ... }:
 {
+
   imports = [
     <nixos-wsl/modules>
   ];
@@ -7,7 +8,7 @@
   wsl.enable = true;
   wsl.defaultUser = builtins.head userNames;
 
-    networking.useDHCP = lib.mkDefault true;
+  networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault systemArchitechture;
 
