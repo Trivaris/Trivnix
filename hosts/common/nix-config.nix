@@ -1,6 +1,12 @@
-{ inputs, outputs, lib, usernames, ... }:
 {
-  
+  inputs,
+  outputs,
+  lib,
+  usernames,
+  ...
+}:
+{
+
   nixpkgs = {
     overlays = [
       outputs.overlays.additions

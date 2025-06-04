@@ -1,7 +1,8 @@
 {
 
   description = ''
-    Trivaris' NixOS Config. Built on top of m3tam3re's series.
+    
+        Trivaris' NixOS Config. Built on top of m3tam3re's series.
   '';
 
   inputs = {
@@ -36,7 +37,7 @@
 
       nixpkgs,
       nixpkgs-stable,
-      
+
       home-manager,
       disko,
       sops-nix,
@@ -57,41 +58,77 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
       # NixOS Config Preset
-      nixosConfiguration = {
-        configname,
-        hostname, 
-        systemArchitechture ? "x86_64-linux", 
-        usernames ? [ "trivaris" ],
-        isWsl ? false
-      }: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs hostname configname usernames isWsl systemArchitechture; };
-        modules = [
-          ./hosts/${configname}
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
-          { config.home-manager.extraSpecialArgs = { inherit inputs outputs hostname configname isWsl systemArchitechture; }; }
-        ];
-      };
+      nixosConfiguration =
+        {
+          configname,
+          hostname,
+          systemArchitechture ? "x86_64-linux",
+          usernames ? [ "trivaris" ],
+          isWsl ? false,
+        }:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit
+              inputs
+              outputs
+              hostname
+              configname
+              usernames
+              isWsl
+              systemArchitechture
+              ;
+          };
+          modules = [
+            ./hosts/${configname}
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
+            {
+              config.home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  outputs
+                  hostname
+                  configname
+                  isWsl
+                  systemArchitechture
+                  ;
+              };
+            }
+          ];
+        };
 
       # Home Config Preset
-      homeConfiguration = {
-        configname,
-        hostname, 
-        systemArchitechture ? "x86_64-linux", 
-        username
-      }: home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${systemArchitechture};
-        extraSpecialArgs = { inherit inputs outputs hostname username systemArchitechture configname; };
-        modules = [
-          sops-nix.nixosModules.sops
-          ./home/${username}/${configname}.nix
-        ];
-      };
+      homeConfiguration =
+        {
+          configname,
+          hostname,
+          systemArchitechture ? "x86_64-linux",
+          username,
+        }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${systemArchitechture};
+          extraSpecialArgs = {
+            inherit
+              inputs
+              outputs
+              hostname
+              username
+              systemArchitechture
+              configname
+              ;
+          };
+          modules = [
+            sops-nix.nixosModules.sops
+            ./home/${username}/${configname}.nix
+          ];
+        };
 
     in
     {
-      packages = forAllSystems (systemArchitechture: import ./pkgs nixpkgs.legacyPackages.${systemArchitechture});
+      packages = forAllSystems (
+        systemArchitechture: import ./pkgs nixpkgs.legacyPackages.${systemArchitechture}
+      );
       overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations.laptop = nixosConfiguration {

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   environment.systemPackages = with pkgs; [
     coreutils
@@ -14,7 +15,7 @@
     wget
     sops
     age
-    
+
     r-matrix
     rbonsai
   ];

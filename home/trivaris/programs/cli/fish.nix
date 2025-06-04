@@ -4,15 +4,17 @@
   programs.fish = {
     enable = true;
     loginShellInit = ''
-      set -x NIX_PATH nixpkgs=channel:nixos-unstable
-      set -x NIX_LOG info
-      set -x TERMINAL wezterm
-
-      start-hyprland
+      
+            set -x NIX_PATH nixpkgs=channel:nixos-unstable
+            set -x NIX_LOG info
+            set -x TERMINAL wezterm
+      
+            start-hyprland
     '';
     interactiveShellInit = ''
-      set fish_greeting
-      fastfetch
+      
+            set fish_greeting
+            fastfetch
     '';
     shellAbbrs = {
       ".." = "cd ..";
@@ -31,25 +33,28 @@
 
     functions.cd.body = "z $argv";
     functions.start-hyprland = ''
-      if test (tty) = "/dev/tty1"
-        exec Hyprland &> /dev/null
-      end
+      
+            if test (tty) = "/dev/tty1"
+              exec Hyprland &> /dev/null
+            end
     '';
     functions.nix-rebuild = ''
-      set flakePath /etc/nixos
-      set currentPath (pwd)
-      echo flakePath: $flakePath
-
-      begin
-        cd $flakePath
-        sudo git pull
-        sudo nix flake update dotfiles
-        sudo nixos-rebuild switch --flake $flakePath#hostname
-        cd $currentPath
-      end
+      
+            set flakePath /etc/nixos
+            set currentPath (pwd)
+            echo flakePath: $flakePath
+      
+            begin
+              cd $flakePath
+              sudo git pull
+              sudo nix flake update dotfiles
+              sudo nixos-rebuild switch --flake $flakePath#hostname
+              cd $currentPath
+            end
     '';
     functions.get-flakepath = ''
-      echo ${inputs.self}
+      
+            echo ${inputs.self}
     '';
   };
 

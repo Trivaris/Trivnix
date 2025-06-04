@@ -1,6 +1,6 @@
 { inputs, ... }:
-{ 
-  
+{
+
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
@@ -8,7 +8,7 @@
   sops = {
     defaultSopsFile = "${inputs.self}/resources/secrets.yaml";
     validateSopsFiles = false;
-    
+
     age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed2519_key" ];
       keyFile = "/var/lib/sops-nix/key.txt";
@@ -28,5 +28,5 @@
       "smtp-passwords/school" = { };
     };
   };
-  
+
 }

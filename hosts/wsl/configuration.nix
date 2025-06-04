@@ -1,4 +1,10 @@
-{ lib, usernames, systemArchitechture, hostname, ... }:
+{
+  lib,
+  usernames,
+  systemArchitechture,
+  hostname,
+  ...
+}:
 {
 
   imports = [
