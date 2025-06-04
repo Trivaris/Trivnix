@@ -148,6 +148,14 @@
         username = "trivaris";
       };
 
+      nixosTests = forAllSystems (
+        system:
+          {
+            openssh = import ./tests/openssh.nix { inherit inputs system; };
+            hyprland = import ./tests/hyprland.nix { inherit inputs system; };
+          }
+      );
+
     };
 
 }
