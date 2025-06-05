@@ -1,12 +1,12 @@
-{ ... }:
+{ inputs, ... }:
 {
 
   imports = [
-    ../common/themes/material-green.nix
-    ./home.nix
     ./credentials.nix
-    ./programs/cli
-    ./programs/desktop/vscodium.nix
+
+    (inputs.self + "/modules/base.nix")
+    (inputs.self + "/modules/nvim.nix")
+    (inputs.self + "/modules/secrets.nix")
   ];
 
 }

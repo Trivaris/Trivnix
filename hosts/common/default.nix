@@ -1,21 +1,9 @@
-{
-  users,
-  pkgs,
-  lib,
-  outputs,
-  inputs,
-  ...
-}:
+{ ... }:
 {
 
   imports = [
-    ./home-manager.nix
-    #./secrets.nix
+    ./core
     ./users
-    ./keymap.nix
-    ./nix-config.nix
-    ./system-packages.nix
-    ./auto-upgrade.nix
   ];
 
 }

@@ -2,10 +2,9 @@
 {
 
   imports = [
-    ../common
-    ./system-packages.nix
-    #./hardware-configuration.nix
+    ./hardware.nix
     ./configuration.nix
+    ../common
   ];
 
 }
