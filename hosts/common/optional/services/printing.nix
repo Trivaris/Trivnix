@@ -1,4 +1,3 @@
-
 { pkgs, ... }:
 {
 
@@ -11,5 +10,5 @@
     enable = false;
     unitConfig.Mask = true;
   };
-  
+
 }

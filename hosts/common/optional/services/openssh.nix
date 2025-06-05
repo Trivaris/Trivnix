@@ -26,5 +26,5 @@ in
   };
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
-  
+
 }

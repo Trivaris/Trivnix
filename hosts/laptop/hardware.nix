@@ -1,4 +1,12 @@
-{ hostname, config, lib, modulesPath, architecture, stateVersion,  ... }:
+{
+  hostname,
+  config,
+  lib,
+  modulesPath,
+  architecture,
+  stateVersion,
+  ...
+}:
 {
 
   imports = [

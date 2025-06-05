@@ -44,7 +44,9 @@ in
       "kvm"
       "qemu-libvirtd"
     ];
-    openssh.authorizedKeys.keys = map (host: builtins.readFile (inputs.self + "/resources/ssh-pub/id_ed25519_${host}.pub")) hosts;
+    openssh.authorizedKeys.keys = map (
+      host: builtins.readFile (inputs.self + "/resources/ssh-pub/id_ed25519_${host}.pub")
+    ) hosts;
   };
 
 }

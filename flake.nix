@@ -1,8 +1,8 @@
 {
 
   description = ''
-    
-        Trivaris' NixOS Config. Built on top of m3tam3re's series.
+
+    Trivaris' NixOS Config. Built on top of m3tam3re's series.
   '';
 
   inputs = {
@@ -138,35 +138,32 @@
           ];
         };
 
-      nixosConfigurations = builtins.mapAttrs
-      (host: cfg: nixosConfiguration {
-        hostname = cfg.name;
-        configname = host;
-        stateVersion = cfg.stateVersion;
-      })
-      hosts;
+      nixosConfigurations = builtins.mapAttrs (
+        host: cfg:
+        nixosConfiguration {
+          hostname = cfg.name;
+          configname = host;
+          stateVersion = cfg.stateVersion;
+        }
+      ) hosts;
 
       homeConfigurations = builtins.listToAttrs (
-        builtins.concatMap
-          (username:
-            builtins.map (configname: {
-              name = "${username}@${hosts.${configname}.name}";
-              value = homeConfiguration {
-                hostname = hosts.${configname}.name;
-                stateVersion = hosts.${configname}.stateVersion;
-                inherit configname username;
-              };
-            }) (builtins.attrNames hosts)
-          )
-          users
+        builtins.concatMap (
+          username:
+          builtins.map (configname: {
+            name = "${username}@${hosts.${configname}.name}";
+            value = homeConfiguration {
+              hostname = hosts.${configname}.name;
+              stateVersion = hosts.${configname}.stateVersion;
+              inherit configname username;
+            };
+          }) (builtins.attrNames hosts)
+        ) users
       );
-
 
     in
     {
-      packages = forAllSystems (
-        architecture: import ./pkgs nixpkgs.legacyPackages.${architecture}
-      );
+      packages = forAllSystems (architecture: import ./pkgs nixpkgs.legacyPackages.${architecture});
       overlays = import ./overlays { inherit inputs; };
 
       inherit nixosConfigurations homeConfigurations;

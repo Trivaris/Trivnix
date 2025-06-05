@@ -1,8 +1,13 @@
-{ inputs, outputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  outputs,
+  ...
+}:
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  environment.systemPackages = with pkgs; [ home-manager  ];
+  environment.systemPackages = with pkgs; [ home-manager ];
 
   home-manager = {
     useUserPackages = true;
