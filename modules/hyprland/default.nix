@@ -1,14 +1,20 @@
-{ ... }:
+{ config, lib, ... }:
+let
+  cfg = config.modules;
+in
+with lib;
 {
 
   imports = [
     ./hyprpaper.nix
-    ./config.nix
   ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
+  options.modules.hyprland = mkEnableOption "hyprland";
+  config = mkIf cfg.hyprland {
+
+    wayland.windowManager.hyprland = {
+      enable = true;
+    };
   };
 
 }

@@ -1,24 +1,22 @@
-{ inputs, ... }:
-let
-
-  modules = [
-    "base"
-    "cli-utils"
-    "fish"
-    "fonts"
-    "fzf"
-    "hyprland"
-    "nvim"
-    "rofi"
-    "secrets"
-    "vscodium"
-    "wayland"
-    "wezterm"
-  ];
-
-in
+{ ... }:
 {
 
-  imports = [ ./credentials.nix ] ++ map (module: (inputs.self + "/modules/${module}.nix")) modules;
+  imports = [
+    ../common
+    ./credentials.nix
+  ];
+
+  config.modules = {
+    hyprland = true;
+    wezterm = true;
+    cli-utils = true;
+    fish = true;
+    font = true;
+    fzf = true;
+    nvim = true;
+    rofi = true;
+    vscodium = true;
+    waybar = true;
+  };
 
 }

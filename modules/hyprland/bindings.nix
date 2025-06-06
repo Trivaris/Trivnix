@@ -1,10 +1,31 @@
 { lib, ... }:
+let
+  mainMod = "SUPER";
+in
 {
 
   wayland.windowManager.hyprland.settings = lib.mkMerge [
     {
+      general = {
+        "$mainMod" = mainMod;
+      };
+
       binds = {
         movefocus_cycles_fullscreen = true;
+      };
+
+      input = {
+        kb_layout = "us,de";
+        kb_options = "grp:alt_caps_toggle";
+        numlock_by_default = true;
+        repeat_delay = 300;
+        follow_mouse = 0;
+        float_switch_override_focus = 0;
+        mouse_refocus = 0;
+        sensitivity = 0;
+        touchpad = {
+          natural_scroll = true;
+        };
       };
 
       bind = [

@@ -1,29 +1,39 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
+let
+  cfg = config.modules;
+in
+with lib;
 {
 
-  home.packages = with pkgs; [
-    procs
-    btop
-    fastfetch
-    pipes-rs
-    rsclock
-  ];
+  options.modules.cli-utils = mkEnableOption "cli tools";
 
-  programs.eza = {
-    enable = true;
-    enableFishIntegration = true;
-    enableBashIntegration = true;
-    extraOptions = [
-      "-l"
-      "--icons"
-      "--git"
-      "-a"
+  config = mkIf cfg.cli-utils {
+
+    home.packages = with pkgs; [
+      procs
+      btop
+      fastfetch
+      pipes-rs
+      rsclock
     ];
-  };
 
-  programs.zoxide = {
-    enable = true;
-    enableFishIntegration = true;
+    programs.eza = {
+      enable = true;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+      extraOptions = [
+        "-l"
+        "--icons"
+        "--git"
+        "-a"
+      ];
+    };
+
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
   };
 
 }

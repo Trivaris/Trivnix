@@ -1,20 +1,14 @@
-{ inputs, ... }:
-let
-
-  modules = [
-    "base"
-    "cli-utils"
-    "fish"
-    "fonts"
-    "fzf"
-    "nvim"
-    "secrets"
-    "vscodium"
-  ];
-
-in
+{ ... }:
 {
 
-  imports = [ ./credentials.nix ] ++ map (module: (inputs.self + "/modules/${module}.nix")) modules;
+  imports = [ 
+    ../common
+    ./credentials.nix
+  ];
+
+  config.modules = {
+    cli-utils = true;
+    fish = true;
+  };
 
 }
