@@ -1,12 +1,21 @@
 { inputs, ... }:
+let
+
+  modules = [
+    "base"
+    "cli-utils"
+    "fish"
+    "fonts"
+    "fzf"
+    "nvim"
+    "secrets"
+    "vscodium"
+  ];
+
+in
 {
 
-  imports = [
-    ./credentials.nix
-
-    (inputs.self + "/modules/base.nix")
-    (inputs.self + "/modules/nvim.nix")
-    (inputs.self + "/modules/secrets.nix")
-  ];
+  imports = [ ./credentials.nix ]
+  ++ map(module: (inputs.self + "/modules/${module}.nix")) modules;
 
 }

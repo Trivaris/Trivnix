@@ -1,11 +1,13 @@
-{ ... }:
+{ inputs, ... }:
+let
+  optionals = [ "all"];
+in
 {
 
   imports = [
     ../common
     ./hardware.nix
-
-    ../common/optional/all.nix
-  ];
+  ]
+  ++ map(optional: (inputs.self + "/hosts/common/optional/${optional}.nix")) optionals;
 
 }

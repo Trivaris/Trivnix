@@ -1,4 +1,4 @@
-{ lib, architecture, ... }:
+{ lib, architecture, stateVersion, ... }:
 {
 
   imports = [
@@ -13,5 +13,7 @@
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault architecture;
+
+  system.stateVersion = stateVersion;
 
 }

@@ -13,20 +13,4 @@
 
   home.stateVersion = stateVersion;
 
-  home.packages = with pkgs; [
-    procs
-    btop
-    fastfetch
-    pipes-rs
-    rsclock
-  ];
-
-  home.file = {
-
-  };
-
-  home.sessionVariables = {
-
-  };
-
 }
