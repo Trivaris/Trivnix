@@ -1,4 +1,9 @@
-{ lib, architecture, stateVersion, ... }:
+{
+  lib,
+  architecture,
+  stateVersion,
+  ...
+}:
 {
 
   imports = [

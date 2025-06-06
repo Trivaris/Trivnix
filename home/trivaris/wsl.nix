@@ -15,7 +15,6 @@ let
 in
 {
 
-  imports = [ ./credentials.nix ]
-  ++ map(module: (inputs.self + "/modules/${module}.nix")) modules;
+  imports = [ ./credentials.nix ] ++ map (module: (inputs.self + "/modules/${module}.nix")) modules;
 
 }

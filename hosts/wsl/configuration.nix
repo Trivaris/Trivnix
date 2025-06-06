@@ -1,8 +1,5 @@
 {
-  lib,
   usernames,
-  stateVersion,
-  architecture,
   hostname,
   ...
 }:

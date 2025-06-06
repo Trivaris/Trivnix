@@ -13,7 +13,6 @@ in
     ./hardware.nix
     ./configuration.nix
     ../common
-  ]
-  ++ map(optional: (inputs.self + "/hosts/common/optional/${optional}.nix")) optionals;
+  ] ++ map (optional: (inputs.self + "/hosts/common/optional/${optional}.nix")) optionals;
 
 }

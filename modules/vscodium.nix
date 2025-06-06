@@ -1,4 +1,9 @@
-{ pkgs, username, hostname, ... }:
+{
+  pkgs,
+  username,
+  hostname,
+  ...
+}:
 {
 
   home.packages = with pkgs; [
@@ -24,7 +29,8 @@
         };
         "options" = {
           "nixos" = {
-            "expr" = "(builtins.getFlake \"/home/${username}/trivnix\").nixosConfigurations.${hostname}.options";
+            "expr" =
+              "(builtins.getFlake \"/home/${username}/trivnix\").nixosConfigurations.${hostname}.options";
           };
           "home-manager" = {
             "expr" =
