@@ -2,13 +2,18 @@
 
 set -euo pipefail
 
-configname="default"
+diko="default"
+nixos=""
 
 # Parse args
 while [[ $# -gt 0 ]]; do
-  case "$1" in 
-  --configname)
-      configname="$2"
+  case "$1" in
+    --disko)
+      disko="$2"
+      shift 2
+      ;;
+    --nixos)
+      nixos="$2"
       shift 2
       ;;
     *)
@@ -18,14 +23,24 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Check required args
+if [[ -z "$nixos" ]]; then
+  echo "Error: --nixos is required"
+  exit 1
+fi
+
+# Debug/logging output
+echo "Using disko config: $disko"
+echo "Using nixos config: $nixos"
+
 # Resolve path relative to script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-# Prefer local file in same dir, fallback to ../hosts/common/hardware/
-if [[ -f "$SCRIPT_DIR/${configname}.nix" ]]; then
-  CONFIG_PATH="$SCRIPT_DIR/${configname}.nix"
+# Prefer local file in same dir, fallback to ../hosts/common/core/hardware/
+if [[ -f "$SCRIPT_DIR/${disko}.nix" ]]; then
+  CONFIG_PATH="$SCRIPT_DIR/${disko}.nix"
 else
-  CONFIG_PATH="$SCRIPT_DIR/../hosts/common/hardware/${configname}.nix"
+  CONFIG_PATH="$SCRIPT_DIR/../hosts/common/core/hardware/${disko}.nix"
 fi
 
 # Run disko
@@ -40,8 +55,6 @@ sudo mkdir -p /var/lib/sops-nix/
 sudo install -m 600 -o root -g root "$KEY_FILE" /var/lib/sops-nix/keys.txt
 echo "✅ Copied keys.txt to /var/lib/sops-nix/keys.txt"
 
-# Auto-fetch latest commit from GitHub
-latest_commit=$(nix flake metadata github:Trivaris/trivnix | jq -r .locked.rev)
-
 # Final install
-sudo nixos-install --flake github:Trivaris/trivnix/$latest_commit#$configname
+sudo nixos-install \
+  --flake github:Trivaris/trivnix#$nixos
