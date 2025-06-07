@@ -43,7 +43,7 @@ if [[ -f "$SCRIPT_DIR/${disko}.nix" ]]; then
   CONFIG_PATH="$SCRIPT_DIR/${disko}.nix"
   use_local_config=true
 else
-  CONFIG_PATH="$SCRIPT_DIR/../hosts/common/hardware/${disko}.nix"
+  CONFIG_PATH="$SCRIPT_DIR/../hosts/common/core/hardware/${disko}.nix"
 fi
 
 echo Found disko config

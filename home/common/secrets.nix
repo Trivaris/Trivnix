@@ -11,10 +11,15 @@
   ];
 
   sops = {
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
     defaultSopsFile = inputs.self + "/resources/secrets.yaml";
     validateSopsFiles = false;
+
+    age = {
+      keyFile = /var/lib/sops-nix/keys.txt;
+      generateKey = true;
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    };
+
 
     secrets = {
       "ssh-private-keys/${configname}" = {
