@@ -44,11 +44,31 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 - **modules/** contains home-manager configs shared between users; for example nvim or fish.
 
 ## Installation
-1. Install [NixOS](https://nixos.org/download.html) with flake support enabled.
-2. Clone this repository on the target machine.
-3. Boot into the NixOS installer and mount the target filesystem (or use `disko` if desired).
-4. Run `sudo nixos-install --flake .#<hostname>` replacing `<hostname>` with `laptop` or `wsl`.
-5. Reboot into your new NixOS system.
+
+1. Install [NixOS](https://nixos.org/download.html).
+
+2. Clone this repository on the target machine **or** copy only the following files:
+   - `install.sh`
+   - `keys.txt`
+   - Your disko config file: `<configname>.nix`
+
+3. Place `keys.txt` in the **same directory** as `install.sh`.
+
+4. Run the installer:
+
+   ```bash
+   ./install.sh --configname <configname>
+   ```
+5. About `--configname`
+    - If `--configname` is not provided, it defaults to `default`.
+
+    - The script searches for the disko config file in the following order:
+        1. `<configname>.nix` in the **same directory** as `install.sh`
+        2. If not found, falls back to `../hosts/common/hardware/<configname>.nix`
+
+    - This allows you to either:
+        - Use a local disko config directly next to the script (for quick overrides), or  
+        - Rely on the shared configuration structure in the repository.
 
 ## Usage
 - Update flake inputs with `nix flake update`.
