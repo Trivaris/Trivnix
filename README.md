@@ -89,16 +89,6 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 - Secrets are stored in `resources/secrets.yaml` and decrypted by `sops-nix` at build time.
 - Optional features can be toggled by modifying the list in `hosts/<host>/default.nix` or by editing the module lists in the corresponding user files.
 
-## Examples
-Build the laptop configuration without switching:
-```bash
-nix build .#nixosConfigurations.laptop.config.system.build.toplevel
-```
-Switch the current user environment on WSL:
-```bash
-home-manager switch --flake .#trivaris@trivwsl
-```
-
 ## Troubleshooting
 - Ensure your secrets key is available when building; otherwise `sops-nix` will fail.
 - When using WSL, verify that required mounts exist and the kernel supports the listed modules.
@@ -110,4 +100,4 @@ home-manager switch --flake .#trivaris@trivwsl
 - Folder Structure inspired by [**EmergentMind**](https://github.com/EmergentMind/nix-config)
 
 ## License
-MIT License: Tu, was du nicht lassen kannst.
+MIT License: Tu', was du nicht lassen kannst.
