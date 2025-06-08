@@ -11,7 +11,7 @@
   ];
 
   sops = {
-    defaultSopsFile = "${inputs.self}/resources/secrets.yaml";
+    defaultSopsFile = inputs.self + "/resources/secrets.yaml";
     validateSopsFiles = false;
     
     age = {

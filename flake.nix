@@ -24,6 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     # Personal
     dotfiles = {
@@ -42,6 +43,8 @@
       home-manager,
       disko,
       sops-nix,
+      hyprland,
+      nixos-wsl,
 
       dotfiles,
       ...
@@ -96,6 +99,7 @@
             ./hosts/${configname}
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
+            nixos-wsl.nixosModules.default
             sops-nix.nixosModules.sops
             {
               config.home-manager.extraSpecialArgs = {
