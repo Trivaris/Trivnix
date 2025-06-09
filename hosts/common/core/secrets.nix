@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, usernames, ... }:
 {
 
   imports = [
@@ -20,14 +20,15 @@
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
 
-    secrets = {
-      "user-passwords/trivaris" = {
-        neededForUsers = true;
-      };
-      "user-passwords/root" = {
-        neededForUsers = true;
-      };
-    };
+    secrets = builtins.listToAttrs (
+      builtins.map (username: {
+        name = "user-passwords/${username}";
+        value = {
+          neededForUsers = true;
+        };
+      }) usernames
+    );
+
   };
 
 }
