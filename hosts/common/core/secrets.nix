@@ -1,4 +1,4 @@
-{ inputs, pkgs, usernames, ... }:
+{ inputs, pkgs, usernames, configname, ... }:
 {
 
   imports = [
@@ -15,20 +15,26 @@
     validateSopsFiles = false;
     
     age = {
-      keyFile = /var/lib/sops-nix/keys.txt;
       generateKey = true;
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
 
-    secrets = builtins.listToAttrs (
-      builtins.map (username: {
-        name = "user-passwords/${username}";
-        value = {
-          neededForUsers = true;
+    secrets =
+      builtins.listToAttrs (builtins.map (user: {
+        name  = "user-passwords/${user}";
+        value = { neededForUsers = true; };
+      }) usernames)
+      // {
+        "ssh-private-keys/hosts/${configname}" = {
+          path   = "/etc/ssh/ssh_host_ed25519_key";
+          owner  = "root"; group = "root"; mode = "0600";
+          restartUnits = [ "sshd.service" ];
         };
-      }) usernames
-    );
-
+        "ssh-private-keys/hosts/${configname}.pub" = {
+          path   = "/etc/ssh/ssh_host_ed25519_key.pub";
+          owner  = "root"; group = "root"; mode = "0644";
+        };
+      };
   };
 
 }

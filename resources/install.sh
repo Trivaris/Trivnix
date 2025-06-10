@@ -1,68 +1,59 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
-disko="default"
-nixos=""
+disko_cfg="default"
+nixos_cfg=""
 
-# Parse args
+# ---------- arg-parsing ----------
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --disko)
-      disko="$2"
-      shift 2
-      ;;
-    --nixos)
-      nixos="$2"
-      shift 2
-      ;;
-    *)
-      echo "Unknown option: $1"
-      exit 1
-      ;;
+    --disko-cfg)  disko_cfg="$2";  shift 2 ;;
+    --nixos-cfg)  nixos_cfg="$2"; shift 2 ;;
+    *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
+[[ -z $nixos_cfg ]] && { echo "Error: --nixos-cfg is required"; exit 1; }
 
-# Check required args
-if [[ -z "$nixos" ]]; then
-  echo "Error: --nixos is required"
-  exit 1
-fi
+echo "disko:  $disko_cfg"
+echo "nixos:  $nixos_cfg"
 
-# Debug/logging output
-echo "Using disko config: $disko"
-echo "Using nixos config: $nixos"
-
-# Resolve path relative to script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+use_local=false
 
-use_local_config=false
-
-# Prefer local file in same dir, fallback to ../hosts/common/hardware/
-if [[ -f "$SCRIPT_DIR/${disko}.nix" ]]; then
-  CONFIG_PATH="$SCRIPT_DIR/${disko}.nix"
-  use_local_config=true
+# ---------- pick disko file ----------
+if [[ -f "$SCRIPT_DIR/${disko_cfg}.nix" ]]; then
+  DISKO_PATH="$SCRIPT_DIR/${disko_cfg}.nix"
+  use_local=true
 else
-  CONFIG_PATH="$SCRIPT_DIR/../hosts/common/core/hardware/${disko}.nix"
+  DISKO_PATH="$SCRIPT_DIR/../hosts/common/core/hardware/${disko_cfg}.nix"
+fi
+echo "✔ Found disko file: $DISKO_PATH"
+
+# ---------- run disko ----------
+sudo nix --experimental-features "nix-command flakes" \
+  run github:nix-community/disko/latest -- \
+  --mode disko "$DISKO_PATH"
+
+# ---------- seed master AGE key ----------
+KEY_SRC="$SCRIPT_DIR/key.txt"
+KEY_DST="/mnt/var/lib/sops-nix/key.txt"
+if [[ -f "$KEY_SRC" ]]; then
+  sudo install -m 0400 -o root -g root -D "$KEY_SRC" "$KEY_DST"
+  echo "🔑 key.txt copied to $KEY_DST"
+else
+  echo "⚠️  key.txt missing – secrets must decrypt via generateKey=true"
 fi
 
-echo Found disko config
-
-# Run disko
-sudo nix \
-  --experimental-features "nix-command flakes" \
-  run github:nix-community/disko/latest -- --mode disko \
-  "$CONFIG_PATH"
-
-# If keys.txt exists, copy to /var/lib/sops-nix/
-KEY_FILE="$SCRIPT_DIR/keys.txt"
-sudo mkdir -p /var/lib/sops-nix/
-sudo install -m 600 -o root -g root "$KEY_FILE" /var/lib/sops-nix/keys.txt
-echo "✅ Copied keys.txt to /var/lib/sops-nix/keys.txt"
-
-# Final install
-if [[ "$use_local_config" == true ]]; then
-  sudo nixos-install --flake github:Trivaris/trivnix#$nixos
+# ---------- nixos-install ----------
+if "$use_local"; then
+  sudo nixos-install --flake github:Trivaris/trivnix#"$nixos_cfg"
 else
-  sudo nixos-install --flake ..#$nixos
+  sudo nixos-install --flake ..#"$nixos_cfg"
 fi
+
+# ---------- post-success cleanup & reboot ----------
+echo "🎉 Install succeeded – shredding bootstrap key and rebooting..."
+sudo shred -u "$KEY_DST" 2>/dev/null || sudo rm -f "$KEY_DST"
+sync
+sleep 1
+sudo reboot

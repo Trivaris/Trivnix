@@ -57,10 +57,10 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 4. Run the installer:
 
    ```bash
-   ./install.sh --configname <configname>
+   ./install.sh --nixos-cfg <host-platform (laptop/wsl/etc)> --disko-cfg <configname>
    ```
-5. About `--configname`
-    - If `--configname` is not provided, it defaults to `default`.
+5. About `--disko-cfg`
+    - If `--disko-cfg` is not provided, it defaults to `default`.
 
     - The script searches for the disko config file in the following order:
         1. `<configname>.nix` in the **same directory** as `install.sh`

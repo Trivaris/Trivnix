@@ -22,7 +22,7 @@ in
         inherit username stateVersion;
       };
       imports = [
-        toString (inputs.self + "/home/${username}/${configname}.nix")
+        (inputs.self + "/home/${username}/${configname}.nix")
       ];
     };
 

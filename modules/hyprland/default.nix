@@ -7,6 +7,7 @@ with lib;
 
   imports = [
     ./hyprpaper.nix
+    ./settings.nix
   ];
 
   options.modules.hyprland = mkEnableOption "hyprland";

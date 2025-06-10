@@ -56,7 +56,7 @@ with lib;
         end
       '';
       functions.get-flakepath = ''
-        echo ${toString inputs.self}
+        echo ${inputs.self.outPath}
       '';
     };
   };

@@ -15,7 +15,7 @@ with lib;
   config = mkIf config.modules.hyprland {
     wayland.windowManager.hyprland.settings =
       let
-        dark = config.colors.dark;
+        colors = config.colors;
       in 
       lib.mkMerge [
       {
@@ -31,8 +31,8 @@ with lib;
           gaps_out = 8;
           float_gaps = 8;
           
-          "col.active_border" = "${mkRgb dark.cursor} ${mkRgb dark.tertiaryFixed} 45deg";
-          "col.inactive_border" = "${mkRgb dark.cursor} ${mkRgb dark.tertiaryFixed} 45deg";
+          "col.active_border" = "${mkRgb colors.fg} ${mkRgb colors.bg5} 45deg";
+          "col.inactive_border" = "${mkRgb colors.bg_dim} ${mkRgb colors.bg0} 45deg";
 
           layout = "dwindle";
         };

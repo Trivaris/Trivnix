@@ -96,7 +96,7 @@
             usernames = usernames ++ [ "root" ];
           };
           modules = [
-            ./hosts/${configname}
+            (inputs.self + "/hosts/${configname}")
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             nixos-wsl.nixosModules.default
@@ -139,7 +139,7 @@
               ;
           };
           modules = [
-            "./home/${username}/${configname}.nix"
+            (inputs.self + "/home/${username}/${configname}.nix")
           ];
         };
 

@@ -1,12 +1,9 @@
 keys:
   - &master age1g24xxtf3hxldudfedy74gtzg25ygrzjzd5zr9g0m3pw8vegxydeqvs5xxm
-  - &hosts:
-    - &trivwsl age1z0zu80qx8xrgkjm4hmwevmz8acmye3wstef5mx9lsfd3xsz09a8szkxjg7
-    # - &trivlaptop 
-    # - &trivdesktop 
+  - &wsl age1z0zu80qx8xrgkjm4hmwevmz8acmye3wstef5mx9lsfd3xsz09a8szkxjg7
+  - &laptop age1evl3qa9amaznmv37a85kjha9jxgd6kn2j5jkqj0nvvc6ggfgxd4qhvflnw
+  # - &trivdesktop 
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
-      - age:
-        - *master
-        - *trivwsl
+      - age: [ *master, *wsl, *laptop ]
