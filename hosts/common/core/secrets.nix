@@ -31,10 +31,6 @@
           owner  = "root"; group = "root"; mode = "0600";
           restartUnits = [ "sshd.service" ];
         };
-        "ssh-private-keys/hosts/${configname}.pub" = {
-          path   = "/etc/ssh/ssh_host_ed25519_key.pub";
-          owner  = "root"; group = "root"; mode = "0644";
-        };
       };
   };
 
