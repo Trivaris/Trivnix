@@ -1,8 +1,9 @@
 {
 
   description = ''
-
-    Trivaris' NixOS Config. Built on top of m3tam3re's series.
+    
+    
+        Trivaris' NixOS Config. Built on top of m3tam3re's series.
   '';
 
   inputs = {

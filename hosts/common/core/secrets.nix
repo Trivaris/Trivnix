@@ -1,4 +1,10 @@
-{ inputs, pkgs, usernames, configname, ... }:
+{
+  inputs,
+  pkgs,
+  usernames,
+  configname,
+  ...
+}:
 {
 
   imports = [
@@ -13,7 +19,7 @@
   sops = {
     defaultSopsFile = inputs.self + "/resources/secrets.yaml";
     validateSopsFiles = false;
-    
+
     age = {
       generateKey = true;
       keyFile = "/var/lib/sops-nix/key.txt";
@@ -21,14 +27,20 @@
     };
 
     secrets =
-      builtins.listToAttrs (builtins.map (user: {
-        name  = "user-passwords/${user}";
-        value = { neededForUsers = true; };
-      }) usernames)
+      builtins.listToAttrs (
+        builtins.map (user: {
+          name = "user-passwords/${user}";
+          value = {
+            neededForUsers = true;
+          };
+        }) usernames
+      )
       // {
         "ssh-private-keys/hosts/${configname}" = {
-          path   = "/etc/ssh/ssh_host_ed25519_key";
-          owner  = "root"; group = "root"; mode = "0600";
+          path = "/etc/ssh/ssh_host_ed25519_key";
+          owner = "root";
+          group = "root";
+          mode = "0600";
           restartUnits = [ "sshd.service" ];
           neededForUsers = true;
         };

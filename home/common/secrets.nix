@@ -19,7 +19,6 @@
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
 
-
     secrets = {
       "ssh-private-keys/${username}/${configname}/key" = {
         path = "/home/${username}/.ssh/id_ed25519";

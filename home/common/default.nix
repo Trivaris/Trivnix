@@ -5,7 +5,7 @@
 {
 
   imports = [
-    (inputs.self + "/modules")  
+    (inputs.self + "/modules")
     ./colors
     ./default-programs.nix
     ./home.nix

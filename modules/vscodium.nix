@@ -11,7 +11,7 @@ let
 in
 with lib;
 {
-  
+
   options.modules.vscodium = mkEnableOption "vscodium";
   config = mkIf cfg.vscodium {
     home.packages = with pkgs; [

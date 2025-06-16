@@ -9,7 +9,7 @@ with lib;
   config = mkIf cfg.rofi {
     programs.rofi = {
       enable = true;
-      theme = 
+      theme =
         let
           inherit (config.lib.formats.rasi) mkLiteral;
           colors = config.colors;
@@ -46,7 +46,7 @@ with lib;
             background-color = mkLiteral colors.bg_blue;
             text-color = mkLiteral colors.fg;
           };
-      };
+        };
     };
   };
 

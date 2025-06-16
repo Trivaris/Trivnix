@@ -23,23 +23,23 @@ in
   };
 
   programs.ssh = {
-    enable          = true;
-    addKeysToAgent  = "yes";
-    extraConfig     = ''
+    enable = true;
+    addKeysToAgent = "yes";
+    extraConfig = ''
       IdentityFile ${keyPath}
     '';
   };
 
   programs.keychain = {
-    enable     = true;
-    keys       = [ keyPath ];
+    enable = true;
+    keys = [ keyPath ];
     extraFlags = [ "--quiet" ];
   };
 
   home.sessionVariables = {
-    SSH_ASKPASS          = "${askPass}/bin/ssh-askpass-${username}";
-    SSH_ASKPASS_REQUIRE  = "force";
-    DISPLAY              = ":0";
+    SSH_ASKPASS = "${askPass}/bin/ssh-askpass-${username}";
+    SSH_ASKPASS_REQUIRE = "force";
+    DISPLAY = ":0";
   };
 
   home.packages = [ askPass ];
