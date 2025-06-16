@@ -30,6 +30,7 @@
           path   = "/etc/ssh/ssh_host_ed25519_key";
           owner  = "root"; group = "root"; mode = "0600";
           restartUnits = [ "sshd.service" ];
+          neededForUsers = true;
         };
       };
   };
