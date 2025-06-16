@@ -21,8 +21,8 @@
     validateSopsFiles = false;
 
     age = {
-      generateKey = true;
-      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = false;
+      keyFile = "/var/lib/sops-nix/master.age";
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
 
@@ -42,7 +42,6 @@
           group = "root";
           mode = "0600";
           restartUnits = [ "sshd.service" ];
-          neededForUsers = true;
         };
       };
   };

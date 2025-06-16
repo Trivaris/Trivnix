@@ -35,13 +35,13 @@ sudo nix --experimental-features "nix-command flakes" \
   --mode disko "$DISKO_PATH"
 
 # ---------- seed master AGE key ----------
-KEY_SRC="$SCRIPT_DIR/key.txt"
-KEY_DST="/mnt/var/lib/sops-nix/key.txt"
+KEY_SRC="$SCRIPT_DIR/master.age"
+KEY_DST="/mnt/var/lib/sops-nix/master.age"
 if [[ -f "$KEY_SRC" ]]; then
   sudo install -m 0400 -o root -g root -D "$KEY_SRC" "$KEY_DST"
-  echo "🔑 key.txt copied to $KEY_DST"
+  echo "🔑 master.age copied to $KEY_DST"
 else
-  echo "⚠️  key.txt missing – secrets must decrypt via generateKey=true"
+  echo "⚠️  master.age missing – secrets must decrypt via generateKey=true"
 fi
 
 # ---------- nixos-install ----------

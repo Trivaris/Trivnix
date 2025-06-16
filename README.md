@@ -30,6 +30,7 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 .
 ├── flake.nix           # Main flake entry point
 ├── flake.lock          # Locked input versions
+├── flake/              # Flake logic for system/home definitions and presets
 ├── hosts/              # System configurations for each host
 ├── home/               # Home-manager modules per user
 ├── modules/            # Reusable home-manager configuration modules
@@ -39,20 +40,22 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 └── README.md           # This file
 ```
 
+- **flake/** contains how systems and user environments are constructed.
 - **hosts/** contains a `common` profile and hardware specific directories such as `laptop` and `wsl`.
 - **home/** contains user specific setups; for example the laptop configuration imports several modules automatically.
 - **modules/** contains home-manager configs shared between users; for example nvim or fish.
 
 ## Installation
+0. Regenerate [secrets.yaml](./SECRETS.md)
 
 1. Install [NixOS](https://nixos.org/download.html).
 
 2. Clone this repository on the target machine **or** copy only the following files:
    - `install.sh`
-   - `keys.txt`
+   - `master.age`
    - Your disko config file: `<configname>.nix`
 
-3. Place `keys.txt` in the **same directory** as `install.sh`.
+3. Place `master.age` in the **same directory** as `install.sh`.
 
 4. Run the installer:
 
