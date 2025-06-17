@@ -46,32 +46,26 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 - **modules/** contains home-manager configs shared between users; for example nvim or fish.
 
 ## Installation
-0. Regenerate [secrets.yaml](./SECRETS.md)
+0. Add your [secrets](./secrets/SECRETS.md)
 
-1. Install [NixOS](https://nixos.org/download.html).
+1. Boot into the [NixOS ISO](https://nixos.org/download.html).
 
-2. Clone this repository on the target machine **or** copy only the following files:
-   - `install.sh`
-   - `master.age`
-   - Your disko config file: `<configname>.nix`
+2. Clone this repository on the target machine
 
-3. Place `master.age` in the **same directory** as `install.sh`.
+### Option A: Automatic Install (Recommended)
+3. Place host `key.txt` in the **same directory** as `install.sh`.
 
 4. Run the installer:
 
    ```bash
-   ./install.sh --nixos-cfg <host-platform (laptop/wsl/etc)> --disko-cfg <configname>
+   ./install.sh --nixos-cfg <host-platform (laptop/wsl/etc)> [--disko-cfg <configname>] [--reboot]
    ```
-5. About `--disko-cfg`
+5. About `--disko-cfg`, `--reboot`
     - If `--disko-cfg` is not provided, it defaults to `default`.
 
-    - The script searches for the disko config file in the following order:
-        1. `<configname>.nix` in the **same directory** as `install.sh`
-        2. If not found, falls back to `../hosts/common/hardware/<configname>.nix`
+    - The script searches for the disko config file in `../hosts/common/core/hardware/<configname>.nix`.
 
-    - This allows you to either:
-        - Use a local disko config directly next to the script (for quick overrides), or  
-        - Rely on the shared configuration structure in the repository.
+    - If `--reboot` is set, the installer will automatically reboot upon completion of installation.
 
 ## Usage
 - Update flake inputs with `nix flake update`.
@@ -89,8 +83,9 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 ## Configuration
 - Host options live under `hosts/<host>` and inherit common modules from `hosts/common`.
 - Home‑manager modules reside in `modules/` and can be added or removed from each user configuration.
-- Secrets are stored in `resources/secrets.yaml` and decrypted by `sops-nix` at build time.
-- Optional features can be toggled by modifying the list in `hosts/<host>/default.nix` or by editing the module lists in the corresponding user files.
+- Secrets are stored in `secrets/` and decrypted by `sops-nix` at build time.
+- NixOS Optional features can be toggled by modifying the list in `hosts/<host>/default.nix`
+- Home Manager Optional features can be toggled by modifying the module toggles in `home/<user>/<host>.nix`.
 
 ## Troubleshooting
 - Ensure your secrets key is available when building; otherwise `sops-nix` will fail.
@@ -103,4 +98,5 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 - Folder Structure inspired by [**EmergentMind**](https://github.com/EmergentMind/nix-config)
 
 ## License
-MIT License: Tu', was du nicht lassen kannst.
+
+This project is licensed under the [MIT License](./LICENSE).
