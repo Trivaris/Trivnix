@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
@@ -10,7 +10,7 @@ with lib;
     ./settings.nix
   ];
 
-  options.modules.hyprland = mkEnableOption "hyprland";
+  options.homeModules.hyprland = mkEnableOption "hyprland";
   config = mkIf cfg.hyprland {
 
     wayland.windowManager.hyprland = {

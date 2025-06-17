@@ -12,7 +12,7 @@ with lib;
     ./bindings.nix
   ];
 
-  config = mkIf config.modules.hyprland {
+  config = mkIf config.homeModules.hyprland {
     wayland.windowManager.hyprland.settings =
       let
         colors = config.colors;

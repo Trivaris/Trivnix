@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
 
-  options.modules.cli-utils = mkEnableOption "cli tools";
+  options.homeModules.cli-utils = mkEnableOption "cli tools";
 
   config = mkIf cfg.cli-utils {
 

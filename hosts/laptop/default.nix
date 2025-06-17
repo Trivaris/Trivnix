@@ -1,12 +1,19 @@
 { inputs, ... }:
-let
-  optionals = [ "all" ];
-in
 {
 
   imports = [
     ../common
+    ../modules
     ./hardware.nix
-  ] ++ map (optional: (inputs.self + "/hosts/common/optional/${optional}.nix")) optionals;
+  ];
+
+  config.nixosModules = {
+    bluetooth = true;
+    custom-packages = true;
+    fish = true;
+    hyprland = true;
+    openssh = true;
+    printing = true;
+  };
 
 }

@@ -3,10 +3,10 @@
 
   imports = [
     ../common
-    ./credentials.nix
+    ../modules
   ];
 
-  config.modules = {
+  config.homeModules = {
     hyprland = true;
     librewolf = false;
     wezterm = true;
@@ -19,5 +19,7 @@
     vscodium = true;
     waybar = true;
   };
+
+  config.git.userEmail = "github@tripple.lurdane.de";
 
 }

@@ -7,12 +7,12 @@
   ...
 }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
 
-  options.modules.vscodium = mkEnableOption "vscodium";
+  options.homeModules.vscodium = mkEnableOption "vscodium";
   config = mkIf cfg.vscodium {
     home.packages = with pkgs; [
       vscodium

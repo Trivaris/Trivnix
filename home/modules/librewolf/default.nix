@@ -5,12 +5,12 @@
   ...
 }:
 let 
-  cfg = config.modules;
+  cfg = config.homeModules;
 in 
 with lib;
 {
 
-  options.modules.librewolf = mkEnableOption "librewolf";
+  options.homeModules.librewolf = mkEnableOption "librewolf";
 
   config = mkIf cfg.librewolf {
 

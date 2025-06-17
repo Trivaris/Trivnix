@@ -2,13 +2,12 @@
 {
 
   imports = [
-    ./services/bluetooth.nix
-    ./services/openssh.nix
-    ./services/printing.nix
-
+    ./bluetooth.nix
     ./custom-packages.nix
     ./fish.nix
     ./hyprland.nix
+    ./openssh.nix
+    ./printing.nix
   ];
 
 }

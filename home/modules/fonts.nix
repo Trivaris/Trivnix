@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
 
-  options.modules.font = mkEnableOption "fonts";
+  options.homeModules.font = mkEnableOption "fonts";
 
   config = mkIf cfg.font {
     home.packages = with pkgs; [

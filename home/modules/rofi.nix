@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
-  options.modules.rofi = mkEnableOption "rofi";
+  options.homeModules.rofi = mkEnableOption "rofi";
 
   config = mkIf cfg.rofi {
     programs.rofi = {

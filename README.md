@@ -1,5 +1,3 @@
- Trivnix
-
 ## Introduction
 
 Trivnix is a flake-based NixOS configuration used to manage my personal machines. It aims to provide reproducible and portable system setups using declarative Nix expressions. The repository currently targets a laptop and a Windows Subsystem for Linux (WSL) installation but can be extended for additional hosts.
@@ -11,7 +9,6 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 - [Usage](#usage)
 - [Dependencies](#dependencies)
 - [Configuration](#configuration)
-- [Examples](#examples)
 - [Troubleshooting](#troubleshooting)
 - [Contributors](#contributors)
 - [License](#license)
@@ -28,22 +25,30 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 ## Repository Structure
 ```
 .
+
 ├── flake.nix           # Main flake entry point
 ├── flake.lock          # Locked input versions
 ├── flake/              # Flake logic for system/home definitions and presets
 ├── hosts/              # System configurations for each host
-├── home/               # Home-manager modules per user
-├── modules/            # Reusable home-manager configuration modules
+│   ├── common/         # Shared base config (e.g. users, system defaults)
+│   ├── laptop/         # Laptop-specific hardware config
+│   ├── wsl/            # WSL-specific config
+│   └── modules/        # NixOS modules shared across hosts (e.g. openssh, bluetooth)
+├── home/               # Home-manager configurations per user
+│   ├── trivaris/       # User-specific setup (e.g. laptop config)
+│   └── modules/        # Home-manager modules shared between users (e.g. nvim, fish)
 ├── overlays/           # Package overlays
 ├── pkgs/               # Custom package definitions
 ├── resources/          # Wallpapers, secrets, SSH keys
 └── README.md           # This file
+
 ```
 
 - **flake/** contains how systems and user environments are constructed.
 - **hosts/** contains a `common` profile and hardware specific directories such as `laptop` and `wsl`.
 - **home/** contains user specific setups; for example the laptop configuration imports several modules automatically.
-- **modules/** contains home-manager configs shared between users; for example nvim or fish.
+- **home/modules/** contains home-manager configs shared between users; for example nvim or fish.
+- **hosts/modules/** contains nixos configs shared between users; for example openssh server and bluetooth.
 
 ## Installation
 0. Add your [secrets](./secrets/SECRETS.md)
@@ -82,7 +87,8 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 
 ## Configuration
 - Host options live under `hosts/<host>` and inherit common modules from `hosts/common`.
-- Home‑manager modules reside in `modules/` and can be added or removed from each user configuration.
+- Home‑manager modules reside in `home/modules/` and can be added or removed from each user configuration.
+- NixOS modules reside in `hosts/modules/` and can be added or removed from each host configuration.
 - Secrets are stored in `secrets/` and decrypted by `sops-nix` at build time.
 - NixOS Optional features can be toggled by modifying the list in `hosts/<host>/default.nix`
 - Home Manager Optional features can be toggled by modifying the module toggles in `home/<user>/<host>.nix`.

@@ -1,11 +1,11 @@
 { config, lib, ... }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
 
-  options.modules.fzf = mkEnableOption "fzf";
+  options.homeModules.fzf = mkEnableOption "fzf";
 
   config = mkIf cfg.fzf {
     programs.fzf = {

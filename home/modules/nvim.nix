@@ -6,12 +6,12 @@
   ...
 }:
 let
-  cfg = config.modules;
+  cfg = config.homeModules;
 in
 with lib;
 {
 
-  options.modules.nvim = mkEnableOption "nvim";
+  options.homeModules.nvim = mkEnableOption "nvim";
 
   config = mkIf cfg.nvim {
     home.packages = with pkgs; [

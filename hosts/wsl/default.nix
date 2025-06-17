@@ -1,18 +1,19 @@
 { inputs, ... }:
-let
-
-  optionals = [
-    "custom-packages"
-    "fish"
-  ];
-
-in
 {
 
   imports = [
     ./hardware.nix
     ./configuration.nix
     ../common
-  ] ++ map (optional: (inputs.self + "/hosts/common/optional/${optional}.nix")) optionals;
+    ../modules
+  ];
+
+  config.nixosModules = {
+    custom-packages = true;
+    fish = true;
+    openssh = true;
+  };
+
+  config.sshPort = 2222;
 
 }
