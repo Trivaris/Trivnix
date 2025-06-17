@@ -4,6 +4,10 @@
   configname,
   ...
 }:
+let
+  commonSecrets = inputs.self + "/secrets/home/${username}/common.yaml";
+  userSecrets = inputs.self + "/secrets/home/${username}/${configname}.yaml";
+in
 {
 
   imports = [
@@ -11,23 +15,26 @@
   ];
 
   sops = {
-    defaultSopsFile = inputs.self + "/resources/secrets.yaml";
-    validateSopsFiles = false;
+    defaultSopsFile = commonSecrets;
+    validateSopsFiles = true;
 
-    age = {
-      generateKey = false;
-      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    };
+    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
+    age.generateKey = false;sudo cat /etc/ssh/ssh_host_ed25519_key
 
     secrets = {
-      "ssh-private-keys/${username}/${configname}/key" = {
+    
+      "user-ssh-key/key" = {
         path = "/home/${username}/.ssh/id_ed25519";
+        sopsFile = userSecrets;
       };
-      "ssh-private-keys/${username}/${configname}/passphrase" = { };
+      "user-ssh-key/passphrase" = {
+        sopsFile = userSecrets;
+      };
 
       "smtp-passwords/public" = { };
       "smtp-passwords/private" = { };
       "smtp-passwords/school" = { };
+    
     };
   };
 

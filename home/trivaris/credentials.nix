@@ -2,12 +2,11 @@
   username,
   config,
   pkgs,
-  configname,
   ...
 }:
 let
-  keyPath = config.sops.secrets."ssh-private-keys/${username}/${configname}/key".path;
-  passPath = config.sops.secrets."ssh-private-keys/${username}/${configname}/passphrase".path;
+  keyPath = config.sops.secrets."user-ssh-key/key".path;
+  passPath = config.sops.secrets."user-ssh-key/passphrase".path;
 
   askPass = pkgs.writeShellScriptBin "ssh-askpass-${username}" ''
     exec cat ${passPath}
@@ -20,6 +19,7 @@ in
     userName = username;
     userEmail = "github@tripple.lurdane.de";
     extraConfig.credential.helper = "store";
+    extraConfig.core.autocrlf = "input";
   };
 
   programs.ssh = {

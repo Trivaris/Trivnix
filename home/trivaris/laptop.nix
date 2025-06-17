@@ -8,6 +8,7 @@
 
   config.modules = {
     hyprland = true;
+    librewolf = false;
     wezterm = true;
     cli-utils = true;
     fish = true;

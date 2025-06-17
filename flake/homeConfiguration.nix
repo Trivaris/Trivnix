@@ -1,7 +1,9 @@
 {
+  inputs,
+  outputs,
   nixpkgs,
   home-manager,
-  self,
+  ...
 }:
 
 {
@@ -19,18 +21,19 @@ home-manager.lib.homeManagerConfiguration {
   # Expose flake args to within the config
   extraSpecialArgs = {
     inherit
+      inputs
+      outputs
       configname
       hostname
       stateVersion
       architecture
       username
-      self
       ;
   };
 
   modules = [
     # Flake entrypoint
-    (self + "/home/${username}/${configname}.nix")
+    (inputs.self + "/home/${username}/${configname}.nix")
   ];
 
 }

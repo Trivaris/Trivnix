@@ -5,6 +5,7 @@
 
   imports = [
     ./hyprland
+    ./librewolf
     ./wezterm
     ./cli-utils.nix
     ./fish.nix

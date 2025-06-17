@@ -1,10 +1,12 @@
 {
+  inputs,
+  outputs,
   nixpkgs,
   disko,
   sops-nix,
   home-manager,
   nixos-wsl,
-  self,
+  ...
 }:
 
 {
@@ -14,22 +16,24 @@
   architecture ? "x86_64-linux",
   usernames ? [ "trivaris" ],
 }:
+
 nixpkgs.lib.nixosSystem {
 
   specialArgs = {
     # Expose flake args to within the nixos config
     inherit
-      configname
+      inputs
+      outputs
       hostname
       stateVersion
+      configname
       architecture
-      self
       ;
     usernames = usernames ++ [ "root" ];
   };
   modules = [
     # Flake entrypoint
-    (self + "/hosts/${configname}")
+    (inputs.self + "/hosts/${configname}")
 
     disko.nixosModules.disko
     home-manager.nixosModules.home-manager
@@ -40,11 +44,12 @@ nixpkgs.lib.nixosSystem {
       # Expose flake args to within the home-manager onfig
       config.home-manager.extraSpecialArgs = {
         inherit
+          inputs
+          outputs
           configname
           hostname
           stateVersion
           architecture
-          self
           ;
       };
     }

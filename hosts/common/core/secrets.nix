@@ -5,6 +5,35 @@
   configname,
   ...
 }:
+let
+  commonSecrets = inputs.self + "/secrets/hosts/common.yaml";
+  hostSecrets = inputs.self + "/secrets/hosts/${configname}.yaml";
+
+  perUserSecrets = builtins.concatLists (
+    builtins.map (user: [
+      {
+        name = "user-passwords/${user}";
+        value = {
+          neededForUsers = true;
+          sopsFile = commonSecrets;
+        };
+      }
+    ] ++ (
+      if user == "root" then [] else [
+        {
+          name = "user-age-keys/${user}";
+          value = {
+            sopsFile = commonSecrets;
+            path = "/home/${user}/.config/sops/age/keys.txt";
+            owner = user;
+            group = "users";
+            mode = "0600";
+          };
+        }
+      ]
+    )) usernames
+  );
+in
 {
 
   imports = [
@@ -17,33 +46,21 @@
   ];
 
   sops = {
-    defaultSopsFile = inputs.self + "/resources/secrets.yaml";
-    validateSopsFiles = false;
+    defaultSopsFile = hostSecrets;
+    validateSopsFiles = true;
 
-    age = {
-      generateKey = false;
-      keyFile = "/var/lib/sops-nix/master.age";
-      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    };
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    age.generateKey = false;
 
-    secrets =
-      builtins.listToAttrs (
-        builtins.map (user: {
-          name = "user-passwords/${user}";
-          value = {
-            neededForUsers = true;
-          };
-        }) usernames
-      )
-      // {
-        "ssh-private-keys/hosts/${configname}" = {
-          path = "/etc/ssh/ssh_host_ed25519_key";
-          owner = "root";
-          group = "root";
-          mode = "0600";
-          restartUnits = [ "sshd.service" ];
-        };
+    secrets = builtins.listToAttrs perUserSecrets // {
+      "host-ssh-key" = {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartUnits = [ "sshd.service" ];
       };
+    };
   };
 
 }
