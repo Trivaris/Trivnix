@@ -21,9 +21,8 @@ let
     ] ++ (
       if user == "root" then [] else [
         {
-          name = "user-age-keys/${user}";
+          name = "sops-keys/${user}";
           value = {
-            sopsFile = commonSecrets;
             path = "/home/${user}/.config/sops/age/keys.txt";
             owner = user;
             group = "users";
@@ -53,7 +52,7 @@ in
     age.generateKey = false;
 
     secrets = builtins.listToAttrs perUserSecrets // {
-      "host-ssh-key" = {
+      ssh-host-key = {
         path = "/etc/ssh/ssh_host_ed25519_key";
         owner = "root";
         group = "root";

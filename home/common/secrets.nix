@@ -19,15 +19,15 @@ in
     validateSopsFiles = true;
 
     age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
-    age.generateKey = false;sudo cat /etc/ssh/ssh_host_ed25519_key
+    age.generateKey = false;
 
     secrets = {
     
-      "user-ssh-key/key" = {
+      "ssh-user-key/key" = {
         path = "/home/${username}/.ssh/id_ed25519";
         sopsFile = userSecrets;
       };
-      "user-ssh-key/passphrase" = {
+      "ssh-user-key/passphrase" = {
         sopsFile = userSecrets;
       };
 

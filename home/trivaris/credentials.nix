@@ -5,8 +5,8 @@
   ...
 }:
 let
-  keyPath = config.sops.secrets."user-ssh-key/key".path;
-  passPath = config.sops.secrets."user-ssh-key/passphrase".path;
+  keyPath = config.sops.secrets."ssh-user-key/key".path;
+  passPath = config.sops.secrets."ssh-user-key/passphrase".path;
 
   askPass = pkgs.writeShellScriptBin "ssh-askpass-${username}" ''
     exec cat ${passPath}
