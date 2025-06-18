@@ -28,6 +28,24 @@
     };
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
+    # Custom Packages
+    adbautoplayer-src = {
+      url = "github:AdbAutoPlayer/AdbAutoPlayer";
+      flake = false;
+    };
+    rmatrix-src = {
+      url = "github:Fierthraix/rmatrix";
+      flake = false;
+    };
+    rbonsai-src = {
+      url = "github:roberte777/rbonsai";
+      flake = false;
+    };
+    adbutils-src = {
+      url = "github:openatx/adbutils";
+      flake = false;
+    };
+
     # Desktop/DE
     hyprland.url = "github:hyprwm/Hyprland";
 

@@ -1,14 +1,8 @@
+{ inputs }:
 {
-  inputs,
-  ...
-}:
-{
+  additions = final: _prev: import ../pkgs { inherit inputs; pkgs = final; };
 
-  additions = final: _prev: import ../pkgs { pkgs = final; };
-
-  modifications = final: prev: {
-
-  };
+  modifications = final: prev: { };
 
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {
@@ -18,5 +12,4 @@
   };
 
   nur = inputs.nur.overlays.default;
-
 }

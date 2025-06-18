@@ -8,7 +8,6 @@
   nixos-wsl,
   ...
 }:
-
 {
   configname,
   hostname,
@@ -16,9 +15,7 @@
   architecture ? "x86_64-linux",
   usernames ? [ "trivaris" ],
 }:
-
 nixpkgs.lib.nixosSystem {
-
   specialArgs = {
     # Expose flake args to within the nixos config
     inherit

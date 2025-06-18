@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  architecture,
   ...
 }:
 let
@@ -14,8 +15,10 @@ with lib;
 
   config = mkIf cfg.custom-packages {
     environment.systemPackages = with pkgs; [
-      r-matrix
+      rmatrix
       rbonsai
+      adbautoplayer
+      adbutils
     ];
   };
 

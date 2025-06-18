@@ -43,7 +43,9 @@ let
 in
 {
   # Packages for all defined systems
-  packages = forAllSystems (arch: import ../pkgs inputs.nixpkgs.legacyPackages.${arch});
+  packages = forAllSystems (arch:
+    import ../pkgs { inherit inputs; pkgs = inputs.nixpkgs.legacyPackages.${arch}; }
+  );
 
   # Import custom overlays
   overlays = import ../overlays { inherit inputs; };
