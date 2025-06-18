@@ -32,41 +32,14 @@ in
         # show keybinds list
         "$mainMod, F1, exec, show-keybinds"
 
-        # Provisory Keybings
+        # keybindings
         "$mainMod, Q, exec, $terminal"
         "$mainMod, M, exit,"
-
-        # keybindings
-        "ALT, Return, exec, [float; size 1111 700] $terminal"
         "$mainMod SHIFT, Return, exec, [fullscreen] $terminal"
-        # "$mainMod, B, exec, hyprctl dispatch exec '[workspace 1 silent] zen-beta'"
-        "$mainMod, C, killactive,"
         "$mainMod, F, fullscreen, 0"
         "$mainMod, Space, exec, togglefloating"
-        "$mainMod, D, exec, $terminal -show drun || pkill $terminal"
-        # "$mainMod SHIFT, D, exec, webcord --enable-features=UseOzonePlatform --ozone-platform=wayland"
-        # "$mainMod SHIFT, S, exec, hyprctl dispatch exec '[workspace 5 silent] SoundWireServer'"
-        # "$mainMod, Escape, exec, swaylock"
-        # "ALT, Escape, exec, hyprlock"
-        # "$mainMod SHIFT, Escape, exec, power-menu"
-        # "$mainMod, P, pseudo,"
-        # "$mainMod, X, togglesplit,"
-        # "$mainMod, T, exec, toggle-oppacity"
-        # "$mainMod, E, exec, nemo"
-        # "ALT, E, exec, hyprctl dispatch exec '[float; size 1111 700] nemo'"
-        "$mainMod SHIFT, B, exec, toggle-waybar"
-        # "$mainMod, C ,exec, hyprpicker -a"
-        # "$mainMod, W,exec, wallpaper-picker"
-        # "$mainMod SHIFT, W,exec, hyprctl dispatch exec '[float; size 925 615] waypaper'"
-        # "$mainMod, N, exec, swaync-client -t -sw"
-        # "CTRL SHIFT, Escape, exec, hyprctl dispatch exec '[workspace 9] missioncenter'"
-        # "$mainMod, equal, exec, woomer"
-        # "$mainMod SHIFT, W, exec, vm-start"
-
-        # screenshot
-        ",Print, exec, screenshot --copy"
-        "$mainMod, Print, exec, screenshot --save"
-        "$mainMod SHIFT, Print, exec, screenshot --swappy"
+        "$mainMod, R, exec, $launcher"
+        "$mainMod, A, exec, waydroid show-full-ui"
 
         # switch focus
         "$mainMod, left,  movefocus, l"
@@ -89,31 +62,6 @@ in
 
         "CTRL ALT, up, exec, hyprctl dispatch focuswindow floating"
         "CTRL ALT, down, exec, hyprctl dispatch focuswindow tiled"
-
-        # switch workspace
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
-
-        # same as above, but switch to the workspace
-        "$mainMod SHIFT, 1, movetoworkspacesilent, 1" # movetoworkspacesilent
-        "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
-        "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
-        "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
-        "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
-        "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
-        "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
-        "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-        "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-        "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
-        "$mainMod CTRL, c, movetoworkspace, empty"
 
         # window control
         "$mainMod SHIFT, left, movewindow, l"
@@ -144,33 +92,11 @@ in
         "$mainMod ALT, l, moveactive, 80 0"
 
         # media and volume controls
-        # ",XF86AudioMute,exec, pamixer -t"
         ",XF86AudioPlay,exec, playerctl play-pause"
         ",XF86AudioNext,exec, playerctl next"
         ",XF86AudioPrev,exec, playerctl previous"
         ",XF86AudioStop,exec, playerctl stop"
-
-        "$mainMod, mouse_down, workspace, e-1"
-        "$mainMod, mouse_up, workspace, e+1"
-
-        # clipboard manager
-        "$mainMod, V, exec, cliphist list | $terminal -dmenu -theme-str 'window {width: 50%;} listview {columns: 1;}' | cliphist decode | wl-copy"
       ];
-
-      # # binds active in lockscreen
-      # bindl = [
-      #   # laptop brigthness
-      #   ",XF86MonBrightnessUp, exec, brightnessctl set 5%+"
-      #   ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
-      #   "$mainMod, XF86MonBrightnessUp, exec, brightnessctl set 100%+"
-      #   "$mainMod, XF86MonBrightnessDown, exec, brightnessctl set 100%-"
-      # ];
-
-      # # binds that repeat when held
-      # binde = [
-      #   ",XF86AudioRaiseVolume,exec, pamixer -i 2"
-      #   ",XF86AudioLowerVolume,exec, pamixer -d 2"
-      # ];
 
       # mouse binding
       bindm = [

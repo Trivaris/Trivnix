@@ -1,12 +1,12 @@
 {
   inputs,
-  pkgs
+  pkgs,
 }:
 
 pkgs.python3Packages.buildPythonPackage {
 
   name = "adbutils";
-  
+
   src = pkgs.lib.cleanSource inputs.adbutils-src;
   format = "pyproject";
 

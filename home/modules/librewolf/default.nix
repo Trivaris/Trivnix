@@ -4,9 +4,9 @@
   config,
   ...
 }:
-let 
+let
   cfg = config.homeModules;
-in 
+in
 with lib;
 {
 

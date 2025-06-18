@@ -99,12 +99,12 @@ with lib;
           };
         };
       extraConfig = ''
-        
-                
-                      return {
-                        enable_tab_bar = false,
-                        color_scheme = "default",
-                      }
+
+
+        return {
+          enable_tab_bar = false,
+          color_scheme = "default",
+        }
       '';
     };
   };

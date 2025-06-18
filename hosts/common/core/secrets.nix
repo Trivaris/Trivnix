@@ -10,27 +10,34 @@ let
   hostSecrets = inputs.self + "/secrets/hosts/${configname}.yaml";
 
   perUserSecrets = builtins.concatLists (
-    builtins.map (user: [
-      {
-        name = "user-passwords/${user}";
-        value = {
-          neededForUsers = true;
-          sopsFile = commonSecrets;
-        };
-      }
-    ] ++ (
-      if user == "root" then [] else [
+    builtins.map (
+      user:
+      [
         {
-          name = "sops-keys/${user}";
+          name = "user-passwords/${user}";
           value = {
-            path = "/home/${user}/.config/sops/age/keys.txt";
-            owner = user;
-            group = "users";
-            mode = "0600";
+            neededForUsers = true;
+            sopsFile = commonSecrets;
           };
         }
       ]
-    )) usernames
+      ++ (
+        if user == "root" then
+          [ ]
+        else
+          [
+            {
+              name = "sops-keys/${user}";
+              value = {
+                path = "/home/${user}/.config/sops/age/keys.txt";
+                owner = user;
+                group = "users";
+                mode = "0600";
+              };
+            }
+          ]
+      )
+    ) usernames
   );
 in
 {

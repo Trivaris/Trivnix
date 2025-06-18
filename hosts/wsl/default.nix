@@ -9,7 +9,6 @@
   ];
 
   config.nixosModules = {
-    android-emulator = true;
     custom-packages = true;
     fish = true;
     openssh = true;

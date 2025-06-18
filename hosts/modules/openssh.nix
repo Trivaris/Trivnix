@@ -1,4 +1,4 @@
-{ 
+{
   config,
   lib,
   usernames,
@@ -30,17 +30,15 @@ with lib;
         GatewayPorts = "clientspecified";
       };
 
-      authorizedKeysFiles = builtins.map( user:
-        "/etc/ssh/authorized_keys.d/${user}"
-      ) usernames;
+      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") usernames;
 
-      openFirewall = true; 
+      openFirewall = true;
 
       hostKeys = [
         {
           path = "/etc/ssh/ssh_host_ed25519_key";
           type = "ed25519";
-        } 
+        }
       ];
     };
 

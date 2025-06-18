@@ -7,8 +7,22 @@ let
   users = import ./users.nix;
 
   # Helper functions to create NixOS and Home Manager configs
-  nixosConfiguration = import ./nixosConfiguration.nix { inherit inputs; outputs = self; inherit (inputs) nixpkgs disko sops-nix home-manager nixos-wsl; };
-  homeConfiguration  = import ./homeConfiguration.nix  { inherit inputs; outputs = self; inherit (inputs) nixpkgs home-manager; };
+  nixosConfiguration = import ./nixosConfiguration.nix {
+    inherit inputs;
+    outputs = self;
+    inherit (inputs)
+      nixpkgs
+      disko
+      sops-nix
+      home-manager
+      nixos-wsl
+      ;
+  };
+  homeConfiguration = import ./homeConfiguration.nix {
+    inherit inputs;
+    outputs = self;
+    inherit (inputs) nixpkgs home-manager;
+  };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
@@ -43,8 +57,12 @@ let
 in
 {
   # Packages for all defined systems
-  packages = forAllSystems (arch:
-    import ../pkgs { inherit inputs; pkgs = inputs.nixpkgs.legacyPackages.${arch}; }
+  packages = forAllSystems (
+    arch:
+    import ../pkgs {
+      inherit inputs;
+      pkgs = inputs.nixpkgs.legacyPackages.${arch};
+    }
   );
 
   # Import custom overlays

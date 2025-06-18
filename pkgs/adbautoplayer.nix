@@ -23,7 +23,6 @@ pkgs.python3Packages.buildPythonApplication {
     python3Packages.pydantic
   ];
 
-
   env = {
     UV_CACHE_DIR = "${placeholder "TMPDIR"}/uv-cache";
   };

@@ -22,7 +22,7 @@ in
     age.generateKey = false;
 
     secrets = {
-    
+
       "ssh-user-key/key" = {
         path = "/home/${username}/.ssh/id_ed25519";
         sopsFile = userSecrets;
@@ -34,7 +34,7 @@ in
       "smtp-passwords/public" = { };
       "smtp-passwords/private" = { };
       "smtp-passwords/school" = { };
-    
+
     };
   };
 
