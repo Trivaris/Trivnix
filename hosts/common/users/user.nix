@@ -1,5 +1,4 @@
 {
-  configname,
   inputs,
   config,
   username,
@@ -15,10 +14,7 @@ let
 in
 {
 
-  home-manager = {
-    extraSpecialArgs = { inherit username stateVersion; };
-    users.${username} = import (inputs.self + "/home/${username}/${configname}.nix");
-  };
+  home-manager.extraSpecialArgs = { inherit username stateVersion; };
 
   users.users.${username} = {
     hashedPasswordFile = config.sops.secrets."user-passwords/${username}".path;

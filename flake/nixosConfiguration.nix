@@ -31,7 +31,7 @@ nixpkgs.lib.nixosSystem {
     usernames = usernames ++ [ "root" ];
   };
   modules = [
-    # Flake entrypoint
+    # Flake NixOS entrypoint
     (inputs.self + "/hosts/${configname}")
 
     disko.nixosModules.disko
@@ -52,6 +52,10 @@ nixpkgs.lib.nixosSystem {
           pkgsLib
           ;
       };
+      # Flake Home Manager entrypoint
+      config.home-manager.users = nixpkgs.lib.genAttrs usernames (name:
+        import (inputs.self + "/home/${name}/${configname}.nix")
+      );
     }
   ];
 

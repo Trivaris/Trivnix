@@ -48,7 +48,7 @@ let
     builtins.concatMap (
       username:
       builtins.map (configname: {
-        name = "${username}@${hosts.${configname}.name}";
+        name = "${username}@${configname}";
         value = homeConfiguration {
           hostname = hosts.${configname}.name;
           stateVersion = hosts.${configname}.stateVersion;
@@ -60,7 +60,7 @@ let
   );
 
 in
-rec {
+{
   # Packages for all defined systems
   packages = forAllSystems (
     arch:

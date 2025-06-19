@@ -1,7 +1,6 @@
 {
   inputs,
   outputs,
-  nixpkgs,
   home-manager,
   pkgsLib,
   ...
