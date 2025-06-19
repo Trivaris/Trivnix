@@ -1,16 +1,16 @@
 {
   inputs,
-  outputs,
   lib,
   usernames,
   pkgs,
+  pkgsLib,
   ...
 }:
 {
 
   nixpkgs = {
-    overlays = outputs.overlayList;
-    config = outputs.pkgsConfig;
+    overlays = pkgsLib.overlayList;
+    config = pkgsLib.pkgsConfig;
   };
 
   nix = {
@@ -33,5 +33,5 @@
     );
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   };
-
+  
 }

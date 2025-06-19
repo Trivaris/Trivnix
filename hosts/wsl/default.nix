@@ -9,7 +9,6 @@
   ];
 
   config.nixosModules = {
-    custom-packages = true;
     fish = true;
     openssh = true;
   };

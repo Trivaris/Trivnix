@@ -6,6 +6,7 @@
   sops-nix,
   home-manager,
   nixos-wsl,
+  pkgsLib,
   ...
 }:
 {
@@ -25,6 +26,7 @@ nixpkgs.lib.nixosSystem {
       stateVersion
       configname
       architecture
+      pkgsLib
       ;
     usernames = usernames ++ [ "root" ];
   };
@@ -47,6 +49,7 @@ nixpkgs.lib.nixosSystem {
           hostname
           stateVersion
           architecture
+          pkgsLib
           ;
       };
     }

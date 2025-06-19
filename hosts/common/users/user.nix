@@ -14,17 +14,15 @@ let
   ];
 in
 {
-
-  home-manager.users.${username} =
-
-    {
-      _module.args = {
-        inherit username stateVersion;
-      };
-      imports = [
-        (inputs.self + "/home/${username}/${configname}.nix")
-      ];
-    };
+  
+  home-manager.extraSpecialArgs = {
+    inherit username stateVersion;
+  };
+  home-manager.users.${username} = {
+    imports = [
+      (inputs.self + "/home/${username}/${configname}.nix")
+    ];
+  };
 
   users.users.${username} = {
     hashedPasswordFile = config.sops.secrets."user-passwords/${username}".path;

@@ -19,6 +19,7 @@ with lib;
       android-tools
       waydroid-helper
       nur.repos.ataraxiasjel.waydroid-script
+      adbautoplayer
     ];
 
   };

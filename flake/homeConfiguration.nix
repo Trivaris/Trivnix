@@ -3,6 +3,7 @@
   outputs,
   nixpkgs,
   home-manager,
+  pkgsLib,
   ...
 }:
 
@@ -16,7 +17,7 @@
 
 home-manager.lib.homeManagerConfiguration {
 
-  pkgs = outputs.mkPkgs architecture;
+  pkgs = pkgsLib.mkPkgs architecture;
 
   # Expose flake args to within the config
   extraSpecialArgs = {
@@ -28,6 +29,7 @@ home-manager.lib.homeManagerConfiguration {
       stateVersion
       architecture
       username
+      pkgsLib
       ;
   };
 

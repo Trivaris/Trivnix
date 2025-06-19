@@ -1,5 +1,4 @@
 { inputs, self, ... }:
-
 let
   # Import lists of system architectures, hosts, and users
   systems = import ./systems.nix;
@@ -7,8 +6,14 @@ let
   users = import ./users.nix;
 
   # Helper functions to create NixOS and Home Manager configs
-  nixosConfiguration = import ./nixosConfiguration.nix {
+  pkgsLib = import ./mkPkgs.nix {
     inherit inputs;
+    outputs = self;
+  };
+
+
+  nixosConfiguration = import ./nixosConfiguration.nix {
+    inherit inputs pkgsLib;
     inherit (inputs)
       nixpkgs
       disko
@@ -16,19 +21,13 @@ let
       home-manager
       nixos-wsl
       ;
-    outputs = self.outputs;
-
+    outputs = self;
   };
 
   homeConfiguration = import ./homeConfiguration.nix {
-    inherit inputs;
+    inherit inputs pkgsLib;
     inherit (inputs) nixpkgs home-manager;
-    outputs = self.outputs;
-  };
-
-  pkgsLib = import ../lib/mkPkgs.nix {
-    inherit inputs;
-    outputs = self.outputs;
+    outputs = self;
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
@@ -77,5 +76,4 @@ rec {
 
   inherit nixosConfigurations homeConfigurations;
 
-  inherit (pkgsLib) mkPkgs overlayList pkgsConfig;
 }

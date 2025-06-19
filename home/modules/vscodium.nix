@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   username,
   hostname,
@@ -8,6 +9,7 @@
 }:
 let
   cfg = config.homeModules;
+  selfPath = toString inputs.self;
 in
 with lib;
 {
@@ -24,27 +26,19 @@ with lib;
     ];
 
     home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON {
-      "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nixd";
-      "nix.formatterPath" = "nixfmt";
-      "nix.serverSettings" = {
-        "nixd" = {
-          "formatting" = {
-            "command" = [ "nixfmt" ];
-          };
-          "nixpkgs" = {
-            "expr" = "import (builtins.getFlake \"/home/${username}/trivnix\").inputs.nixpkgs { } ";
-          };
-          "options" = {
-            "nixos" = {
-              "expr" =
-                "(builtins.getFlake \"/home/${username}/trivnix\").nixosConfigurations.${hostname}.options";
-            };
-            "home-manager" = {
-              "expr" =
-                "(builtins.getFlake \"/home/${username}/trivnix\").homeConfigurations.\"${username}@${hostname}\".options";
-            };
-          };
+
+      "nix.enableLanguageServer"  = true;
+      "nix.serverPath"            = "nixd";
+      "nix.formatterPath"         = "nixfmt";
+
+      "nix.serverSettings".nixd = {
+        formatting.command = [ "nixfmt" ];
+
+        nixpkgs.expr = "import (builtins.getFlake \"${selfPath}\").inputs.nixpkgs { } ";
+
+        options = {
+          nixos.expr =        "(builtins.getFlake \"${selfPath}\").nixosConfigurations.${hostname}.options";
+          home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigurations.\"${username}@${hostname}\".options";
         };
       };
     };

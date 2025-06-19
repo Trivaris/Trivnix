@@ -20,6 +20,8 @@ with lib;
       fastfetch
       pipes-rs
       rsclock
+      rmatrix
+      rbonsai
     ];
 
     programs.eza = {
