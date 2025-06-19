@@ -33,5 +33,5 @@
     );
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   };
-  
+
 }

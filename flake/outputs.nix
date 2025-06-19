@@ -8,9 +8,8 @@ let
   # Helper functions to create NixOS and Home Manager configs
   pkgsLib = import ./mkPkgs.nix {
     inherit inputs;
-    outputs = self;
+    outputs = self.outputs;
   };
-
 
   nixosConfiguration = import ./nixosConfiguration.nix {
     inherit inputs pkgsLib;
@@ -21,13 +20,13 @@ let
       home-manager
       nixos-wsl
       ;
-    outputs = self;
+    outputs = self.outputs;
   };
 
   homeConfiguration = import ./homeConfiguration.nix {
     inherit inputs pkgsLib;
     inherit (inputs) nixpkgs home-manager;
-    outputs = self;
+    outputs = self.outputs;
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs systems;

@@ -14,14 +14,10 @@ let
   ];
 in
 {
-  
-  home-manager.extraSpecialArgs = {
-    inherit username stateVersion;
-  };
-  home-manager.users.${username} = {
-    imports = [
-      (inputs.self + "/home/${username}/${configname}.nix")
-    ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit username stateVersion; };
+    users.${username} = import (inputs.self + "/home/${username}/${configname}.nix");
   };
 
   users.users.${username} = {

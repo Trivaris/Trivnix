@@ -13,12 +13,15 @@ let
     android_sdk.accept_license = true;
   };
 
-in {
+in
+{
   inherit overlayList pkgsConfig;
 
-  mkPkgs = system: import inputs.nixpkgs {
-    inherit system;
-    overlays = overlayList;
-    config = pkgsConfig;
-  };
+  mkPkgs =
+    system:
+    import inputs.nixpkgs {
+      inherit system;
+      overlays = overlayList;
+      config = pkgsConfig;
+    };
 }

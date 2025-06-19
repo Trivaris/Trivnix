@@ -7,7 +7,9 @@
       pkgs = final;
     };
 
-  modifications = final: prev: { };
+  modifications = final: prev: {
+
+  };
 
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {
