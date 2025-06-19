@@ -18,6 +18,7 @@ with lib;
       androidsdk
       android-tools
       waydroid-helper
+      nur.repos.ataraxiasjel.waydroid-script
     ];
 
   };

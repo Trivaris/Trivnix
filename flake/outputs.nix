@@ -9,7 +9,6 @@ let
   # Helper functions to create NixOS and Home Manager configs
   nixosConfiguration = import ./nixosConfiguration.nix {
     inherit inputs;
-    outputs = self;
     inherit (inputs)
       nixpkgs
       disko
@@ -17,11 +16,19 @@ let
       home-manager
       nixos-wsl
       ;
+    outputs = self.outputs;
+
   };
+
   homeConfiguration = import ./homeConfiguration.nix {
     inherit inputs;
-    outputs = self;
     inherit (inputs) nixpkgs home-manager;
+    outputs = self.outputs;
+  };
+
+  pkgsLib = import ../lib/mkPkgs.nix {
+    inherit inputs;
+    outputs = self.outputs;
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
@@ -55,7 +62,7 @@ let
   );
 
 in
-{
+rec {
   # Packages for all defined systems
   packages = forAllSystems (
     arch:
@@ -69,4 +76,6 @@ in
   overlays = import ../overlays { inherit inputs; };
 
   inherit nixosConfigurations homeConfigurations;
+
+  inherit (pkgsLib) mkPkgs overlayList pkgsConfig;
 }

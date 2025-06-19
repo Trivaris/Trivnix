@@ -72,6 +72,9 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 
     - If `--reboot` is set, the installer will automatically reboot upon completion of installation.
 
+    - The disko version is taken from `flake.lock` to keep installations reproducible.
+
+
 ## Usage
 - Update flake inputs with `nix flake update`.
 - Rebuild the system with `sudo nixos-rebuild switch --flake .#<hostname>`.

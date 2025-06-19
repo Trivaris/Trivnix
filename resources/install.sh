@@ -22,6 +22,10 @@ echo "✔ nixos:  $nixos_cfg"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 # ---------- pick disko file ----------
+# Get the disko version pinned in flake.lock
+DISKO_REV="$(jq -r '.nodes.disko.locked.rev' "$SCRIPT_DIR/../flake.lock")"
+DISKO_FLAKE="github:nix-community/disko/${DISKO_REV}"
+
 if [[ -f "$SCRIPT_DIR/../hosts/common/core/hardware/${disko_cfg}.nix" ]]; then
   DISKO_PATH="$SCRIPT_DIR/../hosts/common/core/hardware/${disko_cfg}.nix"
 else
@@ -44,7 +48,7 @@ sudo install -m 0400 -o root -g root -D "$KEY_SRC" "$KEY_DST"
 echo "✔ Copied key.txt to $KEY_DST"
 
 # ---------- nixos-install ----------
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount "$DISKO_PATH"
+sudo nix --experimental-features 'nix-command flakes' run "$DISKO_FLAKE" -- --mode destroy,format,mount "$DISKO_PATH"
 sudo nixos-install --no-root-passwd --flake "$SCRIPT_DIR/..#$nixos_cfg"
 
 # ---------- post-success cleanup & reboot ----------

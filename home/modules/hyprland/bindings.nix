@@ -35,6 +35,7 @@ in
         # keybindings
         "$mainMod, Q, exec, $terminal"
         "$mainMod, M, exit,"
+        "$mainMod, C, killactive,"
         "$mainMod SHIFT, Return, exec, [fullscreen] $terminal"
         "$mainMod, F, fullscreen, 0"
         "$mainMod, Space, exec, togglefloating"

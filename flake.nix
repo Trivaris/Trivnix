@@ -26,9 +26,16 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # Custom Packages
+    # Sources of Custom Packages
     adbautoplayer-src = {
       url = "github:AdbAutoPlayer/AdbAutoPlayer";
       flake = false;
@@ -45,9 +52,6 @@
       url = "github:openatx/adbutils";
       flake = false;
     };
-
-    # Desktop/DE
-    hyprland.url = "github:hyprwm/Hyprland";
 
     # Personal
     dotfiles = {

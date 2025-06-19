@@ -18,7 +18,6 @@ with lib;
       rmatrix
       rbonsai
       adbautoplayer
-      adbutils
     ];
   };
 

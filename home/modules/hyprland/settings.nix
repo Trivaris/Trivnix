@@ -29,7 +29,6 @@ with lib;
 
             gaps_in = 8;
             gaps_out = 8;
-            float_gaps = 8;
 
             "col.active_border" = "${mkRgb colors.fg} ${mkRgb colors.bg5} 45deg";
             "col.inactive_border" = "${mkRgb colors.bg_dim} ${mkRgb colors.bg0} 45deg";

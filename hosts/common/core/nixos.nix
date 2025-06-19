@@ -9,17 +9,8 @@
 {
 
   nixpkgs = {
-    overlays = with outputs.overlays; [
-      additions
-      modifications
-      stable-packages
-    ];
-
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-      android_sdk.accept_license = true;
-    };
+    overlays = outputs.overlayList;
+    config = outputs.pkgsConfig;
   };
 
   nix = {

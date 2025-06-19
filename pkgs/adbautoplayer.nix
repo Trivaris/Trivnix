@@ -15,7 +15,7 @@ pkgs.python3Packages.buildPythonApplication {
   ];
 
   propagatedBuildInputs = with pkgs; [
-    adbutils
+    (pkgs.callPackage ./adbutils.nix { inherit inputs pkgs; })
     python3Packages.pure-python-adb
     python3Packages.av
     python3Packages.opencv-python

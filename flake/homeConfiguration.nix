@@ -16,7 +16,7 @@
 
 home-manager.lib.homeManagerConfiguration {
 
-  pkgs = nixpkgs.legacyPackages.${architecture};
+  pkgs = outputs.mkPkgs architecture;
 
   # Expose flake args to within the config
   extraSpecialArgs = {
