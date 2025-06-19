@@ -15,7 +15,7 @@ let
 in
 {
 
-  options.git.userEmail = lib.mkOption {
+  options.userGitEmail = lib.mkOption {
     type = lib.types.str;
     description = "Git Email Address";
     example = "me@example.com";
@@ -25,7 +25,7 @@ in
     programs.git = {
       enable = true;
       userName = username;
-      userEmail = config.git.userEmail;
+      userEmail = config.userGitEmail;
       extraConfig.credential.helper = "store";
       extraConfig.core.autocrlf = "input";
     };

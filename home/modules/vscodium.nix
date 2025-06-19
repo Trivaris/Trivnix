@@ -43,31 +43,31 @@ with lib;
         };
       };
 
-    activation.fixVSCodiumNode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      for d in ${config.home.homeDirectory}/.vscodium-server/bin/*; do
-        [ -d "$d" ] || continue
-        target="$d/node"
-        new_node="${pkgs.nodejs_20}/bin/node"
+      activation.fixVSCodiumNode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        for d in ${config.home.homeDirectory}/.vscodium-server/bin/*; do
+          [ -d "$d" ] || continue
+          target="$d/node"
+          new_node="${pkgs.nodejs_20}/bin/node"
 
-        if [ ! -e "$target" ]; then
-          echo "✔ node does not exist, creating symlink at $target"
-          ln -sf "$new_node" "$target"
+          if [ ! -e "$target" ]; then
+            echo "✔ node does not exist, creating symlink at $target"
+            ln -sf "$new_node" "$target"
 
-        elif [ -f "$target" ]; then
-          echo "✔ node is a regular file, replacing with symlink at $target"
-          rm -f "$target"
-          ln -sf "$new_node" "$target"
+          elif [ -f "$target" ]; then
+            echo "✔ node is a regular file, replacing with symlink at $target"
+            rm -f "$target"
+            ln -sf "$new_node" "$target"
 
-        elif [ -L "$target" ]; then
-          echo "✔ node is a symlink, replacing with new symlink at $target"
-          rm -f "$target"
-          ln -sf "$new_node" "$target"
+          elif [ -L "$target" ]; then
+            echo "✔ node is a symlink, replacing with new symlink at $target"
+            rm -f "$target"
+            ln -sf "$new_node" "$target"
 
-        else
-          echo "✖ node exists but is not a file or symlink: $target (skipped)"
-        fi
-      done
-    '';
+          else
+            echo "✖ node exists but is not a file or symlink: $target (skipped)"
+          fi
+        done
+      '';
 
     };
   };

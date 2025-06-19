@@ -2,12 +2,13 @@
   lib,
   architecture,
   stateVersion,
+  libExtra,
   ...
 }:
 {
 
   imports = [
-    # ../common/core/hardware/wsl.nix
+    libExtra.partition-layouts.none
   ];
 
   boot.initrd.availableKernelModules = [ ];

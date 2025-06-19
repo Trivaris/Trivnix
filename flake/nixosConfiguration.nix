@@ -6,7 +6,7 @@
   sops-nix,
   home-manager,
   nixos-wsl,
-  pkgsLib,
+  libExtra,
   ...
 }:
 {
@@ -16,6 +16,10 @@
   architecture ? "x86_64-linux",
   usernames ? [ "trivaris" ],
 }:
+let
+  host-configurations = import (libExtra.mkFlakePath /hosts/configurations);
+  home-configurations = import (libExtra.mkFlakePath /home/configurations);
+in
 nixpkgs.lib.nixosSystem {
   specialArgs = {
     # Expose flake args to within the nixos config
@@ -26,13 +30,13 @@ nixpkgs.lib.nixosSystem {
       stateVersion
       configname
       architecture
-      pkgsLib
+      libExtra
       ;
     usernames = usernames ++ [ "root" ];
   };
   modules = [
     # Flake NixOS entrypoint
-    (inputs.self + "/hosts/${configname}")
+    host-configurations."${configname}"
 
     disko.nixosModules.disko
     home-manager.nixosModules.home-manager
@@ -49,12 +53,12 @@ nixpkgs.lib.nixosSystem {
           hostname
           stateVersion
           architecture
-          pkgsLib
+          libExtra
           ;
       };
       # Flake Home Manager entrypoint
-      config.home-manager.users = nixpkgs.lib.genAttrs usernames (name:
-        import (inputs.self + "/home/${name}/${configname}.nix")
+      config.home-manager.users = nixpkgs.lib.genAttrs usernames (
+        name: home-configurations.${name}.${configname}
       );
     }
   ];

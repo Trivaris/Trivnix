@@ -11,7 +11,7 @@
 
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../common/core/hardware
+    config.drive-layouts.disko-default
   ];
 
   boot.initrd.kernelModules = [ ];

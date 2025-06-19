@@ -1,18 +1,22 @@
 { inputs, self, ... }:
 let
+  outputs = self.outputs;
+
   # Import lists of system architectures, hosts, and users
   systems = import ./systems.nix;
   hosts = import ./hosts.nix;
   users = import ./users.nix;
 
   # Helper functions to create NixOS and Home Manager configs
-  pkgsLib = import ./mkPkgs.nix {
-    inherit inputs;
-    outputs = self.outputs;
+  lib = inputs.nixpkgs.lib;
+  forAllSystems = lib.genAttrs systems;
+
+  libExtra = import ./libExtra {
+    inherit inputs outputs;
   };
 
   nixosConfiguration = import ./nixosConfiguration.nix {
-    inherit inputs pkgsLib;
+    inherit inputs outputs libExtra;
     inherit (inputs)
       nixpkgs
       disko
@@ -20,16 +24,12 @@ let
       home-manager
       nixos-wsl
       ;
-    outputs = self.outputs;
   };
 
   homeConfiguration = import ./homeConfiguration.nix {
-    inherit inputs pkgsLib;
+    inherit inputs outputs libExtra;
     inherit (inputs) nixpkgs home-manager;
-    outputs = self.outputs;
   };
-
-  forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
   # Define NixOS configurations for each host
   # Format: configname = <NixOS config>
@@ -44,18 +44,24 @@ let
 
   # Define Home Manager configurations for each user@hostname
   # Format: <user>@<hostname> (configname) = <Home Manager config>
-  homeConfigurations = builtins.listToAttrs (
-    builtins.concatMap (
+  homeConfigurations = lib.listToAttrs (
+    lib.concatMap (
       username:
-      builtins.map (configname: {
-        name = "${username}@${configname}";
-        value = homeConfiguration {
-          hostname = hosts.${configname}.name;
-          stateVersion = hosts.${configname}.stateVersion;
-          configname = configname;
-          username = username;
-        };
-      }) (builtins.attrNames hosts)
+      lib.map (
+        configname:
+        let
+          hostCfg = hosts.${configname};
+        in
+        {
+          name = "${username}@${configname}";
+          value = homeConfiguration {
+            hostname = hostCfg.name;
+            stateVersion = hostCfg.stateVersion;
+            configname = configname;
+            username = username;
+          };
+        }
+      ) (lib.attrNames hosts)
     ) users
   );
 

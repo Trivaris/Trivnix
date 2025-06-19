@@ -2,7 +2,7 @@
   inputs,
   outputs,
   home-manager,
-  pkgsLib,
+  libExtra,
   ...
 }:
 
@@ -13,10 +13,12 @@
   architecture ? "x86_64-linux",
   username,
 }:
-
+let
+  configurations = import (libExtra.mkFlakePath /home/configurations);
+in
 home-manager.lib.homeManagerConfiguration {
 
-  pkgs = pkgsLib.mkPkgs architecture;
+  pkgs = libExtra.mkPkgs architecture;
 
   # Expose flake args to within the config
   extraSpecialArgs = {
@@ -28,13 +30,13 @@ home-manager.lib.homeManagerConfiguration {
       stateVersion
       architecture
       username
-      pkgsLib
+      libExtra
       ;
   };
 
   modules = [
     # Flake entrypoint
-    (inputs.self + "/home/${username}/${configname}.nix")
+    configurations."${username}"."${configname}"
   ];
 
 }

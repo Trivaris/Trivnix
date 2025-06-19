@@ -14,6 +14,8 @@ let
 in
 {
 
+  options.colorschemes = colorschemes;
+
   options.colors = lib.mkOption {
     type = lib.types.attrsOf lib.types.str;
     default = colorschemes.everforest-hard-dark;

@@ -1,5 +1,5 @@
 {
-  inputs,
+  libExtra,
   config,
   username,
   stateVersion,
@@ -35,7 +35,7 @@ in
       "qemu-libvirtd"
     ];
     openssh.authorizedKeys.keys = map (
-      host: builtins.readFile (inputs.self + "/resources/ssh-pub/id_ed25519_${host}.pub")
+      host: builtins.readFile (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_${host}.pub")
     ) hosts;
   };
 

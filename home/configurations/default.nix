@@ -1,0 +1,5 @@
+{
+
+  trivaris = import ./trivaris.nix;
+
+}
