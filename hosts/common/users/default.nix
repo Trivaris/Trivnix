@@ -5,7 +5,7 @@
   usernames,
   lib,
   stateVersion,
-  libExtra,
+  lib-extra,
   ...
 }:
 let
@@ -17,7 +17,7 @@ lib.mkMerge (
   ++ builtins.map (
     user:
     if user == "root" then
-      rootConfiguration { inherit config libExtra; }
+      rootConfiguration { inherit config lib-extra; }
     else
       userConfiguration {
         inherit
@@ -25,7 +25,7 @@ lib.mkMerge (
           inputs
           config
           stateVersion
-          libExtra
+          lib-extra
           ;
         username = user;
       }

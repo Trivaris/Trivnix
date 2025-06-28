@@ -1,11 +1,11 @@
 {
   inputs,
-  libExtra,
+  lib-extra,
   usernames,
   hostname,
   ...
 }:
-libExtra.mkHostConfig {
+lib-extra.mkHostConfig {
 
   extraImports = [
     ./hardware.nix
@@ -16,6 +16,7 @@ libExtra.mkHostConfig {
     nixosModules = {
       fish = true;
       openssh = true;
+      kde = true;
     };
 
     sshPort = 2222;

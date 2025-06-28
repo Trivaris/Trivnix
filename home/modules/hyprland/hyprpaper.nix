@@ -1,7 +1,7 @@
 {
   config,
-  inputs,
   lib,
+  lib-extra,
   ...
 }:
 with lib;
@@ -14,13 +14,13 @@ with lib;
         interval = 600;
         splash = false;
         preload = [
-          (libExtra.mkFlakePath /resources/wp_1.jpg)
-          (libExtra.mkFlakePath /resources/wp_2.jpg)
-          (libExtra.mkFlakePath /resources/wp_3.jpg)
+          (lib-extra.mkFlakePath /resources/wp_1.jpg)
+          (lib-extra.mkFlakePath /resources/wp_2.jpg)
+          (lib-extra.mkFlakePath /resources/wp_3.jpg)
         ];
         wallpaper = [
-          "eDP-1,${toString (libExtra.mkFlakePath /resources/wp_1.jpg)}"
-          "DP-1,${toString (libExtra.mkFlakePath /resources/wp_1.jpg)}"
+          "eDP-1,${toString (lib-extra.mkFlakePath /resources/wp_1.jpg)}"
+          "DP-1,${toString (lib-extra.mkFlakePath /resources/wp_1.jpg)}"
         ];
       };
     };

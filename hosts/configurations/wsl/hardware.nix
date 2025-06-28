@@ -2,13 +2,13 @@
   lib,
   architecture,
   stateVersion,
-  libExtra,
+  lib-extra,
   ...
 }:
 {
 
   imports = [
-    libExtra.partition-layouts.none
+    lib-extra.partition-layouts.none
   ];
 
   boot.initrd.availableKernelModules = [ ];

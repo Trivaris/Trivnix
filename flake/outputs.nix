@@ -11,12 +11,12 @@ let
   lib = inputs.nixpkgs.lib;
   forAllSystems = lib.genAttrs systems;
 
-  libExtra = import ./libExtra {
+  lib-extra = import ./lib-extra {
     inherit inputs outputs;
   };
 
   nixosConfiguration = import ./nixosConfiguration.nix {
-    inherit inputs outputs libExtra;
+    inherit inputs outputs lib-extra;
     inherit (inputs)
       nixpkgs
       disko
@@ -27,7 +27,7 @@ let
   };
 
   homeConfiguration = import ./homeConfiguration.nix {
-    inherit inputs outputs libExtra;
+    inherit inputs outputs lib-extra;
     inherit (inputs) nixpkgs home-manager;
   };
 

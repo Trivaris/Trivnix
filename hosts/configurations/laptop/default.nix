@@ -1,5 +1,5 @@
-{ libExtra, ... }:
-libExtra.mkHostConfig {
+{ lib-extra, ... }:
+lib-extra.mkHostConfig {
 
   extraImports = [ ./hardware.nix ];
 

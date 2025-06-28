@@ -2,7 +2,7 @@
   inputs,
   outputs,
   home-manager,
-  libExtra,
+  lib-extra,
   ...
 }:
 
@@ -14,11 +14,11 @@
   username,
 }:
 let
-  configurations = import (libExtra.mkFlakePath /home/configurations);
+  configurations = import (lib-extra.mkFlakePath /home/configurations);
 in
 home-manager.lib.homeManagerConfiguration {
 
-  pkgs = libExtra.mkPkgs architecture;
+  pkgs = lib-extra.mkPkgs architecture;
 
   # Expose flake args to within the config
   extraSpecialArgs = {
@@ -30,7 +30,7 @@ home-manager.lib.homeManagerConfiguration {
       stateVersion
       architecture
       username
-      libExtra
+      lib-extra
       ;
   };
 

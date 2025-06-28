@@ -5,13 +5,14 @@
   modulesPath,
   architecture,
   stateVersion,
+  lib-extra,
   ...
 }:
 {
 
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    config.drive-layouts.disko-default
+    lib-extra.partition-layouts.disko-default
   ];
 
   boot.initrd.kernelModules = [ ];

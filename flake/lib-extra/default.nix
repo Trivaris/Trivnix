@@ -10,9 +10,6 @@ let
       config = pkgs-config;
     };
 
-  mkHostConfig = import ./mkHostConfig.nix  mkFlakePath;
-  mkHomeConfig = import ./mkHomeConfig.nix  mkFlakePath;
-
   overlay-list = with outputs.overlays; [
     additions
     modifications
@@ -32,6 +29,8 @@ in
 
   inherit overlay-list pkgs-config partition-layouts;
   inherit mkFlakePath mkPkgs;
-  inherit mkHomeConfig mkHostConfig;
+  
+  mkHostConfig = import ./mkHostConfig.nix  mkFlakePath;
+  mkHomeConfig = import ./mkHomeConfig.nix  mkFlakePath;
 
 }

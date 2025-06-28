@@ -3,7 +3,7 @@ let
 in
 {
 
-  laptop = { libExtra, ... }: libExtra.mkHomeConfig {
+  laptop = { lib-extra, ... }: lib-extra.mkHomeConfig {
     homeModules = {
       hyprland = true;
       librewolf = false;
@@ -21,7 +21,7 @@ in
     inherit userGitEmail;
   };
 
-  wsl = { libExtra, ... }: libExtra.mkHomeConfig {
+  wsl = { lib-extra, ... }: lib-extra.mkHomeConfig {
     homeModules = {
       cli-utils = true;
       fish = true;
