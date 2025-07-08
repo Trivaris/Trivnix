@@ -12,7 +12,8 @@
     nixosModules = {
       bluetooth = true;
       fish = true;
-      hyprland = true;
+      greet = true;
+      kde = true;
       openssh = true;
       printing = true;
     };

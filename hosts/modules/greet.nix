@@ -17,7 +17,7 @@ with lib;
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd exec Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd exec start-kde";
           user = "trivaris";
         };
       };
