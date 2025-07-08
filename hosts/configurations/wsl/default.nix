@@ -18,6 +18,7 @@
   config = {
     nixosModules = {
       fish = true;
+      kde = true;
       openssh = true;
     };
 

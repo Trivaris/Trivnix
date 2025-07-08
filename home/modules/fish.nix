@@ -67,6 +67,9 @@ with lib;
 
         echo ${inputs.self.outPath}
       '';
+      functions.start-kde = ''
+        dbus-run-session -- startplasma-wayland
+      '';
     };
   };
 
