@@ -5,7 +5,6 @@ lib-extra.mkHostConfig {
 
   config = {
     nixosModules = {
-      android-emulator = true;
       bluetooth = true;
       fish = true;
       hyprland = true;

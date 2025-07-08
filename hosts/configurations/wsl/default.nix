@@ -16,7 +16,6 @@ lib-extra.mkHostConfig {
     nixosModules = {
       fish = true;
       openssh = true;
-      kde = true;
     };
 
     sshPort = 2222;
