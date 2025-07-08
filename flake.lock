@@ -1,37 +1,5 @@
 {
   "nodes": {
-    "adbautoplayer-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1750183302,
-        "narHash": "sha256-Ou5eG+KVhuYQGCG0emDipGck0NrNmk/2AGM7pqw7Rso=",
-        "owner": "AdbAutoPlayer",
-        "repo": "AdbAutoPlayer",
-        "rev": "18b2a69fa528eeb87f7b206f26968339853e3eb8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AdbAutoPlayer",
-        "repo": "AdbAutoPlayer",
-        "type": "github"
-      }
-    },
-    "adbutils-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1749003325,
-        "narHash": "sha256-gWJEKJNneLu8ZflhKf9haeXpEbxw7/Aue+TTw/c2fo0=",
-        "owner": "openatx",
-        "repo": "adbutils",
-        "rev": "3e657cfa797c717d31ca313cc7deb1954bbe0868",
-        "type": "github"
-      },
-      "original": {
-        "owner": "openatx",
-        "repo": "adbutils",
-        "type": "github"
-      }
-    },
     "aquamarine": {
       "inputs": {
         "hyprutils": [
@@ -590,8 +558,6 @@
     },
     "root": {
       "inputs": {
-        "adbautoplayer-src": "adbautoplayer-src",
-        "adbutils-src": "adbutils-src",
         "disko": "disko",
         "dotfiles": "dotfiles",
         "home-manager": "home-manager",

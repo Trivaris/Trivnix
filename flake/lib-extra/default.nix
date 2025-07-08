@@ -30,7 +30,4 @@ in
   inherit overlay-list pkgs-config partition-layouts;
   inherit mkFlakePath mkPkgs;
   
-  mkHostConfig = import ./mkHostConfig.nix  mkFlakePath;
-  mkHomeConfig = import ./mkHomeConfig.nix  mkFlakePath;
-
 }

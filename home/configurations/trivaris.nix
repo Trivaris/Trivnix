@@ -3,7 +3,13 @@ let
 in
 {
 
-  laptop = { lib-extra, ... }: lib-extra.mkHomeConfig {
+  laptop = { lib-extra, ... }: {
+
+    imports = [
+      (lib-extra.mkFlakePath /home/common)
+      (lib-extra.mkFlakePath /home/modules)
+    ];
+
     homeModules = {
       hyprland = true;
       librewolf = false;
@@ -21,7 +27,13 @@ in
     inherit userGitEmail;
   };
 
-  wsl = { lib-extra, ... }: lib-extra.mkHomeConfig {
+  wsl = { lib-extra, ... }: {
+
+    imports = [
+      (lib-extra.mkFlakePath /home/common)
+      (lib-extra.mkFlakePath /home/modules)
+    ];
+
     homeModules = {
       cli-utils = true;
       fish = true;

@@ -5,9 +5,12 @@
   hostname,
   ...
 }:
-lib-extra.mkHostConfig {
+{
 
-  extraImports = [
+  imports = [
+    (lib-extra.mkFlakePath /hosts/common)
+    (lib-extra.mkFlakePath /hosts/modules)
+  ] ++ [
     ./hardware.nix
     inputs.nixos-wsl.nixosModules.default
   ];

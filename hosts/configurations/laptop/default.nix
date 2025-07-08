@@ -1,7 +1,12 @@
 { lib-extra, ... }:
-lib-extra.mkHostConfig {
+{
 
-  extraImports = [ ./hardware.nix ];
+  imports = [
+    (lib-extra.mkFlakePath /hosts/common)
+    (lib-extra.mkFlakePath /hosts/modules)
+  ] ++ [
+    ./hardware.nix
+  ];
 
   config = {
     nixosModules = {
