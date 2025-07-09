@@ -4,6 +4,7 @@ let
     "desktop"
     "laptop"
     "wsl"
+    "server"
   ];
 in
 {

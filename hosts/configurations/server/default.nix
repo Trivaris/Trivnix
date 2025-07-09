@@ -13,6 +13,7 @@
       fish = true;
       openssh = true;
       sunshine = true;
+      suwayomi = true;
     };
   };
 
