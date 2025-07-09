@@ -33,6 +33,7 @@ in
       "input"
       "kvm"
       "qemu-libvirtd"
+      "Docker"
     ];
     openssh.authorizedKeys.keys = map (
       host: builtins.readFile (lib-extra.mkFlakePath "/resources/ssh-pub/id_ed25519_${host}.pub")

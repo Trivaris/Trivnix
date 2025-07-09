@@ -12,6 +12,7 @@
     nixosModules = {
       fish = true;
       openssh = true;
+      sunshine = true;
     };
   };
 
