@@ -11,7 +11,7 @@ with lib;
 
   options.nixosModules.sunshine = mkEnableOption "Sunshine";
 
-  config = mkIf cfg.docker {
+  config = mkIf cfg.sunshine {
     environment.systemPackages = with pkgs; [ sunshine ];
     services.sunshine.enable = true;
   };
