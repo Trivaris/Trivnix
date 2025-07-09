@@ -12,7 +12,6 @@ with lib;
 
   options.homeModules.hyprland = mkEnableOption "hyprland";
   config = mkIf cfg.hyprland {
-
     wayland.windowManager.hyprland = {
       enable = true;
     };

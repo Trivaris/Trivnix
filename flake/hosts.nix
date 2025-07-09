@@ -10,4 +10,9 @@
     stateVersion = "25.05";
   };
 
+  server = {
+    name = "trivserver";
+    stateVersion = "25.05";
+  };
+
 }

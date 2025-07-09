@@ -42,5 +42,19 @@ in
 
     inherit userGitEmail;
   };
+
+  server = { lib-extra, ... }: {
+    imports = [
+      (lib-extra.mkFlakePath /home/common)
+      (lib-extra.mkFlakePath /home/modules)
+    ];
+
+    homeModules = {
+      cli-utils = true;
+      fish = true;
+    };
+
+    inherit userGitEmail;
+  };
     
 }
