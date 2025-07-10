@@ -3,11 +3,11 @@ let
 in
 {
 
-  laptop = { lib-extra, ... }: {
+  laptop = { libExtra, ... }: {
 
     imports = [
-      (lib-extra.mkFlakePath /home/common)
-      (lib-extra.mkFlakePath /home/modules)
+      (libExtra.mkFlakePath /home/common)
+      (libExtra.mkFlakePath /home/modules)
     ];
 
     homeModules = {
@@ -27,11 +27,11 @@ in
     inherit userGitEmail;
   };
 
-  wsl = { lib-extra, ... }: {
+  wsl = { libExtra, ... }: {
 
     imports = [
-      (lib-extra.mkFlakePath /home/common)
-      (lib-extra.mkFlakePath /home/modules)
+      (libExtra.mkFlakePath /home/common)
+      (libExtra.mkFlakePath /home/modules)
     ];
 
     homeModules = {
@@ -43,15 +43,16 @@ in
     inherit userGitEmail;
   };
 
-  server = { lib-extra, ... }: {
+  server = { libExtra, ... }: {
     imports = [
-      (lib-extra.mkFlakePath /home/common)
-      (lib-extra.mkFlakePath /home/modules)
+      (libExtra.mkFlakePath /home/common)
+      (libExtra.mkFlakePath /home/modules)
     ];
 
     homeModules = {
       cli-utils = true;
       fish = true;
+      vscodium = true;
     };
 
     inherit userGitEmail;

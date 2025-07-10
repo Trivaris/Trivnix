@@ -5,14 +5,14 @@
   modulesPath,
   architecture,
   stateVersion,
-  lib-extra,
+  libExtra,
   ...
 }:
 {
 
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    lib-extra.partition-layouts.disko-default
+    libExtra.partition-layouts.disko-default
   ];
 
   boot.initrd.kernelModules = [ ];

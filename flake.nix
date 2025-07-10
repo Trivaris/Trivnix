@@ -34,6 +34,10 @@
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gradle2nix = {
+      url = "github:tadfisher/gradle2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Sources of Custom Packages
     rmatrix-src = {
@@ -42,6 +46,10 @@
     };
     rbonsai-src = {
       url = "github:roberte777/rbonsai";
+      flake = false;
+    };
+    suwayomi-server-src = {
+      url = "github:Suwayomi/Suwayomi-Server";
       flake = false;
     };
 

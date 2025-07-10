@@ -13,8 +13,12 @@ with lib;
   options.nixosModules.sunshine = mkEnableOption "Sunshine";
 
   config = mkIf cfg.sunshine {
-    environment.systemPackages = with pkgs; [ sunshine ];
-    services.sunshine.enable = true;
+    services.sunshine = {
+      enable = true;
+      autoStart = true;
+      capSysAdmin = true;
+      openFirewall = true;
+    };
   };
 
 }

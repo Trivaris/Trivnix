@@ -3,14 +3,14 @@
   lib,
   usernames,
   pkgs,
-  lib-extra,
+  libExtra,
   ...
 }:
 {
 
   nixpkgs = {
-    overlays = lib-extra.overlay-list;
-    config = lib-extra.pkgs-config;
+    overlays = libExtra.overlay-list;
+    config = libExtra.pkgs-config;
   };
 
   nix = {

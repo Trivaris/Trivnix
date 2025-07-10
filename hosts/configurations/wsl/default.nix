@@ -1,6 +1,6 @@
 {
   inputs,
-  lib-extra,
+  libExtra,
   usernames,
   hostname,
   ...
@@ -8,8 +8,8 @@
 {
 
   imports = [
-    (lib-extra.mkFlakePath /hosts/common)
-    (lib-extra.mkFlakePath /hosts/modules)
+    (libExtra.mkFlakePath /hosts/common)
+    (libExtra.mkFlakePath /hosts/modules)
   ] ++ [
     ./hardware.nix
     inputs.nixos-wsl.nixosModules.default

@@ -11,12 +11,12 @@ let
   lib = inputs.nixpkgs.lib;
   forAllSystems = lib.genAttrs systems;
 
-  lib-extra = import ./lib-extra {
+  libExtra = import ./libExtra {
     inherit inputs outputs;
   };
 
   nixosConfiguration = import ./nixosConfiguration.nix {
-    inherit inputs outputs lib-extra;
+    inherit inputs outputs libExtra;
     inherit (inputs)
       nixpkgs
       disko
@@ -27,7 +27,7 @@ let
   };
 
   homeConfiguration = import ./homeConfiguration.nix {
-    inherit inputs outputs lib-extra;
+    inherit inputs outputs libExtra;
     inherit (inputs) nixpkgs home-manager;
   };
 
@@ -70,7 +70,7 @@ in
   # Packages for all defined systems
   packages = forAllSystems (
     arch:
-    import ../pkgs {
+    import ../overlays/additions {
       inherit inputs;
       pkgs = inputs.nixpkgs.legacyPackages.${arch};
     }

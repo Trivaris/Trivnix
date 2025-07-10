@@ -1,14 +1,19 @@
 { inputs }:
 {
+  nur = inputs.nur.overlays.default;
+
   additions =
     final: _prev:
-    import ../pkgs {
+    import ./additions {
       inherit inputs;
       pkgs = final;
     };
 
-  modifications = final: prev: {
-
+  modifications =
+    final: prev:
+    import ./modifications {
+      inherit inputs;
+      pkgs = prev;
   };
 
   stable-packages = final: _prev: {
@@ -18,5 +23,4 @@
     };
   };
 
-  nur = inputs.nur.overlays.default;
 }

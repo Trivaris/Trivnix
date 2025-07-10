@@ -3,7 +3,7 @@
   pkgs,
   username,
   stateVersion,
-  lib-extra,
+  libExtra,
   ...
 }:
 {
@@ -14,8 +14,8 @@
   home.stateVersion = stateVersion;
 
   nixpkgs = {
-    overlays = lib-extra.overlay-list;
-    config = lib-extra.pkgs-config;
+    overlays = libExtra.overlay-list;
+    config = libExtra.pkgs-config;
   };
 
 }

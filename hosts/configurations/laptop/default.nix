@@ -1,9 +1,9 @@
-{ lib-extra, ... }:
+{ libExtra, ... }:
 {
 
   imports = [
-    (lib-extra.mkFlakePath /hosts/common)
-    (lib-extra.mkFlakePath /hosts/modules)
+    (libExtra.mkFlakePath /hosts/common)
+    (libExtra.mkFlakePath /hosts/modules)
   ] ++ [
     ./hardware.nix
   ];

@@ -12,6 +12,7 @@
     ./printing.nix
     ./sunshine.nix
     ./suwayomi.nix
+    ./vaultwarden.nix
   ];
 
 }
