@@ -123,12 +123,15 @@
       }
     },
     "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
       "locked": {
-        "lastModified": 1605370193,
-        "narHash": "sha256-YyMTf3URDL/otKdKgtoMChu4vfVL3vCMkRqpGifhUn0=",
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "5021eac20303a61fafe17224c087f5519baed54d",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
         "type": "github"
       },
       "original": {
@@ -167,15 +170,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1696101549,
-        "narHash": "sha256-Y9s+S2B+R9z3Q0GVovDLu+GS4OhNH2k6D4JsmKM+r/E=",
+        "lastModified": 1743629487,
+        "narHash": "sha256-MjnEgT9MhO2HknLhrx7GvBRVxdOzSKydIJMyzawe2Fk=",
         "owner": "tadfisher",
         "repo": "gradle2nix",
-        "rev": "68327d0c5dc93bc97e3bb28b716da9fbbce1f942",
+        "rev": "293ecbdc10d32d9d4bdc2d23213b9be09ce247ee",
         "type": "github"
       },
       "original": {
         "owner": "tadfisher",
+        "ref": "v2",
         "repo": "gradle2nix",
         "type": "github"
       }
@@ -187,11 +191,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752093218,
-        "narHash": "sha256-+3rXu8ewcNDi65/2mKkdSGrivQs5zEZVp5aYszXC0d0=",
+        "lastModified": 1752348734,
+        "narHash": "sha256-w3s5y+9Nn0oKUk6yS77YG1iRSizNStxqhEsgIlJKRtw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "206ed3c71418b52e176f16f58805c96e84555320",
+        "rev": "ea24675e4f4f4c494ccb04f6645db2a394d348ee",
         "type": "github"
       },
       "original": {
@@ -272,15 +276,15 @@
           "nixpkgs"
         ],
         "pre-commit-hooks": "pre-commit-hooks",
-        "systems": "systems",
+        "systems": "systems_2",
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1752070437,
-        "narHash": "sha256-zuDkrUTqT1MUfe/bNM3jBLPT0FIIhTJ2s+M59zKI2rs=",
+        "lastModified": 1752337367,
+        "narHash": "sha256-kEumflYEdQSrZZQEr7kik2sBfFohEx0TsJB1rBVAQy4=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "6375e471f33bf1a008a005e963c57a12c7ff0e94",
+        "rev": "d0f58baf296a2cdd5df0f82212fe17dfbef8438e",
         "type": "github"
       },
       "original": {
@@ -469,11 +473,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752138162,
-        "narHash": "sha256-ClgAN2eyqlkRjpnU9y0AL+Rg3ICs5k2sJvCjuSit57A=",
+        "lastModified": 1752199438,
+        "narHash": "sha256-xSBMmGtq8K4Qv80TMqREmESCAsRLJRHAbFH2T/2Bf1Y=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "11500b1ad1c01f7ade38b487924ae89f69f3d022",
+        "rev": "d34d9412556d3a896e294534ccd25f53b6822e80",
         "type": "github"
       },
       "original": {
@@ -501,11 +505,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1751943650,
-        "narHash": "sha256-7orTnNqkGGru8Je6Un6mq1T8YVVU/O5kyW4+f9C1mZQ=",
+        "lastModified": 1752162966,
+        "narHash": "sha256-3MxxkU8ZXMHXcbFz7UE4M6qnIPTYGcE/7EMqlZNnVDE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "88983d4b665fb491861005137ce2b11a9f89f203",
+        "rev": "10e687235226880ed5e9f33f1ffa71fe60f2638a",
         "type": "github"
       },
       "original": {
@@ -523,11 +527,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752147239,
-        "narHash": "sha256-4p1dw/ITmIYMNWkp18lMGDjWpEcoE6xb1FeTJRq8VeI=",
+        "lastModified": 1752347907,
+        "narHash": "sha256-eALx5WQDDwVH6jFuv1LgpgKsCqHiclyzTt3nUTakq48=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3a862f9ce8082d3a935649811dfdb3272ea54688",
+        "rev": "00755e1c9e22c85861df447575ede712dd67485f",
         "type": "github"
       },
       "original": {
@@ -605,7 +609,8 @@
         "rbonsai-src": "rbonsai-src",
         "rmatrix-src": "rmatrix-src",
         "sops-nix": "sops-nix",
-        "suwayomi-server-src": "suwayomi-server-src"
+        "suwayomi-server-src": "suwayomi-server-src",
+        "suwayomi-webui-src": "suwayomi-webui-src"
       }
     },
     "sops-nix": {
@@ -631,20 +636,51 @@
     "suwayomi-server-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1752013595,
-        "narHash": "sha256-5AnoZfCZpI46OWQ0hYQHRC+Fy6CZCr2XK6+Z0HPjfsQ=",
+        "lastModified": 1751825310,
+        "narHash": "sha256-3hJKUagyavLuEP1n42QpS1fy4Y6MdDalMGumEshmv/Q=",
         "owner": "Suwayomi",
-        "repo": "Suwayomi-Server",
-        "rev": "8323ef5f4180f0bb9040757c216f98b4116e50c8",
+        "repo": "Suwayomi-Server-preview",
+        "rev": "8ad780a251eefb239abfdf69a8fabf2a1dcb6070",
         "type": "github"
       },
       "original": {
         "owner": "Suwayomi",
-        "repo": "Suwayomi-Server",
+        "repo": "Suwayomi-Server-preview",
+        "type": "github"
+      }
+    },
+    "suwayomi-webui-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752337449,
+        "narHash": "sha256-Vi5P+ryYKTqNOzZubuzqCZjS5HnHXSUWDor+D+x6jbg=",
+        "owner": "Suwayomi",
+        "repo": "Suwayomi-WebUI-preview",
+        "rev": "d7a36ebd152fba679b7fc0a609844a2121945800",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Suwayomi",
+        "repo": "Suwayomi-WebUI-preview",
         "type": "github"
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",

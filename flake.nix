@@ -35,7 +35,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     gradle2nix = {
-      url = "github:tadfisher/gradle2nix";
+      url = "github:tadfisher/gradle2nix?ref=v2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,7 +49,11 @@
       flake = false;
     };
     suwayomi-server-src = {
-      url = "github:Suwayomi/Suwayomi-Server";
+      url = "github:Suwayomi/Suwayomi-Server-preview";
+      flake = false;
+    };
+    suwayomi-webui-src = {
+      url = "github:Suwayomi/Suwayomi-WebUI-preview";
       flake = false;
     };
 

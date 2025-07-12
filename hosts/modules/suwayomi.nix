@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.nixosModules;
+  dataDir = "/var/lib/suwayomi";
 in
 with lib;
 {
@@ -15,9 +16,8 @@ with lib;
   config = mkIf cfg.suwayomi {
     services.suwayomi-server = {
       enable = true;
-      package = pkgs.suwayomi-server-update;
 
-      dataDir = "/var/lib/suwayomi";
+      inherit dataDir;
       openFirewall = true;
 
       settings = {
@@ -26,6 +26,31 @@ with lib;
         server.initialOpenInBrowserEnable = false;
       };
     };
-  };
 
+    systemd.services.suwayomi-webui = {
+      description = "Unpack and inject WebUI for Suwayomi";
+      after = [ "network.target" ];
+      before = [ "suwayomi-server.service" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = pkgs.writeShellScript "suwayomi-webui-copy" ''
+          set -euo pipefail
+
+          src="${pkgs.suwayomi-server}/lib/webUI"
+          dst="${dataDir}/.local/share/Tachidesk/webUI"
+
+          rm -rf "$dst"
+          mkdir -p "$(dirname "$dst")"
+          cp -r "$src" "$dst"
+        '';
+      };
+    };
+
+    systemd.services.suwayomi-server = {
+      after = [ "suwayomi-webui.service" ];
+    };
+  };
 }

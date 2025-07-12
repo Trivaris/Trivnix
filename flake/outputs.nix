@@ -65,20 +65,24 @@ let
     ) users
   );
 
+  # Import custom overlays
+  overlays = import (libExtra.mkFlakePath /overlays) { inherit inputs; };
+
 in
 {
   # Packages for all defined systems
-  packages = forAllSystems (
-    arch:
-    import ../overlays/additions {
-      inherit inputs;
-      pkgs = inputs.nixpkgs.legacyPackages.${arch};
+  packages = forAllSystems (system:
+    let
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = with overlays; [ additions modifications stable-packages nur ];
+        config.allowUnfree = true;
+      };
+    in {
+      inherit (pkgs) rmatrix rbonsai suwayomi-server;
     }
   );
 
-  # Import custom overlays
-  overlays = import ../overlays { inherit inputs; };
-
-  inherit nixosConfigurations homeConfigurations;
+  inherit nixosConfigurations homeConfigurations overlays;
 
 }

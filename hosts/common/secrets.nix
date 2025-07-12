@@ -3,11 +3,12 @@
   pkgs,
   usernames,
   configname,
+  libExtra,
   ...
 }:
 let
-  commonSecrets = inputs.self + "/secrets/hosts/common.yaml";
-  hostSecrets = inputs.self + "/secrets/hosts/${configname}.yaml";
+  commonSecrets = libExtra.mkFlakePath /secrets/hosts/common.yaml;
+  hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${configname}.yaml";
 
   perUserSecrets = builtins.concatLists (
     builtins.map (
@@ -65,6 +66,9 @@ in
         group = "root";
         mode = "0600";
         restartUnits = [ "sshd.service" ];
+      };
+      vaultwarden-admin-token = {
+        sopsFile = commonSecrets;
       };
     };
   };

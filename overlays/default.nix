@@ -4,17 +4,18 @@
 
   additions =
     final: _prev:
-    import ./additions {
-      inherit inputs;
-      pkgs = final;
+    {
+      rmatrix = final.callPackage ./pkgs/rmatrix.nix { inherit inputs; pkgs = final; };
+      rbonsai = final.callPackage ./pkgs/rbonsai.nix { inherit inputs; pkgs = final; };
     };
 
   modifications =
     final: prev:
-    import ./modifications {
-      inherit inputs;
-      pkgs = prev;
-  };
+    {
+      suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
+        import ./pkgs/suwayomi-server { inherit inputs; pkgs = final; }
+      );
+    };
 
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {

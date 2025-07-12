@@ -2,11 +2,12 @@
   inputs,
   username,
   configname,
+  libExtra,
   ...
 }:
 let
-  commonSecrets = inputs.self + "/secrets/home/${username}/common.yaml";
-  userSecrets = inputs.self + "/secrets/home/${username}/${configname}.yaml";
+  commonSecrets = libExtra.mkFlakePath "/secrets/home/${username}/common.yaml";
+  userSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
 in
 {
 
