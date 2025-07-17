@@ -11,9 +11,14 @@ in
 
   users.users."root" = {
     hashedPasswordFile = config.sops.secrets."user-passwords/root".path;
-    openssh.authorizedKeys.keys = map (
-      host: builtins.readFile (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_${host}.pub")
-    ) hosts;
+    openssh.authorizedKeys.keys = map builtins.readFile (
+      builtins.concatLists (
+        map (host: [
+          (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_sk_${host}_a.pub")
+          (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_sk_${host}_c.pub")
+        ]) hosts
+      )
+    );
   };
 
 }

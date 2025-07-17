@@ -1,16 +1,21 @@
 {
   username,
+  config,
   ...
 }:
 {
 
   programs.ssh = {
-    addKeysToAgent = "yes";
+    enable = true;
+    addKeysToAgent = false;
 
     matchBlocks = {
       "*" = {
-        identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
+        identityFile = [
+          config.sops.secrets."ssh-private-key/a".path
+          config.sops.secrets."ssh-private-key/c".path
+        ];
       };
 
       desktop = {
