@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.nixosModules;
-  cloudflareEnv = "/etc/cloudflare-api-token.env";
 in
 with lib;
 {

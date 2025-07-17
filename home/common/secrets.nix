@@ -24,14 +24,6 @@ in
 
     secrets = {
 
-      "ssh-user-key/key" = {
-        path = "/home/${username}/.ssh/id_ed25519";
-        sopsFile = hostSecrets;
-      };
-      "ssh-user-key/passphrase" = {
-        sopsFile = hostSecrets;
-      };
-
       "smtp-passwords/public" = { };
       "smtp-passwords/private" = { };
       "smtp-passwords/school" = { };
