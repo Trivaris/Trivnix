@@ -9,9 +9,9 @@ in
 with lib;
 {
 
-  options.nixosModules.docker = mkEnableOption "Docker";
+  options.nixosModules.docker.enable = mkEnableOption "Docker";
 
-  config = mkIf cfg.docker {
+  config = mkIf cfg.docker.enable {
     virtualisation.docker.enable = true;
 
   };

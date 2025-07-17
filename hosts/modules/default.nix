@@ -3,15 +3,18 @@
 
   imports = [
     ./bluetooth.nix
+    ./ddclient.nix
     ./docker.nix
     ./fish.nix
     ./greet.nix
     ./hyprland.nix
     ./kde.nix
+    ./keeweb.nix
+    ./nextcloud.nix
     ./openssh.nix
     ./printing.nix
-    ./sunshine.nix
     ./suwayomi.nix
+    ./sunshine.nix
     ./vaultwarden.nix
   ];
 

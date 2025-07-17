@@ -10,9 +10,9 @@ in
 with lib;
 {
 
-  options.homeModules.font = mkEnableOption "fonts";
+  options.homeModules.font.enable = mkEnableOption "fonts";
 
-  config = mkIf cfg.font {
+  config = mkIf cfg.font.enable {
     home.packages = with pkgs; [
       fira-code-symbols
       nerd-fonts.fira-code

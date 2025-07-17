@@ -10,12 +10,12 @@
 
   config = {
     nixosModules = {
-      bluetooth = true;
-      fish = true;
-      greet = true;
-      kde = true;
-      openssh = true;
-      printing = true;
+      bluetooth.enable = true;
+      fish.enable = true;
+      greet.enable = true;
+      kde.enable = true;
+      openssh.enable = true;
+      printing.enable = true;
     };
   };
 

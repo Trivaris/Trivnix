@@ -10,15 +10,13 @@ in
 with lib;
 {
 
-  options.homeModules.waybar = mkEnableOption "waybar";
+  options.homeModules.waybar.enable = mkEnableOption "waybar";
 
-  config = mkIf cfg.waybar {
+  config = mkIf cfg.waybar.enable {
 
     programs.waybar = {
       enable = true;
       style = ''
-
-
 
         @define-color background-darker rgba(30, 31, 41, 230);
         @define-color background #282a36;

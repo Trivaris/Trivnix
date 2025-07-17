@@ -7,7 +7,7 @@
 with lib;
 {
 
-  config = mkIf config.homeModules.hyprland {
+  config = mkIf config.homeModules.hyprland.enable {
     services.hyprpaper = {
       enable = true;
       settings = {

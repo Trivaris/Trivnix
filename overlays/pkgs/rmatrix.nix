@@ -5,7 +5,8 @@
 
 pkgs.rustPlatform.buildRustPackage {
 
-  name = "r-matrix";
+  pname = "r-matrix";
+  version = inputs.rmatrix-src.shortRev;
 
   src = inputs.rmatrix-src;
 

@@ -10,18 +10,19 @@ in
 with lib;
 {
 
-  options.sshPort = lib.mkOption {
-    type = lib.types.int;
-    default = 22;
-    description = "OpenSSH server port";
+  options.nixosModules.openssh = {
+    enable = mkEnableOption "OpenSSH Server";
+    port = lib.mkOption {
+      type = lib.types.int;
+      default = 22;
+      description = "OpenSSH server port";
+    };
   };
 
-  options.nixosModules.openssh = mkEnableOption "OpenSSH Server";
-
-  config = mkIf cfg.openssh {
+  config = mkIf cfg.openssh.enable {
     services.openssh = {
       enable = true;
-      ports = [ config.sshPort ];
+      ports = [ config.nixosModules.openssh.port ];
 
       settings = {
         PasswordAuthentication = false;
@@ -42,7 +43,7 @@ with lib;
       ];
     };
 
-    networking.firewall.allowedTCPPorts = [ config.sshPort ];
+    networking.firewall.allowedTCPPorts = [ config.nixosModules.openssh.port ];
   };
 
 }

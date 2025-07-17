@@ -11,17 +11,17 @@ in
     ];
 
     homeModules = {
-      hyprland = true;
-      librewolf = false;
-      wezterm = true;
-      cli-utils = true;
-      fish = true;
-      font = true;
-      fzf = true;
-      nvim = true;
-      rofi = true;
-      vscodium = true;
-      waybar = true;
+      hyprland.enable = true;
+      librewolf.enable = false;
+      wezterm.enable = true;
+      cli-utils.enable = true;
+      fish.enable = true;
+      font.enable = true;
+      fzf.enable = true;
+      nvim.enable = true;
+      rofi.enable = true;
+      vscodium.enable = true;
+      waybar.enable = true;
     };
 
     inherit userGitEmail;
@@ -35,9 +35,9 @@ in
     ];
 
     homeModules = {
-      cli-utils = true;
-      fish = true;
-      vscodium = true;
+      cli-utils.enable = true;
+      fish.enable = true;
+      vscodium.enable = true;
     };
 
     inherit userGitEmail;
@@ -50,9 +50,9 @@ in
     ];
 
     homeModules = {
-      cli-utils = true;
-      fish = true;
-      vscodium = true;
+      cli-utils.enable = true;
+      fish.enable = true;
+      vscodium.enable = true;
     };
 
     inherit userGitEmail;

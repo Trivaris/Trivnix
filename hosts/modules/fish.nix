@@ -10,9 +10,9 @@ in
 with lib;
 {
 
-  options.nixosModules.fish = mkEnableOption "Fish";
+  options.nixosModules.fish.enable = mkEnableOption "Fish";
 
-  config = mkIf cfg.fish {
+  config = mkIf cfg.fish.enable {
     programs.fish.enable = true;
     users.defaultUserShell = pkgs.fish;
   };

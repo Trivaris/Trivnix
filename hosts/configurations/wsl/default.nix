@@ -17,12 +17,14 @@
 
   config = {
     nixosModules = {
-      fish = true;
-      kde = true;
-      openssh = true;
+      fish.enable = true;
+      kde.enable = true;
+      openssh = {
+        enable = true;
+        port = 2222;
+      };
     };
 
-    sshPort = 2222;
 
     wsl = {
       enable = true;

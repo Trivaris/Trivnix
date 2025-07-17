@@ -4,9 +4,9 @@ let
 in
 with lib;
 {
-  options.homeModules.rofi = mkEnableOption "rofi";
+  options.homeModules.rofi.enable = mkEnableOption "rofi";
 
-  config = mkIf cfg.rofi {
+  config = mkIf cfg.rofi.enable {
     programs.rofi = {
       enable = true;
       theme =

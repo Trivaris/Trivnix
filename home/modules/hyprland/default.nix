@@ -10,8 +10,9 @@ with lib;
     ./settings.nix
   ];
 
-  options.homeModules.hyprland = mkEnableOption "hyprland";
-  config = mkIf cfg.hyprland {
+  options.homeModules.hyprland.enable = mkEnableOption "hyprland";
+  
+  config = mkIf cfg.hyprland.enable {
     wayland.windowManager.hyprland = {
       enable = true;
     };

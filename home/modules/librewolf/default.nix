@@ -10,9 +10,9 @@ in
 with lib;
 {
 
-  options.homeModules.librewolf = mkEnableOption "librewolf";
+  options.homeModules.librewolf.enable = mkEnableOption "librewolf";
 
-  config = mkIf cfg.librewolf {
+  config = mkIf cfg.librewolf.enable {
 
     programs.firefox = {
       enable = true;

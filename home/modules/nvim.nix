@@ -11,9 +11,9 @@ in
 with lib;
 {
 
-  options.homeModules.nvim = mkEnableOption "nvim";
+  options.homeModules.nvim.enable = mkEnableOption "nvim";
 
-  config = mkIf cfg.nvim {
+  config = mkIf cfg.nvim.enable {
     home.packages = with pkgs; [
       neovim
     ];

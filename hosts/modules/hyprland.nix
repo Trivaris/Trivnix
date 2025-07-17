@@ -11,9 +11,9 @@ in
 with lib;
 {
 
-  options.nixosModules.hyprland = mkEnableOption "Hyprland";
+  options.nixosModules.hyprland.enable = mkEnableOption "Hyprland";
 
-  config = mkIf cfg.hyprland {
+  config = mkIf cfg.hyprland.enable {
     programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;

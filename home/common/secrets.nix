@@ -7,7 +7,7 @@
 }:
 let
   commonSecrets = libExtra.mkFlakePath "/secrets/home/${username}/common.yaml";
-  userSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
+  hostSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
 in
 {
 
@@ -26,10 +26,10 @@ in
 
       "ssh-user-key/key" = {
         path = "/home/${username}/.ssh/id_ed25519";
-        sopsFile = userSecrets;
+        sopsFile = hostSecrets;
       };
       "ssh-user-key/passphrase" = {
-        sopsFile = userSecrets;
+        sopsFile = hostSecrets;
       };
 
       "smtp-passwords/public" = { };

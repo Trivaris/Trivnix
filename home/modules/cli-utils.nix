@@ -10,9 +10,9 @@ in
 with lib;
 {
 
-  options.homeModules.cli-utils = mkEnableOption "cli tools";
+  options.homeModules.cli-utils.enable = mkEnableOption "cli tools";
 
-  config = mkIf cfg.cli-utils {
+  config = mkIf cfg.cli-utils.enable {
 
     home.packages = with pkgs; [
       procs

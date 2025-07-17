@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -10,9 +9,9 @@ in
 with lib;
 {
 
-  options.nixosModules.kde = mkEnableOption "KDE Plasma";
+  options.nixosModules.kde.enable = mkEnableOption "KDE Plasma";
 
-  config = mkIf cfg.kde {
+  config = mkIf cfg.kde.enable {
     services.displayManager.sddm.enable = true;
     services.desktopManager.plasma6.enable = true;
     programs.dconf.enable = true;

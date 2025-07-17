@@ -5,9 +5,9 @@ in
 with lib;
 {
 
-  options.homeModules.fzf = mkEnableOption "fzf";
+  options.homeModules.fzf.enable = mkEnableOption "fzf";
 
-  config = mkIf cfg.fzf {
+  config = mkIf cfg.fzf.enable {
     programs.fzf = {
       enable = true;
       enableFishIntegration = true;

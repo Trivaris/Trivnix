@@ -11,9 +11,9 @@ in
 with lib;
 {
 
-  options.nixosModules.suwayomi = mkEnableOption "suwayomi";
+  options.nixosModules.suwayomi.enable = mkEnableOption "suwayomi";
 
-  config = mkIf cfg.suwayomi {
+  config = mkIf cfg.suwayomi.enable {
     services.suwayomi-server = {
       enable = true;
 

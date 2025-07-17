@@ -10,9 +10,9 @@ in
 with lib;
 {
 
-  options.nixosModules.greet = mkEnableOption "TUI Greeter";
+  options.nixosModules.greet.enable = mkEnableOption "TUI Greeter";
 
-  config = mkIf cfg.greet {
+  config = mkIf cfg.greet.enable {
     services.greetd = {
       enable = true;
       settings = {

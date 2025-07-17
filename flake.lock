@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752113600,
-        "narHash": "sha256-7LYDxKxZgBQ8LZUuolAQ8UkIB+jb4A2UmiR+kzY9CLI=",
+        "lastModified": 1752541678,
+        "narHash": "sha256-dyhGzkld6jPqnT/UfGV2oqe7tYn7hppAqFvF3GZTyXY=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "79264292b7e3482e5702932949de9cbb69fedf6d",
+        "rev": "2bf3421f7fed5c84d9392b62dcb9d76ef09796a7",
         "type": "github"
       },
       "original": {
@@ -191,11 +191,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752348734,
-        "narHash": "sha256-w3s5y+9Nn0oKUk6yS77YG1iRSizNStxqhEsgIlJKRtw=",
+        "lastModified": 1752603129,
+        "narHash": "sha256-S+wmHhwNQ5Ru689L2Gu8n1OD6s9eU9n9mD827JNR+kw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ea24675e4f4f4c494ccb04f6645db2a394d348ee",
+        "rev": "e8c19a3cec2814c754f031ab3ae7316b64da085b",
         "type": "github"
       },
       "original": {
@@ -280,11 +280,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1752337367,
-        "narHash": "sha256-kEumflYEdQSrZZQEr7kik2sBfFohEx0TsJB1rBVAQy4=",
+        "lastModified": 1752698382,
+        "narHash": "sha256-fxax8Xpn59Uqwj753Cp1KAtI09Wd7zbgTZNxtFKzhJk=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "d0f58baf296a2cdd5df0f82212fe17dfbef8438e",
+        "rev": "49d73d1893168f493b41ac9873f6022d79e75c83",
         "type": "github"
       },
       "original": {
@@ -473,11 +473,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752199438,
-        "narHash": "sha256-xSBMmGtq8K4Qv80TMqREmESCAsRLJRHAbFH2T/2Bf1Y=",
+        "lastModified": 1752682362,
+        "narHash": "sha256-ZNIpqCG/CfhmV+TgIeyO/XbhDjSWpwWokHM44j0Mn0w=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "d34d9412556d3a896e294534ccd25f53b6822e80",
+        "rev": "20001f9bf0aaf2b1c307e43a5eec8cf8f800fe14",
         "type": "github"
       },
       "original": {
@@ -489,11 +489,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751984180,
-        "narHash": "sha256-LwWRsENAZJKUdD3SpLluwDmdXY9F45ZEgCb0X+xgOL0=",
+        "lastModified": 1752480373,
+        "narHash": "sha256-JHQbm+OcGp32wAsXTE/FLYGNpb+4GLi5oTvCxwSoBOA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9807714d6944a957c2e036f84b0ff8caf9930bc0",
+        "rev": "62e0f05ede1da0d54515d4ea8ce9c733f12d9f08",
         "type": "github"
       },
       "original": {
@@ -505,11 +505,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1752162966,
-        "narHash": "sha256-3MxxkU8ZXMHXcbFz7UE4M6qnIPTYGcE/7EMqlZNnVDE=",
+        "lastModified": 1752620740,
+        "narHash": "sha256-f3pO+9lg66mV7IMmmIqG4PL3223TYMlnlw+pnpelbss=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "10e687235226880ed5e9f33f1ffa71fe60f2638a",
+        "rev": "32a4e87942101f1c9f9865e04dc3ddb175f5f32e",
         "type": "github"
       },
       "original": {
@@ -527,11 +527,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752347907,
-        "narHash": "sha256-eALx5WQDDwVH6jFuv1LgpgKsCqHiclyzTt3nUTakq48=",
+        "lastModified": 1752705337,
+        "narHash": "sha256-402Buiz6l3GmyhYRaQ69HCsvEwrU1up3T71RDeAdmX0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "00755e1c9e22c85861df447575ede712dd67485f",
+        "rev": "bafc355bff627bc38b3ca14c93e755f7aff5f5d4",
         "type": "github"
       },
       "original": {
@@ -610,7 +610,8 @@
         "rmatrix-src": "rmatrix-src",
         "sops-nix": "sops-nix",
         "suwayomi-server-src": "suwayomi-server-src",
-        "suwayomi-webui-src": "suwayomi-webui-src"
+        "suwayomi-webui-src": "suwayomi-webui-src",
+        "udp-proxy-2020-src": "udp-proxy-2020-src"
       }
     },
     "sops-nix": {
@@ -620,11 +621,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751606940,
-        "narHash": "sha256-KrDPXobG7DFKTOteqdSVeL1bMVitDcy7otpVZWDE6MA=",
+        "lastModified": 1752544651,
+        "narHash": "sha256-GllP7cmQu7zLZTs9z0J2gIL42IZHa9CBEXwBY9szT0U=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "3633fc4acf03f43b260244d94c71e9e14a2f6e0d",
+        "rev": "2c8def626f54708a9c38a5861866660395bb3461",
         "type": "github"
       },
       "original": {
@@ -636,11 +637,11 @@
     "suwayomi-server-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1751825310,
-        "narHash": "sha256-3hJKUagyavLuEP1n42QpS1fy4Y6MdDalMGumEshmv/Q=",
+        "lastModified": 1752608857,
+        "narHash": "sha256-tEKN7zb2G0S4uyVAgzERhXW9rUEO5GCCkinhfalZUr0=",
         "owner": "Suwayomi",
         "repo": "Suwayomi-Server-preview",
-        "rev": "8ad780a251eefb239abfdf69a8fabf2a1dcb6070",
+        "rev": "c077e1ae689954e471e6b45743c2e6c30be4be3a",
         "type": "github"
       },
       "original": {
@@ -652,11 +653,11 @@
     "suwayomi-webui-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1752337449,
-        "narHash": "sha256-Vi5P+ryYKTqNOzZubuzqCZjS5HnHXSUWDor+D+x6jbg=",
+        "lastModified": 1752536442,
+        "narHash": "sha256-xRcH2GXjLSJSmpYl3yokF1AnEMbH9ErhQGwgFFt9J6Y=",
         "owner": "Suwayomi",
         "repo": "Suwayomi-WebUI-preview",
-        "rev": "d7a36ebd152fba679b7fc0a609844a2121945800",
+        "rev": "fc608a741e54fccaa91a044e3ee0ba425193689c",
         "type": "github"
       },
       "original": {
@@ -692,6 +693,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "udp-proxy-2020-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747402345,
+        "narHash": "sha256-gAH4wBZP/8YREDjEreeKE3Yl2njI12ef/800VaDT79Y=",
+        "owner": "synfinatic",
+        "repo": "udp-proxy-2020",
+        "rev": "72742faabb019146a41e0551fc29f9a77fc631e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "synfinatic",
+        "repo": "udp-proxy-2020",
         "type": "github"
       }
     },

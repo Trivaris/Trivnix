@@ -10,9 +10,9 @@ in
 with lib;
 {
 
-  options.homeModules.fish = mkEnableOption "fish";
+  options.homeModules.fish.enable = mkEnableOption "fish";
 
-  config = mkIf cfg.fish {
+  config = mkIf cfg.fish.enable {
     programs.fish = {
       enable = true;
       loginShellInit = ''

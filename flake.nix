@@ -56,6 +56,10 @@
       url = "github:Suwayomi/Suwayomi-WebUI-preview";
       flake = false;
     };
+    udp-proxy-2020-src = {
+      url = "github:synfinatic/udp-proxy-2020";
+      flake = false;
+    };
 
     # Personal
     dotfiles = {

@@ -6,14 +6,47 @@
     (libExtra.mkFlakePath /hosts/modules)
   ] ++ [
     ./hardware.nix
+    ./secrets.nix
   ];
 
   config = {
     nixosModules = {
-      fish = true;
-      openssh = true;
-      suwayomi = true;
-      # vaultwarden = true;
+      fish.enable = true;
+      openssh.enable = true;
+      suwayomi.enable = true;
+      vaultwarden = {
+        enable = false;
+        port = 25588;
+        domain = "vault.trivaris.org";
+        email = "cloudflare@tripple.lurdane.de";
+      };
+      nextcloud = {
+        enable = true;
+        domain = "cloud.trivaris.org";
+        port = 25588;
+        email = "cloudflare@tripple.lurdane.de";
+      };
+      keeweb = {
+        enable = false;
+        domain = "vault.trivaris.org";
+        port = 25588;
+        email = "cloudflare@tripple.lurdane.de";
+      };
+      sunshine = {
+        enable = false;
+        hostMac = "08:BF:B8:42:59:7C";
+        hostIP = "192.168.178.70";
+      };
+      ddclient = {
+        enable = true;
+        zone = "trivaris.org";
+        subdomains = [
+          "host"
+          "vault"
+        ];
+        email = "cloudflare@tripple.lurdane.de";
+        protocol = "cloudflare";
+      };
     };
   };
 

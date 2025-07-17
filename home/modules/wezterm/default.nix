@@ -5,8 +5,8 @@ in
 with lib;
 {
 
-  options.homeModules.wezterm = mkEnableOption "wezterm";
-  config = mkIf cfg.wezterm {
+  options.homeModules.wezterm.enable = mkEnableOption "wezterm";
+  config = mkIf cfg.wezterm.enable {
     programs.wezterm = {
       enable = true;
       enableZshIntegration = true;

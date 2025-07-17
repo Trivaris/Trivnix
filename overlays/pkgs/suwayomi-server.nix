@@ -7,7 +7,7 @@ let
   webuiRef = (builtins.fromJSON (builtins.readFile (inputs.suwayomi-webui-src + "/index.json"))).latest;
   webuiZip = pkgs.fetchurl {
     url = "https://github.com/Suwayomi/Suwayomi-WebUI-preview/releases/download/${webuiRef}/Suwayomi-WebUI-${webuiRef}.zip";
-    hash = "sha256-bKud2Vdq2aT6clylzRQqXbdyoZjikwmCcvEINhsu+Yo=";
+    hash = "sha256-LkmS1Powt8TaGMADzT2x+PrUNpoOPzbke8yFlOaOKRM=";
   };
   
   jdk = pkgs.jdk21_headless;
@@ -19,7 +19,7 @@ in
   
   src = pkgs.fetchurl {
     url = "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/${serverRef}/Suwayomi-Server-${serverRef}.jar";
-    hash = "sha256-HYCjj7gbIsip4z/JVw+Zu258TYGo/N1ccov+2YpO64E=";
+    hash = "sha256-QwBoaQL15hEz0MqBH0x+xZSYqLsmKZjPKWR6Je4exD4=";
   };
   
   buildPhase = ''

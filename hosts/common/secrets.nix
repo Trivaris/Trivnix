@@ -67,9 +67,6 @@ in
         mode = "0600";
         restartUnits = [ "sshd.service" ];
       };
-      vaultwarden-admin-token = {
-        sopsFile = commonSecrets;
-      };
     };
   };
 

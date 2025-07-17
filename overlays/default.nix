@@ -7,13 +7,15 @@
     {
       rmatrix = final.callPackage ./pkgs/rmatrix.nix { inherit inputs; pkgs = final; };
       rbonsai = final.callPackage ./pkgs/rbonsai.nix { inherit inputs; pkgs = final; };
+      vaultwarden-web-vault = final.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs; pkgs = final; };
+      keeweb = final.callPackage ./pkgs/keeweb.nix { inherit inputs; pkgs = final; };
     };
 
   modifications =
     final: prev:
     {
       suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
-        import ./pkgs/suwayomi-server { inherit inputs; pkgs = final; }
+        import ./pkgs/suwayomi-server.nix { inherit inputs; pkgs = final; }
       );
     };
 

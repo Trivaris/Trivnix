@@ -5,7 +5,8 @@
 
 pkgs.rustPlatform.buildRustPackage {
 
-  name = "rbonsai";
+  pname = "rbonsai";
+  version = inputs.rbonsai-src.shortRev;
 
   src = inputs.rbonsai-src;
 

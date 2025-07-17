@@ -14,8 +14,8 @@ in
 with lib;
 {
 
-  options.homeModules.vscodium = mkEnableOption "vscodium";
-  config = mkIf cfg.vscodium {
+  options.homeModules.vscodium.enable = mkEnableOption "vscodium";
+  config = mkIf cfg.vscodium.enable {
     home = {
       packages = with pkgs; [
         vscodium
