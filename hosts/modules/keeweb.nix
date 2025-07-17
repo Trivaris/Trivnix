@@ -30,7 +30,6 @@ with lib;
   config = mkIf cfg.keeweb.enable {
 
     networking.firewall.allowedTCPPorts = [ cfg.keeweb.port ];
-    sops.secrets.cloudflare-api-token.path = cloudflareEnv;
 
     services.nginx = {
       enable = true;
@@ -62,21 +61,22 @@ with lib;
         default = false;
 
         locations."/" = {
-          return = "301 https://${cfg.keeweb.domain}$request_uri";
+          return = "301 https://$host:${toString cfg.keeweb.port}$request_uri";
         };
       };
     };
 
     security.acme = {
       acceptTerms = true;
-      defaults.email = cfg.keeweb.email;
-      certs.${cfg.keeweb.domain} = {
+      defaults.email = cfg.vaultwarden.email;
+      certs.${cfg.vaultwarden.domain} = {
         dnsProvider = "cloudflare";
-        environmentFile = cloudflareEnv;
         group = "nginx";
+        credentialFiles = {
+          "CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-api-token.path;
+        };
       };
     };
-    
 
   };
 

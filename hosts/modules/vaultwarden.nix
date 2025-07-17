@@ -7,7 +7,6 @@
 let
   cfg = config.nixosModules;
   envFile = "/etc/vaultwarden.env";
-  cloudflareEnv = "/etc/cloudflare-api-token.env";
 in
 with lib;
 {
@@ -31,16 +30,12 @@ with lib;
   config = mkIf cfg.vaultwarden.enable {
 
     networking.firewall.allowedTCPPorts = [ cfg.vaultwarden.port ];
-    sops.secrets.cloudflare-api-token.path = cloudflareEnv;
     sops.secrets.vaultwarden-admin-token.path = envFile;
 
-    systemd.services.vaultwarden.serviceConfig.ReadOnlyPaths = [ pkgs.vaultwarden-web-vault ];
     services.vaultwarden = {
       enable = true;
       environmentFile = envFile;
       config = {
-        WEB_VAULT_ENABLED = true;
-        WEB_VAULT_FOLDER = "${pkgs.vaultwarden-web-vault}";
         DOMAIN = "https://${cfg.vaultwarden.domain}:${toString cfg.vaultwarden.port}";
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = 8222;
@@ -58,6 +53,13 @@ with lib;
 
       sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
+      appendHttpConfig = ''
+        map $http_upgrade $connection_upgrade {
+          default upgrade;
+          \'\'      "";
+        }
+      '';
+
       virtualHosts.${cfg.vaultwarden.domain} = {
         forceSSL = true;
         default = true;
@@ -68,28 +70,20 @@ with lib;
           ssl = true;
         }];
 
-        locations= {
-        "/" = {
+        locations."/" = {
           proxyPass = "http://127.0.0.1:8222";
           proxyWebsockets = true;
-        };
-        };
-      };
-
-      virtualHosts."${cfg.vaultwarden.domain}-redirect" = {
-        listen = [{
-          addr = "0.0.0.0";
-          port = cfg.vaultwarden.port;
-          ssl = false;
-        }];
-        default = false;
-        serverName = cfg.vaultwarden.domain;
-
-        locations."/" = {
-          return = "301 https://$host:${cfg.vaultwarden.port}$request_uri";
+          
+          extraConfig = ''
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $http_cf_connecting_ip;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+          '';
         };
       };
-
     };
 
     security.acme = {
@@ -97,8 +91,10 @@ with lib;
       defaults.email = cfg.vaultwarden.email;
       certs.${cfg.vaultwarden.domain} = {
         dnsProvider = "cloudflare";
-        environmentFile = cloudflareEnv; # must contain CLOUDFLARE_DNS_API_TOKEN
         group = "nginx";
+        credentialFiles = {
+          "CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-api-token.path;
+        };
       };
     };
     

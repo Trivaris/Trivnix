@@ -15,13 +15,13 @@
       openssh.enable = true;
       suwayomi.enable = true;
       vaultwarden = {
-        enable = false;
+        enable = true;
         port = 25588;
         domain = "vault.trivaris.org";
         email = "cloudflare@tripple.lurdane.de";
       };
       nextcloud = {
-        enable = true;
+        enable = false;
         domain = "cloud.trivaris.org";
         port = 25588;
         email = "cloudflare@tripple.lurdane.de";
@@ -41,11 +41,10 @@
         enable = true;
         zone = "trivaris.org";
         subdomains = [
-          "host"
           "vault"
+          "cloud"
         ];
         email = "cloudflare@tripple.lurdane.de";
-        protocol = "cloudflare";
       };
     };
   };

@@ -29,7 +29,6 @@ with lib;
   config = mkIf cfg.nextcloud.enable {
 
     networking.firewall.allowedTCPPorts = [ cfg.nextcloud.port ];
-    sops.secrets.cloudflare-api-token.path = cloudflareEnv;
 
     services.nextcloud = {
       enable = true;
@@ -87,21 +86,26 @@ with lib;
         default = false;
 
         locations."/" = {
-          return = "301 https://${cfg.nextcloud.domain}$request_uri";
+          return = "301 https://$host:${toString cfg.nextcloud.port}$request_uri";
         };
       };
     };
 
+    systemd.services.lego.environment = {
+      CLOUDFLARE_DNS_API_TOKEN_FILE = config.sops.secrets.cloudflare-api-token.path;
+    };
+
     security.acme = {
       acceptTerms = true;
-      defaults.email = cfg.nextcloud.email;
-      certs.${cfg.nextcloud.domain} = {
+      defaults.email = cfg.vaultwarden.email;
+      certs.${cfg.vaultwarden.domain} = {
         dnsProvider = "cloudflare";
-        environmentFile = cloudflareEnv;
         group = "nginx";
+        credentialFiles = {
+          "CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-api-token.path;
+        };
       };
     };
-    
 
   };
 

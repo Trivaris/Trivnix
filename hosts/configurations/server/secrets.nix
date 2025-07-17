@@ -28,5 +28,11 @@ in
       group = "nginx";
       mode = "0640";
     };
+    cloudflare-api-account-token = {
+      sopsFile = serverSecrets;
+      owner = "root";
+      group = "nginx";
+      mode = "0640";
+    };
   };
 }
