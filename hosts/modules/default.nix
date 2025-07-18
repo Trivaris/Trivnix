@@ -3,6 +3,7 @@
 
   imports = [
     ./bluetooth.nix
+    ./code-server.nix
     ./ddclient.nix
     ./docker.nix
     ./fish.nix

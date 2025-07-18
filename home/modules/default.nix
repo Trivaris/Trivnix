@@ -13,7 +13,6 @@
     ./fzf.nix
     ./nvim.nix
     ./rofi.nix
-    ./vscodium.nix
     ./waybar.nix
   ];
 

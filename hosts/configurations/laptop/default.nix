@@ -6,6 +6,7 @@
     (libExtra.mkFlakePath /hosts/modules)
   ] ++ [
     ./hardware.nix
+    ./secrets.nix
   ];
 
   config = {
@@ -16,6 +17,11 @@
       kde.enable = true;
       openssh.enable = true;
       printing.enable = true;
+      codeServer = {
+        enable = true;
+        domain = "192.168.178.90";
+        port = 7666;
+      };
     };
   };
 

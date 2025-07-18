@@ -20,7 +20,6 @@ in
       fzf.enable = true;
       nvim.enable = true;
       rofi.enable = true;
-      vscodium.enable = true;
       waybar.enable = true;
     };
 
@@ -37,7 +36,6 @@ in
     homeModules = {
       cli-utils.enable = true;
       fish.enable = true;
-      vscodium.enable = true;
     };
 
     inherit userGitEmail;
@@ -52,7 +50,6 @@ in
     homeModules = {
       cli-utils.enable = true;
       fish.enable = true;
-      vscodium.enable = true;
     };
 
     inherit userGitEmail;
