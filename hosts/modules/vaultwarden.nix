@@ -14,6 +14,7 @@ with lib;
     enable = mkEnableOption "vaultwarden";
     port = mkOption {
       type = types.int;
+      default = 8891;
       description = "Internal Port used by the reverse Proxy";
     };
     domain = mkOption {

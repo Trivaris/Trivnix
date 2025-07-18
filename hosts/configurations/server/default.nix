@@ -23,20 +23,22 @@
 
       vaultwarden = {
         enable = true;
-        port = 8888;
         domain = "vault.trivaris.org";
       };
 
       nextcloud = {
         enable = true;
         domain = "cloud.trivaris.org";
-        port = 8889;
       };
 
       codeServer = {
         enable = true;
         domain = "code.trivaris.org";
-        port = 8890;
+      };
+
+      suwayomi = {
+        enable = true;
+        domain = "manga.trivaris.org";
       };
     };
   };

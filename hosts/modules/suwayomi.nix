@@ -16,6 +16,7 @@ with lib;
 
     port = mkOption {
       type = types.int;
+      default = 8890;
       description = "Internal Port used by the reverse Proxy";
     };
 
@@ -28,8 +29,7 @@ with lib;
   config = mkIf cfg.suwayomi.enable {
     services.suwayomi-server = {
       enable = true;
-      inherit dataDir;
-      openFirewall = true;
+      dataDir = dataDir;
 
       settings.server = {
         port = cfg.suwayomi.port;

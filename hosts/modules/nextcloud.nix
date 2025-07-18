@@ -14,6 +14,7 @@ with lib;
     
     port = mkOption {
       type = types.int;
+      default = 8889;
       description = "Internal Port used by the reverse Proxy";
     };
 

@@ -14,6 +14,7 @@ with lib;
 
     port = mkOption {
       type = types.int;
+      default = 8888;
       description = "Internal Port used by the reverse Proxy";
     };
 
@@ -28,6 +29,7 @@ with lib;
       enable = true;
       disableTelemetry = true;
       port = cfg.codeServer.port;
+      host = "127.0.0.1";
       user = "trivaris";
       hashedPassword = "$argon2i$v=19$m=4096,t=3,p=1$VERtWDdiZFhGZk11Y044Sm53NllKdXVQZ3VVPQ$c9o3xk7W5ecGG1H6pgAkcUFtwmJloR2Cz42RooSb/BI";
     };
