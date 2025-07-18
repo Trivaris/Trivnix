@@ -14,7 +14,8 @@ in
     openssh.authorizedKeys.keys = map builtins.readFile (
       builtins.concatLists (
         map (host: [
-          (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_${host}.pub")
+          (libExtra.mkFlakePath "/resources/ssh-pub/host/id_ed25519_${host}.pub")
+          (libExtra.mkFlakePath "/resources/ssh-pub/host/id_ed25519_${host}.pub")
         ]) hosts
       )
     );
