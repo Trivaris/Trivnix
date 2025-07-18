@@ -14,9 +14,6 @@ in
   ];
 
   sops.secrets = {
-    code-server-password = {
-      sopsFile = laptopSecrets;
-      owner = "code-server";
-    };
+
   };
 }

@@ -11,19 +11,30 @@ in
 with lib;
 {
 
-  options.nixosModules.suwayomi.enable = mkEnableOption "suwayomi";
+  options.nixosModules.suwayomi = {
+    enable = mkEnableOption "suwayomi";
+
+    port = mkOption {
+      type = types.int;
+      description = "Internal Port used by the reverse Proxy";
+    };
+
+    domain = mkOption {
+      type = types.str;
+      description = "DNS name";
+    };
+  };
 
   config = mkIf cfg.suwayomi.enable {
     services.suwayomi-server = {
       enable = true;
-
       inherit dataDir;
       openFirewall = true;
 
-      settings = {
-        server.port = 4567;
-        server.systemTrayEnabled = false;
-        server.initialOpenInBrowserEnable = false;
+      settings.server = {
+        port = cfg.suwayomi.port;
+        systemTrayEnabled = false;
+        initialOpenInBrowserEnable = false;
       };
     };
 

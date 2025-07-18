@@ -14,15 +14,11 @@ with lib;
     enable = mkEnableOption "vaultwarden";
     port = mkOption {
       type = types.int;
-      description = "Port of vaultwarden";
+      description = "Internal Port used by the reverse Proxy";
     };
     domain = mkOption {
       type = types.str;
-      description = "DNS name of vaultwarden";
-    };
-    email = mkOption {
-      type = types.str;
-      description = "Email for expiry reminders";
+      description = "DNS name";
     };
   };
 
@@ -35,68 +31,12 @@ with lib;
       enable = true;
       environmentFile = envFile;
       config = {
-        DOMAIN = "https://${cfg.vaultwarden.domain}:${toString cfg.vaultwarden.port}";
+        DOMAIN = "https://${cfg.vaultwarden.domain}:${toString cfg.reverseProxy.port}";
         ROCKET_ADDRESS = "127.0.0.1";
-        ROCKET_PORT = 8222;
+        ROCKET_PORT = cfg.vaultwarden.port;
         SIGNUPS_ALLOWED = true;
       };
     };
-    
-    services.nginx = {
-      enable = true;
-
-      recommendedGzipSettings = true;
-      recommendedOptimisation = true;
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
-
-      sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
-
-      appendHttpConfig = ''
-        map $http_upgrade $connection_upgrade {
-          default upgrade;
-          \'\'      "";
-        }
-      '';
-
-      virtualHosts.${cfg.vaultwarden.domain} = {
-        forceSSL = true;
-        default = true;
-        useACMEHost = cfg.vaultwarden.domain;
-        listen = [{
-          addr = "0.0.0.0";
-          port = cfg.vaultwarden.port;
-          ssl = true;
-        }];
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:8222";
-          proxyWebsockets = true;
-          
-          extraConfig = ''
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection $connection_upgrade;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $http_cf_connecting_ip;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-          '';
-        };
-      };
-    };
-
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = cfg.vaultwarden.email;
-      certs.${cfg.vaultwarden.domain} = {
-        dnsProvider = "cloudflare";
-        group = "nginx";
-        credentialFiles = {
-          "CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-api-token.path;
-        };
-      };
-    };
-    
 
   };
 

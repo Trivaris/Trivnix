@@ -67,6 +67,28 @@ in
         mode = "0600";
         restartUnits = [ "sshd.service" ];
       };
+
+      vaultwarden-admin-token = {
+        sopsFile = commonSecrets;
+        owner = "root";
+      };
+
+      nextcloud-admin-token = {
+        sopsFile = commonSecrets;
+        owner = "root";
+      };
+
+      cloudflare-api-token = {
+        sopsFile = commonSecrets;
+        owner = "root";
+        mode = "0640";
+      };
+
+      cloudflare-api-account-token = {
+        sopsFile = commonSecrets;
+        owner = "root";
+        mode = "0640";
+      };
     };
   };
 

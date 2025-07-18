@@ -13,38 +13,30 @@
     nixosModules = {
       fish.enable = true;
       openssh.enable = true;
-      suwayomi.enable = true;
+
+      reverseProxy = {
+        enable = true;
+        email = "cloudflare@tripple.lurdane.de";
+        zone = "trivaris.org";
+        port = 25588;
+      };
+
       vaultwarden = {
         enable = true;
-        port = 25588;
+        port = 8888;
         domain = "vault.trivaris.org";
-        email = "cloudflare@tripple.lurdane.de";
       };
+
       nextcloud = {
-        enable = false;
-        domain = "cloud.trivaris.org";
-        port = 25588;
-        email = "cloudflare@tripple.lurdane.de";
-      };
-      keeweb = {
-        enable = false;
-        domain = "vault.trivaris.org";
-        port = 25588;
-        email = "cloudflare@tripple.lurdane.de";
-      };
-      sunshine = {
-        enable = false;
-        hostMac = "08:BF:B8:42:59:7C";
-        hostIP = "192.168.178.70";
-      };
-      ddclient = {
         enable = true;
-        zone = "trivaris.org";
-        subdomains = [
-          "vault"
-          "cloud"
-        ];
-        email = "cloudflare@tripple.lurdane.de";
+        domain = "cloud.trivaris.org";
+        port = 8889;
+      };
+
+      codeServer = {
+        enable = true;
+        domain = "code.trivaris.org";
+        port = 8890;
       };
     };
   };

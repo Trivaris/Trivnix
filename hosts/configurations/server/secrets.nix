@@ -14,25 +14,6 @@ in
   ];
 
   sops.secrets = {
-    vaultwarden-admin-token = {
-      sopsFile = serverSecrets;
-      owner = "nginx";
-    };
-    nextcloud-admin-token = {
-      sopsFile = serverSecrets;
-      owner = "root";
-    };
-    cloudflare-api-token = {
-      sopsFile = serverSecrets;
-      owner = "root";
-      group = "nginx";
-      mode = "0640";
-    };
-    cloudflare-api-account-token = {
-      sopsFile = serverSecrets;
-      owner = "root";
-      group = "nginx";
-      mode = "0640";
-    };
+
   };
 }

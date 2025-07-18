@@ -18,7 +18,6 @@
   config = {
     nixosModules = {
       fish.enable = true;
-      kde.enable = true;
       openssh = {
         enable = true;
         port = 2222;
