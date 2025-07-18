@@ -27,7 +27,7 @@ with lib;
   config = mkIf cfg.codeServer.enable {
     services.code-server = {
       enable = true;
-      disableTelemetry = true;
+      # disableTelemetry = true;
       port = cfg.codeServer.port;
       host = "127.0.0.1";
       user = "trivaris";

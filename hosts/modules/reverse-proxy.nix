@@ -46,7 +46,7 @@ in
       appendHttpConfig = ''
         map $http_upgrade $connection_upgrade {
           default upgrade;
-          \'\'      "";
+          \'\'      close;
         }
       '';
     };
@@ -64,16 +64,11 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString service.port}";
           proxyWebsockets = true;
-          extraConfig = ''
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Host $host;
-            proxy_set_header Connection $connection_upgrade;
+ 
+	  extraConfig = ''
             proxy_set_header Accept-Encoding gzip;
-            proxy_set_header X-Real-IP $http_cf_connecting_ip;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
           '';
-        };
+       };
       };
     }) activeServices);
 
