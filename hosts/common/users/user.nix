@@ -7,10 +7,10 @@
 }:
 let
   hosts = [
-    "trivdesktop"
-    "trivlaptop"
-    "trivwsl"
-    "trivserver"
+    "desktop"
+    "laptop"
+    "wsl"
+    "server"
   ];
 in
 {
@@ -39,8 +39,7 @@ in
     openssh.authorizedKeys.keys = map builtins.readFile (
       builtins.concatLists (
         map (host: [
-          (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_sk_rk_${host}_a.pub")
-          (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_sk_rk_${host}_c.pub")
+          (libExtra.mkFlakePath "/resources/ssh-pub/id_ed25519_${host}.pub")
         ]) hosts
       )
     );
