@@ -37,11 +37,7 @@ with lib;
 
       hostKeys = [
         {
-          path = config.sops.secrets.ssh-host-key-a.path;
-          type = "ed25519";
-        }
-        {
-          path = config.sops.secrets.ssh-host-key-c.path;
+          path = config.sops.secrets.ssh-host-key.path;
           type = "ed25519";
         }
       ];
