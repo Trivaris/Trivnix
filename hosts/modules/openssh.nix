@@ -37,7 +37,11 @@ with lib;
 
       hostKeys = [
         {
-          path = "/etc/ssh/ssh_host_ed25519_key";
+          path = config.sops.secrets.ssh-host-key-a.path;
+          type = "ed25519";
+        }
+        {
+          path = config.sops.secrets.ssh-host-key-c.path;
           type = "ed25519";
         }
       ];

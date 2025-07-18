@@ -60,8 +60,14 @@ in
     age.generateKey = false;
 
     secrets = builtins.listToAttrs perUserSecrets // {
-      ssh-host-key = {
-        path = "/etc/ssh/ssh_host_ed25519_key";
+      ssh-host-key-a = {
+        path = "/etc/ssh/ssh_host_ed25519_key_a";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartUnits = [ "sshd.service" ];
+      };
+      ssh-host-key-c = {
         owner = "root";
         group = "root";
         mode = "0600";

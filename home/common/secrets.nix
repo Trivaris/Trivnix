@@ -28,11 +28,11 @@ in
       "smtp-passwords/private" = { };
       "smtp-passwords/school" = { };
 
-      "ssh-private-key/a" = { 
+      ssh-private-key-a = { 
         sopsFile = hostSecrets;
         mode = "0400";
       };
-      "ssh-private-key/c" = { 
+      ssh-private-key-c = { 
         sopsFile = hostSecrets;
         mode = "0400";
       };

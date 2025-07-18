@@ -7,14 +7,14 @@
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = false;
+    addKeysToAgent = "no";
 
     matchBlocks = {
       "*" = {
         identitiesOnly = true;
         identityFile = [
-          config.sops.secrets."ssh-private-key/a".path
-          config.sops.secrets."ssh-private-key/c".path
+          config.sops.secrets.ssh-private-key-a.path
+          config.sops.secrets.ssh-private-key-c.path
         ];
       };
 
