@@ -18,4 +18,10 @@
     hardwareKey = false;
   };
 
+  desktop = {
+    name = "trivdesktop";
+    stateVersion = "25.05";
+    hardwareKey = true;
+  };
+
 }
