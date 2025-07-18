@@ -1,6 +1,7 @@
 {
   username,
   config,
+  hardwareKey,
   ...
 }:
 {
@@ -12,9 +13,11 @@
     matchBlocks = {
       "*" = {
         identitiesOnly = true;
-        identityFile = [
+        identityFile = if hardwareKey then [
           config.sops.secrets.ssh-private-key-a.path
           config.sops.secrets.ssh-private-key-c.path
+        ] else [
+          config.sops.secrets.ssh-private-key.path
         ];
       };
 

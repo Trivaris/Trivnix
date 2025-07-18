@@ -3,15 +3,40 @@
   config,
   username,
   stateVersion,
+  lib,
+  users,
+  hosts,
   ...
 }:
 let
-  hosts = [
-    "desktop"
-    "laptop"
-    "wsl"
-    "server"
-  ];
+  inherit (lib) mapAttrsToList concatMap flatten optionals;
+
+  readKey = path: builtins.readFile (libExtra.mkFlakePath path);
+
+  allAuthorizedKeys =
+    flatten (
+      mapAttrsToList
+        (hostName: hostCfg:
+          let
+            hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostName}_host.pub";
+            userKeys = flatten (
+              map (user:
+                if hostCfg.hardwareKey or true then
+                  [
+                    (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostName}_${user}_a.pub")
+                    (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostName}_${user}_c.pub")
+                  ]
+                else
+                  [
+                    (readKey "/resources/ssh-pub/id_ed25519_${hostName}_${user}.pub")
+                  ]
+              ) users
+            );
+          in
+            [ hostKey ] ++ userKeys
+        )
+        hosts
+    );
 in
 {
 
@@ -36,14 +61,7 @@ in
       "qemu-libvirtd"
       "Docker"
     ];
-    openssh.authorizedKeys.keys = map builtins.readFile (
-      builtins.concatLists (
-        map (host: [
-          (libExtra.mkFlakePath "/resources/ssh-pub/${username}/id_ed25519_sk_rk_${host}_a.pub")
-          (libExtra.mkFlakePath "/resources/ssh-pub/${username}/id_ed25519_sk_rk_${host}_c.pub")
-        ]) hosts
-      )
-    );
+    openssh.authorizedKeys.keys = allAuthorizedKeys;
   };
 
 }

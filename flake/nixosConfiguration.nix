@@ -13,6 +13,9 @@
   configname,
   hostname,
   stateVersion,
+  hardwareKey,
+  hosts,
+  users,
   architecture ? "x86_64-linux",
   usernames ? [ "trivaris" ],
 }:
@@ -28,6 +31,9 @@ nixpkgs.lib.nixosSystem {
       outputs
       hostname
       stateVersion
+      hardwareKey
+      hosts
+      users
       configname
       architecture
       libExtra
@@ -52,6 +58,9 @@ nixpkgs.lib.nixosSystem {
           configname
           hostname
           stateVersion
+          hardwareKey
+          hosts
+          users
           architecture
           libExtra
           ;

@@ -9,7 +9,6 @@
   options.userGitEmail = lib.mkOption {
     type = lib.types.str;
     description = "Git Email Address";
-    example = "me@example.com";
   };
 
   config = {

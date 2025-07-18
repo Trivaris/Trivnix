@@ -10,6 +10,9 @@
   configname,
   hostname,
   stateVersion,
+  hardwareKey,
+  hosts,
+  users,
   architecture ? "x86_64-linux",
   username,
 }:
@@ -28,6 +31,9 @@ home-manager.lib.homeManagerConfiguration {
       configname
       hostname
       stateVersion
+      hardwareKey
+      hosts
+      users
       architecture
       username
       libExtra

@@ -2,12 +2,29 @@
   inputs,
   username,
   configname,
+  hardwareKey,
   libExtra,
   ...
 }:
 let
   commonSecrets = libExtra.mkFlakePath "/secrets/home/${username}/common.yaml";
   hostSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
+  
+  sshSecrets = if hardwareKey then { 
+    ssh-private-key-a = { 
+      sopsFile = hostSecrets;
+      mode = "0400";
+    };
+    ssh-private-key-c = { 
+      sopsFile = hostSecrets;
+      mode = "0400";
+    };
+  } else {
+    ssh-private-key = { 
+      sopsFile = hostSecrets;
+      mode = "0400";
+    }; 
+  };
 in
 {
 
@@ -23,21 +40,10 @@ in
     age.generateKey = false;
 
     secrets = {
-
       "smtp-passwords/public" = { };
       "smtp-passwords/private" = { };
       "smtp-passwords/school" = { };
-
-      ssh-private-key-a = { 
-        sopsFile = hostSecrets;
-        mode = "0400";
-      };
-      ssh-private-key-c = { 
-        sopsFile = hostSecrets;
-        mode = "0400";
-      };
-
-    };
+    } // sshSecrets;
   };
 
 }

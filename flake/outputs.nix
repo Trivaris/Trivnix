@@ -39,6 +39,9 @@ let
       hostname = cfg.name;
       configname = host;
       stateVersion = cfg.stateVersion;
+      hardwareKey = cfg.hardwareKey;
+      hosts = hosts;
+      users = users;
     }
   ) hosts;
 
@@ -59,6 +62,9 @@ let
             stateVersion = hostCfg.stateVersion;
             configname = configname;
             username = username;
+            hardwareKey = hostCfg.hardwareKey;
+            hosts = hosts;
+            users = users;
           };
         }
       ) (lib.attrNames hosts)
