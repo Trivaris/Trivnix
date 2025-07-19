@@ -38,6 +38,10 @@
       url = "github:tadfisher/gradle2nix?ref=v2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Sources of Custom Packages
     rmatrix-src = {

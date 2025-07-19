@@ -8,6 +8,7 @@
     ./fish.nix
     ./hyprland.nix
     ./kde.nix
+    ./minecraft-server.nix
     ./nextcloud.nix
     ./openssh.nix
     ./printing.nix

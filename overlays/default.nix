@@ -1,6 +1,7 @@
 { inputs }:
 {
   nur = inputs.nur.overlays.default;
+  minecraft = inputs.nix-minecraft.overlay;
 
   additions =
     final: _prev:

@@ -15,6 +15,7 @@ let
     modifications
     stable-packages
     nur
+    minecraft
   ];
 
   pkgs-config = {

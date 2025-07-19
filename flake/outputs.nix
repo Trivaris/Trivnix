@@ -81,7 +81,7 @@ in
     let
       pkgs = import inputs.nixpkgs {
         inherit system;
-        overlays = with overlays; [ additions modifications stable-packages nur ];
+        overlays = with overlays; [ additions modifications stable-packages nur minecraft ];
         config.allowUnfree = true;
       };
     in {

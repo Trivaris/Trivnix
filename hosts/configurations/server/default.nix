@@ -40,6 +40,11 @@
         enable = true;
         domain = "manga.trivaris.org";
       };
+
+      minecraftServer = {
+        enable = true;
+        domain = "minecraft.trivaris.org";
+      };
     };
   };
 
