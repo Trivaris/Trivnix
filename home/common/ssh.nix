@@ -1,7 +1,7 @@
 {
-  username,
   config,
-  hardwareKey,
+  username,
+  hostconfig,
   ...
 }:
 {
@@ -13,7 +13,7 @@
     matchBlocks = {
       "*" = {
         identitiesOnly = true;
-        identityFile = if hardwareKey then [
+        identityFile = if hostconfig.hardwareKey then [
           config.sops.secrets.ssh-private-key-a.path
           config.sops.secrets.ssh-private-key-c.path
         ] else [
@@ -21,21 +21,6 @@
         ];
       };
 
-      desktop = {
-        host = "192.168.178.70";
-        user = username;
-      };
-
-      laptop = {
-        host = "192.168.178.90";
-        user = username;
-      };
-
-      wsl = {
-        host = "192.168.178.70";
-        user = username;
-        port = 2222;
-      };
     };
   };
 

@@ -1,4 +1,4 @@
-{ libExtra, ... }:
+{ libExtra, hostconfig, ... }:
 {
 
   imports = [
@@ -9,14 +9,6 @@
     ./secrets.nix
   ];
 
-  config = {
-    nixosModules = {
-      bluetooth.enable = true;
-      fish.enable = true;
-      kde.enable = true;
-      openssh.enable = true;
-      printing.enable = true;
-    };
-  };
+  config.nixosModules = hostconfig.nixosModules;
 
 }

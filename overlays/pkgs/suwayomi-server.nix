@@ -3,15 +3,15 @@
   pkgs
 }:  
 let
-  serverRef = (builtins.fromJSON (builtins.readFile (inputs.suwayomi-server-src + "/index.json"))).latest;
-  webuiRef = (builtins.fromJSON (builtins.readFile (inputs.suwayomi-webui-src + "/index.json"))).latest;
+  serverRef = "v2.0.1854";
+  serverHash = "sha256-oDE0b77qxTovZTd+P9J01wNxYZ3BrNqoX03biei03pM=";
+  webuiRef = "r2675";
+  webuiHash = "sha256-LkmS1Powt8TaGMADzT2x+PrUNpoOPzbke8yFlOaOKRM=";
+
   webuiZip = pkgs.fetchurl {
     url = "https://github.com/Suwayomi/Suwayomi-WebUI-preview/releases/download/${webuiRef}/Suwayomi-WebUI-${webuiRef}.zip";
-    hash = "sha256-LkmS1Powt8TaGMADzT2x+PrUNpoOPzbke8yFlOaOKRM=";
+    hash = webuiHash;
   };
-  
-  jdk = pkgs.jdk21_headless;
-  unzip = pkgs.unzip;
 in
 {
   version = serverRef;
@@ -19,18 +19,16 @@ in
   
   src = pkgs.fetchurl {
     url = "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/${serverRef}/Suwayomi-Server-${serverRef}.jar";
-    hash = "sha256-QwBoaQL15hEz0MqBH0x+xZSYqLsmKZjPKWR6Je4exD4=";
+    hash = serverHash;
   };
   
-  buildPhase = ''
-    runHook preBuild
+  phases = [ "installPhase" ];
 
-    mkdir -p $out/lib
-    ${unzip}/bin/unzip -q ${webuiZip} -d $out/lib/webUI
+  installPhase = ''
+    mkdir -p $out/lib/webUI $out/bin
+    ${pkgs.unzip}/bin/unzip  -q ${webuiZip} -d $out/lib/webUI
 
-    makeWrapper ${jdk}/bin/java $out/bin/tachidesk-server \
-      --add-flags "-Dsuwayomi.tachidesk.config.server.initialOpenInBrowserEnabled=false -jar $src"
-
-    runHook postBuild
+    makeWrapper ${pkgs.jdk21_headless}/bin/java $out/bin/tachidesk-server \
+      --add-flags "-Dsuwayomi.tachidesk.config.server.initialOpenInBrowserEnabled=false -jar ${pkgs.jdk21_headless}"
   '';
 }

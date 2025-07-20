@@ -1,43 +1,33 @@
 {
   inputs,
   outputs,
-  home-manager,
   libExtra,
   ...
 }:
-
 {
+  userconfig,
+  hostconfig,
   configname,
-  hostname,
-  stateVersion,
-  hardwareKey,
   hosts,
-  users,
-  architecture ? "x86_64-linux",
-  username,
 }:
 let
   configurations = import (libExtra.mkFlakePath /home/configurations);
 in
-home-manager.lib.homeManagerConfiguration {
+inputs.home-manager.lib.homeManagerConfiguration {
 
-  pkgs = libExtra.mkPkgs architecture;
+  pkgs = libExtra.mkPkgs hostconfig.architecture;
 
   # Expose flake args to within the config
   extraSpecialArgs = {
     inherit
+      userconfig
+      hostconfig
+      configname
+      hosts;
+    inherit
       inputs
       outputs
-      configname
-      hostname
-      stateVersion
-      hardwareKey
-      hosts
-      users
-      architecture
-      username
-      libExtra
-      ;
+      libExtra;
   };
 
   modules = [

@@ -30,5 +30,9 @@ in
 
   inherit overlay-list pkgs-config partition-layouts;
   inherit mkFlakePath mkPkgs;
+
+  mkNixOSConfiguration = import ./nixosConfiguration.nix;
+  mkHomeConfiguration = import ./homeConfiguration.nix;
   
+
 }

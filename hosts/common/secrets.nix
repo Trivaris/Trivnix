@@ -1,45 +1,35 @@
 {
   inputs,
   pkgs,
-  usernames,
-  configname,
   libExtra,
+  configname,
+  hostconfig,
   ...
 }:
 let
   commonSecrets = libExtra.mkFlakePath /secrets/hosts/common.yaml;
   hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${configname}.yaml";
 
-  perUserSecrets = builtins.concatLists (
-    builtins.map (
-      user:
-      [
-        {
-          name = "user-passwords/${user}";
-          value = {
-            neededForUsers = true;
-            sopsFile = commonSecrets;
-          };
-        }
-      ]
-      ++ (
-        if user == "root" then
-          [ ]
-        else
-          [
-            {
-              name = "sops-keys/${user}";
-              value = {
-                path = "/home/${user}/.config/sops/age/keys.txt";
-                owner = user;
-                group = "users";
-                mode = "0600";
-              };
-            }
-          ]
-      )
-    ) usernames
-  );
+perUserSecrets = builtins.concatMap (user:
+  let
+    base = [{
+      name = "user-passwords/${user}";
+      value = {
+        neededForUsers = true;
+        sopsFile = commonSecrets;
+      };
+    }];
+    extra = if user == "root" then [] else [{
+      name = "sops-keys/${user}";
+      value = {
+        path = "/home/${user}/.config/sops/age/keys.txt";
+        owner = user;
+        group = "users";
+        mode = "0600";
+      };
+    }];
+  in base ++ extra
+) (hostconfig.users ++ [ "root" ]);
 in
 {
 

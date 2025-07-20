@@ -1,38 +1,46 @@
-{
-  configname,
-  inputs,
-  config,
-  usernames,
-  lib,
-  stateVersion,
-  libExtra,
-  users,
-  hosts,
-  ...
-}:
-let
-  userConfiguration = import ./user.nix;
-  rootConfiguration = import ./root.nix;
+  {
+    inputs,
+    config,
+    lib,
+    libExtra,
+
+    configname,
+    hostconfig,
+    hosts,
+
+    ...
+  }:
+  let
+    mkUserConfig = import ./user.nix;
+
+    rootConfiguration = import ./root.nix {
+      inherit
+        config
+        lib
+        libExtra;
+      inherit
+        hostconfig
+        hosts;
+    };
+
+  userConfigurations = map (username:
+    mkUserConfig {
+      inherit
+        inputs
+        config
+        lib
+        libExtra
+        configname
+        hostconfig
+        hosts
+        username;
+    }
+  ) hostconfig.users;
 in
 lib.mkMerge (
   [ { users.mutableUsers = false; } ]
-  ++ builtins.map (
-    user:
-    if user == "root" then
-      rootConfiguration { inherit config libExtra hosts users lib; }
-    else
-      userConfiguration {
-        inherit
-          configname
-          inputs
-          config
-          stateVersion
-          libExtra
-          users
-          hosts
-          lib
-          ;
-        username = user;
-      }
-  ) usernames
+  ++
+  userConfigurations
+  ++
+  [ rootConfiguration ]
 )

@@ -1,8 +1,7 @@
 {
   inputs,
   libExtra,
-  usernames,
-  hostname,
+  hostconfig,
   ...
 }:
 {
@@ -16,19 +15,12 @@
   ];
 
   config = {
-    nixosModules = {
-      fish.enable = true;
-      openssh = {
-        enable = true;
-        port = 2222;
-      };
-    };
-
+    nixosModules = hostconfig.nixosModules;
 
     wsl = {
       enable = true;
-      defaultUser = builtins.head usernames;
-      wslConf.network.hostname = hostname;
+      defaultUser = builtins.head hostconfig.users;
+      wslConf.network.hostname = hostconfig.name;
     };
   };
   

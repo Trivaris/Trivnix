@@ -4,9 +4,12 @@
   lib,
   ...
 }:
+let
+  cfg = config.homeModules;
+in
+with lib;
 {
-
-  options.userGitEmail = lib.mkOption {
+  options.homeModules.git.email = mkOption {
     type = lib.types.str;
     description = "Git Email Address";
   };
@@ -15,7 +18,7 @@
     programs.git = {
       enable = true;
       userName = username;
-      userEmail = config.userGitEmail;
+      userEmail = config.homeModules.git.email;
       extraConfig.credential.helper = "store";
       extraConfig.core.autocrlf = "input";
     };

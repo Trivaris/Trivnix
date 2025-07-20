@@ -4,9 +4,14 @@
 }:
 pkgs.buildGoModule {
   pname = "udp-proxy-2020";
-  version = inputs.udp-proxy-2020-src.shortRev;
+  version = "v0.0.11";
 
-  src = inputs.udp-proxy-2020-src;
+  src = pkgs.fetchFromGitHub {
+    owner = "synfinatic";
+    repo = "udp-proxy-2020";
+    rev = "72742faabb019146a41e0551fc29f9a77fc631e5";
+    sha256 = "sha256-78vOnu5RZgIR71x8fXbWmoeRDzRgaZBQXJ6nugLNij0=";
+  };
 
   nativeBuildInputs = [ pkgs.makeWrapper ];
   buildInputs = with pkgs; [ gcc gnumake libpcap ];

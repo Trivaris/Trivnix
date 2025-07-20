@@ -1,11 +1,9 @@
 {
-  hostname,
   config,
   lib,
-  modulesPath,
-  architecture,
-  stateVersion,
   libExtra,
+  modulesPath,
+  hostconfig,
   ...
 }:
 {
@@ -31,12 +29,12 @@
   ];
 
   networking.useDHCP = lib.mkDefault true;
-  networking.hostName = hostname;
+  networking.hostName = hostconfig.name;
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault architecture;
+  nixpkgs.hostPlatform = lib.mkDefault hostconfig.architecture;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  system.stateVersion = stateVersion;
+  system.stateVersion = hostconfig.stateVersion;
 
 }

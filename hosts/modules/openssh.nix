@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  usernames,
+  hostconfig,
   ...
 }:
 let
@@ -31,7 +31,7 @@ with lib;
         GatewayPorts = "clientspecified";
       };
 
-      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") usernames;
+      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") hostconfig.users;
 
       openFirewall = true;
 

@@ -1,8 +1,7 @@
 {
   lib,
-  architecture,
-  stateVersion,
   libExtra,
+  hostconfig,
   ...
 }:
 {
@@ -18,8 +17,8 @@
 
   networking.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault architecture;
+  nixpkgs.hostPlatform = lib.mkDefault hostconfig.architecture;
 
-  system.stateVersion = stateVersion;
+  system.stateVersion = hostconfig.stateVersion;
 
 }

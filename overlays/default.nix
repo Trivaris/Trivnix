@@ -12,13 +12,13 @@
       keeweb = final.callPackage ./pkgs/keeweb.nix { inherit inputs; pkgs = final; };
     };
 
-  modifications =
-    final: prev:
-    {
-      suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
-        import ./pkgs/suwayomi-server.nix { inherit inputs; pkgs = final; }
-      );
-    };
+    modifications =
+      final: prev:
+      {
+        suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
+          import ./pkgs/suwayomi-server.nix { inherit inputs; pkgs = final; }
+        );
+      };
 
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {

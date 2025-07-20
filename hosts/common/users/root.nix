@@ -1,33 +1,39 @@
-{ libExtra, config, hosts, users, lib, ... }:
+{
+  config,
+  lib,
+  libExtra,
+
+  hostconfig,
+  hosts,
+  
+  ... 
+}:
 let
   inherit (lib) mapAttrsToList concatMap flatten optionals;
 
   readKey = path: builtins.readFile (libExtra.mkFlakePath path);
 
-  allAuthorizedKeys =
-    flatten (
-      mapAttrsToList
-        (hostName: hostCfg:
-          let
-            hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostName}_host.pub";
-            userKeys = flatten (
-              map (user:
-                if hostCfg.hardwareKey or true then
-                  [
-                    (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostName}_${user}_a.pub")
-                    (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostName}_${user}_c.pub")
-                  ]
-                else
-                  [
-                    (readKey "/resources/ssh-pub/id_ed25519_${hostName}_${user}.pub")
-                  ]
-              ) users
-            );
-          in
-            [ hostKey ] ++ userKeys
-        )
-        hosts
-    );
+  allAuthorizedKeys = flatten (
+    mapAttrsToList ( hostname: hostcfg:
+      let
+        hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostname}_host.pub";
+        userKeys = flatten (
+          map ( user:
+            if hostcfg.hardwareKey or true then
+              [
+                (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_a.pub")
+                (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_c.pub")
+              ]
+            else
+              [
+                (readKey "/resources/ssh-pub/id_ed25519_${hostname}_${user}.pub")
+              ]
+          ) hostcfg.users
+        );
+      in
+      [ hostKey ] ++ userKeys
+    ) hosts
+  );
 in
 {
 

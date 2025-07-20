@@ -1,94 +1,91 @@
 { inputs, self, ... }:
 let
   outputs = self.outputs;
+  lib = inputs.nixpkgs.lib;
 
   # Import lists of system architectures, hosts, and users
-  systems = import ./systems.nix;
-  hosts = import ./hosts.nix;
-  users = import ./users.nix;
+  hosts = import ./hosts;
+  architectures = lib.unique (
+    lib.mapAttrsToList (_: host: host.architecture) hosts
+  );
 
-  # Helper functions to create NixOS and Home Manager configs
-  lib = inputs.nixpkgs.lib;
-  forAllSystems = lib.genAttrs systems;
+  # Helper functions to create NixOS and Home Manager configs  
+  forAllArchitectures = lib.genAttrs architectures;
 
   libExtra = import ./libExtra {
     inherit inputs outputs;
   };
 
-  nixosConfiguration = import ./nixosConfiguration.nix {
+  nixosConfiguration = libExtra.mkNixOSConfiguration {
     inherit inputs outputs libExtra;
-    inherit (inputs)
-      nixpkgs
-      disko
-      sops-nix
-      home-manager
-      nixos-wsl
-      ;
   };
 
-  homeConfiguration = import ./homeConfiguration.nix {
+  homeConfiguration = libExtra.mkHomeConfiguration {
     inherit inputs outputs libExtra;
-    inherit (inputs) nixpkgs home-manager;
   };
+
+  # Import custom overlays
+  overlays = import (libExtra.mkFlakePath /overlays) { inherit inputs; };
+in
+{
+  inherit overlays;
+
+  # Packages for all defined architectures
+  packages = forAllArchitectures (architecture:
+    let
+      pkgs = import inputs.nixpkgs {
+        system = architecture;
+        overlays = with overlays; [ additions modifications stable-packages nur minecraft ];
+        config.allowUnfree = true;
+      };
+    in {
+      inherit (pkgs)
+        rmatrix
+        rbonsai 
+        suwayomi-server;
+    }
+  );
 
   # Define NixOS configurations for each host
   # Format: configname = <NixOS config>
   nixosConfigurations = builtins.mapAttrs (
-    host: cfg:
+    configname: rawHost:
+    let
+      userconfigs = rawHost.users or {};
+      hostconfig = rawHost // {
+        users = builtins.attrNames userconfigs;
+      };
+      flatHosts = builtins.mapAttrs(_: host:
+        host // {
+          users = builtins.attrNames (host.users or {});
+        }
+      ) hosts;
+    in
     nixosConfiguration {
-      hostname = cfg.name;
-      configname = host;
-      stateVersion = cfg.stateVersion;
-      hardwareKey = cfg.hardwareKey;
-      hosts = hosts;
-      users = users;
+      inherit
+        configname
+        hostconfig
+        userconfigs;
+      hosts = flatHosts;
     }
   ) hosts;
 
   # Define Home Manager configurations for each user@hostname
   # Format: <user>@<hostname> (configname) = <Home Manager config>
-  homeConfigurations = lib.listToAttrs (
-    lib.concatMap (
-      username:
-      lib.map (
-        configname:
-        let
-          hostCfg = hosts.${configname};
-        in
-        {
+  homeConfigurations = builtins.listToAttrs (
+    lib.concatMap (configname:
+      let
+        rawHost = hosts.${configname};
+        userconfigs = rawHost.users or {};
+        hostconfig = rawHost // { users = builtins.attrNames userconfigs; };
+      in
+        map (username: {
           name = "${username}@${configname}";
           value = homeConfiguration {
-            hostname = hostCfg.name;
-            stateVersion = hostCfg.stateVersion;
-            configname = configname;
-            username = username;
-            hardwareKey = hostCfg.hardwareKey;
-            hosts = hosts;
-            users = users;
+            inherit username configname hostconfig hosts;
+            userconfig = userconfigs.${username} // { name = username; };
           };
-        }
-      ) (lib.attrNames hosts)
-    ) users
+        }) (builtins.attrNames userconfigs)
+    ) (builtins.attrNames hosts)
   );
-
-  # Import custom overlays
-  overlays = import (libExtra.mkFlakePath /overlays) { inherit inputs; };
-
-in
-{
-  # Packages for all defined systems
-  packages = forAllSystems (system:
-    let
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        overlays = with overlays; [ additions modifications stable-packages nur minecraft ];
-        config.allowUnfree = true;
-      };
-    in {
-      inherit (pkgs) rmatrix rbonsai suwayomi-server;
-    }
-  );
-
-  inherit nixosConfigurations homeConfigurations overlays;
-
 }

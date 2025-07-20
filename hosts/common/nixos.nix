@@ -1,9 +1,9 @@
 {
   inputs,
   lib,
-  usernames,
   pkgs,
   libExtra,
+  hostconfig,
   ...
 }:
 {
@@ -22,7 +22,7 @@
 
     settings = {
       experimental-features = "nix-command flakes";
-      trusted-users = usernames ++ [ "root" ];
+      trusted-users = hostconfig.users ++ [ "root" ];
       auto-optimise-store = true;
       warn-dirty = false;
     };

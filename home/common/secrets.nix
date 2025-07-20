@@ -1,16 +1,16 @@
 {
   inputs,
-  username,
-  configname,
-  hardwareKey,
   libExtra,
+  configname,
+  username,
+  hostconfig,
   ...
 }:
 let
   commonSecrets = libExtra.mkFlakePath "/secrets/home/${username}/common.yaml";
   hostSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
   
-  sshSecrets = if hardwareKey then { 
+  sshSecrets = if hostconfig.hardwareKey then { 
     ssh-private-key-a = { 
       sopsFile = hostSecrets;
       mode = "0400";

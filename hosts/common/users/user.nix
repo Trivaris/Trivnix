@@ -1,11 +1,14 @@
 {
-  libExtra,
+  inputs,
   config,
-  username,
-  stateVersion,
   lib,
-  users,
+  libExtra,
+  
+  configname,
+  hostconfig,
   hosts,
+  username,
+
   ...
 }:
 let
@@ -13,34 +16,34 @@ let
 
   readKey = path: builtins.readFile (libExtra.mkFlakePath path);
 
-  allAuthorizedKeys =
-    flatten (
-      mapAttrsToList
-        (hostName: hostCfg:
-          let
-            hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostName}_host.pub";
-            userKeys = flatten (
-              map (user:
-                if hostCfg.hardwareKey or true then
-                  [
-                    (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostName}_${user}_a.pub")
-                    (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostName}_${user}_c.pub")
-                  ]
-                else
-                  [
-                    (readKey "/resources/ssh-pub/id_ed25519_${hostName}_${user}.pub")
-                  ]
-              ) users
-            );
-          in
-            [ hostKey ] ++ userKeys
-        )
-        hosts
-    );
+  allAuthorizedKeys = flatten (
+    mapAttrsToList ( hostname: hostcfg:
+      let
+        hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostname}_host.pub";
+        userKeys = flatten (
+          map ( user:
+            if hostcfg.hardwareKey or true then
+              [
+                (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_a.pub")
+                (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_c.pub")
+              ]
+            else
+              [
+                (readKey "/resources/ssh-pub/id_ed25519_${hostname}_${user}.pub")
+              ]
+          ) hostcfg.users or []
+        );
+      in
+      [ hostKey ] ++ userKeys
+    ) hosts
+  );
 in
 {
 
-  home-manager.extraSpecialArgs = { inherit username stateVersion; };
+  home-manager.extraSpecialArgs = {
+    inherit username;
+    inherit hostconfig;
+  };
 
   users.users.${username} = {
     hashedPasswordFile = config.sops.secrets."user-passwords/${username}".path;
