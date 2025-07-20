@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   libExtra,
   configname,
   username,
@@ -10,21 +11,19 @@ let
   commonSecrets = libExtra.mkFlakePath "/secrets/home/${username}/common.yaml";
   hostSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
   
-  sshSecrets = if hostconfig.hardwareKey then { 
-    ssh-private-key-a = { 
+  mkKey = name: {
+    "${name}" = {
       sopsFile = hostSecrets;
       mode = "0400";
     };
-    ssh-private-key-c = { 
-      sopsFile = hostSecrets;
-      mode = "0400";
-    };
-  } else {
-    ssh-private-key = { 
-      sopsFile = hostSecrets;
-      mode = "0400";
-    }; 
   };
+
+  sshSecrets = lib.mkMerge (
+    if hostconfig.hardwareKey then
+      [ (mkKey "ssh-private-key-a") (mkKey "ssh-private-key-c") ]
+    else
+      [ (mkKey "ssh-private-key") ]
+  );
 in
 {
 
@@ -39,11 +38,15 @@ in
     age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
     age.generateKey = false;
 
-    secrets = {
-      "smtp-passwords/public" = { };
-      "smtp-passwords/private" = { };
-      "smtp-passwords/school" = { };
-    } // sshSecrets;
+    secrets = lib.mkMerge [
+      sshSecrets
+
+      {
+        "smtp-passwords/public" = { };
+        "smtp-passwords/private" = { };
+        "smtp-passwords/school" = { };
+      }
+    ];
   };
 
 }

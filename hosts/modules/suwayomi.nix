@@ -1,28 +1,22 @@
-  {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.nixosModules;
   dataDir = "/var/lib/suwayomi";
 in
 with lib;
 {
-
   options.nixosModules.suwayomi = {
     enable = mkEnableOption "suwayomi";
 
     port = mkOption {
       type = types.int;
       default = 8890;
-      description = "Internal Port used by the reverse Proxy";
+      description = "Internal port used by the reverse proxy.";
     };
 
     domain = mkOption {
       type = types.str;
-      description = "DNS name";
+      description = "DNS name used for external access.";
     };
   };
 
@@ -32,36 +26,18 @@ with lib;
       dataDir = dataDir;
 
       settings.server = {
+        host = "127.0.0.1";
         port = cfg.suwayomi.port;
+
         systemTrayEnabled = false;
-        initialOpenInBrowserEnable = false;
+        downloadAsCbz = true;
+        extensionsRepos = [ "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json" ];
+
+        basicAuthEnabled = true;
+        basicAuthUsername = "trivaris";
+        basicAuthPasswordFile = config.sops.secrets.suwayomi-webui-password.path;
       };
     };
 
-    systemd.services.suwayomi-webui = {
-      description = "Unpack and inject WebUI for Suwayomi";
-      after = [ "network.target" ];
-      before = [ "suwayomi-server.service" ];
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = pkgs.writeShellScript "suwayomi-webui-copy" ''
-          set -euo pipefail
-
-          src="${pkgs.suwayomi-server}/lib/webUI"
-          dst="${dataDir}/.local/share/Tachidesk/webUI"
-
-          rm -rf "$dst"
-          mkdir -p "$(dirname "$dst")"
-          cp -r "$src" "$dst"
-        '';
-      };
-    };
-
-    systemd.services.suwayomi-server = {
-      after = [ "suwayomi-webui.service" ];
-    };
   };
 }

@@ -33,6 +33,6 @@ in
 
   mkNixOSConfiguration = import ./nixosConfiguration.nix;
   mkHomeConfiguration = import ./homeConfiguration.nix;
-  
+  mkModpack = import ./modpack.nix;
 
 }

@@ -26,16 +26,15 @@ with lib;
   config = mkIf cfg.vaultwarden.enable {
 
     networking.firewall.allowedTCPPorts = [ cfg.vaultwarden.port ];
-    sops.secrets.vaultwarden-admin-token.path = envFile;
 
     services.vaultwarden = {
       enable = true;
-      environmentFile = envFile;
       config = {
+        ADMIN_TOKEN = "$argon2id$v=19$m=65540,t=3,p=4$7q/+GP5hFwGIp8RG+/XDctDhkM3d+P0yaIBjx2Q6q4g$3eDxkpcfRopvzTtZUPTX387qiYTG1ACbRB6k5Td9ogI";
         DOMAIN = "https://${cfg.vaultwarden.domain}:${toString cfg.reverseProxy.port}";
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = cfg.vaultwarden.port;
-        SIGNUPS_ALLOWED = true;
+        SIGNUPS_ALLOWED = false;
       };
     };
 
