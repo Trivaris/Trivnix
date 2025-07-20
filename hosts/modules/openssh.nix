@@ -26,7 +26,7 @@ with lib;
 
       settings = {
         PasswordAuthentication = false;
-        PermitRootLogin = "no";
+        PermitRootLogin = "yes";
         StreamLocalBindUnlink = "yes";
         GatewayPorts = "clientspecified";
       };
