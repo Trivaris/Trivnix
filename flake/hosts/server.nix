@@ -23,6 +23,8 @@
       email = "cloudflare@tripple.lurdane.de";
       zone = "trivaris.org";
       port = 25588;
+      extraDomains = [ "minecraft.trivaris.org" ];
+      ddnsTime = "04:15";
     };
 
     vaultwarden = {

@@ -28,6 +28,14 @@ in
       type = types.int;
       description = "External Port used to access the reverse Proxy";
     };
+    extraDomains = mkOption {
+      type = types.listOf types.str;
+      description = "Any other Domains to enable DDNS on";
+    };
+    ddnsTime = mkOption {
+      type = types.str;
+      description = "The timestamp at which to update the DDNS";
+    };
   };
 
   config = mkIf cfg.reverseProxy.enable {
@@ -65,7 +73,7 @@ in
           proxyPass = "http://127.0.0.1:${toString service.port}";
           proxyWebsockets = true;
  
-	  extraConfig = ''
+	        extraConfig = ''
             proxy_set_header Accept-Encoding gzip;
           '';
        };
@@ -94,9 +102,17 @@ in
       ssl = true;
       verbose = true;
       zone = cfg.reverseProxy.zone;
-      domains = map (service: service.domain) activeServices;
+      domains = (map (service: service.domain) activeServices) ++ cfg.reverseProxy.extraDomains;
       username = "token";
       passwordFile = config.sops.secrets.cloudflare-api-account-token.path;
+    };
+
+    systemd.timers.ddclient = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = cfg.reverseProxy.ddnsTime;
+        Persistent = true;
+      };
     };
 
   };

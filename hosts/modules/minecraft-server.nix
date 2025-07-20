@@ -29,6 +29,8 @@ with lib;
   };
 
   config = mkIf cfg.minecraftServer.enable {
+    networking.firewall.allowedTCPPorts = [ cfg.minecraftServer.port ];
+
     services.minecraft-servers = {
       enable = true;
       eula = true;
