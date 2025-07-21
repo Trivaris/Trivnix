@@ -26,8 +26,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 DISKO_REV="$(jq -r '.nodes.disko.locked.rev' "$SCRIPT_DIR/../flake.lock")"
 DISKO_FLAKE="github:nix-community/disko/${DISKO_REV}"
 
-if [[ -f "$SCRIPT_DIR/../hosts/common/core/hardware/${disko_cfg}.nix" ]]; then
-  DISKO_PATH="$SCRIPT_DIR/../hosts/common/core/hardware/${disko_cfg}.nix"
+if [[ -f "$SCRIPT_DIR/../partitions/disko-${disko_cfg}.nix" ]]; then
+  DISKO_PATH="$SCRIPT_DIR/../partitions/disko-${disko_cfg}.nix"
 else
   echo "✖ Error: Disko Config File is required"; exit 1;
 fi

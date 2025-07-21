@@ -6,7 +6,6 @@
   architecture = "x86_64-linux";
   
   users.trivaris = {
-    name = "trivaris";
     homeModules = {
       eza.enable = true;
       fish.enable = true;
