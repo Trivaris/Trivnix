@@ -3,13 +3,13 @@
   lib,
   libExtra,
   configname,
-  username,
+  userconfig,
   hostconfig,
   ...
 }:
 let
-  commonSecrets = libExtra.mkFlakePath "/secrets/home/${username}/common.yaml";
-  hostSecrets = libExtra.mkFlakePath "/secrets/home/${username}/${configname}.yaml";
+  commonSecrets = libExtra.mkFlakePath "/secrets/home/${userconfig.name}/common.yaml";
+  hostSecrets = libExtra.mkFlakePath "/secrets/home/${userconfig.name}/${configname}.yaml";
   
   mkKey = name: {
     "${name}" = {
@@ -35,7 +35,7 @@ in
     defaultSopsFile = commonSecrets;
     validateSopsFiles = true;
 
-    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
+    age.keyFile = "/home/${userconfig.name}/.config/sops/age/keys.txt";
     age.generateKey = false;
 
     secrets = lib.mkMerge [

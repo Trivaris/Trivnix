@@ -15,14 +15,14 @@ with lib;
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
-      package = pkgs.librewolf;
+      # package = pkgs.librewolf;
 
       profiles.${userconfig.name} = {
         extensions = {
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            addons.adnauseam
-            addons.tab-session-manager
-            addons.bitwarden
+            adnauseam
+            tab-session-manager
+            bitwarden
           ];
         };
         isDefault = true;

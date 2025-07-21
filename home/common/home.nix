@@ -2,15 +2,14 @@
   lib,
   pkgs,
   libExtra,
-  username,
+  userconfig,
   hostconfig,
   ...
 }:
 {
 
-  home.username = lib.mkDefault username;
-  home.homeDirectory = lib.mkDefault "/home/${username}";
-  home.sessionVariables.SHELL = "${pkgs.fish}/bin/fish";
+  home.username = lib.mkDefault userconfig.name;
+  home.homeDirectory = lib.mkDefault "/home/${userconfig.name}";
   home.stateVersion = hostconfig.stateVersion;
 
   nixpkgs = {

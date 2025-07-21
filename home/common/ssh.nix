@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  username,
+  userconfig,
   hostconfig,
   hosts,
   ...
@@ -16,7 +16,7 @@ let
         name = host.name;
         value = {
           hostname = host.ip;
-          user = username;
+          user = userconfig.name;
         } // (if host.nixosModules.openssh ? port then { port = builtins.head host.nixosModules.openssh.ports; } else {});
       }]
     ) (lib.attrNames (lib.filterAttrs (_: host: host.nixosModules.openssh.enable or false) hosts))

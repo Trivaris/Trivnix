@@ -1,9 +1,11 @@
   {
     inputs,
+    outputs,
     config,
     lib,
     libExtra,
-
+    pkgs,
+    userconfigs,
     configname,
     hostconfig,
     hosts,
@@ -24,21 +26,26 @@
     };
 
   userConfigurations = map (username:
+  let
+    userconfig = userconfigs.${username}; 
+  in
     mkUserConfig {
       inherit
         inputs
+        outputs
         config
         lib
         libExtra
-        configname
+        userconfig
+        username
         hostconfig
-        hosts
-        username;
+        configname
+        hosts;
     }
   ) hostconfig.users;
 in
 lib.mkMerge (
-  [ { users.mutableUsers = false; } ]
+  [ { users.mutableUsers = false; users.defaultUserShell = pkgs.fish; } ]
   ++
   userConfigurations
   ++

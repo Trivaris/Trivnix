@@ -3,6 +3,7 @@
   config,
   pkgs,
   lib,
+  userconfig,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
 with lib;
 {
 
-  options.homeModules.fish.enable = mkEnableOption "fish";
+  options.homeModules.fish.enable = mkEnableOption "extended fish configuration";
 
   config = mkIf cfg.fish.enable {
     programs.fish = {
@@ -50,8 +51,6 @@ with lib;
         '';
       };
     };
-
-    home.sessionVariables.SHELL = "${pkgs.fish}/bin/fish";
 
     programs.eza.enableFishIntegration = true;
     programs.zoxide.enableFishIntegration = true;

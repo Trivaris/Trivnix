@@ -1,5 +1,5 @@
 {
-  username,
+  userconfig,
   config,
   lib,
   ...
@@ -23,7 +23,7 @@ with lib;
   config = {
     programs.git = {
       enable = true;
-      userName = username;
+      userName = userconfig.name;
       userEmail = config.homeModules.git.email;
       extraConfig.credential.helper = "store";
       extraConfig.core.autocrlf = "input";

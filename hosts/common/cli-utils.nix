@@ -7,7 +7,6 @@
     eza
     fastfetch
     fd
-    fish
     fzf
     git
     httpie
@@ -23,4 +22,6 @@
     zip
     zoxide
   ];
+
+  programs.fish.enable = true;
 }

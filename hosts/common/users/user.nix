@@ -1,13 +1,15 @@
 {
   inputs,
+  outputs,
   config,
   lib,
   libExtra,
   
-  configname,
-  hostconfig,
-  hosts,
+  userconfig,
   username,
+  hostconfig,
+  configname,
+  hosts,
 
   ...
 }:
@@ -41,8 +43,15 @@ in
 {
 
   home-manager.extraSpecialArgs = {
-    inherit username;
-    inherit hostconfig;
+    inherit
+      hostconfig
+      configname
+      hosts;
+    inherit
+      inputs
+      outputs
+      libExtra;
+    userconfig = userconfig // { name = username; };
   };
 
   users.users.${username} = {
@@ -60,11 +69,12 @@ in
       "video"
       "plugdev"
       "input"
-      "kvm"
+      "kvm" 
       "qemu-libvirtd"
       "Docker"
     ];
     openssh.authorizedKeys.keys = allAuthorizedKeys;
+    useDefaultShell = true;
   };
 
 }

@@ -7,7 +7,7 @@
 
   users.trivaris = {
     homeModules = {
-      librewolf.enable = false;
+      librewolf.enable = true;
       wezterm.enable = true;
       eza.enable = true;
       fish.enable = true;
