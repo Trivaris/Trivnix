@@ -10,7 +10,6 @@
     ./nixos.nix
     ./secrets.nix
     ./ssh.nix
-    ./timezone.nix
   ];
 
 }

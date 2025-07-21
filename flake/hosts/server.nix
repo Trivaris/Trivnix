@@ -8,14 +8,15 @@
   users.trivaris = {
     name = "trivaris";
     homeModules = {
-      cli-utils.enable = true;
+      eza.enable = true;
       fish.enable = true;
+      fzf.enable = true;
+
       git.email = "github@tripple.lurdane.de";
     };
   };
   
   nixosModules = {
-    fish.enable = true;
     openssh.enable = true;
 
     reverseProxy = {
@@ -23,7 +24,6 @@
       email = "cloudflare@tripple.lurdane.de";
       zone = "trivaris.org";
       port = 25588;
-      extraDomains = [ "minecraft.trivaris.org" ];
       ddnsTime = "04:15";
     };
 
@@ -50,6 +50,7 @@
     minecraftServer = {
       enable = true;
       domain = "minecraft.trivaris.org";
+      externalPort = 25565;
     };
   };
 }

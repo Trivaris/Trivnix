@@ -8,16 +8,16 @@
   users.trivaris = {
     name = "trivaris";
     homeModules = {
-      cli-utils.enable = true;
+      eza.enable = true;
       fish.enable = true;
+      fzf.enable = true;
+
       git.email = "github@tripple.lurdane.de";
     };
   };
-  
+
   nixosModules = {
-    fish.enable = true;
-    openssh = {
-      enable = true;
-    };
+    font.enable = true;
+    openssh.enable = true;
   };
 }

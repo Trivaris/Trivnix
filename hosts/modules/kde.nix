@@ -10,7 +10,10 @@ in
 with lib;
 {
 
-  options.nixosModules.kde.enable = mkEnableOption "KDE Plasma";
+  options.nixosModules.kde = {
+    enable = mkEnableOption "Enable KDE Plasma desktop environment.";
+  };
+
 
   config = mkIf cfg.kde.enable {
     services.displayManager.sddm.enable = true;

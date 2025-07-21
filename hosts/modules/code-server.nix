@@ -10,24 +10,48 @@ with lib;
 {
 
   options.nixosModules.codeServer = {
-    enable = mkEnableOption "Code Server";
+    enable = mkEnableOption "Enable code-server (VS Code in the browser).";
 
     port = mkOption {
       type = types.int;
       default = 8888;
-      description = "Internal Port used by the reverse Proxy";
+      description = ''
+        Local port that code-server listens on.
+        Typically proxied by a reverse proxy like Nginx.
+      '';
+    };
+
+    externalPort = mkOption {
+      type = types.nullOr types.int;
+      default = null;
+      description = ''
+        Optional override for the externally exposed port.
+        If unset, defaults to the reverse proxy's global port.
+      '';
+    };
+
+    internalIP = mkOption {
+      type = types.str;
+      default = "127.0.0.1";
+      description = ''
+        Internal IP address the service binds to.
+        Use "127.0.0.1" for localhost-only access or "0.0.0.0" to listen on all interfaces.
+      '';
     };
 
     domain = mkOption {
       type = types.str;
-      description = "DNS name";
+      example = "code.example.com";
+      description = ''
+        FQDN used for external access to code-server.
+        Used in reverse proxy configuration and certificate provisioning.
+      '';
     };
   };
 
   config = mkIf cfg.codeServer.enable {
     services.code-server = {
       enable = true;
-      # disableTelemetry = true;
       port = cfg.codeServer.port;
       host = "127.0.0.1";
       user = "trivaris";

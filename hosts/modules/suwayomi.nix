@@ -1,29 +1,52 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.nixosModules;
-  dataDir = "/var/lib/suwayomi";
 in
 with lib;
 {
   options.nixosModules.suwayomi = {
-    enable = mkEnableOption "suwayomi";
-
+    enable = mkEnableOption "Enable the Suwayomi server (Tachidesk) service.";
+    
     port = mkOption {
       type = types.int;
       default = 8890;
-      description = "Internal port used by the reverse proxy.";
+      description = ''
+        Local port the Suwayomi server listens on.
+        This is proxied by Nginx or another reverse proxy for external access.
+      '';
+    };
+    
+    externalPort = mkOption {
+      type = types.nullOr types.int;
+      default = null;
+      description = ''
+        Optional override for the externally exposed port.
+        If unset, defaults to the reverse proxy's global port.
+      '';
+    };
+
+    internalIP = mkOption {
+      type = types.str;
+      default = "127.0.0.1";
+      description = ''
+        Internal IP address the service binds to.
+        Use "127.0.0.1" for localhost-only access or "0.0.0.0" to listen on all interfaces.
+      '';
     };
 
     domain = mkOption {
       type = types.str;
-      description = "DNS name used for external access.";
+      example = "manga.example.com";
+      description = ''
+        Fully qualified domain name (FQDN) for reverse proxy access to Suwayomi.
+        Used to configure virtual hosts and TLS certificates.
+      '';
     };
   };
 
   config = mkIf cfg.suwayomi.enable {
     services.suwayomi-server = {
       enable = true;
-      dataDir = dataDir;
 
       settings.server = {
         host = "127.0.0.1";

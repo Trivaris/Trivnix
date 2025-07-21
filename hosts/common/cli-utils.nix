@@ -1,16 +1,26 @@
 { pkgs, ... }:
 {
-
   environment.systemPackages = with pkgs; [
-    coreutils
-    httpie
-    fd
-    ripgrep
-    tldr
-    zip
     bat
+    btop
+    coreutils
+    eza
+    fastfetch
+    fd
+    fish
+    fzf
     git
+    httpie
+    neovim
+    pipes-rs
+    procs
+    rbonsai
+    ripgrep
+    rmatrix
+    rsclock
+    tldr
     wget
+    zip
+    zoxide
   ];
-
 }

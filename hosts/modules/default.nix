@@ -4,9 +4,7 @@
   imports = [
     ./bluetooth.nix
     ./code-server.nix
-    ./docker.nix
-    ./fish.nix
-    ./hyprland.nix
+    ./font.nix
     ./kde.nix
     ./minecraft-server.nix
     ./nextcloud.nix

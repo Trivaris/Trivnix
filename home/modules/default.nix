@@ -4,16 +4,11 @@
 {
 
   imports = [
-    ./hyprland
     ./librewolf
     ./wezterm
-    ./cli-utils.nix
+    ./eza.nix
     ./fish.nix
-    ./fonts.nix
     ./fzf.nix
-    ./nvim.nix
-    ./rofi.nix
-    ./waybar.nix
   ];
 
 }

@@ -35,6 +35,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-wsl.nixosModules.default
     inputs.sops-nix.nixosModules.sops
+    inputs.nur.modules.nixos.default
 
     {
       # Expose flake args to within the home-manager onfig

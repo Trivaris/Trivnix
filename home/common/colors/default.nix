@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}:
+{ lib, config, ... }:
 let
   colorschemes = {
     everforest-hard-dark = import ./everforest-hard-dark.nix;
@@ -13,13 +10,19 @@ let
   };
 in
 {
+  options = {
+    colorschemeName = lib.mkOption {
+      type = lib.types.enum (builtins.attrNames colorschemes);
+      default = "everforest-hard-dark";
+      description = "Selected colorscheme name.";
+    };
 
-  options.colorschemes = colorschemes;
-
-  options.colors = lib.mkOption {
-    type = lib.types.attrsOf lib.types.str;
-    default = colorschemes.everforest-hard-dark;
-    description = "Color palette";
+    colors = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      readOnly = true;
+      description = "Computed color palette for the selected colorscheme.";
+    };
   };
 
+  config.colors = colorschemes.${config.colorschemeName};
 }

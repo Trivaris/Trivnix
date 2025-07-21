@@ -12,17 +12,21 @@ with lib;
 
   options.nixosModules.openssh = {
     enable = mkEnableOption "OpenSSH Server";
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 22;
-      description = "OpenSSH server port";
+
+    ports = mkOption {
+      type = types.listOf types.int;
+      default = [ 22 ];
+      description = ''
+        TCP port the OpenSSH daemon will listen on.
+        Ensure this port is allowed through the firewall if accessing remotely.
+      '';
     };
   };
 
   config = mkIf cfg.openssh.enable {
     services.openssh = {
       enable = true;
-      ports = [ config.nixosModules.openssh.port ];
+      ports = cfg.openssh.ports;
 
       settings = {
         PasswordAuthentication = false;
@@ -35,15 +39,13 @@ with lib;
 
       openFirewall = true;
 
-      hostKeys = [
-        {
-          path = config.sops.secrets.ssh-host-key.path;
-          type = "ed25519";
-        }
-      ];
+      hostKeys = [{
+        path = config.sops.secrets.ssh-host-key.path;
+        type = "ed25519";
+      }];
     };
 
-    networking.firewall.allowedTCPPorts = [ config.nixosModules.openssh.port ];
+    networking.firewall.allowedTCPPorts = cfg.openssh.ports;
   };
 
 }

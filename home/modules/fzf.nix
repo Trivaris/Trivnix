@@ -1,16 +1,17 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 let
   cfg = config.homeModules;
 in
 with lib;
 {
 
-  options.homeModules.fzf.enable = mkEnableOption "fzf";
+  options.homeModules.fzf = {
+    enable = mkEnableOption "Extended Fzf Configuration";
+  };
 
   config = mkIf cfg.fzf.enable {
     programs.fzf = {
       enable = true;
-      enableFishIntegration = true;
 
       colors = {
         "fg" = "#f8f8f2";
@@ -26,10 +27,12 @@ with lib;
         "spinner" = "#ffb86c";
         "header" = "#6272a4";
       };
+
       defaultOptions = [
         "--preview='bat --color=always -n {}'"
         "--bind 'ctrl-/:toggle-preview'"
       ];
+
       defaultCommand = "fd --type f --exclude .git --follow --hidden";
       changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
     };

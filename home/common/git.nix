@@ -11,7 +11,13 @@ with lib;
 {
   options.homeModules.git.email = mkOption {
     type = lib.types.str;
-    description = "Git Email Address";
+    example = "you@example.com";
+    description = ''
+      Email address to associate with Git commits.
+      This will be used in the global Git configuration under `user.email`.
+      It should match the email used in your Git hosting provider (e.g., GitHub, GitLab)
+      to ensure commits are properly attributed.
+    '';
   };
 
   config = {

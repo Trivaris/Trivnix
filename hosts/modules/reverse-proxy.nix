@@ -11,30 +11,60 @@ let
       cfg.nextcloud
       cfg.suwayomi
       cfg.vaultwarden
+      cfg.minecraftServer
     ];
 in
 {
   options.nixosModules.reverseProxy = {
-    enable = mkEnableOption "Reverse Proxy for enabled services";
+    enable = mkEnableOption "Enable reverse proxy for all enabled services.";
+
     email = mkOption {
       type = types.str;
-      description = "Email for interacting with Cloudflare API";
+      example = "admin@example.com";
+      description = ''
+        Email address used for Let's Encrypt/ACME certificate requests.
+        Required for domain validation and renewal notices.
+      '';
     };
+
     zone = mkOption {
       type = types.str;
-      description = "DNS zone (e.g., example.com)";
+      example = "example.com";
+      description = ''
+        The DNS zone managed by Cloudflare (e.g., your root domain).
+        This is used to determine which domain records DDNS will update.
+      '';
     };
+
     port = mkOption {
       type = types.int;
-      description = "External Port used to access the reverse Proxy";
+      default = 443;
+      description = ''
+        External port on which Nginx will listen for HTTPS traffic.
+        Commonly 443. Make sure this port is forwarded.
+      '';
     };
+
     extraDomains = mkOption {
       type = types.listOf types.str;
-      description = "Any other Domains to enable DDNS on";
+      default = [];
+      example = [ "vpn.example.com" "blog.example.com" ];
+      description = ''
+        Additional FQDNs to include in DDNS updates.
+        These do not need to be linked to services managed by this reverse proxy.
+      '';
     };
+    
     ddnsTime = mkOption {
       type = types.str;
-      description = "The timestamp at which to update the DDNS";
+      example = "04:00";
+      description = ''
+        Systemd OnCalendar timestamp to schedule DDNS updates with ddclient.
+        Follows systemd time syntax. Examples:
+          - "daily"
+          - "04:00"
+          - "Mon *-*-* 02:00:00"
+      '';
     };
   };
 
@@ -64,13 +94,17 @@ in
       value = {
         forceSSL = true;
         useACMEHost = service.domain;
+
         listen = [{
           addr = "0.0.0.0";
-          port = cfg.reverseProxy.port;
+          port = if service.externalPort != null
+                 then service.externalPort
+                 else cfg.reverseProxy.port;
           ssl = true;
         }];
+
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString service.port}";
+          proxyPass = "http://${service.internalIP}:${toString service.port}";
           proxyWebsockets = true;
  
 	        extraConfig = ''

@@ -8,6 +8,8 @@
 }:
 {
 
+  time.timeZone = "Europe/Berlin";
+
   nixpkgs = {
     overlays = libExtra.overlay-list;
     config = libExtra.pkgs-config;

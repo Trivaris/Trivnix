@@ -1,65 +1,65 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, lib, config, inputs, ... }:
 let
-  cfg = config.homeModules;
+  cfg = config.homeModules.librewolf;
+  addons = pkgs.nur.repos.rycee.firefox-addons;
 in
 with lib;
 {
 
-  options.homeModules.librewolf.enable = mkEnableOption "librewolf";
+  options.homeModules.librewolf = {
+    enable = mkEnableOption ''
+      Enable LibreWolf with hardened privacy and security settings.
+      Also manages a Betterfox user.js config and extensions via NUR.
+    '';
+  };
 
-  config = mkIf cfg.librewolf.enable {
+  config = mkIf cfg.enable {
+    home.packages = [
+      addons.adnauseam
+      addons.tab-session-manager
+      addons.bitwarden
+    ];
 
     programs.firefox = {
       enable = true;
       package = pkgs.librewolf;
 
-      profiles."default" = {
-        search.engines = import ./search-engines.nix;
-        extensions.packages = import ./extensions.nix pkgs;
-        settings = {
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        };
-      };
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        Preferences = {
-          "cookiebanners.service.mode.privateBrowsing" = 2; # Block cookie banners in private browsing
-          "cookiebanners.service.mode" = 2; # Block cookie banners
-          "privacy.donottrackheader.enabled" = true;
-          "privacy.fingerprintingProtection" = true;
-          "privacy.resistFingerprinting" = true;
-          "privacy.trackingprotection.emailtracking.enabled" = true;
-          "privacy.trackingprotection.enabled" = true;
-          "privacy.trackingprotection.fingerprinting.enabled" = true;
-          "privacy.trackingprotection.socialtracking.enabled" = true;
+        SanitizeOnShutdown = true;
+        ClearOnShutdown = {
+          cache = true;
+          cookies = true;
+          downloads = true;
+          formdata = true;
+          history = true;
+          offlineApps = true;
+          passwords = false;
+          sessions = true;
+          siteSettings = false;
         };
-        ExtensionSettings = {
-          "adnauseam@rednoise.org" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/adnauseam/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          "Tab-Session-Manager@sienori" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/tab-session-manager/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          "keepassxc-browser@keepassxc.org" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          "jid0-3GUEt1r69sQNSrca5p8kx9Ezc3U@jetpack.xpi" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/terms-of-service-didnt-read/latest.xpi";
-            installation_mode = "force_installed";
-          };
-        };
+
+        Cookies.Allow = [
+          "https://github.com"
+          "https://asuracomic.net"
+          "https://www.kenmei.co"
+          "https://www.youtube.com"
+          "https://www.figma.com"
+          "https://f95zone.to"
+          "https://www.livechart.me"
+          "https://anilist.co"
+          "https://www.cloudflare.com"
+          "https://auth.mangadex.org"
+          "https://www.reddit.com"
+          "https://www.google.com"
+          "https://vault.trivaris.org"
+          "https://accounts.google.com"
+          "https://mangadex.org"
+        ];
       };
     };
 
+    home.file.".librewolf/user.js".source = inputs.betterfox + "/user.js";
   };
-
 }

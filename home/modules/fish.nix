@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -15,18 +16,17 @@ with lib;
   config = mkIf cfg.fish.enable {
     programs.fish = {
       enable = true;
-      loginShellInit = ''
 
+      loginShellInit = ''
         set -x NIX_LOG info
         set -x TERMINAL wezterm
-
-        start-hyprland
       '';
-      interactiveShellInit = ''
 
+      interactiveShellInit = ''
         set fish_greeting
         fastfetch
       '';
+
       shellAbbrs = {
         ".." = "cd ..";
         "..." = "cd ../../";
@@ -42,35 +42,20 @@ with lib;
         "grep" = "rg";
       };
 
-      functions.cd.body = "z $argv";
-      functions.start-hyprland = ''
+      functions = {
+        cd.body = "z $argv";
 
-        if test (tty) = "/dev/tty1"
-          exec Hyprland &> /dev/null
-        end
-      '';
-      functions.nix-rebuild = ''
-
-        set flakePath /etc/nixos
-        set currentPath (pwd)
-        echo flakePath: $flakePath
-
-        begin
-          cd $flakePath
-          sudo git pull
-          sudo nix flake update dotfiles
-          sudo nixos-rebuild switch --flake $flakePath#hostname
-          cd $currentPath
-        end
-      '';
-      functions.get-flakepath = ''
-
-        echo ${inputs.self.outPath}
-      '';
-      functions.start-kde = ''
-        dbus-run-session -- startplasma-wayland
-      '';
+        start-kde = ''
+          dbus-run-session -- startplasma-wayland
+        '';
+      };
     };
+
+    home.sessionVariables.SHELL = "${pkgs.fish}/bin/fish";
+
+    programs.eza.enableFishIntegration = true;
+    programs.zoxide.enableFishIntegration = true;
+    programs.fzf.enableFishIntegration = true;
   };
 
 }
