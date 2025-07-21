@@ -4,32 +4,33 @@
   minecraft = inputs.nix-minecraft.overlay;
 
   additions =
-    final: _prev:
+    pkgs: _prev:
     {
-      rmatrix = final.callPackage ./pkgs/rmatrix.nix { inherit inputs; pkgs = final; };
-      rbonsai = final.callPackage ./pkgs/rbonsai.nix { inherit inputs; pkgs = final; };
-      vaultwarden-web-vault = final.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs; pkgs = final; };
-      keeweb = final.callPackage ./pkgs/keeweb.nix { inherit inputs; pkgs = final; };
-      instagram-cli = final.callPackage ./pkgs/instagram-cli.nix { inherit inputs; pkgs = final; };
+      rmatrix = pkgs.callPackage ./pkgs/rmatrix.nix { inherit inputs pkgs; };
+      rbonsai = pkgs.callPackage ./pkgs/rbonsai.nix { inherit inputs pkgs; };
+      vaultwarden-web-vault = pkgs.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs pkgs; };
+      keeweb = pkgs.callPackage ./pkgs/keeweb.nix { inherit inputs pkgs; };
+      instagram-cli = pkgs.callPackage ./pkgs/instagram-cli.nix { inherit inputs pkgs; };
 
-      elysium-days = final.callPackage ./pkgs/modpacks/elysium-days.nix { inherit inputs; pkgs = final; };
+      elysium-days = pkgs.callPackage ./pkgs/modpacks/elysium-days.nix { inherit inputs pkgs; };
+      versatile = pkgs.callPackage ./pkgs/modpacks/versatile.nix { inherit inputs pkgs; };
     };
 
   modifications =
-    final: prev:
+    pkgs: prev:
     {
       suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
         import ./pkgs/suwayomi-server.nix {
           inherit inputs;
-          pkgs = final;
+          pkgs = pkgs;
           old = previousAttrs;
         }
       );
     };
 
-  stable-packages = final: _prev: {
+  stable-packages = pkgs: _prev: {
     stable = import inputs.nixpkgs-stable {
-      system = final.system;
+      system = pkgs.system;
       config.allowUnfree = true;
     };
   };

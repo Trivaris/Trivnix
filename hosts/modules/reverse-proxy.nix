@@ -11,8 +11,12 @@ let
       cfg.nextcloud
       cfg.suwayomi
       cfg.vaultwarden
-      cfg.minecraftServer
+      # cfg.minecraftServer
     ];
+
+  externalPorts = builtins.map (service: service.externalPort) (
+    builtins.filter (service: service.externalPort != null) activeServices
+  );
 in
 {
   options.nixosConfig.reverseProxy = {
@@ -69,7 +73,7 @@ in
   };
 
   config = mkIf cfg.reverseProxy.enable {
-    networking.firewall.allowedTCPPorts = [ cfg.reverseProxy.port ];
+    networking.firewall.allowedTCPPorts = [ cfg.reverseProxy.port ] ++ externalPorts;
 
     services.nginx = {
       enable = true;

@@ -54,33 +54,38 @@ with lib;
   };
 
   config = mkIf cfg.minecraftServer.enable {
+    networking.firewall.allowedTCPPorts = [ cfg.minecraftServer.port ];
+
     services.minecraft-servers = {
       enable = true;
       eula = true;
 
       servers = {
-        elysium-days =
+        versatile =
           let
-            elysium = libExtra.mkModpack { inherit pkgs; modpack = pkgs.elysium-days.src; };
-          in
+            modpack = pkgs.versatile;
+          in 
           {
           enable = true;
-          package = pkgs.fabricServers.fabric-1_20_1;
+          package = pkgs.fabricServers."fabric-${modpack.minecraftVersion}".override { loaderVersion = modpack.fabricVersion; };
 
           serverProperties = {
-            gamemode = "surivival";
+            gamemode = "survival";
             difficulty = "hard";
             simulation-distance = 8;
             server-port = cfg.minecraftServer.port;
+            whitelist = true;
           };
 
-          symlinks = elysium.symlinks;
+          symlinks = modpack.symlinks;
+          files = modpack.files;
 
           whitelist = {
             trivaris = "80ea6fa5-a1ac-4671-a23f-53cf1ab8a437";
+            ingopin = "3ad93022-06db-475b-9519-75d81cca32bc";
           };
 
-          jvmOpts = "-Xms4092M -Xmx4092M -XX:+UseG1GC";
+          jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
         };
       };
     };

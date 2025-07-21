@@ -3,13 +3,13 @@
 let
   inherit (pkgs.lib) fileContents;
 
-  modpack = pkgs.runCommand "elysium-days-unpacked" {
+  modpack = pkgs.runCommand "versatile-unpacked" {
     nativeBuildInputs = [ pkgs.unzip ];
   } ''
     mkdir -p $out
     unzip -q ${pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/lz3ryGPQ/versions/azCePsLz/Elysium%20Days%207.0.0.mrpack";
-      sha256 = "sha256-/1xIPjUSV+9uPU8wBOr5hJ3rHb2V8RkdSdhzLr/ZJ2Y=";
+      url = "https://cdn.modrinth.com/data/SfTr5hl1/versions/Je7Nxl9S/Versatile%20v7.5.mrpack";
+      sha256 = "sha256-DITpN2wqlJFpiy1V5S514XD+R88OEYD/w9AxX2qNP1k=";
     }} -d $out
     chmod -R u+rwX $out
   '';

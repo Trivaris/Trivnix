@@ -42,7 +42,7 @@ with lib;
       };
 
       functions = {
-        cd.body = "zoxide $argv";
+        # cd.body = "zoxide $argv";
         grep.body = "rg $argv";
 
       };

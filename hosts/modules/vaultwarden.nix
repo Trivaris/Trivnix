@@ -51,9 +51,6 @@ with lib;
   };
 
   config = mkIf cfg.vaultwarden.enable {
-
-    networking.firewall.allowedTCPPorts = [ cfg.vaultwarden.port ];
-
     services.vaultwarden = {
       enable = true;
       config = {
