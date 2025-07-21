@@ -1,11 +1,11 @@
 { pkgs, config, lib, ... }:
 let
-  cfg = config.homeModules;
+  cfg = config.homeConfig;
 in
 with lib;
 {
 
-  options.homeModules.eza = {
+  options.homeConfig.eza = {
     enable = mkEnableOption "Extended Eza Configuration";
   };
 
@@ -19,6 +19,7 @@ with lib;
         "-a"
       ];
     };
+    programs.fish.functions.ls.body = "eza $argv";
   };
   
 }

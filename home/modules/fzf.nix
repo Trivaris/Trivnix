@@ -1,11 +1,11 @@
 { pkgs, config, lib, ... }:
 let
-  cfg = config.homeModules;
+  cfg = config.homeConfig;
 in
 with lib;
 {
 
-  options.homeModules.fzf = {
+  options.homeConfig.fzf = {
     enable = mkEnableOption "Extended Fzf Configuration";
   };
 

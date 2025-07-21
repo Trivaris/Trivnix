@@ -4,19 +4,31 @@
   hardwareKey = false;
   ip = "192.168.178.70";
   architecture = "x86_64-linux";
+  colorscheme = "everforest-dark-soft";
   
   users.trivaris = {
-    homeModules = {
+    homeConfig = {
       eza.enable = true;
       fish.enable = true;
       fzf.enable = true;
+      tmux.enable = true;
+      zoxide.enable = true;
 
       git.email = "github@tripple.lurdane.de";
     };
   };
 
-  nixosModules = {
-    font.enable = true;
+  nixosConfig = {
     openssh.enable = true;
+
+    stylix = {
+      enable = true;
+      colorscheme = "everforest-dark-soft";
+
+      cursorPackage = "rose-pine-cursor";
+      cursorName = "BreezeX-RosePine-Linux";
+
+      nerdfont = "CodeNewRoman";
+    };
   };
 }

@@ -4,13 +4,13 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
   envFile = "/etc/vaultwarden.env";
 in
 with lib;
 {
 
-  options.nixosModules.vaultwarden = {
+  options.nixosConfig.vaultwarden = {
     enable = mkEnableOption "Enable the Vaultwarden password manager server.";
 
     port = mkOption {

@@ -4,12 +4,12 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
 
-  options.nixosModules.codeServer = {
+  options.nixosConfig.codeServer = {
     enable = mkEnableOption "Enable code-server (VS Code in the browser).";
 
     port = mkOption {

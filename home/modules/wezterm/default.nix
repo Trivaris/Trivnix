@@ -1,49 +1,48 @@
 { config, lib, ... }:
 let
-  cfg = config.homeModules;
-  colors = config.colors;
+  cfg = config.homeConfig;
 in
 with lib;
 {
 
-  options.homeModules.wezterm.enable = mkEnableOption "wezterm";
+  options.homeConfig.wezterm.enable = mkEnableOption "wezterm";
   config = mkIf cfg.wezterm.enable {
     programs.wezterm = {
       enable = true;
 
       colorSchemes.default = {
-        foreground = colors.fg;
-        background = colors.bg0;
+        # foreground = colors.fg;
+        # background = colors.bg0;
 
-        cursor_bg = colors.green;
-        cursor_fg = colors.bg0;
-        cursor_border = colors.green;
+        # cursor_bg = colors.green;
+        # cursor_fg = colors.bg0;
+        # cursor_border = colors.green;
 
-        selection_fg = colors.bg0;
+        # selection_fg = colors.bg0;
         selection_bg = "#fffacd";
 
         scrollbar_thumb = "#222222";
         split = "#444444";
 
         ansi = [
-          colors.bg0 # black
-          colors.red # maroon
-          colors.green # green
-          colors.yellow # olive
-          colors.bg_blue # navy
-          colors.purple # purple
-          colors.aqua # teal
-          colors.fg # silver
+          # colors.bg0 # black
+          # colors.red # maroon
+          # colors.green # green
+          # colors.yellow # olive
+          # colors.bg_blue # navy
+          # colors.purple # purple
+          # colors.aqua # teal
+          # colors.fg # silver
         ];
 
         brights = [
-          colors.gray0 # grey
-          colors.red # red
+          # colors.gray0 # grey
+          # colors.red # red
           "#32CD32" # lime (not in palette, so using limegreen)
-          colors.yellow # yellow
-          colors.blue # blue
-          colors.purple # fuchsia
-          colors.aqua # aqua
+          # colors.yellow # yellow
+          # colors.blue # blue
+          # colors.purple # fuchsia
+          # colors.aqua # aqua
           "#ffffff" # white
         ];
 
@@ -51,7 +50,7 @@ with lib;
           "136" = "#af8700";
         };
 
-        compose_cursor = colors.orange;
+        # compose_cursor = colors.orange;
 
         copy_mode_active_highlight_bg = {
           Color = "#000000";
@@ -60,7 +59,7 @@ with lib;
           AnsiColor = "Black";
         };
         copy_mode_inactive_highlight_bg = {
-          Color = colors.green;
+          # Color = colors.green;
         };
         copy_mode_inactive_highlight_fg = {
           AnsiColor = "White";

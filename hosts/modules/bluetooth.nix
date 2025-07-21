@@ -4,12 +4,12 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
 
-  options.nixosModules.bluetooth.enable = mkEnableOption "Bluetooth";
+  options.nixosConfig.bluetooth.enable = mkEnableOption "Bluetooth";
 
   config = mkIf cfg.bluetooth.enable {
     hardware.bluetooth.enable = true;

@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
 
-  options.nixosModules.printing.enable = mkEnableOption "Printing";
+  options.nixosConfig.printing.enable = mkEnableOption "Printing";
 
   config = mkIf cfg.printing.enable {
     services.printing = {

@@ -15,7 +15,7 @@
   ];
 
   config = {
-    nixosModules = hostconfig.nixosModules;
+    nixosConfig = hostconfig.nixosConfig;
 
     wsl = {
       enable = true;

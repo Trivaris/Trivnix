@@ -4,9 +4,10 @@
   hardwareKey = false;
   ip = "192.168.178.75";
   architecture = "x86_64-linux";
+  colorscheme = "everforest-dark-soft";
 
   users.trivaris = {
-    homeModules = {
+    homeConfig = {
       eza.enable = true;
       fish.enable = true;
       fzf.enable = true;
@@ -15,7 +16,7 @@
     };
   };
   
-  nixosModules = {
+  nixosConfig = {
     openssh.enable = true;
 
     reverseProxy = {
@@ -50,6 +51,16 @@
       enable = true;
       domain = "minecraft.trivaris.org";
       externalPort = 25565;
+    };
+
+    stylix = {
+      enable = true;
+      colorscheme = "everforest-dark-soft";
+
+      cursorPackage = "rose-pine-cursor";
+      cursorName = "BreezeX-RosePine-Linux";
+
+      nerdfont = "CodeNewRoman";
     };
   };
 }

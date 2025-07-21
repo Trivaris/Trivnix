@@ -5,7 +5,7 @@ let
       (libExtra.mkFlakePath /home/modules)
     ];
 
-    homeModules = userconfigs.trivaris.homeModules;
+    homeConfig = userconfigs.trivaris.homeConfig;
   };
 in
 {

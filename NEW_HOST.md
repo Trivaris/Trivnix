@@ -17,13 +17,13 @@ Example structure:
   architecture = "x86_64-linux"; # e.g., "aarch64-linux" for ARM
 
   users.username = {
-    homeModules = {
+    homeConfig = {
       module.enable = true;    # Enable home module(s) from /home/modules
       git.email = "user@example.com"; # Git identity
     };
   };
 
-  nixosModules = {
+  nixosConfig = {
     module.enable = true;      # Enable NixOS module(s) from /hosts/modules
   };
 }
@@ -44,7 +44,7 @@ Create or edit `/hosts/configurations/<configname>.nix`:
     (libExtra.mkFlakePath /hosts/modules)
   ];
 
-  config.nixosModules = hostconfig.nixosModules;
+  config.nixosConfig = hostconfig.nixosConfig;
 }
 ```
 
@@ -71,7 +71,7 @@ Create or edit `/home/configurations/<username>.nix`
     (libExtra.mkFlakePath /home/common)
     (libExtra.mkFlakePath /home/modules)
   ];
-  homeModules = userconfigs.username.homeModules;
+  homeConfig = userconfigs.username.homeConfig;
 }
 ```
 

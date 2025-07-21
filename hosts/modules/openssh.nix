@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
 
-  options.nixosModules.openssh = {
+  options.nixosConfig.openssh = {
     enable = mkEnableOption "OpenSSH Server";
 
     ports = mkOption {

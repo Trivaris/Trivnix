@@ -4,12 +4,12 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
 
-  options.nixosModules.nextcloud = {
+  options.nixosConfig.nextcloud = {
     enable = mkEnableOption "Enable the Nextcloud service.";
     
     port = mkOption {

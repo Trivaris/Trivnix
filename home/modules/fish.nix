@@ -7,12 +7,12 @@
   ...
 }:
 let
-  cfg = config.homeModules;
+  cfg = config.homeConfig;
 in
 with lib;
 {
 
-  options.homeModules.fish.enable = mkEnableOption "extended fish configuration";
+  options.homeConfig.fish.enable = mkEnableOption "extended fish configuration";
 
   config = mkIf cfg.fish.enable {
     programs.fish = {
@@ -21,6 +21,7 @@ with lib;
       loginShellInit = ''
         set -x NIX_LOG info
         set -x TERMINAL wezterm
+        tmux
       '';
 
       interactiveShellInit = ''
@@ -38,19 +39,16 @@ with lib;
         "gpull" = "git pull";
         "gpush" = "git push";
         "gclone" = "git clone";
-
-        "ls" = "eza";
-        "grep" = "rg";
       };
 
       functions = {
-        cd.body = "z $argv";
+        cd.body = "zoxide $argv";
+        grep.body = "rg $argv";
 
-        start-kde = ''
-          dbus-run-session -- startplasma-wayland
-        '';
       };
     };
+
+    programs.tmux.shell = "${pkgs.fish}/bin/fish";
 
     programs.eza.enableFishIntegration = true;
     programs.zoxide.enableFishIntegration = true;

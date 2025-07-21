@@ -2,11 +2,14 @@
 
 let
   modrinth_index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
-  files = builtins.filter (f: !(f ? env) || f.env.server != "unsupported") modrinth_index.files;
-  downloads = builtins.map (f: pkgs.fetchurl {
-    urls = f.downloads;
-    inherit (f.hashes) sha512;
+
+  files = builtins.filter (file: !(file ? env) || file.env.server != "unsupported") modrinth_index.files;
+
+  downloads = builtins.map (file: pkgs.fetchurl {
+    urls = file.downloads;
+    inherit (file.hashes) sha512;
   }) files;
+
   paths = builtins.map (builtins.getAttr "path") files;
 
   derivations = pkgs.lib.zipListsWith (path: dl:
@@ -24,6 +27,7 @@ let
   };
 
   overridePath = "${modpack}/overrides";
+  
   overrideDirs = builtins.filter
     (name: (builtins.readDir overridePath).${name} == "directory")
     (builtins.attrNames (builtins.readDir overridePath));

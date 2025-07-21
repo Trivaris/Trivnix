@@ -17,9 +17,9 @@ let
         value = {
           hostname = host.ip;
           user = userconfig.name;
-        } // (if host.nixosModules.openssh ? port then { port = builtins.head host.nixosModules.openssh.ports; } else {});
+        } // (if host.nixosConfig.openssh ? port then { port = builtins.head host.nixosConfig.openssh.ports; } else {});
       }]
-    ) (lib.attrNames (lib.filterAttrs (_: host: host.nixosModules.openssh.enable or false) hosts))
+    ) (lib.attrNames (lib.filterAttrs (_: host: host.nixosConfig.openssh.enable or false) hosts))
   );
 in 
 {

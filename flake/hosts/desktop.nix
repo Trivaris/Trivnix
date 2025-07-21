@@ -5,8 +5,8 @@
   ip = "192.168.178.70";
   architecture = "x86_64-linux";
 
-  users.trivaris = {
-    homeModules = {
+  users.trivaris = {    
+    homeConfig = {
       librewolf.enable = true;
       wezterm.enable = true;
       eza.enable = true;
@@ -17,11 +17,21 @@
     };
   };
 
-  nixosModules = {
+  nixosConfig = {
     bluetooth.enable = true;
-    font.enable = true;
     kde.enable = true;
     openssh.enable = true;
     printing.enable = true;
+    tuigreet.enable = true;
+
+    stylix = {
+      enable = true;
+      colorscheme = "everforest-dark-soft";
+
+      cursorPackage = "rose-pine-cursor";
+      cursorName = "BreezeX-RosePine-Linux";
+
+      nerdfont = "CodeNewRoman";
+    };
   };
 }

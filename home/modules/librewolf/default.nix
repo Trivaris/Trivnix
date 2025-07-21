@@ -1,11 +1,11 @@
 { pkgs, lib, config, inputs, userconfig, ... }:
 let
-  cfg = config.homeModules.librewolf;
+  cfg = config.homeConfig.librewolf;
 in
 with lib;
 {
 
-  options.homeModules.librewolf = {
+  options.homeConfig.librewolf = {
     enable = mkEnableOption ''
       Enable LibreWolf with hardened privacy and security settings.
       Also manages a Betterfox user.js config and extensions via NUR.

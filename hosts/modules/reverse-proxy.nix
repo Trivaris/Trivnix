@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
   inherit (lib) mkEnableOption mkOption mkIf types mapAttrsToList filterAttrs;
   activeServices =
     builtins.filter (
@@ -15,7 +15,7 @@ let
     ];
 in
 {
-  options.nixosModules.reverseProxy = {
+  options.nixosConfig.reverseProxy = {
     enable = mkEnableOption "Enable reverse proxy for all enabled services.";
 
     email = mkOption {

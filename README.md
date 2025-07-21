@@ -157,7 +157,7 @@ To enable optional modules such as `openssh` or `bluetooth`, set them in your ho
 
 ```nix
 {
-  nixosModules = {
+  nixosConfig = {
     openssh.enable = true;
     bluetooth.enable = true;
   };

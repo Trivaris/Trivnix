@@ -10,6 +10,8 @@
       rbonsai = final.callPackage ./pkgs/rbonsai.nix { inherit inputs; pkgs = final; };
       vaultwarden-web-vault = final.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs; pkgs = final; };
       keeweb = final.callPackage ./pkgs/keeweb.nix { inherit inputs; pkgs = final; };
+      instagram-cli = final.callPackage ./pkgs/instagram-cli.nix { inherit inputs; pkgs = final; };
+
       elysium-days = final.callPackage ./pkgs/modpacks/elysium-days.nix { inherit inputs; pkgs = final; };
     };
 

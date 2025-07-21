@@ -7,13 +7,13 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
 
-  options.nixosModules.minecraftServer = {
+  options.nixosConfig.minecraftServer = {
     enable = mkEnableOption "Enable Minecraft servers.";
 
     port = mkOption {

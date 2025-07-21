@@ -9,6 +9,6 @@
     ./secrets.nix
   ];
 
-  config.nixosModules = hostconfig.nixosModules;
+  config.nixosConfig = hostconfig.nixosConfig;
 
 }

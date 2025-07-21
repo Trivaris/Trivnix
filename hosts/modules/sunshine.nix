@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.nixosModules;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
 
-  options.nixosModules.sunshine = {
+  options.nixosConfig.sunshine = {
     enable = mkEnableOption "Enable Sunshine remote desktop proxy integration.";
 
     hostMac = mkOption {
