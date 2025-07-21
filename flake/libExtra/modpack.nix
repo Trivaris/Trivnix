@@ -1,43 +1,55 @@
-{ pkgs, modpack, extra_mods ? [] }:
+{ modrinthUrl, hash }:
+{ inputs, pkgs }:
 
 let
-  modrinth_index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
+  inherit (pkgs.lib) fileContents;
 
-  files = builtins.filter (file: !(file ? env) || file.env.server != "unsupported") modrinth_index.files;
+  modpack = pkgs.runCommand "unpacked" {
+    nativeBuildInputs = [ pkgs.unzip ];
+  } ''
+    mkdir -p $out
+    unzip -q ${pkgs.fetchurl {
+      url = modrinthUrl;
+      sha256 = hash;
+    }} -d $out
+    chmod -R u+rwX $out
+  '';
 
-  downloads = builtins.map (file: pkgs.fetchurl {
-    urls = file.downloads;
-    inherit (file.hashes) sha512;
-  }) files;
+  index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
 
-  paths = builtins.map (builtins.getAttr "path") files;
+  hexToBase64 = hex: builtins.readFile (pkgs.runCommand "hex-to-b64" {
+    nativeBuildInputs = [ pkgs.openssl pkgs.unixtools.xxd ];
+  } ''
+    echo -n '${hex}' | xxd -r -p | openssl base64 -A > $out
+  '');
 
-  derivations = pkgs.lib.zipListsWith (path: dl:
-    let
-      folder = builtins.head (builtins.match "(.*)/(.*$)" path);
-    in pkgs.runCommand (baseNameOf path) { } ''
-      mkdir -p "$out/${folder}"
-      cp ${dl} "$out/${path}"
-    ''
-  ) paths downloads;
-
-  fullPack = pkgs.symlinkJoin {
-    name = "${modrinth_index.name}-${modrinth_index.versionId}";
-    paths = derivations ++ [ "${modpack}/overrides" ] ++ extra_mods;
+  fetchHashedUrl = file: pkgs.fetchurl {
+    url = builtins.head file.downloads;
+    hash = "sha512-${hexToBase64 file.hashes.sha512}";
   };
 
-  overridePath = "${modpack}/overrides";
-  
-  overrideDirs = builtins.filter
-    (name: (builtins.readDir overridePath).${name} == "directory")
-    (builtins.attrNames (builtins.readDir overridePath));
+  symlinks = builtins.listToAttrs (
+    builtins.filter (entry: entry != null) (map (file:
+      if builtins.hasAttr "sha512" file.hashes then {
+        name = file.path;
+        value = fetchHashedUrl file;
+      } else null
+    ) index.files)
+  );
 
-  symlinks = builtins.listToAttrs (map (name: {
-    inherit name;
-    value = "${overridePath}/${name}";
-  }) overrideDirs);
+  files = inputs.nix-minecraft.lib.collectFilesAt "${modpack}" "overrides";
 
-in {
-  path = fullPack;
-  inherit symlinks;
+  minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
+  fabricVersion = index.dependencies.fabric-loader;
+in
+{
+  pname = index.versionId;
+  version = index.versionId;
+  src = modpack;
+
+  inherit
+    symlinks
+    files
+    minecraftVersion
+    fabricVersion;
 }

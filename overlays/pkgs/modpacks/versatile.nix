@@ -36,7 +36,7 @@ let
     ) index.files)
   );
 
-  files = inputs.nix-minecraft.lib.collectFilesAt "${modpack}" "overrides";
+  files = inputs.nix-minecraft.lib.collectFilesAt "${modpack}/overrides";
 
   minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
   fabricVersion = index.dependencies.fabric-loader;
