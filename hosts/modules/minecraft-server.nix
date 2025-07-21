@@ -18,37 +18,9 @@ with lib;
 
     port = mkOption {
       type = types.int;
-      default = 8892;
+      default = 25565;
       description = ''
-        Local port used by the Minecraft server.
-        Exposed via reverse proxy or directly depending on the use case.
-      '';
-    };
-
-    externalPort = mkOption {
-      type = types.nullOr types.int;
-      default = null;
-      description = ''
-        Optional override for the externally exposed port.
-        If unset, defaults to the reverse proxy's global port.
-      '';
-    };
-
-    internalIP = mkOption {
-      type = types.str;
-      default = "127.0.0.1";
-      description = ''
-        Internal IP address the service binds to.
-        Use "127.0.0.1" for localhost-only access or "0.0.0.0" to listen on all interfaces.
-      '';
-    };
-
-    domain = mkOption {
-      type = types.str;
-      example = "minecraft.example.com";
-      description = ''
-        FQDN used to access the Minecraft server.
-        Used for reverse proxy configuration and DNS resolution.
+        Port used by the Minecraft server.
       '';
     };
 
@@ -72,6 +44,7 @@ with lib;
       servers = builtins.listToAttrs (map (modpack: {
         name = modpack;
         value = let modpackPkg = pkgs.modpacks.${modpack}; in {
+          enable = modpack == cfg.minecraftServer.modpack;
           package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override { loaderVersion = modpackPkg.fabricVersion; };
 
           serverProperties = {
@@ -91,10 +64,7 @@ with lib;
 
           jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
         };
-      }
-      // (if (modpack == cfg.minecraftServer.modpack) then {
-        enable = true;
-      } else {} )) (builtins.attrNames pkgs.modpacks) );
+      }) (builtins.attrNames pkgs.modpacks) );
     };
   };
 }

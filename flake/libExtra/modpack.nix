@@ -14,7 +14,7 @@ let
   
   fetchHashedUrl = file: pkgs.fetchurl {
     url = builtins.head file.downloads;
-    hash = "sha512-${libExtra.scripts.hexToBase64 file.hashes.sha512}";
+    hash = "sha512-${libExtra.scripts.hex2b64 pkgs file.hashes.sha512}";
   };
 
 

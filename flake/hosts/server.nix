@@ -25,6 +25,7 @@
       zone = "trivaris.org";
       port = 25588;
       ddnsTime = "04:15";
+      extraDomains = [ "minecraft.trivaris.org" ];
     };
 
     vaultwarden = {
@@ -49,10 +50,7 @@
 
     minecraftServer = {
       enable = true;
-      domain = "minecraft.trivaris.org";
       modpack = "rising-legends";
-      port = 25565;
-      externalPort = 25565;
     };
 
     stylix = {

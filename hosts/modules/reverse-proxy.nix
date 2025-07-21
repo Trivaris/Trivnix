@@ -11,7 +11,6 @@ let
       cfg.nextcloud
       cfg.suwayomi
       cfg.vaultwarden
-      # cfg.minecraftServer
     ];
 
   externalPorts = builtins.map (service: service.externalPort) (

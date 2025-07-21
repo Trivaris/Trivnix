@@ -24,7 +24,7 @@ let
     android_sdk.accept_license = true;
   };
 
-  scripts = import ./scripts inputs.nixpkgs;
+  scripts = import ./scripts;
 
   partition-layouts = import (mkFlakePath /partitions);
 in
