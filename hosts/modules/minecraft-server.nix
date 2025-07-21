@@ -45,11 +45,20 @@ with lib;
 
     domain = mkOption {
       type = types.str;
+      example = "minecraft.example.com";
       description = ''
         FQDN used to access the Minecraft server.
         Used for reverse proxy configuration and DNS resolution.
       '';
-      example = "minecraft.example.com";
+    };
+
+    modpack = mkOption {
+      type = types.enum (builtins.attrNames pkgs.modpacks);
+      example = "elysium-days";
+      description = ''
+        The modpack to deploy on the server. This must be one of the available
+        modpacks defined in `pkgs.modpacks`.
+      '';
     };
   };
 
@@ -60,14 +69,10 @@ with lib;
       enable = true;
       eula = true;
 
-      servers = {
-        versatile =
-          let
-            modpack = pkgs.versatile;
-          in 
-          {
-          enable = true;
-          package = pkgs.fabricServers."fabric-${modpack.minecraftVersion}".override { loaderVersion = modpack.fabricVersion; };
+      servers = builtins.listToAttrs (map (modpack: {
+        name = modpack;
+        value = let modpackPkg = pkgs.modpacks.${modpack}; in {
+          package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override { loaderVersion = modpackPkg.fabricVersion; };
 
           serverProperties = {
             gamemode = "survival";
@@ -77,8 +82,7 @@ with lib;
             whitelist = true;
           };
 
-          symlinks = modpack.symlinks;
-          files = modpack.files;
+          files = modpackPkg.files;
 
           whitelist = {
             trivaris = "80ea6fa5-a1ac-4671-a23f-53cf1ab8a437";
@@ -87,7 +91,10 @@ with lib;
 
           jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
         };
-      };
+      }
+      // (if (modpack == cfg.minecraftServer.modpack) then {
+        enable = true;
+      } else {} )) (builtins.attrNames pkgs.modpacks) );
     };
   };
 }

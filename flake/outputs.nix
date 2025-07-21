@@ -25,7 +25,7 @@ let
   };
 
   # Import custom overlays
-  overlays = import (libExtra.mkFlakePath /overlays) { inherit inputs; };
+  overlays = import (libExtra.mkFlakePath /overlays) { inherit inputs libExtra; };
 in
 {
   inherit overlays;

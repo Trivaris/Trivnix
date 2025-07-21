@@ -1,10 +1,13 @@
-{ inputs }:
+{ inputs, libExtra }:
 {
   nur = inputs.nur.overlays.default;
   minecraft = inputs.nix-minecraft.overlay;
 
   additions =
-    pkgs: _prev:
+    final: _prev:
+    let 
+      pkgs = final;
+    in 
     {
       rmatrix = pkgs.callPackage ./pkgs/rmatrix.nix { inherit inputs pkgs; };
       rbonsai = pkgs.callPackage ./pkgs/rbonsai.nix { inherit inputs pkgs; };
@@ -12,12 +15,24 @@
       keeweb = pkgs.callPackage ./pkgs/keeweb.nix { inherit inputs pkgs; };
       instagram-cli = pkgs.callPackage ./pkgs/instagram-cli.nix { inherit inputs pkgs; };
 
-      elysium-days = pkgs.callPackage ./pkgs/modpacks/elysium-days.nix { inherit inputs pkgs; };
-      versatile = pkgs.callPackage ./pkgs/modpacks/versatile.nix { inherit inputs pkgs; };
+      modpacks = {
+        elysium-days = pkgs.callPackage (libExtra.mkModpack { 
+          modrinthUrl = "https://cdn.modrinth.com/data/lz3ryGPQ/versions/azCePsLz/Elysium%20Days%207.0.0.mrpack";
+          hash = "sha256-/1xIPjUSV+9uPU8wBOr5hJ3rHb2V8RkdSdhzLr/ZJ2Y=";
+        }) { inherit inputs pkgs libExtra; };
+
+        rising-legends = pkgs.callPackage (libExtra.mkModpack { 
+          modrinthUrl = "https://cdn.modrinth.com/data/Qx4KOI2G/versions/SVpfGIfp/Rising%20Legends%202.2.0.mrpack";
+          hash = "sha256-kCMJ6PUSaVr5Tpa9gFbBOE80kUQ4BaNLE1ZVzTfqTFM=";
+        }) { inherit inputs pkgs libExtra; };
+      };
     };
 
   modifications =
-    pkgs: prev:
+    final: prev:
+    let 
+      pkgs = final;
+    in 
     {
       suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
         import ./pkgs/suwayomi-server.nix {
@@ -28,11 +43,14 @@
       );
     };
 
-  stable-packages = pkgs: _prev: {
-    stable = import inputs.nixpkgs-stable {
-      system = pkgs.system;
-      config.allowUnfree = true;
+  stable-packages = final: _prev:
+    let 
+      pkgs = final;
+    in {
+      stable = import inputs.nixpkgs-stable {
+        system = pkgs.system;
+        config.allowUnfree = true;
+      };
     };
-  };
 
 }

@@ -50,6 +50,7 @@
     minecraftServer = {
       enable = true;
       domain = "minecraft.trivaris.org";
+      modpack = "rising-legends";
       port = 25565;
       externalPort = 25565;
     };

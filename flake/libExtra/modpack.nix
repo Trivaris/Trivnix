@@ -1,9 +1,6 @@
 { modrinthUrl, hash }:
-{ inputs, pkgs }:
-
+{ inputs, pkgs, libExtra }:
 let
-  inherit (pkgs.lib) fileContents;
-
   modpack = pkgs.runCommand "unpacked" {
     nativeBuildInputs = [ pkgs.unzip ];
   } ''
@@ -14,41 +11,51 @@ let
     }} -d $out
     chmod -R u+rwX $out
   '';
-
-  index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
-
-  hexToBase64 = hex: builtins.readFile (pkgs.runCommand "hex-to-b64" {
-    nativeBuildInputs = [ pkgs.openssl pkgs.unixtools.xxd ];
-  } ''
-    echo -n '${hex}' | xxd -r -p | openssl base64 -A > $out
-  '');
-
+  
   fetchHashedUrl = file: pkgs.fetchurl {
     url = builtins.head file.downloads;
-    hash = "sha512-${hexToBase64 file.hashes.sha512}";
+    hash = "sha512-${libExtra.scripts.hexToBase64 file.hashes.sha512}";
   };
 
-  symlinks = builtins.listToAttrs (
-    builtins.filter (entry: entry != null) (map (file:
-      if builtins.hasAttr "sha512" file.hashes then {
-        name = file.path;
-        value = fetchHashedUrl file;
-      } else null
-    ) index.files)
-  );
 
-  files = inputs.nix-minecraft.lib.collectFilesAt "${modpack}" "overrides";
+  inherit (pkgs.lib) fileContents unique;
+  index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
 
   minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
   fabricVersion = index.dependencies.fabric-loader;
+
+  overrideEntries = builtins.attrNames (builtins.readDir "${modpack}/overrides");
+  overridesPath = "${modpack}/overrides";
+
+  modFiles = builtins.filter (file:
+    builtins.hasAttr "sha512" file.hashes
+    && ((file.env.server or "required") != "unsupported")
+  ) index.files;
+
+  mods = builtins.listToAttrs (map (file: {
+    name = file.path;
+    value = fetchHashedUrl file;
+  }) modFiles);
+
+  overrides =
+    if pkgs.lib.pathExists overridesPath then
+      let
+        entries = builtins.attrNames (builtins.readDir overridesPath);
+      in
+      builtins.listToAttrs (builtins.map (name: {
+        name = name;
+        value = "${overridesPath}/${name}";
+      }) overrideEntries)
+    else {};
+
+  files = overrides // mods;
 in
 {
-  pname = index.versionId;
+  pname = index.name;
   version = index.versionId;
   src = modpack;
 
   inherit
-    symlinks
     files
     minecraftVersion
     fabricVersion;

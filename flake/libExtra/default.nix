@@ -24,11 +24,13 @@ let
     android_sdk.accept_license = true;
   };
 
+  scripts = import ./scripts inputs.nixpkgs;
+
   partition-layouts = import (mkFlakePath /partitions);
 in
 {
 
-  inherit overlay-list pkgs-config partition-layouts;
+  inherit overlay-list pkgs-config partition-layouts scripts;
   inherit mkFlakePath mkPkgs;
 
   mkNixOSConfiguration = import ./nixosConfiguration.nix;
