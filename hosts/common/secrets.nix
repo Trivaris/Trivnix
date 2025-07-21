@@ -62,7 +62,7 @@ in
           path = "/etc/ssh/ssh_host_ed25519_key";
           owner = "root";
           group = "root";
-          mode = "0640";
+          mode = "0600";
           restartUnits = [ "sshd.service" ];
         };
       })
@@ -71,7 +71,7 @@ in
         cloudflare-api-token = {
           owner = "root";
           group = "root";
-          mode = "0640";
+          mode = "0600";
         };
 
         cloudflare-api-account-token = {
@@ -85,7 +85,7 @@ in
         nextcloud-admin-token = {
           owner = "nextcloud";
           group = "nextcloud";
-          mode = "0640";
+          mode = "0600";
         };
       })
 

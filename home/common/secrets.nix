@@ -14,7 +14,7 @@ let
   mkKey = name: {
     "${name}" = {
       sopsFile = hostSecrets;
-      mode = "0400";
+      mode = "0600";
     };
   };
 

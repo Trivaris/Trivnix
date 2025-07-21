@@ -1,7 +1,6 @@
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, lib, config, inputs, userconfig, ... }:
 let
   cfg = config.homeModules.librewolf;
-  addons = pkgs.nur.repos.rycee.firefox-addons;
 in
 with lib;
 {
@@ -14,15 +13,32 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      addons.adnauseam
-      addons.tab-session-manager
-      addons.bitwarden
-    ];
-
     programs.firefox = {
       enable = true;
       package = pkgs.librewolf;
+
+      profiles.${userconfig.name} = {
+        extensions = {
+          packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            addons.adnauseam
+            addons.tab-session-manager
+            addons.bitwarden
+          ];
+        };
+        isDefault = true;
+        search = {
+          engines = {
+            brave = {
+              name = "Brave";
+              urls = [{
+                template = "https://search.brave.com/search";
+                params = [{ name = "q"; value = "{searchTerms}"; }];
+              }];
+              default = true;
+            };
+          };
+        };
+      };
 
       policies = {
         DisableTelemetry = true;
@@ -34,10 +50,10 @@ with lib;
           downloads = true;
           formdata = true;
           history = true;
-          offlineApps = true;
           passwords = false;
           sessions = true;
           siteSettings = false;
+          offlineApps = true;
         };
 
         Cookies.Allow = [

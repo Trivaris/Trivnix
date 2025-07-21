@@ -57,7 +57,7 @@ with lib;
         extensionsRepos = [ "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json" ];
 
         basicAuthEnabled = true;
-        basicAuthUsername = "trivaris";
+        basicAuthUsername = "admin";
         basicAuthPasswordFile = config.sops.secrets.suwayomi-webui-password.path;
       };
     };
