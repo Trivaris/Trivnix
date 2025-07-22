@@ -1,6 +1,6 @@
 {
+  outputs,
   lib,
-  pkgs,
   libExtra,
   userconfig,
   hostconfig,
@@ -13,7 +13,7 @@
   home.stateVersion = hostconfig.stateVersion;
 
   nixpkgs = {
-    overlays = libExtra.overlay-list;
+    inherit (outputs) overlays;
     config = libExtra.pkgs-config;
   };
 

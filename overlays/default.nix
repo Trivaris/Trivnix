@@ -1,14 +1,14 @@
-{ inputs, libExtra }:
+inputs:
+let
+  mkModpack = import ./mkModpack.nix;
+in
 {
   nur = inputs.nur.overlays.default;
   minecraft = inputs.nix-minecraft.overlay;
 
   additions =
     final: _prev:
-    let 
-      pkgs = final;
-    in 
-    {
+    let pkgs = final; in {
       rmatrix = pkgs.callPackage ./pkgs/rmatrix.nix { inherit inputs pkgs; };
       rbonsai = pkgs.callPackage ./pkgs/rbonsai.nix { inherit inputs pkgs; };
       vaultwarden-web-vault = pkgs.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs pkgs; };
@@ -16,37 +16,28 @@
       instagram-cli = pkgs.callPackage ./pkgs/instagram-cli.nix { inherit inputs pkgs; };
 
       modpacks = {
-        elysium-days = pkgs.callPackage (libExtra.mkModpack { 
+        elysium-days = pkgs.callPackage (mkModpack {
           modrinthUrl = "https://cdn.modrinth.com/data/lz3ryGPQ/versions/azCePsLz/Elysium%20Days%207.0.0.mrpack";
           hash = "sha256-/1xIPjUSV+9uPU8wBOr5hJ3rHb2V8RkdSdhzLr/ZJ2Y=";
-        }) { inherit inputs pkgs libExtra; };
+        } { inherit inputs pkgs; });
 
-        rising-legends = pkgs.callPackage (libExtra.mkModpack { 
+        rising-legends = pkgs.callPackage (mkModpack { 
           modrinthUrl = "https://cdn.modrinth.com/data/Qx4KOI2G/versions/SVpfGIfp/Rising%20Legends%202.2.0.mrpack";
           hash = "sha256-kCMJ6PUSaVr5Tpa9gFbBOE80kUQ4BaNLE1ZVzTfqTFM=";
-        }) { inherit inputs pkgs libExtra; };
+        } { inherit inputs pkgs; });
       };
     };
 
   modifications =
     final: prev:
-    let 
-      pkgs = final;
-    in 
-    {
-      suwayomi-server = prev.suwayomi-server.overrideAttrs (previousAttrs: 
-        import ./pkgs/suwayomi-server.nix {
-          inherit inputs;
-          pkgs = pkgs;
-          old = previousAttrs;
-        }
+    let  pkgs = final; in {
+      suwayomi-server = prev.suwayomi-server.overrideAttrs (oldAttrs: 
+        import ./overrides/suwayomi-server.nix { inherit inputs pkgs oldAttrs; }
       );
     };
 
   stable-packages = final: _prev:
-    let 
-      pkgs = final;
-    in {
+    let pkgs = final; in {
       stable = import inputs.nixpkgs-stable {
         system = pkgs.system;
         config.allowUnfree = true;

@@ -1,9 +1,9 @@
 {
   inputs,
-  outputs,
-  libExtra
+  outputs
 }:
 {
+  libExtra,
   configname,
   hostconfig,
   userconfigs,
@@ -12,7 +12,6 @@
 let
   host-configurations = import (libExtra.mkFlakePath /hosts/configurations);
   home-configurations = import (libExtra.mkFlakePath /home/configurations);
-  
 in
 inputs.nixpkgs.lib.nixosSystem {
   specialArgs = {
@@ -37,6 +36,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.sops-nix.nixosModules.sops
     inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
+    inputs.nix-minecraft.nixosModules.minecraft-servers
 
     {
       # Expose flake args to within the home-manager onfig

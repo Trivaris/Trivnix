@@ -1,8 +1,5 @@
-{
-  pkgs,
-  ...
-}:
-pkgs.stdenv.mkDerivation {
+{ pkgs, ... }:
+pkgs.stdenv.mkDerivation rec {
   pname = "keeweb";
   version = "1.18.7";
 

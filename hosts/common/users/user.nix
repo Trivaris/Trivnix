@@ -14,7 +14,7 @@
   ...
 }:
 let
-  inherit (lib) mapAttrsToList concatMap flatten optionals;
+  inherit (lib) mapAttrsToList flatten;
 
   readKey = path: builtins.readFile (libExtra.mkFlakePath path);
 

@@ -1,8 +1,5 @@
-{ inputs, pkgs }:
-let 
-  pyPkgs = pkgs.python3Packages;
-in 
-pyPkgs.buildPythonApplication rec {
+{ pkgs, ... }:
+pkgs.python3Packages.buildPythonApplication {
   pname = "instagram-cli";
   version = "1.3.5";
 

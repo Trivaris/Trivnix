@@ -5,7 +5,6 @@
 }:
 let
   cfg = config.nixosConfig;
-  envFile = "/etc/vaultwarden.env";
 in
 with lib;
 {

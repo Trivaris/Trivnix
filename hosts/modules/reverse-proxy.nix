@@ -2,7 +2,7 @@
 
 let
   cfg = config.nixosConfig;
-  inherit (lib) mkEnableOption mkOption mkIf types mapAttrsToList filterAttrs;
+  inherit (lib) mkEnableOption mkOption mkIf types;
   activeServices =
     builtins.filter (
       service: service.enable or false

@@ -1,9 +1,8 @@
 {
   description = ''
-    Trivaris' NixOS Config. Built on top of m3tam3re's series.
+    Trivaris' NixOS Config.
   '';
 
-  # Centralize input definitions
   inputs = {
     # Core Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -39,16 +38,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Non Flake Inputs
     betterfox = {
       url = "github:yokoffing/Betterfox";
       flake = false;
     };
   };
 
-  # Delegate output logic to separate module
   outputs =
     inputs@{ self, ... }:
-    import ./flake/outputs.nix {
-      inherit inputs self;
-    };
+    import ./outputs.nix { inherit inputs self; };
 }

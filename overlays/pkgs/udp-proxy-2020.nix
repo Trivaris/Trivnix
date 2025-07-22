@@ -1,7 +1,4 @@
-{
-  inputs,
-  pkgs
-}:
+{ pkgs, ... }:
 pkgs.buildGoModule {
   pname = "udp-proxy-2020";
   version = "v0.0.11";

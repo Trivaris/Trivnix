@@ -1,5 +1,6 @@
 {
   inputs,
+  outputs,
   lib,
   pkgs,
   libExtra,
@@ -11,7 +12,7 @@
   time.timeZone = "Europe/Berlin";
 
   nixpkgs = {
-    overlays = libExtra.overlay-list;
+    inherit (outputs) overlays;
     config = libExtra.pkgs-config;
   };
 

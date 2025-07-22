@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  inputs,
   pkgs,
   libExtra,
   ...
@@ -11,40 +10,18 @@ let
 in
 with lib;
 {
-  imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+  options.nixosConfig.minecraftServer = import ./config.nix lib;
 
-  options.nixosConfig.minecraftServer = {
-    enable = mkEnableOption "Enable Minecraft servers.";
-
-    port = mkOption {
-      type = types.int;
-      default = 25565;
-      description = ''
-        Port used by the Minecraft server.
-      '';
-    };
-
-    modpack = mkOption {
-      type = types.enum (builtins.attrNames pkgs.modpacks);
-      example = "elysium-days";
-      description = ''
-        The modpack to deploy on the server. This must be one of the available
-        modpacks defined in `pkgs.modpacks`.
-      '';
-    };
-  };
-
-  config = mkIf cfg.minecraftServer.enable {
-
+  config = mkIf (cfg.minecraftServer.enable) {
     services.minecraft-servers = {
       enable = true;
       eula = true;
-      openFirewall = true;
 
       servers = builtins.listToAttrs (map (modpack: {
         name = modpack;
         value = let modpackPkg = pkgs.modpacks.${modpack}; in {
-          enable = modpack == cfg.minecraftServer.modpack;
+          enable = modpack == config.minecraftServer.modpack;
+          openFirewall = true;
 
           package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override { loaderVersion = modpackPkg.fabricVersion; };
           files = {
@@ -57,12 +34,13 @@ with lib;
             gamemode = "survival";
             difficulty = "hard";
             simulation-distance = 8;
-            server-port = cfg.minecraftServer.port;
+            server-port = config.minecraftServer.port;
+            enable-rcon = true;
+            "rcon.port" = 25575;
             whitelist = true;
             max-tick-time = -1;
             motd = "Awake and Ready!";
           };
-
 
           whitelist = {
             trivaris = "80ea6fa5-a1ac-4671-a23f-53cf1ab8a437";

@@ -1,7 +1,4 @@
-{
-  inputs,
-  pkgs,
-}:
+{ pkgs, ... }:
 pkgs.rustPlatform.buildRustPackage {
   pname = "rbonsai";
   version = "0.1.5";
