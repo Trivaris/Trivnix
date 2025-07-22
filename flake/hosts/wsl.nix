@@ -14,6 +14,12 @@
       tmux.enable = true;
       zoxide.enable = true;
 
+      vscodium = {
+        enable = true;
+        enableLSP = true;
+        fixServer = true;
+      };
+
       git.email = "github@tripple.lurdane.de";
     };
   };

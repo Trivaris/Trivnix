@@ -31,7 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft = {
-      url = "github:Infinidoge/nix-minecraft";
+      url = "github:Yeshey/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {

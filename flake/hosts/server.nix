@@ -49,7 +49,7 @@
     };
 
     minecraftServer = {
-      enable = true;
+      enable = false;
       modpack = "rising-legends";
     };
 

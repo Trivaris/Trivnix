@@ -21,7 +21,7 @@ with lib;
       loginShellInit = ''
         set -x NIX_LOG info
         set -x TERMINAL wezterm
-        tmux
+        zoxide init fish | source
       '';
 
       interactiveShellInit = ''
@@ -42,9 +42,14 @@ with lib;
       };
 
       functions = {
-        # cd.body = "zoxide $argv";
+        cd.body = "z $argv";
         grep.body = "rg $argv";
 
+        fix-endings = ''
+          mv ./.git ../
+          find . -type f -exec sed -i 's/\r$//' {} +
+          mv ../.git ./
+        '';
       };
     };
 

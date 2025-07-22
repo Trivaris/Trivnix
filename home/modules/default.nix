@@ -10,6 +10,7 @@
     ./fish.nix
     ./fzf.nix
     ./tmux.nix
+    ./vscodium.nix
     ./zoxide.nix
   ];
 
