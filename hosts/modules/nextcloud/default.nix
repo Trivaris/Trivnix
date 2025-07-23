@@ -8,10 +8,9 @@ let
 in
 with lib;
 {
+  options.nixosConfig.nextcloud = import ./config.nix lib;
 
-  options.nixosConfig.nextcloud = import ./config lib;
-
-  config = mkIf cfg.nextcloud.enable {
+  config = mkIf (cfg.nextcloud.enable) {
     services.nextcloud = {
       enable = true;
       hostName = cfg.nextcloud.domain;
@@ -46,5 +45,4 @@ with lib;
 
     users.users.nextcloud.extraGroups = [ "redis" ];
   };
-
 }

@@ -1,4 +1,4 @@
-inputs:
+ inputs:
 let
   mkModpack = import ./mkModpack.nix;
 in
@@ -43,5 +43,4 @@ in
         config.allowUnfree = true;
       };
     };
-
 }

@@ -16,7 +16,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   pkgs = import inputs.nixpkgs {
     system = hostconfig.architecture;
-    inherit (outputs) overlays;
+    overlays = builtins.attrValues (outputs.overlays);
     config = libExtra.pkgs-config;
   } ;
 

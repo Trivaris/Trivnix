@@ -9,10 +9,9 @@ let
 in
 with lib;
 {
-
   options.nixosConfig.printing.enable = mkEnableOption "Printing";
 
-  config = mkIf cfg.printing.enable {
+  config = mkIf (cfg.printing.enable) {
     services.printing = {
       enable = true;
       drivers = [ pkgs.samsung-unified-linux-driver ];
@@ -22,5 +21,4 @@ with lib;
       unitConfig.Mask = true;
     };
   };
-
 }

@@ -13,7 +13,7 @@
   home.stateVersion = hostconfig.stateVersion;
 
   nixpkgs = {
-    inherit (outputs) overlays;
+    overlays = builtins.attrValues (outputs.overlays);
     config = libExtra.pkgs-config;
   };
 

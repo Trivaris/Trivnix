@@ -1,14 +1,14 @@
 lib:
 with lib;
 {
-  enable = mkEnableOption "Enable the Nextcloud service.";
-  
+  enable = mkEnableOption "Enable the Vaultwarden password manager server.";
+
   port = mkOption {
     type = types.int;
-    default = 8889;
+    default = 8891;
     description = ''
-      Local port Nextcloud will bind to.
-      Typically used behind a reverse proxy and not exposed directly.
+      Local port Vaultwarden binds to.
+      This is typically proxied behind Nginx and should not be publicly exposed directly.
     '';
   };
 
@@ -32,10 +32,10 @@ with lib;
 
   domain = mkOption {
     type = types.str;
+    example = "vault.example.com";
     description = ''
-      FQDN to access the Nextcloud instance.
-      Used in web configuration and TLS certificate issuance.
+      FQDN used to access Vaultwarden externally.
+      Used for setting the DOMAIN environment variable and ACME certificate configuration.
     '';
-    example = "cloud.example.com";
   };
 }

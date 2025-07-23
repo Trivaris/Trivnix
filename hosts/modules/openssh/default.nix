@@ -9,10 +9,9 @@ let
 in
 with lib;
 {
-
   options.nixosConfig.openssh = import ./config.nix lib;
 
-  config = mkIf cfg.openssh.enable {
+  config = mkIf (cfg.openssh.enable) {
     services.openssh = {
       enable = true;
       ports = cfg.openssh.ports;
@@ -36,5 +35,4 @@ with lib;
 
     networking.firewall.allowedTCPPorts = cfg.openssh.ports;
   };
-
 }

@@ -1,19 +1,21 @@
-
 {
   config,
   lib,
   pkgs,
   ...
 }:
+
 let
-  cfg = config.nixosConfig;
+  greetdCmd = "env XDG_SESSION_TYPE=wayland dbus-run-session ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland";
 in
+
 with lib;
 {
   options.nixosConfig.kde.enable = mkEnableOption "KDE Desktop Manager";
 
-  config = mkIf (cfg.kde.enable) {
+  config = mkIf config.nixosConfig.kde.enable {
     services.desktopManager.plasma6.enable = true;
-    nixosConfig.tuigreet.command = "env XDG_SESSION_TYPE=wayland dbus-run-session ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland";
+
+    nixosConfig.greetd.command = greetdCmd;
   };
 }

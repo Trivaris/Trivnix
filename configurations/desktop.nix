@@ -22,7 +22,10 @@
     kde.enable = true;
     openssh.enable = true;
     printing.enable = true;
-    tuigreet.enable = true;
+    greetd = {
+      enable = true;
+      pkg = "tuigreet";
+    };
 
     stylix = {
       enable = true;

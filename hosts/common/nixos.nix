@@ -12,7 +12,7 @@
   time.timeZone = "Europe/Berlin";
 
   nixpkgs = {
-    inherit (outputs) overlays;
+    overlays = builtins.attrValues (outputs.overlays);
     config = libExtra.pkgs-config;
   };
 

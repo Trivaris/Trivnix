@@ -22,7 +22,11 @@
     bluetooth.enable = true;
     openssh.enable = true;
     printing.enable = true;
-    tuigreet.enable = true;
+    kde.enable = true;
+    greetd = {
+      enable = true;
+      pkg = "tuigreet";
+    };
 
     stylix = {
       enable = true;

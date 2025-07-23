@@ -1,17 +1,17 @@
 lib:
 with lib;
 {
-  enable = mkEnableOption "Enable the Nextcloud service.";
+  enable = mkEnableOption "Enable the Suwayomi server (Tachidesk) service.";
   
   port = mkOption {
     type = types.int;
-    default = 8889;
+    default = 8890;
     description = ''
-      Local port Nextcloud will bind to.
-      Typically used behind a reverse proxy and not exposed directly.
+      Local port the Suwayomi server listens on.
+      This is proxied by Nginx or another reverse proxy for external access.
     '';
   };
-
+  
   externalPort = mkOption {
     type = types.nullOr types.int;
     default = null;
@@ -32,10 +32,10 @@ with lib;
 
   domain = mkOption {
     type = types.str;
+    example = "manga.example.com";
     description = ''
-      FQDN to access the Nextcloud instance.
-      Used in web configuration and TLS certificate issuance.
+      Fully qualified domain name (FQDN) for reverse proxy access to Suwayomi.
+      Used to configure virtual hosts and TLS certificates.
     '';
-    example = "cloud.example.com";
   };
 }
