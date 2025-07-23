@@ -7,8 +7,7 @@ in
   minecraft = inputs.nix-minecraft.overlay;
 
   additions =
-    final: _prev:
-    let pkgs = final; in {
+    final: pkgs: {
       rmatrix = pkgs.callPackage ./pkgs/rmatrix.nix { inherit inputs pkgs; };
       rbonsai = pkgs.callPackage ./pkgs/rbonsai.nix { inherit inputs pkgs; };
       vaultwarden-web-vault = pkgs.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs pkgs; };
@@ -29,15 +28,13 @@ in
     };
 
   modifications =
-    final: prev:
-    let  pkgs = final; in {
-      suwayomi-server = prev.suwayomi-server.overrideAttrs (oldAttrs: 
+    final: pkgs: {
+      suwayomi-server = pkgs.suwayomi-server.overrideAttrs (oldAttrs: 
         import ./overrides/suwayomi-server.nix { inherit inputs pkgs oldAttrs; }
       );
     };
 
-  stable-packages = final: _prev:
-    let pkgs = final; in {
+  stable-packages = final: pkgs: {
       stable = import inputs.nixpkgs-stable {
         system = pkgs.system;
         config.allowUnfree = true;

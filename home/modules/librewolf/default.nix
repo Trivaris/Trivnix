@@ -13,11 +13,12 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    programs.firefox = {
+    programs.librewolf = {
       enable = true;
-      # package = pkgs.librewolf;
 
       profiles.${userconfig.name} = {
+        isDefault = true;
+
         extensions = {
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
             adnauseam
@@ -25,8 +26,10 @@ with lib;
             bitwarden
           ];
         };
-        isDefault = true;
+        
         search = {
+          default = "brave";
+          order = [ "brave" ];
           engines = {
             brave = {
               name = "Brave";
@@ -34,7 +37,6 @@ with lib;
                 template = "https://search.brave.com/search";
                 params = [{ name = "q"; value = "{searchTerms}"; }];
               }];
-              default = true;
             };
           };
         };
@@ -76,6 +78,6 @@ with lib;
       };
     };
 
-    home.file.".librewolf/user.js".source = inputs.betterfox + "/user.js";
+    home.file.".librewolf/${userconfig.name}/user.js".source = inputs.betterfox + "/user.js";
   };
 }
