@@ -1,17 +1,5 @@
-{ pkgs, ... }:
-{ modrinthUrl, hash }:
+{ modrinthUrl, hash, pkgs, ... }:
 let
-  hex2b64 = { pkgs, hex }:
-    let
-      script = pkgs.writeShellScript "hex2b64" ''
-        echo -n '${hex}' | xxd -r -p | openssl base64 -A
-      '';
-    in
-    builtins.readFile (
-      pkgs.runCommand "hex2b64"
-        { nativeBuildInputs = [ pkgs.openssl pkgs.unixtools.xxd ]; } " ${script} > $out "
-    );
-  
   modpack = pkgs.runCommand "unpacked" {
     nativeBuildInputs = [ pkgs.unzip ];
   } ''
@@ -25,7 +13,7 @@ let
   
   fetchHashedUrl = file: pkgs.fetchurl {
     url = builtins.head file.downloads;
-    hash = "sha512-${hex2b64 pkgs file.hashes.sha512}";
+    hash = "sha512:${file.hashes.sha512}}";
   };
 
   index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
@@ -47,9 +35,9 @@ let
   }) modFiles);
 
   overrides =
-    if pkgs.lib.pathExists overridesPath then
+    if pkgs.lib.pathExists (overridesPath) then
       builtins.listToAttrs (builtins.map (name: {
-        name = name;
+        inherit name;
         value = "${overridesPath}/${name}";
       }) overrideEntries)
     else {};

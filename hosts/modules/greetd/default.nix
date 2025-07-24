@@ -11,11 +11,19 @@ with lib;
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.${cfg.greetd.pkg}}/bin/${cfg.greetd.pkg} --time --cmd '${cfg.greetd.command}'";
+          command = ''
+            env QT_QPA_PLATFORM=wayland \
+            ${cfg.greetd.pkg} --cmd ${cfg.greetd.command}
+          '';
           user = cfg.greetd.user;
         };
       };
     };
+
+    environment.systemPackages = with pkgs; [
+      greetd."${cfg.greetd.pkg}"
+      qt6.qtwayland
+    ];
 
     users.users.${cfg.greetd.user} = {
       isSystemUser = true;

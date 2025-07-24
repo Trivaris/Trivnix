@@ -1,7 +1,17 @@
-lib:
+{ lib, pkgs }:
 with lib;
 {
   enable = mkEnableOption "Enable Minecraft servers.";
+
+  domain = mkOption {
+    type = types.str;
+    description = ''
+      FQDN to access the Minecraft Server instance.
+      Can also be the ip Address of the server.
+      Used in web configuration and TLS certificate issuance.
+    '';
+    example = "cloud.example.com";
+  };
 
   port = mkOption {
     type = types.int;

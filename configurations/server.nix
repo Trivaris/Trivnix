@@ -49,7 +49,8 @@
     };
 
     minecraftServer = {
-      enable = false;
+      enable = true;
+      domain = "minecraft.trivaris.org";
       modpack = "rising-legends";
     };
 

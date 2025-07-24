@@ -24,7 +24,7 @@
     printing.enable = true;
     greetd = {
       enable = true;
-      pkg = "tuigreet";
+      pkg = "qtgreet";
     };
 
     stylix = {

@@ -5,6 +5,7 @@
     coreutils
     wget
     zip
+    jq
 
     # Shell enhancements
     eza          # modern ls replacement
@@ -32,12 +33,6 @@
     pipes-rs     # terminal pipes animation
     rmatrix      # matrix rain effect
     rbonsai      # terminal bonsai tree
-
-    # TUI Clients
-    nchat
-    instagram-cli
-    gurk-rs
-    discordo
   ];
 
   programs.fish.enable = true;
