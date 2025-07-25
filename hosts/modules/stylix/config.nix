@@ -40,7 +40,7 @@ with lib;
 
   nerdfont = mkOption {
     type = types.str;
-    example = "JetBrainsMono";
+    example = "ubuntu";
     description = ''
       The name of the Nerd Font to use for all font categories (monospace, sansSerif, serif).
     '';

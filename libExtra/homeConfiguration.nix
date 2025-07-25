@@ -34,7 +34,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   modules = [
     # Flake entrypoint
-    configurations."${userconfig.name}"."${configname}"
+    configurations.${userconfig.name}.${configname}
   ];
 
 }

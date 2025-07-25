@@ -21,7 +21,7 @@ with lib;
     };
 
     environment.systemPackages = with pkgs; [
-      greetd."${cfg.greetd.pkg}"
+      greetd.${cfg.greetd.pkg}
       qt6.qtwayland
     ];
 

@@ -35,7 +35,7 @@
       cursorPackage = "rose-pine-cursor";
       cursorName = "BreezeX-RosePine-Linux";
 
-      nerdfont = "CodeNewRoman";
+      nerdfont = "code-new-roman";
     };
   };
 }

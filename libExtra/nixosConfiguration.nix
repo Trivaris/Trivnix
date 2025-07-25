@@ -28,7 +28,7 @@ inputs.nixpkgs.lib.nixosSystem {
   };
   modules = [
     # Flake NixOS entrypoint
-    host-configurations."${configname}"
+    host-configurations.${configname}
 
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager

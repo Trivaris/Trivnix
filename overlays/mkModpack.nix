@@ -35,7 +35,7 @@ let
   }) modFiles);
 
   overrides =
-    if pkgs.lib.pathExists (overridesPath) then
+    if pkgs.lib.pathExists overridesPath then
       builtins.listToAttrs (builtins.map (name: {
         inherit name;
         value = "${overridesPath}/${name}";

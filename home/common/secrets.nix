@@ -12,7 +12,7 @@ let
   hostSecrets = libExtra.mkFlakePath "/secrets/home/${userconfig.name}/${configname}.yaml";
   
   mkKey = name: {
-    "${name}" = {
+    ${name} = {
       sopsFile = hostSecrets;
       mode = "0600";
     };

@@ -13,7 +13,7 @@ with lib;
     programs.zoxide = {
       enable = true;
     };
-    programs.fish.functions.cd.body = "z $argv";
+    # programs.fish.functions.cd.body = "z $argv";
   };
   
 }

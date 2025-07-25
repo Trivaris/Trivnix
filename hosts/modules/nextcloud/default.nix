@@ -37,7 +37,7 @@ with lib;
     };
 
     services.redis = {
-      servers."${cfg.nextcloud.domain}" = {
+      servers.${cfg.nextcloud.domain} = {
         enable = true;
         unixSocketPerm = 770;
       };
