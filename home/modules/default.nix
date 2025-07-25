@@ -6,6 +6,7 @@
   imports = [
     ./librewolf
     ./wezterm
+    ./btop.nix
     ./eza.nix
     ./fish.nix
     ./fzf.nix

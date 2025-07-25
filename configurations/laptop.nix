@@ -23,10 +23,7 @@
     openssh.enable = true;
     printing.enable = true;
     kde.enable = true;
-    greetd = {
-      enable = true;
-      pkg = "qtgreet";
-    };
+    greetd.enable = true;
 
     stylix = {
       enable = true;

@@ -13,7 +13,7 @@ let
   
   fetchHashedUrl = file: pkgs.fetchurl {
     url = builtins.head file.downloads;
-    hash = "sha512:${file.hashes.sha512}}";
+    hash = "sha512:${file.hashes.sha512}";
   };
 
   index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");

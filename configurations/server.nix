@@ -11,6 +11,7 @@
       eza.enable = true;
       fish.enable = true;
       fzf.enable = true;
+      btop.enable = true;
 
       git.email = "github@tripple.lurdane.de";
     };
