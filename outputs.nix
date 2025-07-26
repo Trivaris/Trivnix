@@ -41,13 +41,18 @@ in
         rawHost = configurations.${configname};
         userconfigs = rawHost.users or {};
         hostconfig = rawHost // { users = builtins.attrNames userconfigs; };
+        hosts = builtins.mapAttrs(_: host:
+          host // {
+            users = builtins.attrNames (host.users or {});
+          }
+        ) configurations;
       in
         map (username: {
           name = "${username}@${configname}";
           value = libExtra.mkHomeConfiguration {
             inherit
               libExtra
-              username
+              userconfigs
               configname
               hostconfig
               hosts;

@@ -71,7 +71,7 @@ in
       "input"
       "kvm" 
       "qemu-libvirtd"
-      "Docker"
+      "docker"
     ];
     openssh.authorizedKeys.keys = allAuthorizedKeys;
     useDefaultShell = true;

@@ -22,7 +22,7 @@ with lib;
   };
 
   port = mkOption {
-    type = types.int;
+    type = types.port;
     default = 443;
     description = ''
       External port on which Nginx will listen for HTTPS traffic.

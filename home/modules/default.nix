@@ -1,18 +1,5 @@
+{ libExtra,  lib, ... }:
+with libExtra;
 {
-  ...
-}:
-{
-
-  imports = [
-    ./librewolf
-    ./wezterm
-    ./btop.nix
-    ./eza.nix
-    ./fish.nix
-    ./fzf.nix
-    ./tmux.nix
-    ./vscodium.nix
-    ./zoxide.nix
-  ];
-
+  imports = importDir lib (mkFlakePath "/home/modules");
 }

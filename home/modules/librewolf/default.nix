@@ -1,18 +1,12 @@
 { pkgs, lib, config, inputs, userconfig, ... }:
 let
-  cfg = config.homeConfig.librewolf;
+  cfg = config.homeConfig;
 in
 with lib;
 {
+  options.homeConfig.librewolf = import ./config.nix lib;
 
-  options.homeConfig.librewolf = {
-    enable = mkEnableOption ''
-      Enable LibreWolf with hardened privacy and security settings.
-      Also manages a Betterfox user.js config and extensions via NUR.
-    '';
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf cfg.librewolf.enable {
     programs.librewolf = {
       enable = true;
 
@@ -45,8 +39,8 @@ with lib;
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        SanitizeOnShutdown = true;
-        ClearOnShutdown = {
+        SanitizeOnShutdown = mkIf (cfg.librewolf.clearOnShutdown) true;
+        ClearOnShutdown = mkIf (cfg.librewolf.clearOnShutdown) {
           cache = true;
           cookies = true;
           downloads = true;
@@ -58,28 +52,12 @@ with lib;
           offlineApps = true;
         };
 
-        Cookies.Allow = [
-          "https://github.com"
-          "https://asuracomic.net"
-          "https://www.kenmei.co"
-          "https://www.youtube.com"
-          "https://www.figma.com"
-          "https://f95zone.to"
-          "https://www.livechart.me"
-          "https://anilist.co"
-          "https://www.cloudflare.com"
-          "https://auth.mangadex.org"
-          "https://www.reddit.com"
-          "https://www.google.com"
-          "https://vault.trivaris.org"
-          "https://accounts.google.com"
-          "https://mangadex.org"
-        ];
+        Cookies.Allow = cfg.librewolf.allowedCookies;
       };
     };
 
-    stylix.targets.librewolf.profileNames = [ userconfig.name ];
+    # stylix.targets.librewolf.profileNames = [ userconfig.name ];
 
-    home.file.".librewolf/${userconfig.name}/user.js".source = inputs.betterfox + "/user.js";
+    home.file.".librewolf/${userconfig.name}/user.js".source = mkIf (cfg.librewolf.betterwolf) (inputs.betterfox + "/user.js");
   };
 }

@@ -4,10 +4,7 @@ let
 in
 with lib;
 {
-
-  options.homeConfig.eza = {
-    enable = mkEnableOption "Extended Eza Configuration";
-  };
+  options.homeConfig.eza.enable = mkEnableOption "Extended Eza Configuration";
 
   config = mkIf cfg.eza.enable {
     programs.eza = {
@@ -21,5 +18,4 @@ with lib;
     };
     programs.fish.functions.ls.body = "eza $argv";
   };
-  
 }

@@ -9,7 +9,6 @@ let
 in
 with lib;
 {
-
   options.homeConfig.fish.enable = mkEnableOption "extended fish configuration";
 
   config = mkIf cfg.fish.enable {
@@ -57,5 +56,4 @@ with lib;
     programs.zoxide.enableFishIntegration = true;
     programs.fzf.enableFishIntegration = true;
   };
-
 }

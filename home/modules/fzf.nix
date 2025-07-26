@@ -4,10 +4,7 @@ let
 in
 with lib;
 {
-
-  options.homeConfig.fzf = {
-    enable = mkEnableOption "Extended Fzf Configuration";
-  };
+  options.homeConfig.fzf.enable = mkEnableOption "Extended Fzf Configuration";
 
   config = mkIf cfg.fzf.enable {
     programs.fzf = {
@@ -22,5 +19,4 @@ with lib;
       changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
     };
   };
-
 }

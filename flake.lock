@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "appflowy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753421400,
+        "narHash": "sha256-LHscpa/+X10cRV5MDP9yZUvLUcFLUK6peHHo1KEOf4w=",
+        "owner": "AppFlowy-IO",
+        "repo": "AppFlowy-Cloud",
+        "rev": "5c9937591a78e2b1532b1df94b22f6ce289c8fdd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AppFlowy-IO",
+        "repo": "AppFlowy-Cloud",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -388,6 +404,7 @@
     },
     "root": {
       "inputs": {
+        "appflowy": "appflowy",
         "betterfox": "betterfox",
         "disko": "disko",
         "home-manager": "home-manager",
@@ -397,7 +414,8 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nur": "nur",
         "sops-nix": "sops-nix",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "trivnix-private": "trivnix-private"
       }
     },
     "sops-nix": {
@@ -563,6 +581,21 @@
         "owner": "tinted-theming",
         "repo": "base16-zed",
         "type": "github"
+      }
+    },
+    "trivnix-private": {
+      "locked": {
+        "lastModified": 1753562797,
+        "narHash": "sha256-ETLVepm2MWQ1kxFUFQ5LEKEBDqM5QROn30H5CessYbQ=",
+        "ref": "refs/heads/master",
+        "rev": "6af60b26baace42d3e614054d9e77fc0406405ec",
+        "revCount": 3,
+        "type": "git",
+        "url": "ssh://git@github.com/trivaris/trivnix-private"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/trivaris/trivnix-private"
       }
     }
   },

@@ -13,17 +13,9 @@ let
 in
 with lib;
 {
-
-  options.homeConfig.vscodium = {
-    enable = mkEnableOption "Enable VSCodium";
-
-    enableLSP = mkEnableOption "Enable LSP and Formatting for Nix";
-
-    fixServer = mkEnableOption "Fix Server Installation when remoting into this host via Open Remote extension.";
-  };
+  options.homeConfig.vscodium = import ./config.nix lib;
 
   config = mkIf cfg.vscodium.enable (mkMerge [
-
     {
       home.packages = with pkgs; [
         vscodium
@@ -87,6 +79,5 @@ with lib;
         done
       '';
     })
-
   ]);
 }

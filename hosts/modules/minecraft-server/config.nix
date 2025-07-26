@@ -14,7 +14,7 @@ with lib;
   };
 
   port = mkOption {
-    type = types.int;
+    type = types.port;
     default = 25565;
     description = ''
       Port used by the Minecraft server.

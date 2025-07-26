@@ -24,6 +24,12 @@ let
     else
       [ (mkKey "ssh-private-key") ]
   );
+
+  
+  emailSecrets = builtins.listToAttrs (map (account: {
+    name = "email-passwords/${account}";
+    value = { };
+  }) (builtins.attrNames inputs.trivnix-private.emailAccounts));
 in
 {
 
@@ -40,12 +46,7 @@ in
 
     secrets = lib.mkMerge [
       sshSecrets
-
-      {
-        "smtp-passwords/public" = { };
-        "smtp-passwords/private" = { };
-        "smtp-passwords/school" = { };
-      }
+      emailSecrets
     ];
   };
 

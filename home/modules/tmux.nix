@@ -4,10 +4,7 @@ let
 in
 with lib;
 {
-
-  options.homeConfig.tmux = {
-    enable = mkEnableOption "Extended Tmux Configuration";
-  };
+  options.homeConfig.tmux.enable = mkEnableOption "Extended Tmux Configuration";
 
   config = mkIf cfg.tmux.enable {
     programs.tmux = {
@@ -31,5 +28,4 @@ with lib;
       '';
     };
   };
-
 }

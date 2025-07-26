@@ -4,7 +4,7 @@ with lib;
   enable = mkEnableOption "Enable the Vaultwarden password manager server.";
 
   port = mkOption {
-    type = types.int;
+    type = types.port;
     default = 8891;
     description = ''
       Local port Vaultwarden binds to.
@@ -13,7 +13,7 @@ with lib;
   };
 
   externalPort = mkOption {
-    type = types.nullOr types.int;
+    type = types.nullOr types.port;
     default = null;
     description = ''
       Optional override for the externally exposed port.

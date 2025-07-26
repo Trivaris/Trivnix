@@ -1,11 +1,5 @@
-{ ... }:
+{ libExtra,  lib, ... }:
+with libExtra;
 {
-
-  imports = [
-    ./git.nix
-    ./home.nix
-    ./secrets.nix
-    ./ssh.nix
-  ];
-
+  imports = importDir lib (mkFlakePath "/home/common");
 }

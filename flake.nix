@@ -38,9 +38,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Private Information
+    trivnix-private = {
+     url = "git+ssh://git@github.com/trivaris/trivnix-private";
+    };
+
     # Non Flake Inputs
     betterfox = {
       url = "github:yokoffing/Betterfox";
+      flake = false;
+    };
+    appflowy = {
+      url = "github:AppFlowy-IO/AppFlowy-Cloud";
       flake = false;
     };
   };

@@ -4,7 +4,7 @@ with lib;
   enable = mkEnableOption "OpenSSH Server";
 
   ports = mkOption {
-    type = types.listOf types.int;
+    type = types.listOf types.port;
     default = [ 22 ];
     description = ''
       TCP port the OpenSSH daemon will listen on.

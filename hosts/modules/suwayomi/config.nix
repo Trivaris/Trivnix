@@ -4,7 +4,7 @@ with lib;
   enable = mkEnableOption "Enable the Suwayomi server (Tachidesk) service.";
   
   port = mkOption {
-    type = types.int;
+    type = types.port;
     default = 8890;
     description = ''
       Local port the Suwayomi server listens on.
@@ -13,7 +13,7 @@ with lib;
   };
   
   externalPort = mkOption {
-    type = types.nullOr types.int;
+    type = types.nullOr types.port;
     default = null;
     description = ''
       Optional override for the externally exposed port.

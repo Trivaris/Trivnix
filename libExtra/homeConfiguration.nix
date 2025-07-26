@@ -4,6 +4,7 @@
 }:
 {
   libExtra,
+  userconfigs,
   userconfig,
   hostconfig,
   configname,
@@ -26,6 +27,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
       inputs
       outputs
       libExtra
+      userconfigs
       userconfig
       hostconfig
       configname
@@ -35,6 +37,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
   modules = [
     # Flake entrypoint
     configurations.${userconfig.name}.${configname}
+
   ];
 
 }

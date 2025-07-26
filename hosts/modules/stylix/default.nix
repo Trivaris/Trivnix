@@ -1,4 +1,4 @@
-{ config, pkgs, lib, libExtra, ... }:
+{ config, pkgs, lib, libExtra, userconfigs, ... }:
 let
   cfg = config.nixosConfig;
 in

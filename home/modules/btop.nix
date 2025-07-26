@@ -8,13 +8,9 @@ let
 in
 with lib;
 {
-
-  options.homeConfig.btop = {
-    enable = mkEnableOption "Extended Btop Configuration";
-  };
+  options.homeConfig.btop.enable = mkEnableOption "Extended Btop Configuration";
 
   config = mkIf cfg.btop.enable {
     programs.btop.enable = true;
   };
-
 }
