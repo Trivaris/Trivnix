@@ -7,10 +7,9 @@
   ...
 }:
 {
-
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    # libExtra.partition-layouts.disko-default
+    libExtra.partition-layouts.disko-desktop
   ];
 
   boot.initrd.kernelModules = [ ];
@@ -35,18 +34,4 @@
   hardware.nvidia.modesetting.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia.open = true;
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/54d85da4-4452-4cba-89b2-eae6bc71d635";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A39C-EE6D";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  swapDevices = [ ];
-
 }

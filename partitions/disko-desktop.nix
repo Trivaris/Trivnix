@@ -1,45 +1,32 @@
 {
-
   disko.devices.disk.nixos = {
     type = "disk";
     device = "/dev/nvme1n1";
     content.type = "gpt";
     content.partitions = {
-
-      ESP = {
-        size = "512M";
-        type = "EF00";
+      boot = {
+        type = "partition";
+        start = "1MiB";
+        end = "512MiB";
+        bootable = true;
         content = {
           type = "filesystem";
           format = "vfat";
           mountpoint = "/boot";
-          extraArgs = [ "-F32" ];
-          mountOptions = [
-            "fmask=0077"
-            "dmask=0077"
-          ];
+          mountOptions = [ "fmask=0077" "dmask=0077" ];
         };
       };
 
       root = {
-        size = "100%";
+        type = "partition";
+        start = "512MiB";
+        end = "100%";
         content = {
           type = "filesystem";
           format = "ext4";
           mountpoint = "/";
         };
       };
-
-      encryptedSwap = {
-        size = "16G";
-        content = {
-          type = "swap";
-          randomEncryption = true;
-          priority = 100;
-        };
-      };
-
     };
   };
-
 }
