@@ -1,6 +1,6 @@
 {
   homeConfig = {
-    terminals = [ "wezterm" ];
+    terminals = [ "alacritty" ];
 
     librewolf = {
       enable = true;
@@ -22,6 +22,8 @@
         "https://vault.trivaris.org"
         "https://accounts.google.com"
         "https://mangadex.org"
+        "https://chatgpt.com/"
+        "https://open.spotify.com/"
       ];
     };
   };

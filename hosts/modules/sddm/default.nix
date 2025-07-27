@@ -7,6 +7,10 @@ with lib;
   options.nixosConfig.sddm.enable = mkEnableOption "Enable SDDM Greeter";
 
   config = mkIf cfg.sddm.enable {
-    services.displayManager.sddm.enable = true;
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
+    services.xserver.enable = true;
   };
 }
