@@ -18,8 +18,9 @@ in
       email.enable = true;
 
       git.email = "github@tripple.lurdane.de";
+      terminals = [ "alacritty" ];
 
-      inherit (commons.homeConfig) librewolf terminals;
+      inherit (commons.homeConfig) librewolf;
     };
   };
 

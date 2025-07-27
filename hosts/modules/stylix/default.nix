@@ -10,7 +10,7 @@ in
       enable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.stylix.colorscheme}.yaml";
       
-      image = libExtra.mkFlakePath /resources/wp_1.jpg;
+      image = libExtra.mkFlakePath /resources/wallpaper.jpg;
       polarity = "dark";
 
       cursor.package = pkgs.${cfg.stylix.cursorPackage};

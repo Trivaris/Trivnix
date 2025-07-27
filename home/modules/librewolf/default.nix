@@ -56,7 +56,7 @@ with lib;
       };
     };
 
-    # stylix.targets.librewolf.profileNames = [ userconfig.name ];
+    stylix.targets.librewolf.profileNames = [ userconfig.name ];
 
     home.file.".librewolf/${userconfig.name}/user.js".source = mkIf (cfg.librewolf.betterwolf) (inputs.betterfox + "/user.js");
   };

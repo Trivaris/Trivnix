@@ -36,8 +36,9 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   modules = [
     # Flake entrypoint
+    inputs.stylix.homeModules.stylix
+    
     configurations.${userconfig.name}.${configname}
-
   ];
 
 }

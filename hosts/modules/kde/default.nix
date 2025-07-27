@@ -5,5 +5,7 @@ with lib;
 
   config = mkIf config.nixosConfig.kde.enable {
     services.desktopManager.plasma6.enable = true;
+    stylix.targets.qt.platform = mkForce "qtct";
   };
+
 }
