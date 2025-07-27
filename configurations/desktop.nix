@@ -10,12 +10,21 @@ in
 
   users.trivaris = {    
     homeConfig = {
-      eza.enable = true;
-      fish.enable = true;
-      fzf.enable = true;
-      spotify.enable = true;
-      thunderbird.enable = true;
+      bitwarden.enable = true;
+      chatgpt.enable = true;
       email.enable = true;
+      spotify.enable = true;
+      steam.enable = true;
+      thunderbird.enable = true;
+      vesktop.enable = true;
+      vscodium = {
+        enable = true;
+        enableLSP = true;
+      };
+
+      fish.enable = true;
+      eza.enable = true;
+      fzf.enable = true;
 
       git.email = "github@tripple.lurdane.de";
 
@@ -25,9 +34,9 @@ in
 
   nixosConfig = {
     bluetooth.enable = true;
+    kde.enable = true;
     openssh.enable = true;
     printing.enable = true;
-    kde.enable = true;
     sddm.enable = true;
 
     inherit (commons.nixosConfig) stylix;
