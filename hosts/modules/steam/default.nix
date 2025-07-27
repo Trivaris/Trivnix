@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.homeConfig;
+  cfg = config.nixosConfig;
 in
 with lib;
 {
-  options.homeConfig.steam.enable = mkEnableOption "Enable Steam";
+  options.nixosConfig.steam.enable = mkEnableOption "Enable Steam";
 
   config = mkIf cfg.steam.enable {
     programs.steam = {

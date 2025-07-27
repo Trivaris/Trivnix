@@ -11,10 +11,9 @@ in
   users.trivaris = {    
     homeConfig = {
       bitwarden.enable = true;
-      chatgpt.enable = true;
+      # chatgpt.enable = true;
       email.enable = true;
       spotify.enable = true;
-      steam.enable = true;
       thunderbird.enable = true;
       vesktop.enable = true;
       vscodium = {
@@ -38,6 +37,7 @@ in
     openssh.enable = true;
     printing.enable = true;
     sddm.enable = true;
+    steam.enable = true;
 
     inherit (commons.nixosConfig) stylix;
   };
