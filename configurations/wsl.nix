@@ -13,6 +13,7 @@
       fzf.enable = true;
       tmux.enable = true;
       zoxide.enable = true;
+      email.enable = true;
 
       vscodium = {
         enable = true;

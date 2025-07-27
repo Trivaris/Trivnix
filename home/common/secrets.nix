@@ -28,7 +28,7 @@ let
   
   emailSecrets = builtins.listToAttrs (map (account: {
     name = "email-passwords/${account}";
-    value = { };
+    value = { mode = "0600"; };
   }) (builtins.attrNames inputs.trivnix-private.emailAccounts));
 in
 {

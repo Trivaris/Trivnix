@@ -16,6 +16,9 @@ with lib;
       enable = true;
       profiles.${userconfig.name} = {
         isDefault = true;
+        settings = {
+          "mail.folderpane.view" = "smart";
+        };
       };
     };
   };

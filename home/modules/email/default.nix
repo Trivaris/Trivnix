@@ -2,6 +2,7 @@
   inputs,
   config,
   lib,
+  userconfig,
   ...
 }:
 let
@@ -12,6 +13,20 @@ with lib;
   options.homeConfig.email.enable = mkEnableOption "Enable Email Accounts";
 
   config = mkIf cfg.email.enable {
-    accounts.email.accounts = inputs.trivnix-private.emailAccounts;
+    accounts.email.accounts = builtins.listToAttrs (map(accountName:
+      let 
+        account = inputs.trivnix-private.emailAccounts.${accountName};
+      in
+      {
+        name = accountName;
+        value = account // {
+          passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
+          thunderbird = mkIf cfg.thunderbird.enable {
+            enable = true;
+            profiles = [ userconfig.name ];
+          };
+        };
+      }
+    ) (builtins.attrNames inputs.trivnix-private.emailAccounts));
   };
 }
