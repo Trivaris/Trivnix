@@ -1,3 +1,6 @@
+let
+  commons = import ./common.nix;
+in
 {
   name = "trivwsl";
   stateVersion = "24.11";
@@ -26,16 +29,6 @@
   };
 
   nixosConfig = {
-    openssh.enable = true;
-
-    stylix = {
-      enable = true;
-      colorscheme = "everforest-dark-soft";
-
-      cursorPackage = "rose-pine-cursor";
-      cursorName = "BreezeX-RosePine-Linux";
-
-      nerdfont = "code-new-roman";
-    };
+    inherit (commons.nixosConfig) stylix;
   };
 }

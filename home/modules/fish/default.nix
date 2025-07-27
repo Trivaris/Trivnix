@@ -17,7 +17,7 @@ with lib;
 
       loginShellInit = ''
         set -x NIX_LOG info
-        set -x TERMINAL wezterm
+        ${if (cfg.terminals == [] ) then "" else "set -x TERMINAL ${builtins.head cfg.terminals}"}
         zoxide init fish | source
       '';
 

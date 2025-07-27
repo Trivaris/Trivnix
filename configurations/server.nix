@@ -1,3 +1,6 @@
+let
+  commons = import ./common.nix;
+in
 {
   name = "trivserver";
   stateVersion = "25.05";
@@ -55,14 +58,6 @@
       modpack = "rising-legends";
     };
 
-    stylix = {
-      enable = true;
-      colorscheme = "everforest-dark-soft";
-
-      cursorPackage = "rose-pine-cursor";
-      cursorName = "BreezeX-RosePine-Linux";
-
-      nerdfont = "code-new-roman";
-    };
+    inherit (commons.nixosConfig) stylix;
   };
 }
