@@ -1,12 +1,11 @@
-{
-
+\{
   disko.devices.disk.nixos = {
     type = "disk";
     device = "/dev/nvme0n1";
     content.type = "gpt";
-    content.partitions = {
 
-      ESP = {
+    content.partitions = {
+      boot = {
         size = "512M";
         type = "EF00";
         content = {
@@ -30,7 +29,7 @@
         };
       };
 
-      encryptedSwap = {
+      swap = {
         size = "16G";
         content = {
           type = "swap";
@@ -38,8 +37,6 @@
           priority = 100;
         };
       };
-
     };
   };
-
 }

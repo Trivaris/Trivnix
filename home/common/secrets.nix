@@ -32,16 +32,11 @@ let
   }) (builtins.attrNames inputs.trivnix-private.emailAccounts));
 in
 {
-
-  imports = [
-    inputs.sops-nix.homeManagerModules.sops
-  ];
-
   sops = {
     defaultSopsFile = commonSecrets;
     validateSopsFiles = true;
 
-    age.keyFile = "/home/${userconfig.name}/.config/sops/age/keys.txt";
+    age.keyFile = "/home/${userconfig.name}/.config/sops/age/key.txt";
     age.generateKey = false;
 
     secrets = lib.mkMerge [
@@ -49,5 +44,4 @@ in
       emailSecrets
     ];
   };
-
 }

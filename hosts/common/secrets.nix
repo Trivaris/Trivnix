@@ -9,7 +9,7 @@
   ...
 }:
 let
-  commonSecrets = libExtra.mkFlakePath /secrets/hosts/common.yaml;
+  commonSecrets = libExtra.mkFlakePath "/secrets/hosts/common.yaml";
   hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${configname}.yaml";
 
   cfg = config.nixosConfig;
@@ -22,25 +22,21 @@ let
           neededForUsers = true;
         };
       }];
-      extra = if user == "root" then [] else [{
+      extra = if (user == "root") then [] else [{
         name = "sops-keys/${user}";
         value = {
           sopsFile = hostSecrets;
-          path = "/home/${user}/.config/sops/age/keys.txt";
+          path = "/home/${user}/.config/sops/age/key.txt";
           owner = user;
           group = "users";
           mode = "0600";
+          neededForUsers = true;
         };
       }];
     in base ++ extra
   ) (hostconfig.users ++ [ "root" ]);
 in
 {
-
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
-
   environment.systemPackages = with pkgs; [
     sops
     age
@@ -64,6 +60,7 @@ in
           group = "root";
           mode = "0600";
           restartUnits = [ "sshd.service" ];
+          neededForUsers = true;
         };
       })
 

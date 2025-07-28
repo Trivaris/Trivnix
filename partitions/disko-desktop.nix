@@ -3,28 +3,38 @@
     type = "disk";
     device = "/dev/nvme1n1";
     content.type = "gpt";
+    
     content.partitions = {
       boot = {
-        type = "partition";
-        start = "1MiB";
-        end = "512MiB";
-        bootable = true;
+        size = "512M";
+        type = "EF00";
         content = {
           type = "filesystem";
           format = "vfat";
           mountpoint = "/boot";
-          mountOptions = [ "fmask=0077" "dmask=0077" ];
+          extraArgs = [ "-F32" ];
+          mountOptions = [
+            "fmask=0077"
+            "dmask=0077"
+          ];
         };
       };
 
       root = {
-        type = "partition";
-        start = "512MiB";
-        end = "100%";
+        size = "100%";
         content = {
           type = "filesystem";
           format = "ext4";
           mountpoint = "/";
+        };
+      };
+
+      swap = {
+        size = "16G";
+        content = {
+          type = "swap";
+          randomEncryption = true;
+          priority = 100;
         };
       };
     };

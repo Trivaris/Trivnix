@@ -26,6 +26,7 @@ inputs.nixpkgs.lib.nixosSystem {
       outputs
       libExtra;
   };
+
   modules = [
     # Flake NixOS entrypoint
     host-configurations.${configname}
@@ -39,6 +40,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nix-minecraft.nixosModules.minecraft-servers
 
     {
+      config.home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
+
       # Expose flake args to within the home-manager onfig
       config.home-manager.extraSpecialArgs = {
         inherit
