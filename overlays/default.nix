@@ -5,6 +5,7 @@ in
 {
   nur = inputs.nur.overlays.default;
   minecraft = inputs.nix-minecraft.overlay;
+  millennium = inputs.millennium.overlays.default;
 
   additions =
     final: pkgs: {

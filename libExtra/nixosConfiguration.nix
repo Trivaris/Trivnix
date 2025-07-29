@@ -38,9 +38,13 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
     inputs.nix-minecraft.nixosModules.minecraft-servers
+    inputs.spicetify-nix.nixosModules.spicetify
 
     {
-      config.home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
+      config.home-manager.sharedModules = [
+        inputs.sops-nix.homeManagerModules.sops
+        inputs.spicetify-nix.homeManagerModules.spicetify
+      ];
 
       # Expose flake args to within the home-manager onfig
       config.home-manager.extraSpecialArgs = {

@@ -1,7 +1,7 @@
 lib:
 with lib;
 {
-  enable = mkEnableOption "Enable Stylix theming support for system appearance.";
+  darkmode = mkEnableOption "Wether to enable dark mode";
 
   colorscheme = mkOption {
     type = types.str;

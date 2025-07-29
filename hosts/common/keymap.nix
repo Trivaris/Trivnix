@@ -1,6 +1,5 @@
 { ... }:
 {
-
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -16,10 +15,10 @@
   };
 
   services.xserver.xkb = {
-    layout = "de";
+    layout = "us";
     variant = "";
   };
 
-  console.keyMap = "de";
+  console.keyMap = "us";
 
 }

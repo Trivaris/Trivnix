@@ -8,7 +8,6 @@
   ...
 }:
 {
-
   time.timeZone = "Europe/Berlin";
 
   nixpkgs = {
@@ -36,5 +35,4 @@
     );
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   };
-
 }

@@ -37,6 +37,14 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    millennium = {
+      url = "git+https://github.com/SteamClientHomebrew/Millennium";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Private Information
     trivnix-private = {

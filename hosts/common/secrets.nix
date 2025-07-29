@@ -30,7 +30,6 @@ let
           owner = user;
           group = "users";
           mode = "0600";
-          neededForUsers = true;
         };
       }];
     in base ++ extra

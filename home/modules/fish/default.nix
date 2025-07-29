@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  userconfig,
   ...
 }:
 let
@@ -17,12 +18,13 @@ with lib;
 
       loginShellInit = ''
         set -x NIX_LOG info
-        ${if (cfg.terminals == [] ) then "" else "set -x TERMINAL ${builtins.head cfg.terminals}"}
-        zoxide init fish | source
+        ${if (cfg.alacritty.enable) then "set -x TERMINAL alacritty" else ""}
       '';
 
       interactiveShellInit = ''
         set fish_greeting
+        starship init fish | source
+        zoxide init fish | source
         fastfetch
       '';
 
@@ -39,14 +41,35 @@ with lib;
       };
 
       functions = {
-        cd.body = "z $argv";
-        grep.body = "rg $argv";
+        cd.body = "z \"$argv\"";
+        grep.body = "rg \"$argv\"";
+        ls.body = "eza \"$argv\"";
 
         fix-endings = ''
           mv ./.git ../
           find . -type f -exec sed -i 's/\r$//' {} +
           mv ../.git ./
         '';
+
+        rm-clobbering = ''
+          rm -f ~/.gtkrc-2.0.backup
+          rm -f ~/.librewolf/${userconfig.name}/search.json.mozlz4.backup
+          sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
+        '';
+      };
+    };
+
+    programs.starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+        character = {
+          success_symbol = "[❯](green)";
+          error_symbol = "[❯](red)";
+        };
+        directory = {
+          style = "blue";
+        };
       };
     };
 

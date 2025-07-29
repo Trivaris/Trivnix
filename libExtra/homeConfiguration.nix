@@ -38,6 +38,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
     # Flake entrypoint
     inputs.stylix.homeModules.stylix
     inputs.sops-nix.homeManagerModules.sops
+    inputs.spicetify-nix.homeManagerModules.spicetify
     
     configurations.${userconfig.name}.${configname}
   ];

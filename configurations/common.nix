@@ -1,6 +1,6 @@
 {
   homeConfig = {
-    terminals = [ "alacritty" ];
+    alacritty.enable = true;
 
     librewolf = {
       enable = true;
@@ -11,8 +11,6 @@
         "https://asuracomic.net"
         "https://www.kenmei.co"
         "https://www.youtube.com"
-        "https://www.figma.com"
-        "https://f95zone.to"
         "https://www.livechart.me"
         "https://anilist.co"
         "https://www.cloudflare.com"
@@ -23,15 +21,13 @@
         "https://accounts.google.com"
         "https://mangadex.org"
         "https://chatgpt.com/"
-        "https://open.spotify.com/"
       ];
     };
   };
 
   nixosConfig = {
     stylix = {
-      enable = true;
-      colorscheme = "tokyo-night-dark";
+      colorscheme = "rose-pine-moon";
 
       cursorPackage = "rose-pine-cursor";
       cursorName = "BreezeX-RosePine-Linux";

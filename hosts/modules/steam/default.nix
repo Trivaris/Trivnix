@@ -9,6 +9,7 @@ with lib;
   config = mkIf cfg.steam.enable {
     programs.steam = {
       enable = true;
+      # package = pkgs.millennium;
       extraCompatPackages = with pkgs; [
         proton-ge-bin
       ];

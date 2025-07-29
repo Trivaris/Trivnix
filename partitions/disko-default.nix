@@ -1,4 +1,4 @@
-\{
+{
   disko.devices.disk.nixos = {
     type = "disk";
     device = "/dev/nvme0n1";

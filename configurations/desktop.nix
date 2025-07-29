@@ -13,6 +13,7 @@ in
       bitwarden.enable = true;
       # chatgpt.enable = true;
       email.enable = true;
+      lutris.enable = true;
       spotify.enable = true;
       thunderbird.enable = true;
       vesktop.enable = true;
@@ -27,7 +28,7 @@ in
 
       git.email = "github@tripple.lurdane.de";
 
-      inherit (commons.homeConfig) librewolf terminals;
+      inherit (commons.homeConfig) librewolf alacritty;
     };
   };
 
@@ -36,7 +37,7 @@ in
     kde.enable = true;
     openssh.enable = true;
     printing.enable = true;
-    sddm.enable = true;
+    gdm.enable = true;
     steam.enable = true;
 
     inherit (commons.nixosConfig) stylix;

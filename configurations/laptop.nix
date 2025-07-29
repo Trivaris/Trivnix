@@ -16,13 +16,11 @@ in
       spotify.enable = true;
       thunderbird.enable = true;
       vesktop.enable = true;
-      waydroid.enable = true;
       email.enable = true;
 
       git.email = "github@tripple.lurdane.de";
-      terminals = [ "alacritty" ];
 
-      inherit (commons.homeConfig) librewolf;
+      inherit (commons.homeConfig) librewolf alacritty;
     };
   };
 

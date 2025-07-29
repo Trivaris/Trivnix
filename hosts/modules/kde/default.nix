@@ -1,11 +1,16 @@
 { pkgs, config, lib, ... }:
+let
+  cfg = config.nixosConfig;
+in
 with lib;
 {
   options.nixosConfig.kde.enable = mkEnableOption "Enable KDE Plasma";
 
-  config = mkIf config.nixosConfig.kde.enable {
+  config = mkIf cfg.kde.enable {
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasma";
+    services.displayManager.sddm.wayland.compositor = "kwin";
+    # stylix.targets.qt.platform = mkForce "qtct";
 
     environment.systemPackages = with pkgs; [
       kdePackages.kcalc
@@ -13,7 +18,7 @@ with lib;
       kdePackages.kcolorchooser
       kdePackages.kolourpaint
       kdePackages.ksystemlog
-      kdePackages.sddm-kcm
+      (mkIf cfg.sddm.enable kdePackages.sddm-kcm)
       kdePackages.systemsettings
       kdePackages.kdeconnect-kde
       kdiff3
@@ -33,7 +38,7 @@ with lib;
       allowedUDPPortRanges = [ 
         { from = 1714; to = 1764; }
       ];  
-    };  
+    }; 
   };
 
 }

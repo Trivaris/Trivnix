@@ -1,6 +1,11 @@
-{ pkgs, lib, config, inputs, userconfig, ... }:
+{ pkgs, lib, config, inputs, userconfig, hostconfig, ... }:
 let
   cfg = config.homeConfig;
+  prefs = builtins.readFile (inputs.betterfox + "/user.js") + ''
+    /** OVERRIDES ***/
+    user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
+    user_pref("places.history.enabled", false);
+  '';
 in
 with lib;
 {
@@ -14,6 +19,7 @@ with lib;
         isDefault = true;
 
         extensions = {
+          force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
             adnauseam
             tab-session-manager
