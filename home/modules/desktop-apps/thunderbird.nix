@@ -9,16 +9,11 @@ let
 in
 with lib;
 {
-  options.homeConfig.thunderbird.enable = mkEnableOption "Enable Thunderbird";
-
-  config = mkIf cfg.thunderbird.enable {
+  config = mkIf (builtins.elem "thunderbird" cfg.desktopApps) {
     programs.thunderbird = {
       enable = true;
       profiles.${userconfig.name} = {
         isDefault = true;
-        settings = {
-          "mail.folderpane.view" = "smart";
-        };
       };
     };
   };

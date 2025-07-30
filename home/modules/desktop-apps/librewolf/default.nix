@@ -11,7 +11,7 @@ with lib;
 {
   options.homeConfig.librewolf = import ./config.nix lib;
 
-  config = mkIf cfg.librewolf.enable {
+  config = mkIf (builtins.elem "librewolf" cfg.desktopApps) {
     programs.librewolf = {
       enable = true;
 
@@ -24,6 +24,7 @@ with lib;
             adnauseam
             tab-session-manager
             bitwarden
+            plasma-integration
           ];
         };
         

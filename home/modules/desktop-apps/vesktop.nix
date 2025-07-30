@@ -4,9 +4,7 @@ let
 in
 with lib;
 {
-  options.homeConfig.vesktop.enable = mkEnableOption "Enable the discord client Vesktop";
-
-  config = mkIf cfg.vesktop.enable {
+  config = mkIf (builtins.elem "vesktop" cfg.desktopApps) {
     programs.vesktop = {
       enable = true;
     };

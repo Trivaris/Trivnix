@@ -8,7 +8,7 @@
   };
 
   mkFlakePath = path: (inputs.self + (toString path));
-  importDir = import ./importDir.nix;
+  importDir = import ./importDir.nix inputs;
 
   mkNixOSConfiguration = import ./nixosConfiguration.nix { inherit inputs outputs; };
   mkHomeConfiguration = import ./homeConfiguration.nix { inherit inputs outputs; };

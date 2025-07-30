@@ -19,10 +19,11 @@ in
       email.enable = true;
 
       vscodium = {
-        enable = true;
         enableLSP = true;
         fixServer = true;
       };
+
+      desktopApps = [ "vscodium" ];
 
       git.email = "github@tripple.lurdane.de";
     };

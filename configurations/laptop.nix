@@ -8,28 +8,32 @@ in
   ip = "192.168.178.90";
   architecture = "x86_64-linux";
 
-  users.trivaris = {
+  users.trivaris = {    
     homeConfig = {
-      eza.enable = true;
-      fish.enable = true;
-      fzf.enable = true;
-      spotify.enable = true;
-      thunderbird.enable = true;
-      vesktop.enable = true;
       email.enable = true;
+      lutris.enable = true;
+
+      vscodium = {
+        enableLSP = true;
+      };
+
+      fish.enable = true;
+      eza.enable = true;
+      fzf.enable = true;
 
       git.email = "github@tripple.lurdane.de";
 
-      inherit (commons.homeConfig) librewolf alacritty;
+      inherit (commons.homeConfig) librewolf desktopApps;
     };
   };
 
   nixosConfig = {
     bluetooth.enable = true;
+    kde.enable = true;
     openssh.enable = true;
     printing.enable = true;
-    kde.enable = true;
-    sddm.enable = true;
+    gdm.enable = true;
+    steam.enable = true;
 
     inherit (commons.nixosConfig) stylix;
   };

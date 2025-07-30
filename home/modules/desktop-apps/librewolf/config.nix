@@ -1,10 +1,7 @@
 lib:
 with lib;
 {
-  enable = mkEnableOption "Enable LibreWolf with";
-  
   betterwolf = mkEnableOption "Enable Betterfox User Config";
-  
   clearOnShutdown = mkEnableOption "Clear all Site Data when closing Browser";
   
   allowedCookies = mkOption {

@@ -18,7 +18,7 @@ with lib;
 
       loginShellInit = ''
         set -x NIX_LOG info
-        ${if (cfg.alacritty.enable) then "set -x TERMINAL alacritty" else ""}
+        ${if (builtins.elem "alacritty" cfg.desktopApps) then "set -x TERMINAL alacritty" else ""}
       '';
 
       interactiveShellInit = ''

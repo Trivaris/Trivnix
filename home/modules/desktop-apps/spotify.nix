@@ -4,9 +4,7 @@ let
 in
 with lib;
 {
-  options.homeConfig.spotify.enable = mkEnableOption "Enable Spotify Client";
-
-  config = mkIf cfg.spotify.enable {
+  config = mkIf (builtins.elem "spotify" cfg.desktopApps) {
     programs.spicetify = {
       enable = true;
     };

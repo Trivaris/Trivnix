@@ -10,12 +10,28 @@
 let
   cfg = config.homeConfig;
   selfPath = libExtra.mkFlakePath "/" ;
+  lspConfig = builtins.toJSON {
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nixd";
+    "nix.formatterPath" = "nixfmt";
+
+    "nix.serverSettings".nixd = {
+      formatting.command = [ "nixfmt" ];
+
+      nixpkgs.expr = "import (builtins.getFlake \"${selfPath}\").inputs.nixpkgs { } ";
+
+      options = {
+        nixos.expr = "(builtins.getFlake \"${selfPath}\").nixosConfigurations.${hostconfig.name}.options";
+        home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigurations.\"${userconfig.name}@${hostconfig.name}\".options";
+      };
+    };
+  };
 in
 with lib;
 {
   options.homeConfig.vscodium = import ./config.nix lib;
 
-  config = mkIf cfg.vscodium.enable (mkMerge [
+  config = mkIf (builtins.elem "vscodium" cfg.desktopApps) (mkMerge [
     {
       home.packages = with pkgs; [
         vscodium
@@ -34,22 +50,8 @@ with lib;
     }
 
     (mkIf cfg.vscodium.enableLSP {
-      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON {
-        "nix.enableLanguageServer" = true;
-        "nix.serverPath" = "nixd";
-        "nix.formatterPath" = "nixfmt";
-
-        "nix.serverSettings".nixd = {
-          formatting.command = [ "nixfmt" ];
-
-          nixpkgs.expr = "import (builtins.getFlake \"${selfPath}\").inputs.nixpkgs { } ";
-
-          options = {
-            nixos.expr = "(builtins.getFlake \"${selfPath}\").nixosConfigurations.${hostconfig.name}.options";
-            home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigurations.\"${userconfig.name}@${hostconfig.name}\".options";
-          };
-        };
-      };
+      home.file.".vscodium-server/data/Machine/settings.json".text = lspConfig;
+      home.file.".config/VSCodium/User/settings.json".text = lspConfig;
     })
 
     (mkIf cfg.vscodium.fixServer {

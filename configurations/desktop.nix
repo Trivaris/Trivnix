@@ -10,15 +10,10 @@ in
 
   users.trivaris = {    
     homeConfig = {
-      bitwarden.enable = true;
-      # chatgpt.enable = true;
       email.enable = true;
       lutris.enable = true;
-      spotify.enable = true;
-      thunderbird.enable = true;
-      vesktop.enable = true;
+
       vscodium = {
-        enable = true;
         enableLSP = true;
       };
 
@@ -28,7 +23,7 @@ in
 
       git.email = "github@tripple.lurdane.de";
 
-      inherit (commons.homeConfig) librewolf alacritty;
+      inherit (commons.homeConfig) librewolf desktopApps;
     };
   };
 

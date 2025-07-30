@@ -10,23 +10,25 @@ with lib;
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasma";
     services.displayManager.sddm.wayland.compositor = "kwin";
-    # stylix.targets.qt.platform = mkForce "qtct";
+
+    environment.plasma6.excludePackages = with pkgs.kdePackages; [
+      konsole
+      elisa
+    ];
 
     environment.systemPackages = with pkgs; [
-      kdePackages.kcalc
-      kdePackages.kcharselect
-      kdePackages.kcolorchooser
-      kdePackages.kolourpaint
-      kdePackages.ksystemlog
       (mkIf cfg.sddm.enable kdePackages.sddm-kcm)
+
+      kdePackages.kcalc
+      kdePackages.ksystemlog
       kdePackages.systemsettings
       kdePackages.kdeconnect-kde
-      kdiff3
-      kdePackages.isoimagewriter
-      kdePackages.partitionmanager
+      kdePackages.plasma-browser-integration
+      kdePackages.ktorrent
       hardinfo2
       wayland-utils
       wl-clipboard
+      vlc
     ];
 
     # KDE Connect

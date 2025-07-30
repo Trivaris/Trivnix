@@ -1,5 +1,5 @@
 { libExtra,  lib, ... }:
 with libExtra;
 {
-  imports = importDir lib (mkFlakePath "/hosts/common");
+  imports = importDir { dirPath = (mkFlakePath "/hosts/common"); };
 }

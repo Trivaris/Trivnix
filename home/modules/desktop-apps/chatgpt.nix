@@ -4,9 +4,7 @@ let
 in
 with lib;
 {
-  options.homeConfig.chatgpt.enable = mkEnableOption "Enable ChatGPT Desktop";
-
-  config = mkIf cfg.chatgpt.enable {
+  config = mkIf (builtins.elem "chatgpt" cfg.desktopApps) {
     home.packages = with pkgs; [
       chatgpt
     ];

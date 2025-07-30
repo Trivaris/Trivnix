@@ -4,9 +4,7 @@ let
 in
 with lib;
 {
-  options.homeConfig.bitwarden.enable = mkEnableOption "Enable Bitwarden Desktop Client";
-
-  config = mkIf cfg.bitwarden.enable {
+  config = mkIf (builtins.elem "bitwarden" cfg.desktopApps) {
     home.packages = with pkgs; [
       bitwarden-desktop
     ];

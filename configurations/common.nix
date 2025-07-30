@@ -1,9 +1,6 @@
 {
   homeConfig = {
-    alacritty.enable = true;
-
     librewolf = {
-      enable = true;
       betterwolf = true;
       clearOnShutdown = true;
       allowedCookies = [
@@ -23,6 +20,17 @@
         "https://chatgpt.com/"
       ];
     };
+
+    desktopApps = [
+      "librewolf"
+      "vscodium"
+      "alacritty"
+      "bitwarden"
+      "signal"
+      "spotify"
+      "thunderbird"
+      "vesktop"
+    ];
   };
 
   nixosConfig = {
