@@ -1,0 +1,31 @@
+{
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.homeConfig;
+in 
+with lib;
+{
+  config = mkIf (builtins.elem "nvim" cfg.extendedCli) {
+    programs.nvf = {
+      enable = true;
+      
+      settings.vim = {
+        statusline.lualine.enable = true;
+        telescope.enable = true;
+        autocomplete.nvim-cmp.enable = true;
+        lsp.enable = true;
+
+        languages = {
+          enableTreesitter = true;
+
+          nix.enable = true;
+          java.enable = true;
+          kotlin.enable = true;
+        };
+      };
+    };
+  };
+}

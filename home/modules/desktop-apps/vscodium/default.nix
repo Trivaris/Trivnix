@@ -7,10 +7,17 @@
   userconfig,
   ...
 }:
+with lib;
 let
   cfg = config.homeConfig;
   selfPath = libExtra.mkFlakePath "/" ;
-  lspConfig = builtins.toJSON {
+  
+  commonSettings = {
+    "files.autoSave" = "afterDelay";
+    "files.autoSaveDelay" = 1000;
+  };
+
+  lspSettings = {
     "nix.enableLanguageServer" = true;
     "nix.serverPath" = "nixd";
     "nix.formatterPath" = "nixfmt";
@@ -27,7 +34,6 @@ let
     };
   };
 in
-with lib;
 {
   options.homeConfig.vscodium = import ./config.nix lib;
 
@@ -37,7 +43,7 @@ with lib;
         vscodium
       ]
 
-      ++ (optionals cfg.vscodium.enableLSP [
+      ++ (optionals cfg.vscodium.enableLsp [
         nixd
         nixfmt-rfc-style
         nix-ld
@@ -49,10 +55,17 @@ with lib;
       ]); 
     }
 
-    (mkIf cfg.vscodium.enableLSP {
-      home.file.".vscodium-server/data/Machine/settings.json".text = lspConfig;
-      home.file.".config/VSCodium/User/settings.json".text = lspConfig;
-    })
+    {
+      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON ( mkMerge [ 
+        commonSettings
+        (mkIf (cfg.vscodium.enableLsp) lspSettings)
+      ]);
+
+      home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON ( mkMerge [ 
+        commonSettings
+        (mkIf (cfg.vscodium.enableLsp) lspSettings)
+      ]);
+    }
 
     (mkIf cfg.vscodium.fixServer {
       home.activation.fixVSCodiumServer = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

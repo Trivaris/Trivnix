@@ -4,9 +4,7 @@ let
 in
 with lib;
 {
-  options.homeConfig.fzf.enable = mkEnableOption "Extended Fzf Configuration";
-
-  config = mkIf cfg.fzf.enable {
+  config = mkIf (builtins.elem "fzf" cfg.extendedCli) {
     programs.fzf = {
       enable = true;
 

@@ -11,21 +11,17 @@ in
   
   users.trivaris = {
     homeConfig = {
-      eza.enable = true;
+      inherit (commons.homeConfig) extendedCli; 
+
       fish.enable = true;
-      fzf.enable = true;
-      tmux.enable = true;
-      zoxide.enable = true;
       email.enable = true;
+      desktopApps = [ "vscodium" ];
+      git.email = "github@tripple.lurdane.de";
 
       vscodium = {
-        enableLSP = true;
+        enableLsp = true;
         fixServer = true;
       };
-
-      desktopApps = [ "vscodium" ];
-
-      git.email = "github@tripple.lurdane.de";
     };
   };
 

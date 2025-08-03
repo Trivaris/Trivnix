@@ -8,9 +8,7 @@ let
 in
 with lib;
 {
-  options.homeConfig.btop.enable = mkEnableOption "Extended Btop Configuration";
-
-  config = mkIf cfg.btop.enable {
+  config = mkIf (builtins.elem "btop" cfg.extendedCli) {
     programs.btop.enable = true;
   };
 }

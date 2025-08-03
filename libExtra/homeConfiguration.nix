@@ -19,7 +19,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
     system = hostconfig.architecture;
     overlays = builtins.attrValues (outputs.overlays);
     config = libExtra.pkgs-config;
-  } ;
+  };
 
   # Expose flake args to within the config
   extraSpecialArgs = {
@@ -39,6 +39,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
     inputs.stylix.homeModules.stylix
     inputs.sops-nix.homeManagerModules.sops
     inputs.spicetify-nix.homeManagerModules.spicetify
+    inputs.nvf.homeManagerModules.default
     
     configurations.${userconfig.name}.${configname}
   ];

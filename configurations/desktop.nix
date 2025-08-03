@@ -12,18 +12,12 @@ in
     homeConfig = {
       email.enable = true;
       lutris.enable = true;
-
-      vscodium = {
-        enableLSP = true;
-      };
-
+      vscodium.enableLsp = true;
       fish.enable = true;
-      eza.enable = true;
-      fzf.enable = true;
 
       git.email = "github@tripple.lurdane.de";
 
-      inherit (commons.homeConfig) librewolf desktopApps;
+      inherit (commons.homeConfig) librewolf desktopApps extendedCli;
     };
   };
 

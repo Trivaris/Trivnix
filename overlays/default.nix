@@ -14,6 +14,7 @@ in
       vaultwarden-web-vault = pkgs.callPackage ./pkgs/vaultwarden-web-vault.nix { inherit inputs pkgs; };
       keeweb = pkgs.callPackage ./pkgs/keeweb.nix { inherit inputs pkgs; };
       instagram-cli = pkgs.callPackage ./pkgs/instagram-cli.nix { inherit inputs pkgs; };
+      adbautoplayer = pkgs.callPackage ./pkgs/adbautoplayer.nix { inherit inputs pkgs; };
 
       modpacks = {
         elysium-days = pkgs.callPackage mkModpack {

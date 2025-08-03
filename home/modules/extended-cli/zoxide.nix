@@ -4,12 +4,9 @@ let
 in
 with lib;
 {
-  options.homeConfig.zoxide.enable = mkEnableOption "Extended Zoxide Configuration";
-
-  config = mkIf cfg.zoxide.enable {
+  config = mkIf (builtins.elem "zoxide" cfg.extendedCli) {
     programs.zoxide = {
       enable = true;
     };
-    # programs.fish.functions.cd.body = "z $argv";
   };
 }

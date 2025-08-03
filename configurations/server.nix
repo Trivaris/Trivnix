@@ -7,20 +7,23 @@ in
   hardwareKey = false;
   ip = "192.168.178.75";
   architecture = "x86_64-linux";
-  colorscheme = "everforest-dark-soft";
 
   users.trivaris = {
     homeConfig = {
-      eza.enable = true;
       fish.enable = true;
-      fzf.enable = true;
-      btop.enable = true;
-
       git.email = "github@tripple.lurdane.de";
+
+      extendedCli = [
+        "fzf"
+        "eza"
+        "btop"
+      ];
     };
   };
   
   nixosConfig = {
+    inherit (commons.nixosConfig) stylix;
+
     openssh.enable = true;
 
     reverseProxy = {
@@ -57,7 +60,5 @@ in
       domain = "minecraft.trivaris.org";
       modpack = "rising-legends";
     };
-
-    inherit (commons.nixosConfig) stylix;
   };
 }

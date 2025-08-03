@@ -18,6 +18,9 @@
         "https://accounts.google.com"
         "https://mangadex.org"
         "https://chatgpt.com/"
+        "https://www.notion.so"
+        "https://web.whatsapp.com/"
+        "https://f95zone.to/"
       ];
     };
 
@@ -30,6 +33,14 @@
       "spotify"
       "thunderbird"
       "vesktop"
+    ];
+
+    extendedCli = [
+      "btop"
+      "eza"
+      "fzf"
+      "nvim"
+      "zoxide"
     ];
   };
 

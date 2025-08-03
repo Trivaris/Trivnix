@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -13,6 +14,7 @@ with lib;
   config = mkIf (cfg.nextcloud.enable) {
     services.nextcloud = {
       enable = true;
+      package = pkgs.nextcloud31;
       hostName = cfg.nextcloud.domain;
       https = true;
 

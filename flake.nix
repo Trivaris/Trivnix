@@ -45,10 +45,14 @@
       url = "git+https://github.com/SteamClientHomebrew/Millennium";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
     # Private Information
     trivnix-private = {
-     url = "git+ssh://git@github.com/trivaris/trivnix-private";
+      url = "git+ssh://git@github.com/trivaris/trivnix-private";
     };
 
     # Non Flake Inputs
