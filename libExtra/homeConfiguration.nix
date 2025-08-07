@@ -1,6 +1,6 @@
 {
   inputs,
-  outputs
+  outputs,
 }:
 {
   libExtra,
@@ -31,7 +31,8 @@ inputs.home-manager.lib.homeManagerConfiguration {
       userconfig
       hostconfig
       configname
-      hosts;
+      hosts
+      ;
   };
 
   modules = [
@@ -40,7 +41,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
     inputs.sops-nix.homeManagerModules.sops
     inputs.spicetify-nix.homeManagerModules.spicetify
     inputs.nvf.homeManagerModules.default
-    
+
     configurations.${userconfig.name}.${configname}
   ];
 

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  environment.systemPackages = with pkgs; [ home-manager ];
+  environment.systemPackages = [ pkgs.home-manager ];
 
   home-manager = {
     useUserPackages = true;

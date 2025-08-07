@@ -1,5 +1,8 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   enable = mkEnableOption "OpenSSH Server";
 

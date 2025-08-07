@@ -1,5 +1,8 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   darkmode = mkEnableOption "Wether to enable dark mode";
 

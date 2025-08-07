@@ -1,5 +1,8 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  types,
+  mkOption,
+}:
 {
   enable = mkEnableOption "Enable code-server (VS Code in the browser).";
 

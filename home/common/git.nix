@@ -5,9 +5,9 @@
   ...
 }:
 let
+  inherit (lib) mkOption;
   cfg = config.homeConfig;
 in
-with lib;
 {
   options.homeConfig.git.email = mkOption {
     type = lib.types.str;

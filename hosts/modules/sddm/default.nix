@@ -1,8 +1,8 @@
 { config, lib, ... }:
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.nixosConfig;
 in
-with lib;
 {
   options.nixosConfig.sddm.enable = mkEnableOption "Enable SDDM Greeter";
 

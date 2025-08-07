@@ -1,7 +1,6 @@
+{ ... }:
 {
-  ...
-}:
-{
+
   programs.ssh = {
     startAgent = true;
 
@@ -23,4 +22,5 @@
     };
 
   };
+
 }

@@ -1,12 +1,17 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
 in
-with lib;
 {
   config = mkIf (builtins.elem "bitwarden" cfg.desktopApps) {
-    home.packages = with pkgs; [
-      bitwarden-desktop
-    ];
+    home.packages = builtins.attrValues {
+      inherit (pkgs) bitwarden-desktop;
+    };
   };
 }

@@ -1,8 +1,8 @@
 { config, lib, ... }:
 let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
   options.nixosConfig.gdm.enable = mkEnableOption "Enable Gnome Display Manager";
 

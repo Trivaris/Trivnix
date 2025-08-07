@@ -20,7 +20,7 @@ in
       ];
     };
   };
-  
+
   nixosConfig = {
     inherit (commons.nixosConfig) stylix;
 

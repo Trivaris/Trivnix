@@ -7,11 +7,11 @@
   userconfig,
   ...
 }:
-with lib;
 let
+  inherit (lib) mkIf mkMerge optionals;
   cfg = config.homeConfig;
-  selfPath = libExtra.mkFlakePath "/" ;
-  
+  selfPath = libExtra.mkFlakePath "/";
+
   commonSettings = {
     "files.autoSave" = "afterDelay";
     "files.autoSaveDelay" = 1000;
@@ -35,36 +35,42 @@ let
   };
 in
 {
-  options.homeConfig.vscodium = import ./config.nix lib;
+  options.homeConfig.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
 
   config = mkIf (builtins.elem "vscodium" cfg.desktopApps) (mkMerge [
     {
-      home.packages = with pkgs; [
-        vscodium
-      ]
+      home.packages =
+        builtins.attrValues {
+          inherit (pkgs)
+            vscodium
+            ;
+        }
+        // (optionals (cfg.vscodium.enableLsp) builtins.attrValues {
+          inherit (pkgs)
+            nixd
+            nixfmt-rfc-style
+            nix-ld
+            ;
+          inherit (pkgs.vscode-extensions.jnoortheen)
+            nix-ide
+            ;
+        })
 
-      ++ (optionals cfg.vscodium.enableLsp [
-        nixd
-        nixfmt-rfc-style
-        nix-ld
-        vscode-extensions.jnoortheen.nix-ide
-      ])
-
-      ++ (optionals cfg.vscodium.fixServer [
-        nodejs_20
-      ]); 
+        // (optionals (cfg.vscodium.fixServer) builtins.attrValues {
+          inherit (pkgs)
+            nodejs_20
+            ;
+        });
     }
 
     {
-      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON ( mkMerge [ 
-        commonSettings
-        (mkIf (cfg.vscodium.enableLsp) lspSettings)
-      ]);
+      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON (
+        commonSettings // (if (cfg.vscodium.enableLsp) then lspSettings else { })
+      );
 
-      home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON ( mkMerge [ 
-        commonSettings
-        (mkIf (cfg.vscodium.enableLsp) lspSettings)
-      ]);
+      home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON (
+        commonSettings // (if (cfg.vscodium.enableLsp) then lspSettings else { })
+      );
     }
 
     (mkIf cfg.vscodium.fixServer {

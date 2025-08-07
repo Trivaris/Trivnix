@@ -8,7 +8,7 @@ in
   ip = "192.168.178.90";
   architecture = "x86_64-linux";
 
-  users.trivaris = {    
+  users.trivaris = {
     homeConfig = {
       inherit (commons.homeConfig) librewolf desktopApps extendedCli;
 

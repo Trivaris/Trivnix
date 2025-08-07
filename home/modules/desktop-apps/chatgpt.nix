@@ -1,12 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
 in
-with lib;
 {
   config = mkIf (builtins.elem "chatgpt" cfg.desktopApps) {
-    home.packages = with pkgs; [
-      chatgpt
-    ];
+    home.packages = builtins.attrValues {
+      inherit (pkgs) chatgpt;
+    };
   };
 }

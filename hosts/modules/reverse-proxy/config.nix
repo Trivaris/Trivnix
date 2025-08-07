@@ -1,5 +1,8 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   enable = mkEnableOption "Enable reverse proxy for all enabled services.";
 
@@ -32,14 +35,17 @@ with lib;
 
   extraDomains = mkOption {
     type = types.listOf types.str;
-    default = [];
-    example = [ "vpn.example.com" "blog.example.com" ];
+    default = [ ];
+    example = [
+      "vpn.example.com"
+      "blog.example.com"
+    ];
     description = ''
       Additional FQDNs to include in DDNS updates.
       These do not need to be linked to services managed by this reverse proxy.
     '';
   };
-  
+
   ddnsTime = mkOption {
     type = types.str;
     example = "04:00";

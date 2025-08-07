@@ -17,10 +17,11 @@
 
   nix = {
     package = lib.mkDefault pkgs.nix;
-
+    optimise.automatic = true;
     gc.automatic = true;
     gc.dates = "daily";
     gc.options = "--delete-older-than 7d";
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
     settings = {
       experimental-features = "nix-command flakes";
@@ -29,10 +30,8 @@
       warn-dirty = false;
     };
 
-    optimise.automatic = true;
     registry = (lib.mapAttrs (_: flake: { inherit flake; })) (
       (lib.filterAttrs (_: lib.isType "flake")) inputs
     );
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   };
 }

@@ -1,34 +1,34 @@
-  {
-    inputs,
-    outputs,
-    config,
-    lib,
-    libExtra,
-    pkgs,
-    userconfigs,
-    configname,
-    hostconfig,
-    hosts,
+{
+  inputs,
+  outputs,
+  config,
+  lib,
+  libExtra,
+  pkgs,
+  userconfigs,
+  configname,
+  hostconfig,
+  hosts,
+  ...
+}:
+let
+  mkUserConfig = import ./user.nix;
 
-    ...
-  }:
-  let
-    mkUserConfig = import ./user.nix;
+  rootConfiguration = import ./root.nix {
+    inherit
+      config
+      lib
+      libExtra
+      hostconfig
+      hosts
+      ;
+  };
 
-    rootConfiguration = import ./root.nix {
-      inherit
-        config
-        lib
-        libExtra;
-      inherit
-        hostconfig
-        hosts;
-    };
-
-  userConfigurations = map (username:
-  let
-    userconfig = userconfigs.${username}; 
-  in
+  userConfigurations = map (
+    username:
+    let
+      userconfig = userconfigs.${username};
+    in
     mkUserConfig {
       inherit
         inputs
@@ -40,14 +40,18 @@
         username
         hostconfig
         configname
-        hosts;
+        hosts
+        ;
     }
   ) hostconfig.users;
 in
 lib.mkMerge (
-  [ { users.mutableUsers = false; users.defaultUserShell = pkgs.fish; } ]
-  ++
-  userConfigurations
-  ++
-  [ rootConfiguration ]
+  [
+    {
+      users.mutableUsers = false;
+      users.defaultUserShell = pkgs.fish;
+    }
+  ]
+  ++ userConfigurations
+  ++ [ rootConfiguration ]
 )

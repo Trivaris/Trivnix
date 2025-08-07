@@ -1,17 +1,13 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
-in 
-with lib;
+in
 {
   config = mkIf (builtins.elem "nvim" cfg.extendedCli) {
     programs.nvf = {
       enable = true;
-      
+
       settings.vim = {
         statusline.lualine.enable = true;
         telescope.enable = true;

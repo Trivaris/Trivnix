@@ -1,13 +1,18 @@
 lib:
-with lib;
+let
+  inherit (lib) mkEnableOption mkOption types;
+in
 {
-  betterwolf = mkEnableOption "Enable Betterfox User Config";
+  betterfox = mkEnableOption "Enable Betterfox User Config";
   clearOnShutdown = mkEnableOption "Clear all Site Data when closing Browser";
-  
+
   allowedCookies = mkOption {
     type = types.listOf types.str;
-    default = [];
-    example = [ "https://accounts.google.com" "https://www.youtube.com" ];
+    default = [ ];
+    example = [
+      "https://accounts.google.com"
+      "https://www.youtube.com"
+    ];
     description = ''
       URLs of Domains that will keep their cookies after closing if `clearOnShutdown` is enabled 
     '';

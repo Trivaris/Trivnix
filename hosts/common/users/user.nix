@@ -4,7 +4,7 @@
   config,
   lib,
   libExtra,
-  
+
   userconfig,
   username,
   hostconfig,
@@ -19,11 +19,13 @@ let
   readKey = path: builtins.readFile (libExtra.mkFlakePath path);
 
   allAuthorizedKeys = flatten (
-    mapAttrsToList ( hostname: hostcfg:
+    mapAttrsToList (
+      hostname: hostcfg:
       let
         hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostname}_host.pub";
         userKeys = flatten (
-          map ( user:
+          map (
+            user:
             if hostcfg.hardwareKey or true then
               [
                 (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_a.pub")
@@ -33,7 +35,7 @@ let
               [
                 (readKey "/resources/ssh-pub/id_ed25519_${hostname}_${user}.pub")
               ]
-          ) hostcfg.users or []
+          ) hostcfg.users or [ ]
         );
       in
       [ hostKey ] ++ userKeys
@@ -46,12 +48,14 @@ in
     inherit
       hostconfig
       configname
-      hosts;
-    inherit
+      hosts
       inputs
       outputs
-      libExtra;
-    userconfig = userconfig // { name = username; };
+      libExtra
+      ;
+    userconfig = userconfig // {
+      name = username;
+    };
   };
 
   users.users.${username} = {
@@ -69,7 +73,7 @@ in
       "video"
       "plugdev"
       "input"
-      "kvm" 
+      "kvm"
       "qemu-libvirtd"
       "docker"
     ];

@@ -4,7 +4,8 @@
   imports = [
     (libExtra.mkFlakePath /hosts/common)
     (libExtra.mkFlakePath /hosts/modules)
-  ] ++ [
+  ]
+  ++ [
     ./hardware.nix
   ];
 

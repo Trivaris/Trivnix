@@ -8,10 +8,10 @@ in
   ip = "192.168.178.70";
   architecture = "x86_64-linux";
   colorscheme = "everforest-dark-soft";
-  
+
   users.trivaris = {
     homeConfig = {
-      inherit (commons.homeConfig) extendedCli; 
+      inherit (commons.homeConfig) extendedCli;
 
       fish.enable = true;
       email.enable = true;

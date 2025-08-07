@@ -1,8 +1,13 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.homeConfig;
 in
-with lib;
 {
   options.homeConfig.tmux.enable = mkEnableOption "Extended Tmux Configuration";
 
@@ -12,8 +17,8 @@ with lib;
       prefix = "C-s";
       keyMode = "vi";
 
-      plugins = with pkgs; [
-        tmuxPlugins.vim-tmux-navigator
+      plugins = [
+        pkgs.tmuxPlugins.vim-tmux-navigator
       ];
 
       extraConfig = ''

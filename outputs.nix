@@ -12,13 +12,15 @@ in
   nixosConfigurations = builtins.mapAttrs (
     configname: rawHost:
     let
-      userconfigs = rawHost.users or {};
+      userconfigs = rawHost.users or { };
       hostconfig = rawHost // {
         users = builtins.attrNames userconfigs;
       };
-      hosts = builtins.mapAttrs(_: host:
-        host // {
-          users = builtins.attrNames (host.users or {});
+      hosts = builtins.mapAttrs (
+        _: host:
+        host
+        // {
+          users = builtins.attrNames (host.users or { });
         }
       ) configurations;
     in
@@ -28,25 +30,34 @@ in
         configname
         hostconfig
         userconfigs
-        hosts;
+        hosts
+        ;
     }
   ) configurations;
 
   # Define Home Manager configurations for each user@hostname
   # Format: <user>@<hostname> (configname) = <Home Manager config>
-  homeConfigurations = with inputs.nixpkgs.lib;
-  builtins.listToAttrs (
-    concatMap (configname:
-      let
-        rawHost = configurations.${configname};
-        userconfigs = rawHost.users or {};
-        hostconfig = rawHost // { users = builtins.attrNames userconfigs; };
-        hosts = builtins.mapAttrs(_: host:
-          host // {
-            users = builtins.attrNames (host.users or {});
-          }
-        ) configurations;
-      in
+  homeConfigurations =
+    let
+      inherit (inputs.nixpkgs.lib) concatMap;
+    in
+    builtins.listToAttrs (
+      concatMap (
+        configname:
+        let
+          rawHost = configurations.${configname};
+          userconfigs = rawHost.users or { };
+          hostconfig = rawHost // {
+            users = builtins.attrNames userconfigs;
+          };
+          hosts = builtins.mapAttrs (
+            _: host:
+            host
+            // {
+              users = builtins.attrNames (host.users or { });
+            }
+          ) configurations;
+        in
         map (username: {
           name = "${username}@${configname}";
           value = libExtra.mkHomeConfiguration {
@@ -55,10 +66,13 @@ in
               userconfigs
               configname
               hostconfig
-              hosts;
-            userconfig = userconfigs.${username} // { name = username; };
+              hosts
+              ;
+            userconfig = userconfigs.${username} // {
+              name = username;
+            };
           };
         }) (builtins.attrNames userconfigs)
-    ) (builtins.attrNames configurations)
-  );
+      ) (builtins.attrNames configurations)
+    );
 }

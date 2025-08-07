@@ -1,41 +1,47 @@
 { pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
-    # Core utilities
-    coreutils
-    wget
-    zip
-    jq
 
-    # Shell enhancements
-    eza          # modern ls replacement
-    fd           # simpler find
-    ripgrep      # faster grep
-    fzf          # fuzzy finder
-    zoxide       # smarter cd
-    tldr         # simplified man pages
+  environment.systemPackages = builtins.attrValues {
 
-    # System monitoring / info
-    btop         # resource monitor
-    procs        # modern ps replacement
-    fastfetch    # system info display
-    rsclock      # terminal clock
+    inherit (pkgs)
+      # Core utilities
+      coreutils
+      wget
+      zip
+      jq
 
-    # Development tools
-    git
-    neovim
+      # Shell enhancements
+      eza
+      fd
+      ripgrep
+      fzf
+      zoxide
+      tldr
 
-    # Networking / API
-    httpie       # human-friendly HTTP client
+      # System monitoring / info
+      btop
+      procs
+      fastfetch
+      rsclock
 
-    # Fun / visuals
-    bat          # syntax-highlighted cat
-    pipes-rs     # terminal pipes animation
-    rmatrix      # matrix rain effect
-    rbonsai      # terminal bonsai tree
-  ];
+      # Dev tools
+      git
+      neovim
+
+      # Networking / API
+      httpie
+
+      # Fun / visuals
+      bat
+      pipes-rs
+      rmatrix
+      rbonsai
+      ;
+
+  };
 
   programs.fish.enable = true;
   programs.tmux.enable = true;
   programs.zoxide.enable = true;
+
 }

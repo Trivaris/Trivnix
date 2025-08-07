@@ -3,7 +3,7 @@
     type = "disk";
     device = "/dev/nvme1n1";
     content.type = "gpt";
-    
+
     content.partitions = {
       boot = {
         size = "512M";

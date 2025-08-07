@@ -1,12 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
 in
-with lib;
 {
   config = mkIf (builtins.elem "signal" cfg.desktopApps) {
-    home.packages = with pkgs; [
-      signal-desktop
-    ];
+    home.packages = builtins.attrValues {
+      inherit (pkgs) signal-desktop;
+    };
   };
 }

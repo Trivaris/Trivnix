@@ -8,7 +8,7 @@ in
   ip = "192.168.178.70";
   architecture = "x86_64-linux";
 
-  users.trivaris = {    
+  users.trivaris = {
     homeConfig = {
       email.enable = true;
       lutris.enable = true;

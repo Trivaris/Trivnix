@@ -1,8 +1,11 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   enable = mkEnableOption "Enable the Suwayomi server (Tachidesk) service.";
-  
+
   port = mkOption {
     type = types.port;
     default = 8890;
@@ -11,7 +14,7 @@ with lib;
       This is proxied by Nginx or another reverse proxy for external access.
     '';
   };
-  
+
   externalPort = mkOption {
     type = types.nullOr types.port;
     default = null;

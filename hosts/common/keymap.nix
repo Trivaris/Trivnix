@@ -1,6 +1,8 @@
 { ... }:
 {
+
   i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "us";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -18,7 +20,5 @@
     layout = "us";
     variant = "";
   };
-
-  console.keyMap = "us";
 
 }

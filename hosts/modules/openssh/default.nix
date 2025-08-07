@@ -5,11 +5,11 @@
   ...
 }:
 let
+  inherit (lib) mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
-  options.nixosConfig.openssh = import ./config.nix lib;
+  options.nixosConfig.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf (cfg.openssh.enable) {
     services.openssh = {
@@ -27,10 +27,12 @@ with lib;
 
       openFirewall = true;
 
-      hostKeys = [{
-        path = config.sops.secrets.ssh-host-key.path;
-        type = "ed25519";
-      }];
+      hostKeys = [
+        {
+          path = config.sops.secrets.ssh-host-key.path;
+          type = "ed25519";
+        }
+      ];
     };
 
     networking.firewall.allowedTCPPorts = cfg.openssh.ports;

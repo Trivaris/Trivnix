@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+pkgs:
 pkgs.rustPlatform.buildRustPackage {
   pname = "rbonsai";
   version = "0.1.5";
@@ -12,12 +12,12 @@ pkgs.rustPlatform.buildRustPackage {
 
   cargoHash = "sha256-78vOnu5RZgIR71x8fXbWmoeRDzRgaZBQXJ6nugLNij0=";
 
-  nativeBuildInputs = with pkgs; [ ncurses5.dev ];
-  buildInputs = with pkgs; [ ncurses5 ];
+  nativeBuildInputs = [ pkgs.ncurses5.dev ];
+  buildInputs = [ pkgs.ncurses5 ];
 
-  meta = with pkgs.lib; {
+  meta = {
     description = "A terminal bonsai tree generator";
     homepage = "https://github.com/roberte777/rbonsai";
-    license = licenses.gpl3Plus;
+    license = pkgs.lib.licenses.gpl3Plus;
   };
 }

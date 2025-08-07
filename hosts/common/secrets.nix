@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   config,
   lib,
@@ -14,32 +13,44 @@ let
 
   cfg = config.nixosConfig;
 
-  perUserSecrets = builtins.concatMap (user:
+  perUserSecrets = builtins.concatMap (
+    user:
     let
-      base = [{
-        name = "user-passwords/${user}";
-        value = {
-          neededForUsers = true;
-        };
-      }];
-      extra = if (user == "root") then [] else [{
-        name = "sops-keys/${user}";
-        value = {
-          sopsFile = hostSecrets;
-          path = "/home/${user}/.config/sops/age/key.txt";
-          owner = user;
-          group = "users";
-          mode = "0600";
-        };
-      }];
-    in base ++ extra
+      base = [
+        {
+          name = "user-passwords/${user}";
+          value = {
+            neededForUsers = true;
+          };
+        }
+      ];
+      extra =
+        if (user == "root") then
+          [ ]
+        else
+          [
+            {
+              name = "sops-keys/${user}";
+              value = {
+                sopsFile = hostSecrets;
+                path = "/home/${user}/.config/sops/age/key.txt";
+                owner = user;
+                group = "users";
+                mode = "0600";
+              };
+            }
+          ];
+    in
+    base ++ extra
   ) (hostconfig.users ++ [ "root" ]);
 in
 {
-  environment.systemPackages = with pkgs; [
-    sops
-    age
-  ];
+  environment.systemPackages = builtins.attrValues {
+    inherit (pkgs)
+      sops
+      age
+      ;
+  };
 
   sops = {
     defaultSopsFile = commonSecrets;

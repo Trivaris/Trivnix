@@ -5,11 +5,11 @@
   ...
 }:
 let
+  inherit (lib) mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
-  options.nixosConfig.sunshine = import ./config.nix lib;
+  options.nixosConfig.sunshine = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf cfg.sunshine.enable {
     services.haproxy = {
@@ -50,12 +50,32 @@ with lib;
         backend sunshine-extra-backend
           mode tcp
           server sunshine ${cfg.sunshine.hostIP}:48010
-        '';
+      '';
     };
 
     networking.firewall = {
-      allowedTCPPorts = [ 5353 47984 47989 47990 48010 ];
-      allowedUDPPorts = [ 47998 47999 48000 48001 48002 48003 48004 48005 48006 48007 48008 48009 48010 ];
+      allowedTCPPorts = [
+        5353
+        47984
+        47989
+        47990
+        48010
+      ];
+      allowedUDPPorts = [
+        47998
+        47999
+        48000
+        48001
+        48002
+        48003
+        48004
+        48005
+        48006
+        48007
+        48008
+        48009
+        48010
+      ];
     };
 
     environment.etc."wake.sh".text = ''
@@ -98,7 +118,6 @@ with lib;
       '';
       mode = "0755";
     };
-
 
     systemd.services.sunshine-udp-proxy = {
       description = "UDP Proxy for Sunshine (WAN-safe)";

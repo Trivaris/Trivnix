@@ -4,12 +4,14 @@
   ...
 }:
 let
+  inherit (lib) mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
-  options.nixosConfig.codeServer = import ./config.nix lib;
-  
+  options.nixosConfig.codeServer = import ./config.nix {
+    inherit (lib) mkEnableOption types mkOption;
+  };
+
   config = mkIf (cfg.codeServer.enable) {
     services.code-server = {
       enable = true;

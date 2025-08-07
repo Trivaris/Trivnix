@@ -1,8 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
   options.nixosConfig.steam.enable = mkEnableOption "Enable Steam";
 
@@ -10,12 +15,8 @@ with lib;
     programs.steam = {
       enable = true;
       # package = pkgs.millennium;
-      extraCompatPackages = with pkgs; [
-        proton-ge-bin
-      ];
-      extraPackages = with pkgs; [
-        gamescope
-      ];
+      extraCompatPackages = [ pkgs.proton-ge-bin ];
+      extraPackages = [ pkgs.gamescope ];
       protontricks.enable = true;
       extest.enable = true;
     };

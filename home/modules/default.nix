@@ -1,5 +1,7 @@
-{ libExtra,  lib, ... }:
-with libExtra;
+{ libExtra, ... }:
+let
+  inherit (libExtra) importDir mkFlakePath;
+in
 {
   imports = importDir { dirPath = (mkFlakePath "/home/modules"); };
 }

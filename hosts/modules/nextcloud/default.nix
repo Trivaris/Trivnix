@@ -5,11 +5,13 @@
   ...
 }:
 let
+  inherit (lib) mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
-  options.nixosConfig.nextcloud = import ./config.nix lib;
+  options.nixosConfig.nextcloud = import ./config.nix {
+    inherit (pkgs) mkEnableOption mkOption types;
+  };
 
   config = mkIf (cfg.nextcloud.enable) {
     services.nextcloud = {
@@ -32,10 +34,12 @@ with lib;
       enable = true;
       ensureDatabases = [ "nextcloud" ];
 
-      ensureUsers = [{
-        name = "nextcloud";
-        ensureDBOwnership = true;
-      }];
+      ensureUsers = [
+        {
+          name = "nextcloud";
+          ensureDBOwnership = true;
+        }
+      ];
     };
 
     services.redis = {

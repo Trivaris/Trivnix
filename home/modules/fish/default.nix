@@ -6,9 +6,9 @@
   ...
 }:
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.homeConfig;
 in
-with lib;
 {
   options.homeConfig.fish.enable = mkEnableOption "extended fish configuration";
 

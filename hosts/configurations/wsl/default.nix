@@ -9,7 +9,8 @@
   imports = [
     (libExtra.mkFlakePath /hosts/common)
     (libExtra.mkFlakePath /hosts/modules)
-  ] ++ [
+  ]
+  ++ [
     ./hardware.nix
     inputs.nixos-wsl.nixosModules.default
   ];
@@ -23,5 +24,5 @@
       wslConf.network.hostname = hostconfig.name;
     };
   };
-  
+
 }

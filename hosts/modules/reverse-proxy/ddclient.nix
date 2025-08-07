@@ -1,4 +1,8 @@
-{ cfg, config, activeServices }:
+{
+  cfg,
+  config,
+  activeServices,
+}:
 {
   enable = true;
   protocol = "cloudflare";

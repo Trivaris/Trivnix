@@ -1,5 +1,9 @@
-{ lib, pkgs }:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+  pkgs,
+}:
 {
   enable = mkEnableOption "Enable Minecraft servers.";
 

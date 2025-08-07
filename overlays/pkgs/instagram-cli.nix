@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+pkgs:
 pkgs.python3Packages.buildPythonApplication {
   pname = "instagram-cli";
   version = "1.3.5";
@@ -12,9 +12,9 @@ pkgs.python3Packages.buildPythonApplication {
 
   doCheck = false;
 
-  meta = with pkgs.lib; {
+  meta = {
     description = "The ultimate weapon against brainrot ";
     homepage = "https://pypi.org/project/instagram-cli/";
-    license = licenses.mit; 
+    license = pkgs.lib.licenses.mit;
   };
 }

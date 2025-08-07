@@ -1,13 +1,13 @@
 { config, lib, ... }:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
 in
-with lib;
 {
   config = mkIf (builtins.elem "alacritty" cfg.desktopApps) {
     programs.alacritty = {
       enable = true;
-      
+
       settings = {
         font.normal.style = "Regular";
 

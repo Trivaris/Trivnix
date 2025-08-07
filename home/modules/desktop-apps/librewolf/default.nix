@@ -1,13 +1,21 @@
-{ pkgs, lib, config, inputs, userconfig, hostconfig, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  userconfig,
+  ...
+}:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
-  prefs = builtins.readFile (inputs.betterfox + "/user.js") + ''
+  overrides = ''
+
     /** OVERRIDES ***/
     user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
     user_pref("places.history.enabled", false);
   '';
 in
-with lib;
 {
   options.homeConfig.librewolf = import ./config.nix lib;
 
@@ -20,24 +28,33 @@ with lib;
 
         extensions = {
           force = true;
-          packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            adnauseam
-            tab-session-manager
-            bitwarden
-            plasma-integration
-          ];
+          packages = builtins.attrValues {
+            inherit (pkgs.nur.repos.rycee.firefox-addons)
+              adnauseam
+              tab-session-manager
+              bitwarden
+              plasma-integration
+              ;
+          };
         };
-        
+
         search = {
           default = "brave";
           order = [ "brave" ];
           engines = {
             brave = {
               name = "Brave";
-              urls = [{
-                template = "https://search.brave.com/search";
-                params = [{ name = "q"; value = "{searchTerms}"; }];
-              }];
+              urls = [
+                {
+                  template = "https://search.brave.com/search";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
             };
           };
         };
@@ -65,6 +82,7 @@ with lib;
 
     stylix.targets.librewolf.profileNames = [ userconfig.name ];
 
-    home.file.".librewolf/${userconfig.name}/user.js".source = mkIf (cfg.librewolf.betterwolf) (inputs.betterfox + "/user.js");
+    home.file.".librewolf/${userconfig.name}/user.js".text =
+      if (cfg.librewolf.betterfox) then (inputs.betterfox + "/user.js") else "" + overrides;
   };
 }

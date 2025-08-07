@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
+  inherit (lib) mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
-  options.nixosConfig.suwayomi = import ./config.nix lib;
+  options.nixosConfig.suwayomi = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf cfg.suwayomi.enable {
     services.suwayomi-server = {

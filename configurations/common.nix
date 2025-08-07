@@ -1,7 +1,7 @@
 {
   homeConfig = {
     librewolf = {
-      betterwolf = true;
+      betterfox = true;
       clearOnShutdown = true;
       allowedCookies = [
         "https://github.com"
@@ -36,6 +36,7 @@
     ];
 
     extendedCli = [
+      "bat"
       "btop"
       "eza"
       "fzf"

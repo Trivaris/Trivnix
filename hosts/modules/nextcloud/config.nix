@@ -1,8 +1,11 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   enable = mkEnableOption "Enable the Nextcloud service.";
-  
+
   port = mkOption {
     type = types.port;
     default = 8889;

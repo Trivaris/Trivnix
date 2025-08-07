@@ -2,19 +2,25 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.nixosConfig;
   dockerGroup = config.users.groups.docker.name or "docker";
 in
-with lib;
 {
   options.nixosConfig.appflowy.enable = mkEnableOption "Enable Appflowy";
-  
+
   config = mkIf (cfg.appflowy.enable) {
     virtualisation.docker.enable = true;
-    environment.systemPackages = with pkgs; [ docker docker-compose  ];
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs)
+        docker
+        docker-compose
+        ;
+    };
 
     systemd.services.appflowy-cloud = {
       description = "AppFlowy Cloud Stack";
@@ -25,7 +31,7 @@ with lib;
       serviceConfig = {
         WorkingDirectory = cfg.appflowy.dir;
         ExecStart = "${pkgs.docker-compose}/bin/docker compose -f ${cfg.appflowy.dir}/docker-compose.yml up -d";
-        ExecStop  = "${pkgs.docker-compose}/bin/docker compose -f ${cfg.appflowy.dir}/docker-compose.yml down";
+        ExecStop = "${pkgs.docker-compose}/bin/docker compose -f ${cfg.appflowy.dir}/docker-compose.yml down";
         Restart = "on-failure";
       };
 

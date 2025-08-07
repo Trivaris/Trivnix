@@ -1,13 +1,13 @@
 {
   inputs,
-  outputs
+  outputs,
 }:
 {
   libExtra,
   configname,
   hostconfig,
   userconfigs,
-  hosts
+  hosts,
 }:
 let
   host-configurations = import (libExtra.mkFlakePath /hosts/configurations);
@@ -20,11 +20,11 @@ inputs.nixpkgs.lib.nixosSystem {
       configname
       hostconfig
       userconfigs
-      hosts;
-    inherit
+      hosts
       inputs
       outputs
-      libExtra;
+      libExtra
+      ;
   };
 
   modules = [
@@ -54,11 +54,11 @@ inputs.nixpkgs.lib.nixosSystem {
           configname
           hostconfig
           userconfigs
-          hosts;
-        inherit
+          hosts
           inputs
           outputs
-          libExtra;
+          libExtra
+          ;
       };
       config.home-manager.users = inputs.nixpkgs.lib.genAttrs hostconfig.users (
         name: home-configurations.${name}.${configname}

@@ -1,14 +1,12 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
+  inherit (lib) mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
-  options.nixosConfig.vaultwarden = import ./config.nix lib;
+  options.nixosConfig.vaultwarden = import ./config.nix {
+    inherit (lib) mkEnableOption mkOption types;
+  };
 
   config = mkIf cfg.vaultwarden.enable {
     services.vaultwarden = {

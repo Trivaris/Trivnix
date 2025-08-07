@@ -1,25 +1,31 @@
-{ pkgs, ... }:
+pkgs:
 let
-  adbutils = pkgs.python3Packages.buildPythonPackage rec {
-    pname = "adbutils";
-    version = "2.8.7";
-    format = "pyproject";
-    doCheck = false;
-    nativeBuildInputs = with pkgs.python3Packages; [ pbr ];
-    pythonImportsCheck = [ "adbutils" ];
+  adbutils =
+    let
+      adbutils = {
+        pname = "adbutils";
+        version = "2.8.7";
+        format = "pyproject";
+        doCheck = false;
+        nativeBuildInputs = [ pkgs.python3Packages.pbr ];
+        pythonImportsCheck = [ "adbutils" ];
 
-    src = pkgs.fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-jjSJ1Kg2lQCVHwjP5tv94d29+GuaqpZkH4IhgRlfoM8=";
-    };
+        src = pkgs.fetchPypi {
+          inherit (adbutils) pname version;
+          sha256 = "sha256-jjSJ1Kg2lQCVHwjP5tv94d29+GuaqpZkH4IhgRlfoM8=";
+        };
 
-    propagatedBuildInputs = with pkgs.python3Packages; [
-      requests
-      deprecation
-      retry
-      pillow
-    ];
-  };
+        propagatedBuildInputs = builtins.attrValues {
+          inherit (pkgs.python3Packages)
+            requests
+            deprecation
+            retry
+            pillow
+            ;
+        };
+      };
+    in
+    pkgs.python3Packages.buildPythonPackage adbutils;
 in
 pkgs.python3Packages.buildPythonApplication {
   pname = "adbautoplayer";
@@ -35,23 +41,25 @@ pkgs.python3Packages.buildPythonApplication {
   format = "pyproject";
   doCheck = false;
 
-  nativeBuildInputs = with pkgs.python3Packages; [
-    hatchling
+  nativeBuildInputs = [
+    pkgs.python3Packages.hatchling
   ];
 
-  propagatedBuildInputs = with pkgs.python3Packages; [
-    adbutils
-    opencv-python
-    pydantic
-    av
-    pillow
-    pytesseract
-  ];
+  propagatedBuildInputs = builtins.attrValues {
+    inherit adbutils;
+    inherit (pkgs.python3Packages)
+      opencv-python
+      pydantic
+      av
+      pillow
+      pytesseract
+      ;
+  };
 
-  meta = with pkgs.lib; {
+  meta = {
     description = "Automated Android game player using ADB";
     homepage = "https://adbautoplayer.github.io";
-    license = licenses.mit;
-    platforms = platforms.linux;
+    license = pkgs.lib.licenses.mit;
+    platforms = pkgs.lib.platforms.linux;
   };
 }

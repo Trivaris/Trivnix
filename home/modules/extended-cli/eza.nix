@@ -1,8 +1,8 @@
 { config, lib, ... }:
 let
+  inherit (lib) mkIf;
   cfg = config.homeConfig;
 in
-with lib;
 {
   config = mkIf (builtins.elem "eza" cfg.extendedCli) {
     programs.eza = {

@@ -1,5 +1,8 @@
-lib:
-with lib;
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   enable = mkEnableOption "Enable Sunshine remote desktop proxy integration.";
 

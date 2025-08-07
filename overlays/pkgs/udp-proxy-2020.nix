@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+pkgs:
 pkgs.buildGoModule {
   pname = "udp-proxy-2020";
   version = "v0.0.11";
@@ -11,14 +11,13 @@ pkgs.buildGoModule {
   };
 
   nativeBuildInputs = [ pkgs.makeWrapper ];
-  buildInputs = with pkgs; [ gcc gnumake libpcap ];
+  buildInputs = builtins.attrValues { inherit (pkgs) gcc gnumake libpcap; };
 
   vendorHash = "sha256-D5VyJx76B39KgQ8m9uTmp1vgkyClWq5VQh2iWE+PwaI=";
 
-
-  meta = with pkgs.lib; {
+  meta = {
     description = "UDP Proxy 2020";
     homepage = "https://github.com/synfinatic/udp-proxy-2020";
-    license = licenses.mit;
+    license = pkgs.lib.licenses.mit;
   };
 }

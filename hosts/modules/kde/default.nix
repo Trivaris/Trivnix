@@ -1,8 +1,13 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.nixosConfig;
 in
-with lib;
 {
   options.nixosConfig.kde.enable = mkEnableOption "Enable KDE Plasma";
 
@@ -11,36 +16,49 @@ with lib;
     services.displayManager.defaultSession = "plasma";
     services.displayManager.sddm.wayland.compositor = "kwin";
 
-    environment.plasma6.excludePackages = with pkgs.kdePackages; [
-      konsole
-      elisa
-    ];
+    environment.plasma6.excludePackages = builtins.attrValues {
+      inherit (pkgs.kdePackages)
+        konsole
+        elisa
+        ;
+    };
 
-    environment.systemPackages = with pkgs; [
-      (mkIf cfg.sddm.enable kdePackages.sddm-kcm)
+    environment.systemPackages =
+      builtins.attrValues {
+        inherit (pkgs)
+          hardinfo2
+          wayland-utils
+          wl-clipboard
+          vlc
+          ;
 
-      kdePackages.kcalc
-      kdePackages.ksystemlog
-      kdePackages.systemsettings
-      kdePackages.kdeconnect-kde
-      kdePackages.plasma-browser-integration
-      kdePackages.ktorrent
-      hardinfo2
-      wayland-utils
-      wl-clipboard
-      vlc
-    ];
+        inherit (pkgs.kdePackages)
+          kcalc
+          ksystemlog
+          systemsettings
+          kdeconnect-kde
+          plasma-browser-integration
+          ktorrent
+          ;
+      }
+      ++ mkIf (cfg.sddm.enable) [ pkgs.kdePackages.sddm-kcm ];
 
     # KDE Connect
-    networking.firewall = { 
+    networking.firewall = {
       enable = true;
-      allowedTCPPortRanges = [ 
-        { from = 1714; to = 1764; }
-      ];  
-      allowedUDPPortRanges = [ 
-        { from = 1714; to = 1764; }
-      ];  
-    }; 
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+    };
   };
 
 }

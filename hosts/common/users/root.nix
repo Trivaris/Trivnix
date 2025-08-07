@@ -2,10 +2,8 @@
   config,
   lib,
   libExtra,
-
   hosts,
-  
-  ... 
+  ...
 }:
 let
   inherit (lib) mapAttrsToList flatten;
@@ -13,11 +11,13 @@ let
   readKey = path: builtins.readFile (libExtra.mkFlakePath path);
 
   allAuthorizedKeys = flatten (
-    mapAttrsToList ( hostname: hostcfg:
+    mapAttrsToList (
+      hostname: hostcfg:
       let
         hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostname}_host.pub";
         userKeys = flatten (
-          map ( user:
+          map (
+            user:
             if hostcfg.hardwareKey or true then
               [
                 (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_a.pub")

@@ -49,7 +49,7 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     # Private Information
     trivnix-private = {
       url = "git+ssh://git@github.com/trivaris/trivnix-private";
@@ -66,7 +66,5 @@
     };
   };
 
-  outputs =
-    inputs@{ self, ... }:
-    import ./outputs.nix { inherit inputs self; };
+  outputs = inputs@{ self, ... }: import ./outputs.nix { inherit inputs self; };
 }

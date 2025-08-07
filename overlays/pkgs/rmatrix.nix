@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+pkgs:
 pkgs.rustPlatform.buildRustPackage {
   pname = "r-matrix";
   version = "0.2.7";
@@ -12,12 +12,12 @@ pkgs.rustPlatform.buildRustPackage {
 
   cargoHash = "sha256-PGQNxvoltpWRi4svK2NK+HFbu2vR7BJstDilAe1k748=";
 
-  nativeBuildInputs = with pkgs; [ ncurses5.dev ];
-  buildInputs = with pkgs; [ ncurses5 ];
+  nativeBuildInputs = builtins.attrValues { inherit (pkgs.ncurses5) dev; };
+  buildInputs = builtins.attrValues { inherit (pkgs) ncurses5; };
 
-  meta = with pkgs.lib; {
+  meta = {
     description = "Rust port of cmatrix";
     homepage = "https://github.com/Fierthraix/rmatrix";
-    license = licenses.mit;
+    license = pkgs.lib.licenses.mit;
   };
 }
