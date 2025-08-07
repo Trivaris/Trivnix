@@ -3,5 +3,5 @@ let
   inherit (libExtra) importDir mkFlakePath;
 in
 {
-  imports = importDir { dirPath = (mkFlakePath "/home/modules"); };
+  imports = importDir { dirPath = (mkFlakePath "/hosts/modules"); };
 }

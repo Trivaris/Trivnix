@@ -10,7 +10,7 @@ let
 in
 {
   options.nixosConfig.nextcloud = import ./config.nix {
-    inherit (pkgs) mkEnableOption mkOption types;
+    inherit (lib) mkEnableOption mkOption types;
   };
 
   config = mkIf (cfg.nextcloud.enable) {

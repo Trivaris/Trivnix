@@ -21,6 +21,7 @@
         "https://www.notion.so"
         "https://web.whatsapp.com/"
         "https://f95zone.to/"
+        "https://www.instagram.com/"
       ];
     };
 

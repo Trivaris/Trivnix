@@ -23,7 +23,7 @@ in
         ;
     };
 
-    environment.systemPackages =
+    environment.systemPackages = (
       builtins.attrValues {
         inherit (pkgs)
           hardinfo2
@@ -41,7 +41,8 @@ in
           ktorrent
           ;
       }
-      ++ mkIf (cfg.sddm.enable) [ pkgs.kdePackages.sddm-kcm ];
+      ++ (if (cfg.sddm.enable) then [ pkgs.kdePackages.sddm-kcm ] else [ ])
+    );
 
     # KDE Connect
     networking.firewall = {

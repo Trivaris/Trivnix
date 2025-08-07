@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkMerge optionals;
+  inherit (lib) mkIf mkMerge;
   cfg = config.homeConfig;
   selfPath = libExtra.mkFlakePath "/";
 
@@ -33,44 +33,49 @@ let
       };
     };
   };
+
+  vscodiumSettings = commonSettings // (if (cfg.vscodium.enableLsp) then lspSettings else { });
 in
 {
   options.homeConfig.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
 
   config = mkIf (builtins.elem "vscodium" cfg.desktopApps) (mkMerge [
-    {
-      home.packages =
-        builtins.attrValues {
-          inherit (pkgs)
-            vscodium
-            ;
-        }
-        // (optionals (cfg.vscodium.enableLsp) builtins.attrValues {
-          inherit (pkgs)
-            nixd
-            nixfmt-rfc-style
-            nix-ld
-            ;
-          inherit (pkgs.vscode-extensions.jnoortheen)
-            nix-ide
-            ;
-        })
 
-        // (optionals (cfg.vscodium.fixServer) builtins.attrValues {
-          inherit (pkgs)
-            nodejs_20
-            ;
-        });
+    {
+      home.packages = builtins.attrValues (
+        {
+          inherit (pkgs) vscodium;
+        }
+
+        // (
+          if cfg.vscodium.enableLsp then
+            {
+              inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;
+
+              inherit (pkgs)
+                nixd
+                nixfmt-rfc-style
+                nix-ld
+                ;
+            }
+          else
+            { }
+        )
+
+        // (
+          if cfg.vscodium.fixServer then
+            {
+              inherit (pkgs) nodejs_20;
+            }
+          else
+            { }
+        )
+      );
     }
 
     {
-      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON (
-        commonSettings // (if (cfg.vscodium.enableLsp) then lspSettings else { })
-      );
-
-      home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON (
-        commonSettings // (if (cfg.vscodium.enableLsp) then lspSettings else { })
-      );
+      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON vscodiumSettings;
+      home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON vscodiumSettings;
     }
 
     (mkIf cfg.vscodium.fixServer {
