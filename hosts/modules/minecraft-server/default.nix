@@ -22,7 +22,7 @@ in
 
       servers =
         let
-          modpack = cfg.minecraftServer.modpack;
+          inherit (cfg.minecraftServer) modpack;
           modpackPkg = pkgs.modpacks.${modpack};
         in
         {
@@ -33,6 +33,7 @@ in
             package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override {
               loaderVersion = modpackPkg.fabricVersion;
             };
+
             files = {
               server-icon = libExtra.mkFlakePath /resources/minecraft-server-icon.png;
             }
@@ -70,6 +71,8 @@ in
                 oldLazyMCPkgs.lazymc;
 
               config = {
+                public.address = "${cfg.minecraftServer.domain}:${toString (cfg.minecraftServer.port + 1)}";
+
                 server.start_timeout = 180;
                 server.stop_timeout = 60;
 
