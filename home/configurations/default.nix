@@ -1,3 +1,5 @@
-{
-  trivaris = import ./trivaris.nix;
+{ importDir, mkFlakePath }:
+importDir {
+  dirPath = mkFlakePath "/home/configurations";
+  asMap = true;
 }

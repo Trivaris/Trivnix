@@ -9,7 +9,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    libExtra.partition-layouts.disko-desktop
+    libExtra.partition-layouts.desktop
   ];
 
   services.udev.extraRules = ''

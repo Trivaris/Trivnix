@@ -11,7 +11,7 @@
   hosts,
 }:
 let
-  configurations = import (libExtra.mkFlakePath /home/configurations);
+  configurations = import (libExtra.mkFlakePath /home/configurations) { inherit (libExtra) importDir mkFlakePath; };
 in
 inputs.home-manager.lib.homeManagerConfiguration {
 

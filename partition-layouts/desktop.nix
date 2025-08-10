@@ -1,7 +1,7 @@
 {
   disko.devices.disk.nixos = {
     type = "disk";
-    device = "/dev/nvme1n1";
+    device = "/dev/disk/by-id/nvme-eui.002538424141181a";
     content.type = "gpt";
 
     content.partitions = {

@@ -10,8 +10,8 @@
   hosts,
 }:
 let
-  host-configurations = import (libExtra.mkFlakePath /hosts/configurations);
-  home-configurations = import (libExtra.mkFlakePath /home/configurations);
+  host-configurations = import (libExtra.mkFlakePath /hosts/configurations) { inherit (libExtra) importDir mkFlakePath; };
+  home-configurations = import (libExtra.mkFlakePath /home/configurations) { inherit (libExtra) importDir mkFlakePath; };
 in
 inputs.nixpkgs.lib.nixosSystem {
   specialArgs = {

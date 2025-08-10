@@ -1,7 +1,7 @@
 { inputs, outputs }:
 let
   libExtra = {
-    partition-layouts = import (libExtra.mkFlakePath /partitions);
+    partition-layouts = import (libExtra.mkFlakePath /partition-layouts) { inherit (libExtra) importDir mkFlakePath;};
     pkgs-config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
