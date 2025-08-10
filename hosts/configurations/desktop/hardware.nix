@@ -27,6 +27,7 @@
     "usbhid"
     "sd_mod"
   ];
+  
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;

@@ -14,6 +14,7 @@
   ];
 
   boot.initrd.kernelModules = [ ];
+  boot.initrd.supportedFilesystems = [ "ext4" "vfat" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;
