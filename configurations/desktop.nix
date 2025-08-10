@@ -28,6 +28,10 @@ in
     printing.enable = true;
     gdm.enable = true;
     steam.enable = true;
+    sunshine = {
+      enable = true;
+      domain = "sunshine.trivaris.org";
+    };
 
     inherit (commons.nixosConfig) stylix;
   };

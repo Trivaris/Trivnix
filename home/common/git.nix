@@ -25,8 +25,11 @@ in
       enable = true;
       userName = userconfig.name;
       userEmail = cfg.git.email;
-      extraConfig.credential.helper = "store";
-      extraConfig.core.autocrlf = "input";
+      extraConfig = {
+        credential.helper = "store";
+        core.autocrlf = "input";
+        init.defaultBranch = "main";
+      };
     };
 
   };

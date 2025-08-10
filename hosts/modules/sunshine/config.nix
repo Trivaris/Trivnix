@@ -14,11 +14,22 @@
     '';
   };
 
-  hostIP = mkOption {
-    type = types.str;
-    example = "192.168.1.100";
+  port = mkOption {
+    type = types.nullOr types.port;
+    default = null;
+    example = 47989;
     description = ''
-      IPv4 address of the Sunshine desktop, used by the TCP/UDP proxy and for reachability checks.
+      Base port -- others used are offset from this one.
+      See https://docs.lizardbyte.dev/projects/sunshine/en/latest/about/advanced_usage.html#port for details.
     '';
+  };
+
+  domain = mkOption {
+    type = types.str;
+    description = ''
+      FQDN to access the Sunshine instance.
+      Used in web configuration and TLS certificate issuance.
+    '';
+    example = "sunshine.example.com";
   };
 }

@@ -4,7 +4,6 @@
   config,
   lib,
   libExtra,
-
   userconfig,
   username,
   hostconfig,
@@ -69,8 +68,10 @@ in
       "networkmanager"
       "libvirtd"
       "flatpak"
+      "input"
       "audio"
       "video"
+      "render"
       "plugdev"
       "input"
       "kvm"

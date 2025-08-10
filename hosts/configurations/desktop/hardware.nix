@@ -12,6 +12,12 @@
     libExtra.partition-layouts.disko-desktop
   ];
 
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+    KERNEL=="event*", SUBSYSTEM=="input", GROUP="input", MODE="0660"
+  '';
+
+
   boot.initrd.kernelModules = [ ];
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -41,4 +47,5 @@
   hardware.nvidia.modesetting.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia.open = true;
+  hardware.uinput.enable = true;
 }

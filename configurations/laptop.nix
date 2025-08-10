@@ -10,23 +10,25 @@ in
 
   users.trivaris = {
     homeConfig = {
-      inherit (commons.homeConfig) librewolf desktopApps extendedCli;
-
       email.enable = true;
-      fish.enable = true;
+      lutris.enable = true;
       vscodium.enableLsp = true;
+      fish.enable = true;
+
       git.email = "github@tripple.lurdane.de";
+
+      inherit (commons.homeConfig) librewolf desktopApps extendedCli;
     };
   };
 
   nixosConfig = {
-    inherit (commons.nixosConfig) stylix;
-
     bluetooth.enable = true;
     kde.enable = true;
     openssh.enable = true;
     printing.enable = true;
     gdm.enable = true;
     steam.enable = true;
+
+    inherit (commons.nixosConfig) stylix;
   };
 }
