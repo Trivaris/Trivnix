@@ -6,6 +6,7 @@
 
     content.partitions = {
       boot = {
+        # name = "ESP";
         size = "512M";
         type = "EF00";
         content = {
@@ -20,21 +21,23 @@
         };
       };
 
-      root = {
-        size = "100%";
-        content = {
-          type = "filesystem";
-          format = "ext4";
-          mountpoint = "/";
-        };
-      };
-
       swap = {
         size = "16G";
+        # name = "encryptedSwap";
         content = {
           type = "swap";
           randomEncryption = true;
           priority = 100;
+        };
+      };
+
+      root = {
+        size = "100%";
+        # name = "root";
+        content = {
+          type = "filesystem";
+          format = "ext4";
+          mountpoint = "/";
         };
       };
     };
