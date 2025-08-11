@@ -32,7 +32,10 @@ in
       zone = "trivaris.org";
       port = 25588;
       ddnsTime = "04:15";
-      extraDomains = [ "minecraft.trivaris.org" ];
+      extraDomains = [
+        "minecraft.trivaris.org"
+        "sunshine.trivaris.org"
+      ];
     };
 
     vaultwarden = {

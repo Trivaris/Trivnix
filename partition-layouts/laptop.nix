@@ -6,6 +6,7 @@
 
     content.partitions = {
       boot = {
+        name = "ESP";
         size = "512M";
         type = "EF00";
         content = {
@@ -21,6 +22,7 @@
       };
 
       swap = {
+        name = "encryptedSwap";
         size = "16G";
         content = {
           type = "swap";
@@ -30,6 +32,7 @@
       };
 
       root = {
+        name = "root";
         size = "100%";
         content = {
           type = "filesystem";

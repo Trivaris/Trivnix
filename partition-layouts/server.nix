@@ -22,8 +22,8 @@
       };
 
       swap = {
-        size = "16G";
         name = "encryptedSwap";
+        size = "16G";
         content = {
           type = "swap";
           randomEncryption = true;
@@ -32,8 +32,8 @@
       };
 
       root = {
-        size = "100%";
         name = "root";
+        size = "100%";
         content = {
           type = "filesystem";
           format = "ext4";
