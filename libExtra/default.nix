@@ -12,7 +12,7 @@ let
     };
 
     mkFlakePath = path: (inputs.self + (toString path));
-    importDir = import ./importDir.nix inputs;
+    resolveDir = import ./resolveDir.nix {inherit inputs; inherit (libExtra) mkFlakePath; };
 
     mkNixOSConfiguration = import ./nixosConfiguration.nix { inherit inputs outputs; };
     mkHomeConfiguration = import ./homeConfiguration.nix { inherit inputs outputs; };

@@ -1,7 +1,7 @@
 { inputs, self }:
 let
   outputs = self.outputs;
-  configurations = import ./configurations;
+  configurations = import ./configurations { inherit (libExtra) resolveDir; };
   libExtra = import ./libExtra { inherit inputs outputs; };
 in
 {

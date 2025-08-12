@@ -322,11 +322,19 @@
         ]
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754842705,
         "narHash": "sha256-2vvncPLsBWV6dRM5LfGHMGYZ+vzqRDqSPBzxPAS0R/A=",
         "owner": "nix-community",
         "repo": "home-manager",
         "rev": "91586008a23c01cc32894ee187dca8c0a7bd20a4",
+=======
+        "lastModified": 1754613544,
+        "narHash": "sha256-ueR1mGX4I4DWfDRRxxMphbKDNisDeMPMusN72VV1+cc=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "cc2fa2331aebf9661d22bb507d362b39852ac73f",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {
@@ -343,11 +351,19 @@
         ]
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754856671,
         "narHash": "sha256-WXRvs14lYgg1AMppoupJQrD19fS5u+Es9SxZg/rphLA=",
         "ref": "refs/heads/main",
         "rev": "d6f6a9efb282d1547a1758abbd946a1141886a81",
         "revCount": 2023,
+=======
+        "lastModified": 1754242145,
+        "narHash": "sha256-3z/6zBCyRA620pYxYdF7pz4AGrKzt4/Ln07hKpaEK3I=",
+        "ref": "refs/heads/main",
+        "rev": "6873424e527691daa5ccc2505c560ecebf880285",
+        "revCount": 2022,
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "submodules": true,
         "type": "git",
         "url": "https://github.com/SteamClientHomebrew/Millennium"
@@ -381,11 +397,19 @@
         ]
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754792376,
         "narHash": "sha256-yfeRUWD6cBt3jhpVdUHG6YfactdXINCzGTqLeSA2594=",
         "owner": "Yeshey",
         "repo": "nix-minecraft",
         "rev": "80f8ee939ad6ab13a8c776ada99f630a9835703f",
+=======
+        "lastModified": 1754714638,
+        "narHash": "sha256-/9sKZOLN/rTAnDVV2KtKNSHXHpt4mvgqA879AvhQ9no=",
+        "owner": "Yeshey",
+        "repo": "nix-minecraft",
+        "rev": "95fb235bd93a136b7b3fde1329fa4bead50104a6",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {
@@ -418,11 +442,19 @@
     },
     "nixpkgs": {
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754725699,
         "narHash": "sha256-iAcj9T/Y+3DBy2J0N+yF9XQQQ8IEb5swLFzs23CdP88=",
         "owner": "nixos",
         "repo": "nixpkgs",
         "rev": "85dbfc7aaf52ecb755f87e577ddbe6dbbdbc1054",
+=======
+        "lastModified": 1754498491,
+        "narHash": "sha256-erbiH2agUTD0Z30xcVSFcDHzkRvkRXOQ3lb887bcVrs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c2ae88e026f9525daf89587f3cbee584b92b6134",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {
@@ -471,11 +503,19 @@
         ]
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754865282,
         "narHash": "sha256-K49yhUk4ql3jFoCvwcJV0lmeNku81ohPZZi6LDqF85U=",
         "owner": "nix-community",
         "repo": "NUR",
         "rev": "db39211c5c11eb70fb6aa1ef7635d96103a681d7",
+=======
+        "lastModified": 1754745091,
+        "narHash": "sha256-3yDuZDgjDjRFEqonXnCPGm/gJ5GTS0ARWlPN5TGmEvw=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "065dbab502a419020ea2fa66341b09414221d9f8",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {
@@ -520,11 +560,19 @@
         "systems": "systems_2"
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754832356,
         "narHash": "sha256-CHWUy7FY1icSQnvTNv+9ty6VFjBNDyb3gD8hHhVEZ9Y=",
         "owner": "NotAShelf",
         "repo": "nvf",
         "rev": "1681ad703470e784156ce3461d92d18492c5baef",
+=======
+        "lastModified": 1754552918,
+        "narHash": "sha256-vbT+nGdMLNAeYZ1S5WBBLJTVWosGne2VRt46rqPfB2A=",
+        "owner": "NotAShelf",
+        "repo": "nvf",
+        "rev": "d61de135ce174f4e04b4e509de02e1afe040a834",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {
@@ -580,11 +628,19 @@
         "systems": "systems_3"
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754801101,
         "narHash": "sha256-oxWjZ/SfhCvHFNePZcUu+LcE5j4xxuIt/yaoaSvMZk0=",
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
         "rev": "fcbfc21572518c68317df992929b28df9a1d8468",
+=======
+        "lastModified": 1754196919,
+        "narHash": "sha256-0zATw65mNql9H8e7HWVBPpijMSbDVeK7JNivRBcUScM=",
+        "owner": "Gerg-L",
+        "repo": "spicetify-nix",
+        "rev": "24fcb94f7792ab755b933e1c9516996530ac1fbd",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {
@@ -614,11 +670,19 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1754851076,
         "narHash": "sha256-k3+/24lN6E9BFRhryHocm7314t0Wtku0hgIdEWi15XI=",
         "owner": "danth",
         "repo": "stylix",
         "rev": "afcfed6fd2a51615cd63aa7fa7608d670e7b61e5",
+=======
+        "lastModified": 1754597531,
+        "narHash": "sha256-OpC9/PBIuL2WEJUkcuD/wVxI8r+3o6f5RylSIefjHo4=",
+        "owner": "danth",
+        "repo": "stylix",
+        "rev": "63bb34a66ad7d1af2e95ee20dd675896b2074c32",
+>>>>>>> ffe12c5 (feat: Expanded on importDir and renamed to resolveDir to better reflect usage)
         "type": "github"
       },
       "original": {

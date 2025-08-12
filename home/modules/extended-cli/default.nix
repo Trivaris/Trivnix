@@ -1,13 +1,10 @@
 { lib, libExtra, ... }:
 let
   inherit (lib) types mkOption;
-  inherit (libExtra) mkFlakePath importDir;
-  dirPath = mkFlakePath "/home/modules/extended-cli";
-  modules = importDir {
-    inherit dirPath;
-    asPath = false;
-  };
-  imports = importDir { inherit dirPath; };
+  inherit (libExtra) resolveDir;
+  dirPath = "/home/modules/extended-cli";
+  modules = resolveDir { inherit dirPath; mode = "names"; };
+  imports = resolveDir { inherit dirPath; mode = "paths"; };
 in
 {
   inherit imports;

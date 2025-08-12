@@ -1,7 +1,7 @@
 { libExtra, ... }:
 let
-  inherit (libExtra) importDir mkFlakePath;
+  inherit (libExtra) resolveDir;
 in
 {
-  imports = importDir { dirPath = (mkFlakePath "/home/common"); };
+  imports = resolveDir { dirPath = "/home/common"; mode = "paths"; };
 }
