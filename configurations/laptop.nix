@@ -30,7 +30,7 @@ in
     steam.enable = true;
 
     language = {
-      keyMap = true;
+      keyMap = "de";
     };
 
     inherit (commons.nixosConfig) stylix;
