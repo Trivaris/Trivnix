@@ -3,7 +3,6 @@
   mkOption,
 }:
 {
-
   keyMap = mkOption {
     type = types.str;
     default = "us";
@@ -35,5 +34,4 @@
       Determines the Language of the types of Units used.
     '';
   };
-
 }

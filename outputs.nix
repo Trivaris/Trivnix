@@ -1,7 +1,7 @@
 { inputs, self }:
 let
   outputs = self.outputs;
-  configurations = import ./configurations { inherit (libExtra) resolveDir; };
+  configurations = libExtra.resolveDir { dirPath = "/configurations"; mode = "imports"; exclude = [ "common" ]; };
   libExtra = import ./libExtra { inherit inputs outputs; };
 in
 {
@@ -9,15 +9,13 @@ in
 
   # Define NixOS configurations for each host
   # Format: configname = <NixOS config>
-  nixosConfigurations = builtins.mapAttrs (
-    configname: rawHost:
+  nixosConfigurations = builtins.mapAttrs ( configname: rawHost:
     let
       userconfigs = rawHost.users or { };
       hostconfig = rawHost // {
         users = builtins.attrNames userconfigs;
       };
-      hosts = builtins.mapAttrs (
-        _: host:
+      hosts = builtins.mapAttrs ( _: host:
         host
         // {
           users = builtins.attrNames (host.users or { });

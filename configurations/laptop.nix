@@ -29,6 +29,10 @@ in
     gdm.enable = true;
     steam.enable = true;
 
+    language = {
+      keyMap = true;
+    };
+
     inherit (commons.nixosConfig) stylix;
   };
 }

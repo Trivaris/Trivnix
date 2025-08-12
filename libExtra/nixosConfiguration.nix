@@ -10,8 +10,8 @@
   hosts,
 }:
 let
-  host-configurations = libExtra.resolveDir { dirPath = "/hosts/configurations"; mode = "imports"; };
-  home-configurations = libExtra.resolveDir { dirPath = "/home/configurations"; mode = "imports"; };
+  hostConfigurations = libExtra.resolveDir { dirPath = "/hosts/configurations"; mode = "imports"; depth = 2; };
+  homeConfigurations = libExtra.resolveDir { dirPath = "/home/configurations"; mode = "imports"; };
 in
 inputs.nixpkgs.lib.nixosSystem {
   specialArgs = {
@@ -29,7 +29,7 @@ inputs.nixpkgs.lib.nixosSystem {
 
   modules = [
     # Flake NixOS entrypoint
-    host-configurations.${configname}
+    hostConfigurations.${configname}
 
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
@@ -61,7 +61,7 @@ inputs.nixpkgs.lib.nixosSystem {
           ;
       };
       config.home-manager.users = inputs.nixpkgs.lib.genAttrs hostconfig.users (
-        name: home-configurations.${name}.${configname}
+        name: homeConfigurations.${name}.${configname}
       );
     }
   ];

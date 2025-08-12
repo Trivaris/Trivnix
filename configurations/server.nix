@@ -58,10 +58,10 @@ in
       domain = "manga.trivaris.org";
     };
 
-    minecraftServer = {
-      enable = true;
-      domain = "minecraft.trivaris.org";
-      modpack = "rising-legends";
-    };
+    # minecraftServer = {
+    #   enable = true;
+    #   domain = "minecraft.trivaris.org";
+    #   modpack = "rising-legends";
+    # };
   };
 }
