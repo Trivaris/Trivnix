@@ -34,7 +34,6 @@ in
       ddnsTime = "04:15";
       extraDomains = [
         "minecraft.trivaris.org"
-        "sunshine.trivaris.org"
       ];
     };
 
@@ -58,8 +57,14 @@ in
       domain = "manga.trivaris.org";
     };
 
-    minecraftServer = {
+    sunshine = {
       enable = true;
+      domain = "sunshine.trivaris.org";
+      hostMac = "08:bf:b8:42:59:7c";
+    };
+
+    minecraftServer = {
+      enable = false;
       domain = "minecraft.trivaris.org";
       modpack = "rising-legends";
     };

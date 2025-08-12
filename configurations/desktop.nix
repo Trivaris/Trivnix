@@ -29,7 +29,7 @@ in
     gdm.enable = true;
     steam.enable = true;
     sunshine = {
-      enable = true;
+      enableService = true;
       domain = "sunshine.trivaris.org";
     };
 

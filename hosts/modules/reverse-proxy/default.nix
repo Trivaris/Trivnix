@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
   cfg = config.nixosConfig;
@@ -8,6 +8,7 @@ let
     cfg.nextcloud
     cfg.suwayomi
     cfg.vaultwarden
+    cfg.sunshine
   ];
 
   externalPorts = builtins.map (service: service.externalPort) (
@@ -27,14 +28,14 @@ in
     in
     mkIf (cfg.reverseProxy.enable) {
       networking.firewall.allowedTCPPorts = [ cfg.reverseProxy.port ] ++ externalPorts;
-
       security = { inherit acme; };
 
       services = {
         inherit ddclient;
         nginx = {
-          enable = true;
           inherit virtualHosts;
+          package = pkgs.openresty;
+          enable = true;
 
           recommendedGzipSettings = true;
           recommendedOptimisation = true;
@@ -43,11 +44,12 @@ in
 
           sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
-          appendHttpConfig = ''
+          appendHttpConfig = lib.mkAfter ''
             map $http_upgrade $connection_upgrade {
               default upgrade;
               \'\'      close;
             }
+            lua_shared_dict wol 1m;
           '';
         };
       };

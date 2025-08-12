@@ -24,6 +24,7 @@
   networking.useDHCP = lib.mkDefault true;
   networking.hostName = hostconfig.name;
   networking.networkmanager.enable = true;
+  networking.interfaces.eno1.wakeOnLan.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault hostconfig.architecture;
   system.stateVersion = hostconfig.stateVersion;

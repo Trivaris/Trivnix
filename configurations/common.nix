@@ -34,6 +34,7 @@
       "spotify"
       "thunderbird"
       "vesktop"
+      "moonlight-qt"
     ];
 
     extendedCli = [

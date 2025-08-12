@@ -5,14 +5,7 @@
 }:
 {
   enable = mkEnableOption "Enable Sunshine remote desktop proxy integration.";
-
-  hostMac = mkOption {
-    type = types.str;
-    example = "3C:52:82:4B:00:11";
-    description = ''
-      MAC address of the Sunshine desktop, used to send Wake-on-LAN packets.
-    '';
-  };
+  enableService = mkEnableOption "Enable Sunshine Service.";
 
   port = mkOption {
     type = types.nullOr types.port;
@@ -24,6 +17,15 @@
     '';
   };
 
+  externalPort = mkOption {
+    type = types.nullOr types.port;
+    default = null;
+    description = ''
+      Optional override for the externally exposed port.
+      If unset, defaults to the reverse proxy's global port.
+    '';
+  };
+
   domain = mkOption {
     type = types.str;
     description = ''
@@ -31,5 +33,13 @@
       Used in web configuration and TLS certificate issuance.
     '';
     example = "sunshine.example.com";
+  };
+
+  hostMac = mkOption {
+    type = types.str;
+    example = "3C:52:82:4B:00:11";
+    description = ''
+      MAC address of the computer to send the WoL Packet to.
+    '';
   };
 }
