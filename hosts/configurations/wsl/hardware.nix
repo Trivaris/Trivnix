@@ -7,7 +7,7 @@
 {
 
   imports = [
-    libExtra.partition-layouts.none
+    libExtra.partitionLayouts.none
   ];
 
   boot.initrd.availableKernelModules = [ ];

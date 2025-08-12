@@ -75,7 +75,6 @@ in
 
                 server.start_timeout = 180;
                 server.stop_timeout = 60;
-                public.address = "${cfg.minecraftServer.domain}:${toString (cfg.minecraftServer.port - 1)}";
 
                 time.sleep_after = 900;
                 time.minimum_online_time = 120;

@@ -9,7 +9,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    libExtra.partition-layouts.desktop
+    libExtra.partitionLayouts.desktop
   ];
 
   boot.initrd.kernelModules = [ ];
