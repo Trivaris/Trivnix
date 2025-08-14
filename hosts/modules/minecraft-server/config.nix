@@ -12,7 +12,7 @@
     description = ''
       FQDN to access the Minecraft Server instance.
       Can also be the ip Address of the server.
-      Used in web configuration and TLS certificate issuance.
+      Used in web config and TLS certificate issuance.
     '';
     example = "cloud.example.com";
   };

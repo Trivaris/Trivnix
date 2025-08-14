@@ -11,7 +11,7 @@ let
   commonSecrets = libExtra.mkFlakePath "/secrets/hosts/common.yaml";
   hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${configname}.yaml";
 
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 
   perUserSecrets = builtins.concatMap (
     user:

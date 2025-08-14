@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.sddm.enable = mkEnableOption "Enable SDDM Greeter";
+  options.hostprefs.sddm.enable = mkEnableOption "Enable SDDM Greeter";
 
   config = mkIf cfg.sddm.enable {
     services.displayManager.sddm = {

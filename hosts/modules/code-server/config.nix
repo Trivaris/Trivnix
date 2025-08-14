@@ -38,7 +38,7 @@
     example = "code.example.com";
     description = ''
       FQDN used for external access to code-server.
-      Used in reverse proxy configuration and certificate provisioning.
+      Used in reverse proxy config and certificate provisioning.
     '';
   };
 }

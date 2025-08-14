@@ -1,5 +1,5 @@
 {
-  homeConfig = {
+  user = {
     librewolf = {
       betterfox = true;
       clearOnShutdown = true;
@@ -47,7 +47,7 @@
     ];
   };
 
-  nixosConfig = {
+  host = {
     stylix = {
       colorscheme = "rose-pine-moon";
 

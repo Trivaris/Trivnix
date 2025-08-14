@@ -1,9 +1,9 @@
 {
   config,
   lib,
-  userconfig,
-  hostconfig,
-  hosts,
+  hostInfo,
+  userPrefs,
+  allHostInfos,
   ...
 }:
 let
@@ -11,24 +11,18 @@ let
     lib.concatMap (
       configname:
       let
-        host = hosts.${configname};
+        host = allHostInfos.${configname};
       in
       [
         {
           name = host.name;
           value = {
             hostname = host.ip;
-            user = userconfig.name;
-          }
-          // (
-            if host.nixosConfig.openssh ? port then
-              { port = builtins.head host.nixosConfig.openssh.ports; }
-            else
-              { }
-          );
+            user = userPrefs.name;
+          };
         }
       ]
-    ) (lib.attrNames (lib.filterAttrs (_: host: host.nixosConfig.openssh.enable or false) hosts))
+    ) (lib.attrNames (lib.filterAttrs (_: host: host.ip != null) allHostInfos))
   );
 in
 {
@@ -41,7 +35,7 @@ in
       "*" = {
         identitiesOnly = true;
         identityFile =
-          if hostconfig.hardwareKey then
+          if hostInfo.hardwareKey then
             [
               config.sops.secrets.ssh-private-key-a.path
               config.sops.secrets.ssh-private-key-c.path

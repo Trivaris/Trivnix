@@ -2,15 +2,15 @@
   inputs,
   config,
   lib,
-  userconfig,
+  userPrefs,
   ...
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.homeConfig;
+  cfg = config.userPrefs;
 in
 {
-  options.homeConfig.email.enable = mkEnableOption "Enable Email Accounts";
+  options.userPrefs.email.enable = mkEnableOption "Enable Email Accounts";
 
   config = mkIf cfg.email.enable {
     accounts.email.accounts = builtins.listToAttrs (
@@ -25,7 +25,7 @@ in
             passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
             thunderbird = mkIf (builtins.elem "thunderbird" cfg.desktopApps) {
               enable = true;
-              profiles = [ userconfig.name ];
+              profiles = [ userPrefs.name ];
             };
           };
         }

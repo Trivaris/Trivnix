@@ -7,11 +7,11 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
   dockerGroup = config.users.groups.docker.name or "docker";
 in
 {
-  options.nixosConfig.appflowy.enable = mkEnableOption "Enable Appflowy";
+  options.hostprefs.appflowy.enable = mkEnableOption "Enable Appflowy";
 
   config = mkIf (cfg.appflowy.enable) {
     virtualisation.docker.enable = true;

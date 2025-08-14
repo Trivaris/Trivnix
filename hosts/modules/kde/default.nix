@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.kde.enable = mkEnableOption "Enable KDE Plasma";
+  options.hostprefs.kde.enable = mkEnableOption "Enable KDE Plasma";
 
   config = mkIf cfg.kde.enable {
     services.desktopManager.plasma6.enable = true;

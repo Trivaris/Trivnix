@@ -3,14 +3,14 @@
   pkgs,
   lib,
   libExtra,
-  userconfig,
-  hostconfig,
+  userPrefs,
+  hostInfo,
   ...
 }:
 {
-  home.username = lib.mkDefault userconfig.name;
-  home.homeDirectory = lib.mkDefault "/home/${userconfig.name}";
-  home.stateVersion = hostconfig.stateVersion;
+  home.username = lib.mkDefault userPrefs.name;
+  home.homeDirectory = lib.mkDefault "/home/${userPrefs.name}";
+  home.stateVersion = hostInfo.stateVersion;
 
   systemd.user.services.rmClobbering = {
     Unit = {
@@ -22,7 +22,7 @@
       ExecStart = pkgs.writeShellScript "rm-clobbering" ''
         #!/usr/bin/env bash
         rm -f ~/.gtkrc-2.0.backup
-        rm -f ~/.librewolf/${userconfig.name}/search.json.mozlz4.backup
+        rm -f ~/.librewolf/${userPrefs.name}/search.json.mozlz4.backup
         rm -f ~/.config/gtk-3.0/gtk.css.backup 2>/dev/null || true
       '';
     };
@@ -38,6 +38,6 @@
 
   nixpkgs = {
     overlays = builtins.attrValues (outputs.overlays);
-    config = libExtra.pkgs-config;
+    config = libExtra.pkgsConfig;
   };
 }

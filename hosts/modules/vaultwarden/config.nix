@@ -38,7 +38,7 @@
     example = "vault.example.com";
     description = ''
       FQDN used to access Vaultwarden externally.
-      Used for setting the DOMAIN environment variable and ACME certificate configuration.
+      Used for setting the DOMAIN environment variable and ACME certificate config.
     '';
   };
 }

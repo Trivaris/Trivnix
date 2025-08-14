@@ -3,7 +3,7 @@
   lib, 
   modulesPath, 
   libExtra, 
-  hostconfig, 
+  hostInfo, 
   ... 
 }:
 {
@@ -22,9 +22,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.useDHCP = lib.mkDefault true;
-  networking.hostName = hostconfig.name;
+  networking.hostName = hostInfo.name;
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault hostconfig.architecture;
-  system.stateVersion = hostconfig.stateVersion;
+  nixpkgs.hostPlatform = lib.mkDefault hostInfo.architecture;
+  system.stateVersion = hostInfo.stateVersion;
 }

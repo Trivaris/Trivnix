@@ -9,7 +9,7 @@ in
 {
   inherit imports;
 
-  options.homeConfig.extendedCli = mkOption {
+  options.userPrefs.extendedCli = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];
     example = [
@@ -17,7 +17,7 @@ in
       "eza"
     ];
     description = ''
-      Advanced Configurations of Cli Tools.
+      Advanced Configs of Cli Tools.
     '';
   };
 }

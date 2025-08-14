@@ -23,7 +23,7 @@ Example structure:
     };
   };
 
-  nixosConfig = {
+  hostprefs = {
     module.enable = true;      # Enable NixOS module(s) from /hosts/modules
   };
 }
@@ -31,9 +31,9 @@ Example structure:
 
 ---
 
-### 2. Define System Configuration
+### 2. Define System Config
 
-Create or edit `/hosts/configurations/<configname>.nix`:
+Create or edit `/hosts/configs/<configname>.nix`:
 
 ```nix
 { libExtra, hostconfig, ... }:
@@ -44,7 +44,7 @@ Create or edit `/hosts/configurations/<configname>.nix`:
     (libExtra.mkFlakePath /hosts/modules)
   ];
 
-  config.nixosConfig = hostconfig.nixosConfig;
+  config.hostprefs = hostconfig.hostprefs;
 }
 ```
 
@@ -52,7 +52,7 @@ Create or edit `/hosts/configurations/<configname>.nix`:
 
 ### 3. Register the Host
 
-In `/hosts/configurations/default.nix`, add your host to the exported set:
+In `/hosts/configs/default.nix`, add your host to the exported set:
 
 ```nix
 {
@@ -60,8 +60,8 @@ In `/hosts/configurations/default.nix`, add your host to the exported set:
 }
 ```
 
-### 4. Define your Home Configuration
-Create or edit `/home/configurations/<username>.nix`
+### 4. Define your Home Config
+Create or edit `/home/configs/<username>.nix`
 
 ```nix
 { libExtra, userconfigs, ... }:

@@ -3,12 +3,12 @@
   lib,
   config,
   inputs,
-  userconfig,
+  userPrefs,
   ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.homeConfig;
+  cfg = config.userPrefs;
   overrides = ''
 
     /** OVERRIDES ***/
@@ -23,7 +23,7 @@ in
     programs.librewolf = {
       enable = true;
 
-      profiles.${userconfig.name} = {
+      profiles.${userPrefs.name} = {
         isDefault = true;
 
         extensions = {
@@ -80,9 +80,9 @@ in
       };
     };
 
-    stylix.targets.librewolf.profileNames = [ userconfig.name ];
+    stylix.targets.librewolf.profileNames = [ userPrefs.name ];
 
-    home.file.".librewolf/${userconfig.name}/user.js".text =
+    home.file.".librewolf/${userPrefs.name}/user.js".text =
       if (cfg.librewolf.betterfox) then (inputs.betterfox + "/user.js") else "" + overrides;
   };
 }

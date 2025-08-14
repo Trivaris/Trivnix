@@ -6,11 +6,11 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
 
-  options.nixosConfig.tui.enable = mkEnableOption "Enable CLI Tools related to TUIs";
+  options.hostprefs.tui.enable = mkEnableOption "Enable CLI Tools related to TUIs";
 
   config = mkIf cfg.tui.enable {
     environment.systemPackages = builtins.attrValues {

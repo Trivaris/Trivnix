@@ -6,10 +6,10 @@
   ...
 }:
 let
-  cfg = config.nixosConfig;
+  cfg = config.hostPrefs;
 in
 {
-  options.nixosConfig.stylix = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.stylix = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config.stylix =
     let

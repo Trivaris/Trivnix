@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostprefs.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf (cfg.openssh.enable) {
     services.openssh = {

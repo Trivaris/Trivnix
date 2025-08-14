@@ -1,17 +1,4 @@
-{
-  inputs,
-  outputs,
-  config,
-  lib,
-  libExtra,
-  userconfig,
-  username,
-  hostconfig,
-  configname,
-  hosts,
-
-  ...
-}:
+{ config, userPrefs, allHostInfos, allHostUsers, lib, libExtra }:
 let
   inherit (lib) mapAttrsToList flatten;
 
@@ -19,13 +6,13 @@ let
 
   allAuthorizedKeys = flatten (
     mapAttrsToList (
-      hostname: hostcfg:
+      hostname: hostInfo:
       let
         hostKey = readKey "/resources/ssh-pub/id_ed25519_${hostname}_host.pub";
         userKeys = flatten (
           map (
             user:
-            if hostcfg.hardwareKey or true then
+            if hostInfo.hardwareKey or true then
               [
                 (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_a.pub")
                 (readKey "/resources/ssh-pub/id_ed25519_sk_rk_${hostname}_${user}_c.pub")
@@ -34,35 +21,21 @@ let
               [
                 (readKey "/resources/ssh-pub/id_ed25519_${hostname}_${user}.pub")
               ]
-          ) hostcfg.users or [ ]
+          ) allHostUsers.${hostInfo.configname} or [ ]
         );
       in
       [ hostKey ] ++ userKeys
-    ) hosts
+    ) allHostInfos
   );
 in
 {
 
-  home-manager.extraSpecialArgs = {
-    inherit
-      hostconfig
-      configname
-      hosts
-      inputs
-      outputs
-      libExtra
-      ;
-    userconfig = userconfig // {
-      name = username;
-    };
-  };
-
-  users.users.${username} = {
-    hashedPasswordFile = config.sops.secrets."user-passwords/${username}".path;
+  users.users.${userPrefs.name} = {
+    hashedPasswordFile = config.sops.secrets."user-passwords/${userPrefs.name}".path;
     isNormalUser = true;
     createHome = true;
-    home = "/home/${username}";
-    description = username;
+    home = "/home/${userPrefs.name}";
+    description = userPrefs.name;
     extraGroups = [
       "wheel"
       "networkmanager"

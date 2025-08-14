@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.vaultwarden = import ./config.nix {
+  options.hostprefs.vaultwarden = import ./config.nix {
     inherit (lib) mkEnableOption mkOption types;
   };
 

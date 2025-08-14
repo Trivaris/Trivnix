@@ -1,6 +1,6 @@
 ## Introduction
 
-Trivnix is a flake-based NixOS configuration used to manage my personal machines. It aims to provide reproducible and portable system setups using declarative Nix expressions. The repository currently targets a laptop and a Windows Subsystem for Linux (WSL) installation but can be extended for additional hosts.
+Trivnix is a flake-based NixOS config used to manage my personal machines. It aims to provide reproducible and portable system setups using declarative Nix expressions. The repository currently targets a laptop and a Windows Subsystem for Linux (WSL) installation but can be extended for additional hosts.
 
 ---
 
@@ -10,10 +10,10 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 - [Repository Structure](#repository-structure)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Extending the Configuration](#extending-the-configuration)
-- [Host Configuration Context](#host-configuration-context)
-- [Home Configuration Context](#home-configuration-context)
-- [Configuration](#configuration)
+- [Extending the Config](#extending-the-config)
+- [Host Config Context](#host-config-context)
+- [Home Config Context](#home-config-context)
+- [Config](#config)
 - [Troubleshooting](#troubleshooting)
 - [Contributors](#contributors)
 - [License](#license)
@@ -22,8 +22,8 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 
 ## Features
 - **Flake-based setup** with inputs for `nixpkgs`, `home-manager`, `disko`, and `sops-nix`.
-- **Host definitions** (e.g. desktop, laptop, WSL) with support for arbitrary instances via `nixosConfiguration`.
-- **Home‑manager integration** for per-user customization, imported via `homeConfiguration`.
+- **Host definitions** (e.g. desktop, laptop, WSL) with support for arbitrary instances via `nixosConfig`.
+- **Home‑manager integration** for per-user customization, imported via `homeConfig`.
 - **Hardware modules** including automated disk layouts using `disko`.
 - **Secrets management** with `sops-nix` to deploy encrypted credentials.
 - **Custom packages** such as `r-matrix` and `rbonsai` provided via overlays.
@@ -53,14 +53,14 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 │   ├── hosts/           # Host definitions (desktop, laptop, WSL, etc.)
 │   └── libExtra/        # Helper functions (e.g. mkFlakePath)
 │
-├── home/                # Home Manager configurations
+├── home/                # Home Manager configs
 │   ├── common/          # Shared user settings (e.g. secrets, programs)
-│   ├── configurations/  # Per-host user configurations
+│   ├── configs/  # Per-host user configs
 │   └── modules/         # Reusable Home Manager modules (e.g. nvim, fish)
 │
-├── hosts/               # NixOS system configurations
+├── hosts/               # NixOS system configs
 │   ├── common/          # Shared host settings (e.g. users, secrets)
-│   ├── configurations/  # Per-host system + hardware configuration
+│   ├── configs/  # Per-host system + hardware config
 │   └── modules/         # Shared NixOS modules (e.g. openssh, bluetooth)
 │
 ├── overlays/            # Package overlays
@@ -121,7 +121,7 @@ Trivnix is a flake-based NixOS configuration used to manage my personal machines
 
 ---
 
-## Extending the Configuration
+## Extending the Config
 
 ### Adding New Hosts and Users
 
@@ -129,25 +129,25 @@ See [`./NEW_HOST.md`](./NEW_HOST.md) for a step-by-step guide.
 
 ---
 
-### Host Configuration Context
+### Host Config Context
 
-The following variables are available in host-level NixOS configurations:
+The following variables are available in host-level NixOS configs:
 
 | Name          | Description                                                             |
 | ------------- | ----------------------------------------------------------------------- |
 | `configname`  | Abstract hostname (e.g., `desktop`, `laptop`, `wsl`, `server`)          |
-| `hostconfig`  | Configuration for the current host. See `/flake/hosts/<configname>.nix` |
-| `userconfigs` | All user configurations for the current host, including enabled modules |
-| `hosts`       | All host configurations in the system                                   |
+| `hostconfig`  | Config for the current host. See `/flake/hosts/<configname>.nix` |
+| `userconfigs` | All user configs for the current host, including enabled modules |
+| `hosts`       | All host configs in the system                                   |
 | `libExtra`    | Utility functions, e.g., `mkFlakePath`, from `/flake/libExtra`          |
 
-### Home Configuration Context
+### Home Config Context
 
 In addition to the above, the following is available in Home Manager modules:
 
 | Name         | Description                                                  |
 | ------------ | ------------------------------------------------------------ |
-| `userconfig` | Configuration of the current user, including enabled modules |
+| `userconfig` | Config of the current user, including enabled modules |
 
 ---
 
@@ -168,9 +168,9 @@ This will include `./hosts/modules/openssh.nix` and `bluetooth.nix` automaticall
 
 ---
 
-## Configuration
+## Config
 - Host and Home options live under `flake/hosts/<host>` and inherit common modules from `hosts/common`.
-- Modules reside in `home/modules/` and `hosts/modules/` and can be added or removed from each user configuration.
+- Modules reside in `home/modules/` and `hosts/modules/` and can be added or removed from each user config.
 - Secrets are stored in `secrets/` and decrypted by `sops-nix` at build time.
 - NixOS and Home Manager Optional features can be toggled and configured by modifying the set in `flake/hosts/<host>.nix`
 

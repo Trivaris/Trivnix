@@ -5,10 +5,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.bluetooth.enable = lib.mkEnableOption "Enable Bluetooth";
+  options.hostprefs.bluetooth.enable = lib.mkEnableOption "Enable Bluetooth";
 
   config = mkIf (cfg.bluetooth.enable) {
     hardware.bluetooth.enable = true;

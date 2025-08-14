@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.homeConfig;
+  cfg = config.userPrefs;
 in
 {
-  options.homeConfig.tmux.enable = mkEnableOption "Extended Tmux Configuration";
+  options.userPrefs.tmux.enable = mkEnableOption "Extended Tmux Config";
 
   config = mkIf cfg.tmux.enable {
     programs.tmux = {

@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.nextcloud = import ./config.nix {
+  options.hostprefs.nextcloud = import ./config.nix {
     inherit (lib) mkEnableOption mkOption types;
   };
 

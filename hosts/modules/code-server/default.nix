@@ -5,10 +5,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.codeServer = import ./config.nix {
+  options.hostprefs.codeServer = import ./config.nix {
     inherit (lib) mkEnableOption types mkOption;
   };
 

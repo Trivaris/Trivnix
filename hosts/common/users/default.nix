@@ -1,49 +1,28 @@
 {
-  inputs,
-  outputs,
   config,
   lib,
   libExtra,
   pkgs,
-  userconfigs,
-  configname,
-  hostconfig,
-  hosts,
+  allUserPrefs,
   ...
 }:
 let
   mkUserConfig = import ./user.nix;
 
-  rootConfiguration = import ./root.nix {
+  rootConfig = import ./root.nix {
     inherit
       config
       lib
       libExtra
-      hostconfig
-      hosts
       ;
   };
 
-  userConfigurations = map (
-    username:
+  userConfigs = map (username:
     let
-      userconfig = userconfigs.${username};
+      userPrefs = allUserPrefs.${username};
     in
-    mkUserConfig {
-      inherit
-        inputs
-        outputs
-        config
-        lib
-        libExtra
-        userconfig
-        username
-        hostconfig
-        configname
-        hosts
-        ;
-    }
-  ) hostconfig.users;
+    mkUserConfig { inherit userPrefs lib libExtra; }
+  ) allUserPrefs.users;
 in
 lib.mkMerge (
   [
@@ -52,6 +31,6 @@ lib.mkMerge (
       users.defaultUserShell = pkgs.fish;
     }
   ]
-  ++ userConfigurations
-  ++ [ rootConfiguration ]
+  ++ userConfigs
+  ++ [ rootConfig ]
 )

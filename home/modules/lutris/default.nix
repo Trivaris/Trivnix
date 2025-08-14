@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.homeConfig;
+  cfg = config.userPrefs;
 in
 {
-  options.homeConfig.lutris.enable = mkEnableOption "Enable Lutris Gaming";
+  options.userPrefs.lutris.enable = mkEnableOption "Enable Lutris Gaming";
 
   config = mkIf cfg.lutris.enable {
     home.packages = [

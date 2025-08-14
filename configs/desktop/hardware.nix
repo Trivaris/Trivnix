@@ -1,15 +1,13 @@
 {
   config,
   lib,
-  libExtra,
   modulesPath,
-  hostconfig,
+  hostInfo,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    libExtra.partitionLayouts.desktop
   ];
 
   boot.initrd.kernelModules = [ ];
@@ -22,12 +20,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.useDHCP = lib.mkDefault true;
-  networking.hostName = hostconfig.name;
+  networking.hostName = hostInfo.name;
   networking.networkmanager.enable = true;
   networking.interfaces.eno1.wakeOnLan.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault hostconfig.architecture;
-  system.stateVersion = hostconfig.stateVersion;
+  nixpkgs.hostPlatform = lib.mkDefault hostInfo.architecture;
+  system.stateVersion = hostInfo.stateVersion;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;

@@ -1,7 +1,7 @@
 {
-  userconfig,
   config,
   lib,
+  userPrefs,
   ...
 }:
 let
@@ -14,7 +14,7 @@ in
     example = "you@example.com";
     description = ''
       Email address to associate with Git commits.
-      This will be used in the global Git configuration under `user.email`.
+      This will be used in the global Git config under `user.email`.
       It should match the email used in your Git hosting provider (e.g., GitHub, GitLab)
       to ensure commits are properly attributed.
     '';
@@ -23,7 +23,7 @@ in
   config = {
     programs.git = {
       enable = true;
-      userName = userconfig.name;
+      userName = userPrefs.name;
       userEmail = cfg.git.email;
       extraConfig = {
         credential.helper = "store";

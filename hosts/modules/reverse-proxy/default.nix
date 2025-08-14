@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 
   activeServices = builtins.filter (service: service.enable or false) [
     cfg.codeServer
@@ -16,7 +16,7 @@ let
   );
 in
 {
-  options.nixosConfig.reverseProxy = import ./config.nix {
+  options.hostprefs.reverseProxy = import ./config.nix {
     inherit (lib) mkEnableOption mkOption types;
   };
 

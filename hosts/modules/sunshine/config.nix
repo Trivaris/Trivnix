@@ -30,7 +30,7 @@
     type = types.str;
     description = ''
       FQDN to access the Sunshine instance.
-      Used in web configuration and TLS certificate issuance.
+      Used in web config and TLS certificate issuance.
     '';
     example = "sunshine.example.com";
   };

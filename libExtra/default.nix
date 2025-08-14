@@ -1,8 +1,11 @@
-{ inputs, outputs }:
+{ inputs }:
 let
   libExtra = {
-    partitionLayouts = (libExtra.resolveDir { dirPath = "/partition-layouts"; mode = "imports"; }) // { none = { }; };
-    pkgs-config = {
+    configs = import (libExtra.mkFlakePath /configs) { inherit (libExtra) resolveDir; };
+    mkFlakePath = path: (inputs.self + (toString path));
+    resolveDir = import ./resolveDir.nix {inherit inputs; inherit (libExtra) mkFlakePath; };
+
+    pkgsConfig = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
       android_sdk.accept_license = true;
@@ -10,12 +13,6 @@ let
         "libsoup-2.74.3"
       ];
     };
-
-    mkFlakePath = path: (inputs.self + (toString path));
-    resolveDir = import ./resolveDir.nix {inherit inputs; inherit (libExtra) mkFlakePath; };
-
-    mkNixOSConfiguration = import ./nixosConfiguration.nix { inherit inputs outputs; };
-    mkHomeConfiguration = import ./homeConfiguration.nix { inherit inputs outputs; };
   };
 in
 libExtra

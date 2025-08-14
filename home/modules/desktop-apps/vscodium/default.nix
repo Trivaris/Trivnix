@@ -3,8 +3,8 @@
   config,
   lib,
   libExtra,
-  hostconfig,
-  userconfig,
+  hostInfo,
+  userPrefs,
   ...
 }:
 let
@@ -28,8 +28,8 @@ let
       nixpkgs.expr = "import (builtins.getFlake \"${selfPath}\").inputs.nixpkgs { } ";
 
       options = {
-        nixos.expr = "(builtins.getFlake \"${selfPath}\").nixosConfigurations.${hostconfig.name}.options";
-        home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigurations.\"${userconfig.name}@${hostconfig.name}\".options";
+        nixos.expr = "(builtins.getFlake \"${selfPath}\").hostprefsurations.${hostInfo.name}.options";
+        home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigs.\"${userPrefs.name}@${hostInfo.name}\".options";
       };
     };
   };

@@ -9,7 +9,7 @@ in
 {
   inherit imports;
 
-  options.homeConfig.desktopApps = mkOption {
+  options.userPrefs.desktopApps = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];
     example = [

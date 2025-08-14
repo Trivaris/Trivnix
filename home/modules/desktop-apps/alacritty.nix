@@ -1,7 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   inherit (lib) mkIf;
-  cfg = config.homeConfig;
+  cfg = config.userPrefs;
 in
 {
   config = mkIf (builtins.elem "alacritty" cfg.desktopApps) {

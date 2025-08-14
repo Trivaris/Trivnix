@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.gdm.enable = mkEnableOption "Enable Gnome Display Manager";
+  options.hostprefs.gdm.enable = mkEnableOption "Enable Gnome Display Manager";
 
   config = mkIf cfg.gdm.enable {
     services.displayManager.gdm = {

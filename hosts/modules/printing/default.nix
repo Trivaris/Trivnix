@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.printing.enable = mkEnableOption "Printing";
+  options.hostprefs.printing.enable = mkEnableOption "Printing";
 
   config = mkIf (cfg.printing.enable) {
     services.printing = {

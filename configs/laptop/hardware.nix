@@ -1,15 +1,13 @@
 {
   config,
   lib,
-  libExtra,
   modulesPath,
-  hostconfig,
+  hostInfo,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    libExtra.partitionLayouts.laptop
   ];
 
   boot.initrd.kernelModules = [ ];
@@ -22,9 +20,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.useDHCP = lib.mkDefault true;
-  networking.hostName = hostconfig.name;
+  networking.hostName = hostInfo.name;
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault hostconfig.architecture;
-  system.stateVersion = hostconfig.stateVersion;
+  nixpkgs.hostPlatform = lib.mkDefault hostInfo.architecture;
+  system.stateVersion = hostInfo.stateVersion;
 }

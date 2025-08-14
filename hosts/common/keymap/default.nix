@@ -4,11 +4,11 @@
   ...
 }:
 let 
-  cfg = config.nixosConfig;
+  cfg = config.hostPrefs;
 in 
 {
 
-  options.nixosConfig.language = import ./config.nix {
+  options.hostPrefs.language = import ./config.nix {
     inherit (lib) types mkOption;
   };
 

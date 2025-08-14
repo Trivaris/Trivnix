@@ -12,7 +12,7 @@
 
   nixpkgs = {
     overlays = builtins.attrValues (outputs.overlays);
-    config = libExtra.pkgs-config;
+    config = libExtra.pkgsConfig;
   };
 
   nix = {

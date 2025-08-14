@@ -2,15 +2,15 @@
   config,
   pkgs,
   lib,
-  userconfig,
+  userPrefs,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.homeConfig;
+  cfg = config.userPrefs;
 in
 {
-  options.homeConfig.fish.enable = mkEnableOption "extended fish configuration";
+  options.userPrefs.fish.enable = mkEnableOption "extended fish config";
 
   config = mkIf cfg.fish.enable {
     programs.fish = {
@@ -53,7 +53,7 @@ in
 
         rm-clobbering = ''
           rm -f ~/.gtkrc-2.0.backup
-          rm -f ~/.librewolf/${userconfig.name}/search.json.mozlz4.backup
+          rm -f ~/.librewolf/${userPrefs.name}/search.json.mozlz4.backup
           sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
         '';
       };

@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.nixosConfig;
+  cfg = config.hostprefs;
 in
 {
-  options.nixosConfig.steam.enable = mkEnableOption "Enable Steam";
+  options.hostprefs.steam.enable = mkEnableOption "Enable Steam";
 
   config = mkIf cfg.steam.enable {
     programs.steam = {
