@@ -5,6 +5,7 @@
   dropExtensions ? true,
   exclude ? [ ],
   depth ? 1,
+  includeNonNix? false
 }:
 let
   inherit (inputs.nixpkgs.lib) hasSuffix removeSuffix concatLists;
@@ -31,6 +32,7 @@ let
             && !(builtins.hasAttr (removeSuffix ".nix" name) dirSet))
           || (isDir name
               && builtins.pathExists (mkFlakePath "${dir}/${name}/default.nix"))
+          || includeNonNix
         )
         && !(builtins.elem (removeSuffix ".nix" name) exclude)
       ) names;

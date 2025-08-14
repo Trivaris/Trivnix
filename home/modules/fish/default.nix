@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  userPrefs,
+  userInfo,
   ...
 }:
 let
@@ -53,7 +53,7 @@ in
 
         rm-clobbering = ''
           rm -f ~/.gtkrc-2.0.backup
-          rm -f ~/.librewolf/${userPrefs.name}/search.json.mozlz4.backup
+          rm -f ~/.librewolf/${userInfo.name}/search.json.mozlz4.backup
           sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
         '';
       };

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 
   activeServices = builtins.filter (service: service.enable or false) [
     cfg.codeServer
@@ -16,7 +16,7 @@ let
   );
 in
 {
-  options.hostprefs.reverseProxy = import ./config.nix {
+  options.hostPrefs.reverseProxy = import ./config.nix {
     inherit (lib) mkEnableOption mkOption types;
   };
 

@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.printing.enable = mkEnableOption "Printing";
+  options.hostPrefs.printing.enable = mkEnableOption "Printing";
 
   config = mkIf (cfg.printing.enable) {
     services.printing = {

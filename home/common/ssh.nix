@@ -2,7 +2,7 @@
   config,
   lib,
   hostInfo,
-  userPrefs,
+  userInfo,
   allHostInfos,
   ...
 }:
@@ -18,7 +18,7 @@ let
           name = host.name;
           value = {
             hostname = host.ip;
-            user = userPrefs.name;
+            user = userInfo.name;
           };
         }
       ]

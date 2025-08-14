@@ -6,11 +6,11 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
 
-  options.hostprefs.tui.enable = mkEnableOption "Enable CLI Tools related to TUIs";
+  options.hostPrefs.tui.enable = mkEnableOption "Enable CLI Tools related to TUIs";
 
   config = mkIf cfg.tui.enable {
     environment.systemPackages = builtins.attrValues {

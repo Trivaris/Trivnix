@@ -7,10 +7,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.minecraftServer = import ./config.nix {
+  options.hostPrefs.minecraftServer = import ./config.nix {
     inherit (lib) mkEnableOption mkOption types;
     inherit pkgs;
   };

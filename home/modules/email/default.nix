@@ -2,7 +2,7 @@
   inputs,
   config,
   lib,
-  userPrefs,
+  userInfo,
   ...
 }:
 let
@@ -25,7 +25,7 @@ in
             passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
             thunderbird = mkIf (builtins.elem "thunderbird" cfg.desktopApps) {
               enable = true;
-              profiles = [ userPrefs.name ];
+              profiles = [ userInfo.name ];
             };
           };
         }

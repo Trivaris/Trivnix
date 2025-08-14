@@ -1,6 +1,7 @@
 common:
 {
   trivaris = {
+    info = { };
     prefs = {
       fish.enable = true;
       git.email = "github@tripple.lurdane.de";

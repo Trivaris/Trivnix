@@ -2,6 +2,7 @@
   inputs,
   outputs,
   libExtra,
+  homeImports
 }:
 {
   configname,
@@ -16,8 +17,12 @@ let
   hostInfo = hostConfig.info // { inherit configname; };
   hostPrefs = hostConfig.prefs;
 
-  allOtherHostConfigs = configs // { ${configname} = null; };
-  allOtherUserConfigs = hostConfig.users // { ${configname} = null; };
+  userConfig = hostConfig.users.${username};
+  userInfo = userConfig.info // { name = username; };
+  userPrefs = userConfig.prefs;
+
+  allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
+  allOtherUserConfigs = builtins.removeAttrs hostConfig.users [ username ];
   
   allHostInfos = (mapAttrs' (name: value:
     nameValuePair name (value.info)
@@ -27,8 +32,16 @@ let
     nameValuePair name (value.prefs)
   ) allOtherHostConfigs);
 
-  allHostUserPrefs = (mapAttrs' (name: value:
-    nameValuePair name (value.users)
+  allHostUserPrefs = (mapAttrs' (configname: config:
+    nameValuePair configname (mapAttrs' (usrname: userconfig:
+      nameValuePair usrname (userconfig.prefs)
+    )(config.users))
+  ) allOtherHostConfigs);
+
+  allHostUserInfos = (mapAttrs' (configname: config:
+    nameValuePair configname (mapAttrs' (usrname: userconfig:
+      nameValuePair usrname (userconfig.info)
+    )(config.users))
   ) allOtherHostConfigs);
 
 
@@ -36,7 +49,9 @@ let
     nameValuePair name (value.prefs)
   ) allOtherUserConfigs;
 
-  userPrefs = hostConfig.users.${username};
+  allUserInfos = mapAttrs' (name: value:
+    nameValuePair name (value.prefs)
+  ) allOtherUserConfigs;
 
   generalArgs = {
     inherit
@@ -46,19 +61,22 @@ let
       allHostInfos
       allHostPrefs
       allHostUserPrefs
+      allHostUserInfos
       ;
   };
 
   hostArgs = {
     inherit 
-      hostPrefs
       hostInfo
       allUserPrefs
+      allUserInfos
       ;
   };
 
   homeArgs = {
-    inherit userPrefs;
+    inherit
+      userInfo
+      ;
   };
 in
 homeManagerConfiguration {
@@ -77,16 +95,14 @@ homeManagerConfiguration {
     inputs.spicetify-nix.homeManagerModules.spicetify
     inputs.nvf.homeManagerModules.default
 
-    (
-      { libExtra, ... }:
-      {
-        imports = [
-          (libExtra.mkFlakePath /home/common)
-          (libExtra.mkFlakePath /home/modules)
-        ];
-
-        inherit userPrefs;
-      }
-    )
+    {
+      imports = homeImports;
+      config = {
+        inherit
+          hostPrefs
+          userPrefs
+          ;
+      };
+    }
   ];
 }

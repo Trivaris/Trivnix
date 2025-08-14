@@ -3,15 +3,15 @@
   config,
   lib,
   libExtra,
-  configname,
-  hostconfig,
+  hostInfo,
+  allUserInfos,
   ...
 }:
 let
   commonSecrets = libExtra.mkFlakePath "/secrets/hosts/common.yaml";
-  hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${configname}.yaml";
+  hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${hostInfo.configname}.yaml";
 
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 
   perUserSecrets = builtins.concatMap (
     user:
@@ -42,7 +42,7 @@ let
           ];
     in
     base ++ extra
-  ) (hostconfig.users ++ [ "root" ]);
+  ) ((builtins.attrNames allUserInfos) ++ [ "root" ]);
 in
 {
   environment.systemPackages = builtins.attrValues {

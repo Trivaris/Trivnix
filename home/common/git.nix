@@ -1,15 +1,15 @@
 {
   config,
   lib,
-  userPrefs,
+  userInfo,
   ...
 }:
 let
   inherit (lib) mkOption;
-  cfg = config.homeConfig;
+  prefs = config.userPrefs;
 in
 {
-  options.homeConfig.git.email = mkOption {
+  options.userPrefs.git.email = mkOption {
     type = lib.types.str;
     example = "you@example.com";
     description = ''
@@ -23,8 +23,8 @@ in
   config = {
     programs.git = {
       enable = true;
-      userName = userPrefs.name;
-      userEmail = cfg.git.email;
+      userName = userInfo.name;
+      userEmail = prefs.git.email;
       extraConfig = {
         credential.helper = "store";
         core.autocrlf = "input";

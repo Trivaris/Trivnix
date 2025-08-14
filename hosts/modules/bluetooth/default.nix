@@ -5,10 +5,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.bluetooth.enable = lib.mkEnableOption "Enable Bluetooth";
+  options.hostPrefs.bluetooth.enable = lib.mkEnableOption "Enable Bluetooth";
 
   config = mkIf (cfg.bluetooth.enable) {
     hardware.bluetooth.enable = true;

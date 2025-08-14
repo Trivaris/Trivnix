@@ -7,11 +7,11 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
   dockerGroup = config.users.groups.docker.name or "docker";
 in
 {
-  options.hostprefs.appflowy.enable = mkEnableOption "Enable Appflowy";
+  options.hostPrefs.appflowy.enable = mkEnableOption "Enable Appflowy";
 
   config = mkIf (cfg.appflowy.enable) {
     virtualisation.docker.enable = true;

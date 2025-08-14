@@ -4,12 +4,12 @@
   lib,
   libExtra,
   hostInfo,
-  userPrefs,
+  userInfo,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.homeConfig;
+  prefs = config.userPrefs;
   selfPath = libExtra.mkFlakePath "/";
 
   commonSettings = {
@@ -28,18 +28,18 @@ let
       nixpkgs.expr = "import (builtins.getFlake \"${selfPath}\").inputs.nixpkgs { } ";
 
       options = {
-        nixos.expr = "(builtins.getFlake \"${selfPath}\").hostprefsurations.${hostInfo.name}.options";
-        home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigs.\"${userPrefs.name}@${hostInfo.name}\".options";
+        nixos.expr = "(builtins.getFlake \"${selfPath}\").nixosConfigurations.${hostInfo.name}.options";
+        home-manager.expr = "(builtins.getFlake \"${selfPath}\").homeConfigurations.\"${userInfo.name}@${hostInfo.name}\".options";
       };
     };
   };
 
-  vscodiumSettings = commonSettings // (if (cfg.vscodium.enableLsp) then lspSettings else { });
+  vscodiumSettings = commonSettings // (if (prefs.vscodium.enableLsp) then lspSettings else { });
 in
 {
-  options.homeConfig.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
+  options.userPrefs.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
 
-  config = mkIf (builtins.elem "vscodium" cfg.desktopApps) (mkMerge [
+  config = mkIf (builtins.elem "vscodium" prefs.desktopApps) (mkMerge [
 
     {
       home.packages = builtins.attrValues (
@@ -48,7 +48,7 @@ in
         }
 
         // (
-          if cfg.vscodium.enableLsp then
+          if prefs.vscodium.enableLsp then
             {
               inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;
 
@@ -63,7 +63,7 @@ in
         )
 
         // (
-          if cfg.vscodium.fixServer then
+          if prefs.vscodium.fixServer then
             {
               inherit (pkgs) nodejs_20;
             }
@@ -78,7 +78,7 @@ in
       home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON vscodiumSettings;
     }
 
-    (mkIf cfg.vscodium.fixServer {
+    (mkIf prefs.vscodium.fixServer {
       home.activation.fixVSCodiumServer = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         for d in ${config.home.homeDirectory}/.vscodium-server/bin/*; do
           [ -d "$d" ] || continue

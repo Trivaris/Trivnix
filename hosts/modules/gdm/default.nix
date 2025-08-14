@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.gdm.enable = mkEnableOption "Enable Gnome Display Manager";
+  options.hostPrefs.gdm.enable = mkEnableOption "Enable Gnome Display Manager";
 
   config = mkIf cfg.gdm.enable {
     services.displayManager.gdm = {

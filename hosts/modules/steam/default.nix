@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.steam.enable = mkEnableOption "Enable Steam";
+  options.hostPrefs.steam.enable = mkEnableOption "Enable Steam";
 
   config = mkIf cfg.steam.enable {
     programs.steam = {

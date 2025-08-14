@@ -2,12 +2,12 @@
   inputs,
   config,
   lib,
-  userPrefs,
+  userInfo,
   ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.homeConfig;
+  prefs = config.userPrefs;
 
   calendarSettings = lib.flatten (
     lib.mapAttrsToList (
@@ -45,10 +45,10 @@ let
   );
 in
 {
-  config = mkIf (builtins.elem "thunderbird" cfg.desktopApps) {
+  config = mkIf (builtins.elem "thunderbird" prefs.desktopApps) {
     programs.thunderbird = {
       enable = true;
-      profiles.${userPrefs.name} = {
+      profiles.${userInfo.name} = {
         isDefault = true;
         settings = builtins.listToAttrs calendarSettings;
       };

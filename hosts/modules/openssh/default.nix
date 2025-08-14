@@ -1,15 +1,15 @@
 {
   config,
   lib,
-  hostconfig,
+  allUserInfos,
   ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf (cfg.openssh.enable) {
     services.openssh = {
@@ -23,7 +23,7 @@ in
         GatewayPorts = "clientspecified";
       };
 
-      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") hostconfig.users;
+      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") (builtins.attrNames allUserInfos);
 
       openFirewall = true;
 

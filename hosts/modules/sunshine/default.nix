@@ -5,10 +5,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.sunshine = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.sunshine = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf cfg.sunshine.enable {
     services.sunshine = {

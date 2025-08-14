@@ -4,7 +4,7 @@
   lib,
   pkgs,
   libExtra,
-  hostconfig,
+  allUserInfos,
   ...
 }:
 {
@@ -25,7 +25,7 @@
 
     settings = {
       experimental-features = "nix-command flakes";
-      trusted-users = hostconfig.users ++ [ "root" ];
+      trusted-users = (builtins.attrNames allUserInfos) ++ [ "root" ];
       auto-optimise-store = true;
       warn-dirty = false;
     };

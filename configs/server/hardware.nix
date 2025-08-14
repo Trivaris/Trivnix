@@ -2,14 +2,12 @@
   config, 
   lib, 
   modulesPath, 
-  libExtra, 
   hostInfo, 
   ... 
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    libExtra.partitionLayouts.server
   ];
 
   boot.initrd.kernelModules = [ ];

@@ -23,7 +23,7 @@ Example structure:
     };
   };
 
-  hostprefs = {
+  hostPrefs = {
     module.enable = true;      # Enable NixOS module(s) from /hosts/modules
   };
 }
@@ -44,7 +44,7 @@ Create or edit `/hosts/configs/<configname>.nix`:
     (libExtra.mkFlakePath /hosts/modules)
   ];
 
-  config.hostprefs = hostconfig.hostprefs;
+  config.hostPrefs = hostconfig.hostPrefs;
 }
 ```
 

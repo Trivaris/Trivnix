@@ -3,12 +3,12 @@
   lib,
   config,
   inputs,
-  userPrefs,
+  userInfo,
   ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
   overrides = ''
 
     /** OVERRIDES ***/
@@ -17,13 +17,13 @@ let
   '';
 in
 {
-  options.homeConfig.librewolf = import ./config.nix lib;
+  options.userPrefs.librewolf = import ./config.nix lib;
 
-  config = mkIf (builtins.elem "librewolf" cfg.desktopApps) {
+  config = mkIf (builtins.elem "librewolf" prefs.desktopApps) {
     programs.librewolf = {
       enable = true;
 
-      profiles.${userPrefs.name} = {
+      profiles.${userInfo.name} = {
         isDefault = true;
 
         extensions = {
@@ -63,8 +63,8 @@ in
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        SanitizeOnShutdown = mkIf (cfg.librewolf.clearOnShutdown) true;
-        ClearOnShutdown = mkIf (cfg.librewolf.clearOnShutdown) {
+        SanitizeOnShutdown = mkIf (prefs.librewolf.clearOnShutdown) true;
+        ClearOnShutdown = mkIf (prefs.librewolf.clearOnShutdown) {
           cache = true;
           cookies = true;
           downloads = true;
@@ -76,13 +76,13 @@ in
           offlineApps = true;
         };
 
-        Cookies.Allow = cfg.librewolf.allowedCookies;
+        Cookies.Allow = prefs.librewolf.allowedCookies;
       };
     };
 
-    stylix.targets.librewolf.profileNames = [ userPrefs.name ];
+    stylix.targets.librewolf.profileNames = [ userInfo.name ];
 
-    home.file.".librewolf/${userPrefs.name}/user.js".text =
-      if (cfg.librewolf.betterfox) then (inputs.betterfox + "/user.js") else "" + overrides;
+    home.file.".librewolf/${userInfo.name}/user.js".text =
+      if (prefs.librewolf.betterfox) then (inputs.betterfox + "/user.js") else "" + overrides;
   };
 }

@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostprefs;
+  cfg = config.hostPrefs;
 in
 {
-  options.hostprefs.kde.enable = mkEnableOption "Enable KDE Plasma";
+  options.hostPrefs.kde.enable = mkEnableOption "Enable KDE Plasma";
 
   config = mkIf cfg.kde.enable {
     services.desktopManager.plasma6.enable = true;

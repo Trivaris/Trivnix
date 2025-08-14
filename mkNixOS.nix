@@ -2,6 +2,8 @@
   inputs,
   outputs,
   libExtra,
+  hostImports,
+  homeImports
 }:
 {
   configname,
@@ -14,22 +16,34 @@ let
   hostInfo = hostConfig.info // { inherit configname; };
   hostPrefs = hostConfig.prefs;
 
-  allOtherHosts = configs // { ${configname} = null; };
-  
+  allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
+
   allHostInfos = (mapAttrs' (name: value:
     nameValuePair name (value.info)
-  ) allOtherHosts);
+  ) allOtherHostConfigs);
 
   allHostPrefs = (mapAttrs' (name: value:
     nameValuePair name (value.prefs)
-  ) allOtherHosts);
+  ) allOtherHostConfigs);
 
-  allHostUserPrefs = (mapAttrs' (name: value:
-    nameValuePair name (value.users)
-  ) allOtherHosts);
+  allHostUserPrefs = (mapAttrs' (configname: config:
+    nameValuePair configname (mapAttrs' (usrname: userconfig:
+      nameValuePair usrname (userconfig.prefs)
+    )(config.users))
+  ) allOtherHostConfigs);
+
+  allHostUserInfos = (mapAttrs' (configname: config:
+    nameValuePair configname ( mapAttrs'(usrname: userconfig:
+      nameValuePair usrname (userconfig.info)
+    )(config.users))
+  ) allOtherHostConfigs);
 
   allUserPrefs = mapAttrs' (name: value:
     nameValuePair name (value.prefs)
+  ) hostConfig.users;
+
+  allUserInfos = mapAttrs' (name: value:
+    nameValuePair name (value.info)
   ) hostConfig.users;
 
   generalArgs = {
@@ -40,14 +54,15 @@ let
       allHostInfos
       allHostPrefs
       allHostUserPrefs
+      allHostUserInfos
       ;
   };
 
   hostArgs = {
     inherit 
-      hostPrefs
       hostInfo
       allUserPrefs
+      allUserInfos
       ;
   };
 in
@@ -70,6 +85,11 @@ nixosSystem {
     hostConfig.hardware
 
     {
+      imports = hostImports;
+      config = {
+        inherit hostPrefs;
+      };
+
       # Expose flake args to within the home-manager config
       config.home-manager = {
         sharedModules = [
@@ -77,25 +97,24 @@ nixosSystem {
           inputs.spicetify-nix.homeManagerModules.spicetify
           inputs.nvf.homeManagerModules.default
         ];
+
+        extraSpecialArgs = generalArgs // hostArgs;
         
         users = mapAttrs' (name: userPrefs:
+          let
+            userInfo = hostConfig.users.${name}.info // { inherit name; };
+          in
           nameValuePair
           name
-          (
-            { libExtra, ... }:
-            {
-              imports = [
-                (libExtra.mkFlakePath /home/common)
-                (libExtra.mkFlakePath /home/modules)
-              ];
-              
-              home-manager.extraSpecialArgs = {
-                userPrefs = userPrefs // {
-                  inherit name;
-                };
-              };
-            }
-          )
+          {
+            imports = homeImports ++ [
+              { _module.args.userInfo = userInfo; }
+            ];
+
+            config = {
+              inherit userPrefs;
+            };
+          }
         ) allUserPrefs;
       };
     }
