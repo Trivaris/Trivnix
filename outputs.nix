@@ -3,7 +3,7 @@ let
   outputs = self.outputs;
   libExtra = import ./libExtra { inherit inputs; };
   
-  inherit (libExtra) configs;
+  configs = builtins.removeAttrs libExtra.configs [ "homeServer" ];
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair concatMapAttrs;
 
   mkImports = base:

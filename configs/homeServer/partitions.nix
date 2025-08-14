@@ -1,11 +1,12 @@
 {
   disko.devices.disk.nixos = {
     type = "disk";
-    device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_102062030";
+    device = "/dev/disk/by-id/wwn-0x5001b44e1c3e8464";
     content.type = "gpt";
 
     content.partitions = {
       boot = {
+        name = "ESP";
         size = "512M";
         type = "EF00";
         content = {
@@ -21,20 +22,22 @@
       };
 
       swap = {
-        size = "4G";
+        name = "encryptedSwap";
+        size = "16G";
         content = {
           type = "swap";
+          randomEncryption = true;
           priority = 100;
         };
       };
 
       root = {
+        name = "root";
         size = "100%";
         content = {
           type = "filesystem";
           format = "ext4";
           mountpoint = "/";
-          mountOptions = [ "noatime" "lazytime" ];
         };
       };
     };
