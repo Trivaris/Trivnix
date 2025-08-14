@@ -3,7 +3,7 @@
   outputs,
   lib,
   pkgs,
-  libExtra,
+  trivnixLib,
   allUserInfos,
   ...
 }:
@@ -12,7 +12,7 @@
 
   nixpkgs = {
     overlays = builtins.attrValues (outputs.overlays);
-    config = libExtra.pkgsConfig;
+    config = trivnixLib.pkgsConfig;
   };
 
   nix = {

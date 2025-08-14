@@ -36,12 +36,12 @@ Example structure:
 Create or edit `/hosts/configs/<configname>.nix`:
 
 ```nix
-{ libExtra, hostconfig, ... }:
+{ trivnixLib, hostconfig, ... }:
 
 {
   imports = [
-    (libExtra.mkFlakePath /hosts/common)
-    (libExtra.mkFlakePath /hosts/modules)
+    (trivnixLib.mkFlakePath /hosts/common)
+    (trivnixLib.mkFlakePath /hosts/modules)
   ];
 
   config.hostPrefs = hostconfig.hostPrefs;
@@ -64,12 +64,12 @@ In `/hosts/configs/default.nix`, add your host to the exported set:
 Create or edit `/home/configs/<username>.nix`
 
 ```nix
-{ libExtra, userconfigs, ... }:
+{ trivnixLib, userconfigs, ... }:
 
 {
   imports = [
-    (libExtra.mkFlakePath /home/common)
-    (libExtra.mkFlakePath /home/modules)
+    (trivnixLib.mkFlakePath /home/common)
+    (trivnixLib.mkFlakePath /home/modules)
   ];
   homeConfig = userconfigs.username.homeConfig;
 }

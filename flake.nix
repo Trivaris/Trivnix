@@ -50,9 +50,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Private Information
+    # Private Information and other helper stuff
     trivnix-private = {
       url = "git+ssh://git@github.com/trivaris/trivnix-private";
+    };
+
+    trivnix-lib = {
+      url = "github:trivaris/trivnix-lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    trivnix-configs = {
+      url = "github:trivaris/trivnix-configs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        trivnix-lib.follows = "trivnix-lib";
+      };
     };
 
     # Non Flake Inputs

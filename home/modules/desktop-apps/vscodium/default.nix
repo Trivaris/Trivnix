@@ -2,7 +2,7 @@
   pkgs,
   config,
   lib,
-  libExtra,
+  trivnixLib,
   hostInfos,
   userInfos,
   ...
@@ -10,7 +10,7 @@
 let
   inherit (lib) mkIf mkMerge;
   prefs = config.userPrefs;
-  selfPath = libExtra.mkFlakePath "/";
+  selfPath = trivnixLib.mkFlakePath "/";
 
   commonSettings = {
     "files.autoSave" = "afterDelay";

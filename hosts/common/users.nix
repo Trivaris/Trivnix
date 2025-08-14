@@ -2,12 +2,12 @@
   config,
   pkgs,
   lib,
-  libExtra,
+  trivnixLib,
   allUserInfos,
   ...
 }:
 let
-  sshKeyFiles = libExtra.resolveDir { dirPath = "/resources/ssh-pub"; mode = "paths"; includeNonNix = true; };
+  sshKeyFiles = trivnixLib.resolveDir { dirPath = "/resources/ssh-pub"; mode = "paths"; includeNonNix = true; };
 
   allUsers = (lib.mapAttrs' (username: userInfos:
     lib.nameValuePair

@@ -1,7 +1,7 @@
-{ lib, libExtra, ... }:
+{ lib, trivnixLib, ... }:
 let
   inherit (lib) types mkOption;
-  inherit (libExtra) resolveDir;
+  inherit (trivnixLib) resolveDir;
   dirPath = "/home/modules/extended-cli";
   modules = resolveDir { inherit dirPath; mode = "names"; };
   imports = resolveDir { inherit dirPath; mode = "paths"; };

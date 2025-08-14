@@ -51,7 +51,7 @@ Trivnix is a flake-based NixOS config used to manage my personal machines. It ai
 │
 ├── flake/               # Flake logic for hosts, home configs, and utilities
 │   ├── hosts/           # Host definitions (desktop, laptop, WSL, etc.)
-│   └── libExtra/        # Helper functions (e.g. mkFlakePath)
+│   └── trivnixLib/        # Helper functions (e.g. mkFlakePath)
 │
 ├── home/                # Home Manager configs
 │   ├── common/          # Shared user settings (e.g. secrets, programs)
@@ -139,7 +139,7 @@ The following variables are available in host-level NixOS configs:
 | `hostconfig`  | Config for the current host. See `/flake/hosts/<configname>.nix` |
 | `userconfigs` | All user configs for the current host, including enabled modules |
 | `hosts`       | All host configs in the system                                   |
-| `libExtra`    | Utility functions, e.g., `mkFlakePath`, from `/flake/libExtra`          |
+| `trivnixLib`    | Utility functions, e.g., `mkFlakePath`, from `/flake/trivnixLib`          |
 
 ### Home Config Context
 

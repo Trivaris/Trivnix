@@ -2,14 +2,14 @@
   pkgs,
   config,
   lib,
-  libExtra,
+  trivnixLib,
   hostInfos,
   allUserInfos,
   ...
 }:
 let
-  commonSecrets = libExtra.mkFlakePath "/secrets/hosts/common.yaml";
-  hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${hostInfos.configname}.yaml";
+  commonSecrets = trivnixLib.mkFlakePath "/secrets/hosts/common.yaml";
+  hostSecrets = trivnixLib.mkFlakePath "/secrets/hosts/${hostInfos.configname}.yaml";
 
   cfg = config.hostPrefs;
 

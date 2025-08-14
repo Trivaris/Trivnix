@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  libExtra,
+  trivnixLib,
   ...
 }:
 let
@@ -25,7 +25,7 @@ in
           {
             nativeBuildInputs = builtins.attrValues { inherit (pkgs) imagemagickBig yq; };
             inherit theme;
-            inputImage = libExtra.mkFlakePath /resources/wallpaper2.png;
+            inputImage = trivnixLib.mkFlakePath /resources/wallpaper2.png;
           }
           ''
             cp "$inputImage" wallpaper.png

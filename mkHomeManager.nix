@@ -1,7 +1,7 @@
 {
   inputs,
   outputs,
-  libExtra,
+  trivnixLib,
   homeImports
 }:
 {
@@ -11,7 +11,7 @@
 let
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
-  inherit (libExtra) configs;
+  inherit (trivnixLib) configs;
   
   hostConfig = configs.${configname};
   hostInfos = hostConfig.infos // { inherit configname; };
@@ -57,7 +57,7 @@ let
     inherit
       inputs
       outputs
-      libExtra
+      trivnixLib
       allHostInfos
       allHostPrefs
       allHostUserPrefs
@@ -83,7 +83,7 @@ homeManagerConfiguration {
   pkgs = import inputs.nixpkgs {
     system = hostConfig.infos.architecture;
     overlays = builtins.attrValues (outputs.overlays);
-    config = libExtra.pkgsConfig;
+    config = trivnixLib.pkgsConfig;
   };
 
   extraSpecialArgs = generalArgs // hostArgs // homeArgs;

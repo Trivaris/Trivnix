@@ -1,14 +1,14 @@
 {
   inputs,
   lib,
-  libExtra,
+  trivnixLib,
   userInfos,
   hostInfos,
   ...
 }:
 let
-  commonSecrets = libExtra.mkFlakePath "/secrets/home/${userInfos.name}/common.yaml";
-  hostSecrets = libExtra.mkFlakePath "/secrets/home/${userInfos.name}/${hostInfos.configname}.yaml";
+  commonSecrets = trivnixLib.mkFlakePath "/secrets/home/${userInfos.name}/common.yaml";
+  hostSecrets = trivnixLib.mkFlakePath "/secrets/home/${userInfos.name}/${hostInfos.configname}.yaml";
 
   mkKey = name: {
     ${name} = {

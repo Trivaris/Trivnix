@@ -1,7 +1,8 @@
 {
   inputs,
   outputs,
-  libExtra,
+  trivnixLib,
+  configs,
   hostImports,
   homeImports
 }:
@@ -10,7 +11,6 @@
 }:
 let
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair nixosSystem;
-  inherit (libExtra) configs;
   
   hostConfig = configs.${configname};
   hostInfos = hostConfig.infos // { inherit configname; };
@@ -50,7 +50,7 @@ let
     inherit
       inputs
       outputs
-      libExtra
+      trivnixLib
       allHostInfos
       allHostPrefs
       allHostUserPrefs

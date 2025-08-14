@@ -1,24 +1,24 @@
 { inputs, self }:
 let
   outputs = self.outputs;
-  libExtra = import ./libExtra { inherit inputs; };
+  trivnixLib = inputs.trivnix-lib.lib.for self;
   
-  configs = builtins.removeAttrs libExtra.configs [ "homeServer" ];
+  inherit (inputs.trivnix-configs) configs;
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair concatMapAttrs;
 
   mkImports = base:
-    (libExtra.resolveDir { dirPath = "/${base}/common"; mode = "paths"; }) ++
-    (libExtra.resolveDir { dirPath = "/${base}/modules"; mode = "paths"; });
+    (trivnixLib.resolveDir { dirPath = "/${base}/common"; mode = "paths"; }) ++
+    (trivnixLib.resolveDir { dirPath = "/${base}/modules"; mode = "paths"; });
   
   homeImports = mkImports "home";
   hostImports = mkImports "hosts";
 
-  mkHomeManager = import ./mkHomeManager.nix { inherit inputs outputs libExtra homeImports; };
-  mkNixOS = import ./mkNixOS.nix { inherit inputs outputs libExtra hostImports homeImports; };
-
+  mkHomeManager = import ./mkHomeManager.nix { inherit inputs outputs trivnixLib homeImports configs; };
+  mkNixOS = import ./mkNixOS.nix { inherit inputs outputs trivnixLib hostImports homeImports configs; };
 in
 {
-  overlays = import (libExtra.mkFlakePath /overlays) inputs;
+  inherit configs trivnixLib;
+  overlays = import (trivnixLib.mkFlakePath /overlays) inputs;
 
   # Define NixOS configs for each host
   # Format: configname = <NixOS config>

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  libExtra,
+  trivnixLib,
   ...
 }:
 let
@@ -35,7 +35,7 @@ in
             };
 
             files = {
-              server-icon = libExtra.mkFlakePath /resources/minecraft-server-icon.png;
+              server-icon = trivnixLib.mkFlakePath /resources/minecraft-server-icon.png;
             }
             // modpackPkg.files;
 
