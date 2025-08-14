@@ -1,8 +1,9 @@
 {
   config,
   lib,
-  hostInfo,
-  userInfo,
+  hostInfos,
+  userInfos,
+  allHostPrefs,
   allHostInfos,
   ...
 }:
@@ -11,18 +12,18 @@ let
     lib.concatMap (
       configname:
       let
-        host = allHostInfos.${configname};
+        infos = allHostInfos.${configname};
       in
       [
         {
-          name = host.name;
+          name = infos.name;
           value = {
-            hostname = host.ip;
-            user = userInfo.name;
+            hostname = infos.ip;
+            user = userInfos.name;
           };
         }
       ]
-    ) (lib.attrNames (lib.filterAttrs (_: host: host.ip != null) allHostInfos))
+    ) (lib.attrNames (lib.filterAttrs (_: prefs: prefs.openssh.enable or false) allHostPrefs))
   );
 in
 {
@@ -35,7 +36,7 @@ in
       "*" = {
         identitiesOnly = true;
         identityFile =
-          if hostInfo.hardwareKey then
+          if hostInfos.hardwareKey then
             [
               config.sops.secrets.ssh-private-key-a.path
               config.sops.secrets.ssh-private-key-c.path

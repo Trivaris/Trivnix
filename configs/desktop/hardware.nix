@@ -2,7 +2,7 @@
   config,
   lib,
   modulesPath,
-  hostInfo,
+  hostInfos,
   ...
 }:
 {
@@ -20,12 +20,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.useDHCP = lib.mkDefault true;
-  networking.hostName = hostInfo.name;
+  networking.hostName = hostInfos.name;
   networking.networkmanager.enable = true;
   networking.interfaces.eno1.wakeOnLan.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault hostInfo.architecture;
-  system.stateVersion = hostInfo.stateVersion;
+  nixpkgs.hostPlatform = lib.mkDefault hostInfos.architecture;
+  system.stateVersion = hostInfos.stateVersion;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;

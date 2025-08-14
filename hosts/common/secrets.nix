@@ -3,13 +3,13 @@
   config,
   lib,
   libExtra,
-  hostInfo,
+  hostInfos,
   allUserInfos,
   ...
 }:
 let
   commonSecrets = libExtra.mkFlakePath "/secrets/hosts/common.yaml";
-  hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${hostInfo.configname}.yaml";
+  hostSecrets = libExtra.mkFlakePath "/secrets/hosts/${hostInfos.configname}.yaml";
 
   cfg = config.hostPrefs;
 

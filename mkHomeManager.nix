@@ -14,18 +14,18 @@ let
   inherit (libExtra) configs;
   
   hostConfig = configs.${configname};
-  hostInfo = hostConfig.info // { inherit configname; };
+  hostInfos = hostConfig.infos // { inherit configname; };
   hostPrefs = hostConfig.prefs;
 
   userConfig = hostConfig.users.${username};
-  userInfo = userConfig.info // { name = username; };
+  userInfos = userConfig.infos // { name = username; };
   userPrefs = userConfig.prefs;
 
   allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
   allOtherUserConfigs = builtins.removeAttrs hostConfig.users [ username ];
   
   allHostInfos = (mapAttrs' (name: value:
-    nameValuePair name (value.info)
+    nameValuePair name (value.infos)
   ) allOtherHostConfigs);
 
   allHostPrefs = (mapAttrs' (name: value:
@@ -40,7 +40,7 @@ let
 
   allHostUserInfos = (mapAttrs' (configname: config:
     nameValuePair configname (mapAttrs' (usrname: userconfig:
-      nameValuePair usrname (userconfig.info)
+      nameValuePair usrname (userconfig.infos)
     )(config.users))
   ) allOtherHostConfigs);
 
@@ -67,7 +67,7 @@ let
 
   hostArgs = {
     inherit 
-      hostInfo
+      hostInfos
       allUserPrefs
       allUserInfos
       ;
@@ -75,13 +75,13 @@ let
 
   homeArgs = {
     inherit
-      userInfo
+      userInfos
       ;
   };
 in
 homeManagerConfiguration {
   pkgs = import inputs.nixpkgs {
-    system = hostConfig.info.architecture;
+    system = hostConfig.infos.architecture;
     overlays = builtins.attrValues (outputs.overlays);
     config = libExtra.pkgsConfig;
   };

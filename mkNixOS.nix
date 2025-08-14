@@ -13,13 +13,13 @@ let
   inherit (libExtra) configs;
   
   hostConfig = configs.${configname};
-  hostInfo = hostConfig.info // { inherit configname; };
+  hostInfos = hostConfig.infos // { inherit configname; };
   hostPrefs = hostConfig.prefs;
 
   allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
 
   allHostInfos = (mapAttrs' (name: value:
-    nameValuePair name (value.info)
+    nameValuePair name (value.infos)
   ) allOtherHostConfigs);
 
   allHostPrefs = (mapAttrs' (name: value:
@@ -34,7 +34,7 @@ let
 
   allHostUserInfos = (mapAttrs' (configname: config:
     nameValuePair configname ( mapAttrs'(usrname: userconfig:
-      nameValuePair usrname (userconfig.info)
+      nameValuePair usrname (userconfig.infos)
     )(config.users))
   ) allOtherHostConfigs);
 
@@ -43,7 +43,7 @@ let
   ) hostConfig.users;
 
   allUserInfos = mapAttrs' (name: value:
-    nameValuePair name (value.info)
+    nameValuePair name (value.infos)
   ) hostConfig.users;
 
   generalArgs = {
@@ -60,7 +60,7 @@ let
 
   hostArgs = {
     inherit 
-      hostInfo
+      hostInfos
       allUserPrefs
       allUserInfos
       ;
@@ -102,13 +102,13 @@ nixosSystem {
         
         users = mapAttrs' (name: userPrefs:
           let
-            userInfo = hostConfig.users.${name}.info // { inherit name; };
+            userInfos = hostConfig.users.${name}.infos // { inherit name; };
           in
           nameValuePair
           name
           {
             imports = homeImports ++ [
-              { _module.args.userInfo = userInfo; }
+              { _module.args = { inherit userInfos; }; }
             ];
 
             config = {

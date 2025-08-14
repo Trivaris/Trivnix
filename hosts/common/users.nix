@@ -9,7 +9,7 @@
 let
   sshKeyFiles = libExtra.resolveDir { dirPath = "/resources/ssh-pub"; mode = "paths"; includeNonNix = true; };
 
-  allUsers = (lib.mapAttrs' (username: userInfo:
+  allUsers = (lib.mapAttrs' (username: userInfos:
     lib.nameValuePair
       username
       {

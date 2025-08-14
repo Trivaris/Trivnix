@@ -1,7 +1,7 @@
 common:
 {
   trivaris = {
-    info = { };
+    infos = { };
     prefs = {
       email.enable = true;
       lutris.enable = true;

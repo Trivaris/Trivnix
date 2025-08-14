@@ -3,7 +3,7 @@
   lib,
   config,
   inputs,
-  userInfo,
+  userInfos,
   ...
 }:
 let
@@ -23,7 +23,7 @@ in
     programs.librewolf = {
       enable = true;
 
-      profiles.${userInfo.name} = {
+      profiles.${userInfos.name} = {
         isDefault = true;
 
         extensions = {
@@ -80,9 +80,9 @@ in
       };
     };
 
-    stylix.targets.librewolf.profileNames = [ userInfo.name ];
+    stylix.targets.librewolf.profileNames = [ userInfos.name ];
 
-    home.file.".librewolf/${userInfo.name}/user.js".text =
+    home.file.".librewolf/${userInfos.name}/user.js".text =
       if (prefs.librewolf.betterfox) then (inputs.betterfox + "/user.js") else "" + overrides;
   };
 }

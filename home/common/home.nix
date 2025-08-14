@@ -3,14 +3,14 @@
   pkgs,
   lib,
   libExtra,
-  hostInfo,
-  userInfo,
+  hostInfos,
+  userInfos,
   ...
 }:
 {
-  home.username = lib.mkDefault userInfo.name;
-  home.homeDirectory = lib.mkDefault "/home/${userInfo.name}";
-  home.stateVersion = hostInfo.stateVersion;
+  home.username = lib.mkDefault userInfos.name;
+  home.homeDirectory = lib.mkDefault "/home/${userInfos.name}";
+  home.stateVersion = hostInfos.stateVersion;
 
   systemd.user.services.rmClobbering = {
     Unit = {
@@ -22,7 +22,7 @@
       ExecStart = pkgs.writeShellScript "rm-clobbering" ''
         #!/usr/bin/env bash
         rm -f ~/.gtkrc-2.0.backup
-        rm -f ~/.librewolf/${userInfo.name}/search.json.mozlz4.backup
+        rm -f ~/.librewolf/${userInfos.name}/search.json.mozlz4.backup
         rm -f ~/.config/gtk-3.0/gtk.css.backup 2>/dev/null || true
       '';
     };

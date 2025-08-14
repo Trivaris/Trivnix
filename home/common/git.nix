@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  userInfo,
+  userInfos,
   ...
 }:
 let
@@ -23,7 +23,7 @@ in
   config = {
     programs.git = {
       enable = true;
-      userName = userInfo.name;
+      userName = userInfos.name;
       userEmail = prefs.git.email;
       extraConfig = {
         credential.helper = "store";
