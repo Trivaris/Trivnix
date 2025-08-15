@@ -3,15 +3,8 @@ let
   inherit (lib) mkIf;
   prefs = config.hostPrefs;
 
-  services = builtins.attrValues {
-    inherit (prefs)
-      suwayomi
-      vaultwarden
-      nextcloud
-      codeServer
-      minecraftServer
-      ;
-  };
+  services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (builtins.attrValues prefs);
+  
   activeServices = map (service: service.reverseProxy) (builtins.filter (service: service.reverseProxy.enable or false) services);
 
   externalPorts = builtins.map (service: service.externalPort) (
