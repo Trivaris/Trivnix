@@ -11,7 +11,7 @@ let
       minecraftServer
       ;
   };
-  activeServices = map (service: service.reverseProxy) builtins.filter (service: service.reverseProxy.enabel or false) services;
+  activeServices = map (service: service.reverseProxy) (builtins.filter (service: service.reverseProxy.enable or false) services);
 
   externalPorts = builtins.map (service: service.externalPort) (
     builtins.filter (service: service.externalPort != null) activeServices

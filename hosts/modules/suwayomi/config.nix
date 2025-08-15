@@ -4,5 +4,5 @@
 }:
 {
   enable = mkEnableOption "Enable the Suwayomi server (Tachidesk) service.";
-  reverseProxy = mkReverseProxyOption 8890;
+  reverseProxy = mkReverseProxyOption { defaultPort = 8890; };
 }

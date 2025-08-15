@@ -6,7 +6,7 @@
 }:
 {
   enable = mkEnableOption "Enable Sunshine remote desktop proxy integration.";
-  reverseProxy = mkReverseProxyOption 47989;
+  reverseProxy = mkReverseProxyOption { defaultPort = 47989; };
 
   hostMac = mkOption {
     type = types.str;

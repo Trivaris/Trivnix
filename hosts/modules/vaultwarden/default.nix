@@ -1,12 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, trivnixLib, ... }:
 let
   inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.vaultwarden = import ./config.nix {
-    inherit (lib) mkEnableOption mkOption types;
-  };
+  options.hostPrefs.vaultwarden = import ./config.nix { inherit (lib) mkEnableOption; inherit (trivnixLib) mkReverseProxyOption; };
 
   config = mkIf prefs.vaultwarden.enable {
     services.vaultwarden = {

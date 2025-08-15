@@ -4,5 +4,5 @@
 }:
 {
   enable = mkEnableOption "Enable the Vaultwarden password manager server.";
-  reverseProxy = mkReverseProxyOption 8891;
+  reverseProxy = mkReverseProxyOption { defaultPort = 8891; };
 }

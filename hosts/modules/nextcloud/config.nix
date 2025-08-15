@@ -4,5 +4,5 @@
 }:
 {
   enable = mkEnableOption "Enable the Nextcloud service.";
-  reverseProxy = mkReverseProxyOption 8889;
+  reverseProxy = mkReverseProxyOption { defaultPort = 8889; };
 }

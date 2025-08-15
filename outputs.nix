@@ -17,7 +17,6 @@ let
   mkNixOS = import ./mkNixOS.nix { inherit inputs outputs trivnixLib hostImports homeImports configs; };
 in
 {
-  inherit configs trivnixLib;
   overlays = import (trivnixLib.mkFlakePath /overlays) inputs;
 
   # Define NixOS configs for each host

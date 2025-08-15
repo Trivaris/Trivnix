@@ -4,5 +4,5 @@
 }:
 {
   enable = mkEnableOption "Enable code-server (VS Code in the browser).";
-  reverseProxy = mkReverseProxyOption 8888;
+  reverseProxy = mkReverseProxyOption { defaultPort = 8888; };
 }
