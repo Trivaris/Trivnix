@@ -1,4 +1,5 @@
 {
+  mkReverseProxyOption,
   mkEnableOption,
   mkOption,
   types,
@@ -6,24 +7,7 @@
 }:
 {
   enable = mkEnableOption "Enable Minecraft servers.";
-
-  domain = mkOption {
-    type = types.str;
-    description = ''
-      FQDN to access the Minecraft Server instance.
-      Can also be the ip Address of the server.
-      Used in web config and TLS certificate issuance.
-    '';
-    example = "cloud.example.com";
-  };
-
-  port = mkOption {
-    type = types.port;
-    default = 25565;
-    description = ''
-      Port used by the Minecraft server.
-    '';
-  };
+  reverseProxy = mkReverseProxyOption { defaultPort = 25565; };
 
   modpack = mkOption {
     type = types.enum (builtins.attrNames pkgs.modpacks);

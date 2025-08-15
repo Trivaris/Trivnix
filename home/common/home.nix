@@ -12,8 +12,6 @@
   home.homeDirectory = lib.mkDefault "/home/${userInfos.name}";
   home.stateVersion = hostInfos.stateVersion;
 
-  home.sessionPath = [ "/run/current-system/sw/bin" ];
-
   systemd.user.services.rmClobbering = {
     Unit = {
       Description = "Remove unwanted backup files";

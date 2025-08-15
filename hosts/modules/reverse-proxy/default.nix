@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
   prefs = config.hostPrefs;
@@ -8,6 +8,7 @@ let
       suwayomi
       vaultwarden
       nextcloud
+      codeServer
       minecraftServer
       ;
   };
@@ -34,7 +35,6 @@ in
         inherit ddclient;
         nginx = {
           inherit virtualHosts;
-          package = pkgs.openresty;
           enable = true;
 
           recommendedGzipSettings = true;

@@ -7,22 +7,23 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.minecraftServer = import ./config.nix {
     inherit (lib) mkEnableOption mkOption types;
+    inherit (trivnixLib) mkReverseProxyOption;
     inherit pkgs;
   };
 
-  config = mkIf (cfg.minecraftServer.enable) {
+  config = mkIf (prefs.minecraftServer.enable) {
     services.minecraft-servers = {
       enable = true;
       eula = true;
 
       servers =
         let
-          inherit (cfg.minecraftServer) modpack;
+          inherit (prefs.minecraftServer) modpack;
           modpackPkg = pkgs.modpacks.${modpack};
         in
         {
@@ -45,11 +46,11 @@ in
               gamemode = "survival";
               difficulty = "hard";
               simulation-distance = 8;
-              server-port = cfg.minecraftServer.port;
+              server-port = prefs.minecraftServer.reverseProxy.port;
               whitelist = true;
               max-tick-time = -1;
               "enable-rcon" = true;
-              "rcon.port" = cfg.minecraftServer.port - 2;
+              "rcon.port" = prefs.minecraftServer.reverseProxy.port - 2;
               motd = "Awake and Ready!";
             };
 
@@ -71,7 +72,7 @@ in
                 oldLazyMCPkgs.lazymc;
 
               config = {
-                public.address = "${cfg.minecraftServer.domain}:${toString (cfg.minecraftServer.port + 1)}";
+                public.address = "${prefs.minecraftServer.reverseProxy.domain}:${toString (prefs.minecraftServer.reverseProxy.port + 1)}";
 
                 server.start_timeout = 180;
                 server.stop_timeout = 60;
@@ -90,7 +91,7 @@ in
 
                 rcon = {
                   enabled = true;
-                  port = cfg.minecraftServer.port - 2;
+                  port = prefs.minecraftServer.reverseProxy.port - 2;
                   password = "secure-password";
                   randomize_password = true;
                 };
