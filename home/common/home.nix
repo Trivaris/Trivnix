@@ -33,7 +33,7 @@
 
   home.activation.runRmClobberingService =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      systemctl --user start rmClobbering.service || true
+      /run/current-system/sw/bin/systemctl --user start rmClobbering.service || true
     '';
 
   nixpkgs = {
