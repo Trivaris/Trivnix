@@ -1,18 +1,18 @@
-{ config, lib, ... }:
+{ config, lib, trivnixLib, ... }:
 let
   inherit (lib) mkIf;
   cfg = config.hostPrefs;
 in
 {
-  options.hostPrefs.suwayomi = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.suwayomi = import ./config.nix { inherit (lib) mkEnableOption; inherit (trivnixLib) mkReverseProxyOption; };
 
   config = mkIf cfg.suwayomi.enable {
     services.suwayomi-server = {
       enable = true;
 
       settings.server = {
-        host = cfg.suwayomi.ipAddress;
-        port = cfg.suwayomi.port;
+        host = cfg.suwayomi.reverseProxy.ipAddress;
+        port = cfg.suwayomi.reverseProxy.port;
 
         systemTrayEnabled = false;
         downloadAsCbz = true;

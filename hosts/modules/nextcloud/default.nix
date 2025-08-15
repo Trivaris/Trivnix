@@ -2,22 +2,21 @@
   pkgs,
   config,
   lib,
+  trivnixLib,
   ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.nextcloud = import ./config.nix {
-    inherit (lib) mkEnableOption mkOption types;
-  };
+  options.hostPrefs.nextcloud = import ./config.nix { inherit (lib) mkEnableOption; inherit (trivnixLib) mkReverseProxyOption; };
 
-  config = mkIf (cfg.nextcloud.enable) {
+  config = mkIf (prefs.nextcloud.enable) {
     services.nextcloud = {
       enable = true;
       package = pkgs.nextcloud31;
-      hostName = cfg.nextcloud.domain;
+      hostName = prefs.nextcloud.reverseProxy.domain;
       https = true;
 
       config = {
@@ -43,7 +42,7 @@ in
     };
 
     services.redis = {
-      servers.${cfg.nextcloud.domain} = {
+      servers.${prefs.nextcloud.reverseProxy.domain} = {
         enable = true;
         unixSocketPerm = 770;
       };

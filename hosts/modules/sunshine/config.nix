@@ -1,39 +1,12 @@
 {
+  mkReverseProxyOption,
   mkEnableOption,
   mkOption,
   types,
 }:
 {
   enable = mkEnableOption "Enable Sunshine remote desktop proxy integration.";
-  enableService = mkEnableOption "Enable Sunshine Service.";
-
-  port = mkOption {
-    type = types.nullOr types.port;
-    default = null;
-    example = 47989;
-    description = ''
-      Base port -- others used are offset from this one.
-      See https://docs.lizardbyte.dev/projects/sunshine/en/latest/about/advanced_usage.html#port for details.
-    '';
-  };
-
-  externalPort = mkOption {
-    type = types.nullOr types.port;
-    default = null;
-    description = ''
-      Optional override for the externally exposed port.
-      If unset, defaults to the reverse proxy's global port.
-    '';
-  };
-
-  domain = mkOption {
-    type = types.str;
-    description = ''
-      FQDN to access the Sunshine instance.
-      Used in web config and TLS certificate issuance.
-    '';
-    example = "sunshine.example.com";
-  };
+  reverseProxy = mkReverseProxyOption 47989;
 
   hostMac = mkOption {
     type = types.str;

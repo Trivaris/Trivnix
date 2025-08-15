@@ -1,33 +1,33 @@
 { config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 
-  activeServices = builtins.filter (service: service.enable or false) [
-    cfg.codeServer
-    cfg.nextcloud
-    cfg.suwayomi
-    cfg.vaultwarden
-    cfg.sunshine
-  ];
+  services = builtins.attrValues {
+    inherit (prefs)
+      suwayomi
+      vaultwarden
+      nextcloud
+      minecraftServer
+      ;
+  };
+  activeServices = map (service: service.reverseProxy) builtins.filter (service: service.reverseProxy.enabel or false) services;
 
   externalPorts = builtins.map (service: service.externalPort) (
     builtins.filter (service: service.externalPort != null) activeServices
   );
 in
 {
-  options.hostPrefs.reverseProxy = import ./config.nix {
-    inherit (lib) mkEnableOption mkOption types;
-  };
+  options.hostPrefs.reverseProxy = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config =
     let
-      ddclient = import ./ddclient.nix { inherit cfg config activeServices; };
-      acme = import ./acme.nix { inherit cfg config activeServices; };
-      virtualHosts = import ./virtualHosts.nix { inherit cfg activeServices; };
+      ddclient = import ./ddclient.nix { inherit prefs config activeServices; };
+      acme = import ./acme.nix { inherit prefs config activeServices; };
+      virtualHosts = import ./virtualHosts.nix { inherit prefs activeServices; };
     in
-    mkIf (cfg.reverseProxy.enable) {
-      networking.firewall.allowedTCPPorts = [ cfg.reverseProxy.port ] ++ externalPorts;
+    mkIf (prefs.reverseProxy.enable) {
+      networking.firewall.allowedTCPPorts = [ prefs.reverseProxy.port ] ++ externalPorts;
       security = { inherit acme; };
 
       services = {
@@ -57,7 +57,7 @@ in
       systemd.timers.ddclient = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnCalendar = cfg.reverseProxy.ddnsTime;
+          OnCalendar = prefs.reverseProxy.ddnsTime;
           Persistent = true;
         };
       };

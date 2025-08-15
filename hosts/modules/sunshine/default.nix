@@ -1,16 +1,17 @@
 {
+  trivnixLib,
   config,
   lib,
   ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.sunshine = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.sunshine = import ./config.nix { inherit (trivnixLib) mkReverseProxyOption; inherit (lib) mkEnableOption mkOption types; };
 
-  config = mkIf cfg.sunshine.enable {
+  config = mkIf prefs.sunshine.enable {
     services.sunshine = {
       enable = true;
       autoStart = true;
@@ -18,14 +19,14 @@ in
       openFirewall = true;
 
       settings = {
-        port = mkIf (cfg.sunshine.port != null) cfg.sunshine.port;
+        port = prefs.sunshine.reverseProxy.port;
         gamepad = "x360";
         # motion_as_ds4 = "disabled";
         # touchpad_as_ds4 = "disabled";
         # upnp = "enabled";
         capture = "kms";
         output_name = 2;
-        external_ip = cfg.sunshine.domain;
+        external_ip = prefs.sunshine.reverseProxy.domain;
         origin_web_ui_allowed = "wan";
         wan_encryption_mode = 0;
       };
