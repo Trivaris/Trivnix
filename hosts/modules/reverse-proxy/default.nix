@@ -25,7 +25,7 @@ in
       security = { inherit acme; };
 
       services = {
-        inherit ddclient;
+        ddclient = mkIf prefs.reverseProxy.enableDDClient ddclient;
         nginx = {
           inherit virtualHosts;
           enable = true;

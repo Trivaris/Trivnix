@@ -28,10 +28,10 @@ in
   # Define Home Manager configs for each user@hostname
   # Format: <user>@<hostname> (configname) = <Home Manager config>
   homeConfigurations = concatMapAttrs (configname: hostConfig:
-  mapAttrs' (username: userconfig:
-    nameValuePair "${username}@${configname}" (mkHomeManager {
-      inherit configname username;
-    })
-  ) hostConfig.users
-) configs;
+    mapAttrs' (username: userconfig:
+      nameValuePair "${username}@${configname}" (mkHomeManager {
+        inherit configname username;
+      })
+    ) hostConfig.users
+  ) configs;
 }

@@ -5,6 +5,7 @@
 }:
 {
   enable = mkEnableOption "Enable reverse proxy for all enabled services.";
+  enableDDClient = mkEnableOption "Enable Dynamic DNS Client";
 
   email = mkOption {
     type = types.str;
