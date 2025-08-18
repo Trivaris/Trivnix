@@ -42,12 +42,11 @@ in
               default upgrade;
               \'\'      close;
             }
-            lua_shared_dict wol 1m;
           '';
         };
       };
 
-      systemd.timers.ddclient = {
+      systemd.timers.ddclient = mkIf (prefs.reverseProxy.ddnsTime != null && prefs.reverseProxy.enableDDClient) {
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = prefs.reverseProxy.ddnsTime;

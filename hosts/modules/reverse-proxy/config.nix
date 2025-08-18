@@ -48,7 +48,8 @@
   };
 
   ddnsTime = mkOption {
-    type = types.str;
+    type = types.nullOr types.str;
+    default = null;
     example = "04:00";
     description = ''
       Systemd OnCalendar timestamp to schedule DDNS updates with ddclient.
