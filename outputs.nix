@@ -12,8 +12,6 @@ in
 {
   overlays = (import ./overlays) inputs;
 
-  modules = trivnixLib.resolveDir { dirPath = ./home/modules/desktop-apps; preset = "importList"; };
-
   # Define NixOS configs for each host
   # Format: configname = <NixOS config>
   nixosConfigurations = mapAttrs' (configname: _:

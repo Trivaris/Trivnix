@@ -78,7 +78,6 @@ nixosSystem {
     # Flake NixOS entrypoint
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixos-wsl.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
