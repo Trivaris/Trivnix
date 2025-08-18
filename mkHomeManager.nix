@@ -2,7 +2,6 @@
   inputs,
   outputs,
   trivnixLib,
-  homeImports
 }:
 {
   configname,
@@ -16,6 +15,7 @@ let
   hostConfig = configs.${configname};
   hostInfos = hostConfig.infos // { inherit configname; };
   hostPrefs = hostConfig.prefs;
+  hostPubKeys = hostConfig.pubKeys;
 
   userConfig = hostConfig.users.${username};
   userInfos = userConfig.infos // { name = username; };
@@ -32,6 +32,10 @@ let
     nameValuePair name (value.prefs)
   ) allOtherHostConfigs);
 
+  allHostPubKeys = (mapAttrs' (name: value:
+    nameValuePair name (value.pubKeys)
+  ) allOtherHostConfigs);
+
   allHostUserPrefs = (mapAttrs' (configname: config:
     nameValuePair configname (mapAttrs' (usrname: userconfig:
       nameValuePair usrname (userconfig.prefs)
@@ -43,7 +47,6 @@ let
       nameValuePair usrname (userconfig.infos)
     )(config.users))
   ) allOtherHostConfigs);
-
 
   allUserPrefs = mapAttrs' (name: value:
     nameValuePair name (value.prefs)
@@ -60,6 +63,7 @@ let
       trivnixLib
       allHostInfos
       allHostPrefs
+      allHostPubKeys
       allHostUserPrefs
       allHostUserInfos
       ;
@@ -68,6 +72,8 @@ let
   hostArgs = {
     inherit 
       hostInfos
+      hostPrefs
+      hostPubKeys
       allUserPrefs
       allUserInfos
       ;
@@ -96,13 +102,9 @@ homeManagerConfiguration {
     inputs.nvf.homeManagerModules.default
 
     {
-      imports = homeImports;
-      config = {
-        inherit
-          hostPrefs
-          userPrefs
-          ;
-      };
+      imports = trivnixLib.resolveDir { dirPath = ./home; preset = "importList"; };
+
+      config = { inherit userPrefs ; };
     }
   ];
 }

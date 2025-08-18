@@ -6,18 +6,13 @@ let
   inherit (inputs.trivnix-configs) configs;
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair concatMapAttrs;
 
-  mkImports = base:
-    (trivnixLib.resolveDir { dirPath = "/${base}/common"; mode = "paths"; }) ++
-    (trivnixLib.resolveDir { dirPath = "/${base}/modules"; mode = "paths"; });
-  
-  homeImports = mkImports "home";
-  hostImports = mkImports "hosts";
-
-  mkHomeManager = import ./mkHomeManager.nix { inherit inputs outputs trivnixLib homeImports configs; };
-  mkNixOS = import ./mkNixOS.nix { inherit inputs outputs trivnixLib hostImports homeImports configs; };
+  mkHomeManager = import ./mkHomeManager.nix { inherit inputs outputs trivnixLib configs; };
+  mkNixOS = import ./mkNixOS.nix { inherit inputs outputs trivnixLib configs; };
 in
 {
-  overlays = import (trivnixLib.mkFlakePath /overlays) inputs;
+  overlays = (import ./overlays) inputs;
+
+  modules = trivnixLib.resolveDir { dirPath = ./home/modules/desktop-apps; preset = "importList"; };
 
   # Define NixOS configs for each host
   # Format: configname = <NixOS config>

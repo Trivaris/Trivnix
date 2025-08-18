@@ -2,9 +2,8 @@
 let
   inherit (lib) types mkOption;
   inherit (trivnixLib) resolveDir;
-  dirPath = "/home/modules/extended-cli";
-  modules = resolveDir { inherit dirPath; mode = "names"; };
-  imports = resolveDir { inherit dirPath; mode = "paths"; };
+  modules = resolveDir { dirPath = ./.; preset = "moduleNames"; };
+  imports = resolveDir { dirPath = ./.; preset = "importList"; };
 in
 {
   inherit imports;

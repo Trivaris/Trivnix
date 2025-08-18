@@ -40,8 +40,8 @@ Create or edit `/hosts/configs/<configname>.nix`:
 
 {
   imports = [
-    (trivnixLib.mkFlakePath /hosts/common)
-    (trivnixLib.mkFlakePath /hosts/modules)
+    (trivnixLib.mkStorePath /hosts/common)
+    (trivnixLib.mkStorePath /hosts/modules)
   ];
 
   config.hostPrefs = hostconfig.hostPrefs;
@@ -68,8 +68,8 @@ Create or edit `/home/configs/<username>.nix`
 
 {
   imports = [
-    (trivnixLib.mkFlakePath /home/common)
-    (trivnixLib.mkFlakePath /home/modules)
+    (trivnixLib.mkStorePath /home/common)
+    (trivnixLib.mkStorePath /home/modules)
   ];
   homeConfig = userconfigs.username.homeConfig;
 }

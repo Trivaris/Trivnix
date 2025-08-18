@@ -3,8 +3,6 @@
   outputs,
   trivnixLib,
   configs,
-  hostImports,
-  homeImports
 }:
 {
   configname,
@@ -15,6 +13,7 @@ let
   hostConfig = configs.${configname};
   hostInfos = hostConfig.infos // { inherit configname; };
   hostPrefs = hostConfig.prefs;
+  hostPubKeys = hostConfig.pubKeys;
 
   allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
 
@@ -24,6 +23,10 @@ let
 
   allHostPrefs = (mapAttrs' (name: value:
     nameValuePair name (value.prefs)
+  ) allOtherHostConfigs);
+
+  allHostPubKeys = (mapAttrs' (name: value:
+    nameValuePair name (value.pubKeys)
   ) allOtherHostConfigs);
 
   allHostUserPrefs = (mapAttrs' (configname: config:
@@ -53,6 +56,7 @@ let
       trivnixLib
       allHostInfos
       allHostPrefs
+      allHostPubKeys
       allHostUserPrefs
       allHostUserInfos
       ;
@@ -61,6 +65,7 @@ let
   hostArgs = {
     inherit 
       hostInfos
+      hostPubKeys
       allUserPrefs
       allUserInfos
       ;
@@ -85,10 +90,9 @@ nixosSystem {
     hostConfig.hardware
 
     {
-      imports = hostImports;
-      config = {
-        inherit hostPrefs;
-      };
+      imports = trivnixLib.resolveDir { dirPath = ./hosts; preset = "importList"; };
+      config = { inherit hostPrefs; };
+      config.disko.enableConfig = true;
 
       # Expose flake args to within the home-manager config
       config.home-manager = {
@@ -107,13 +111,11 @@ nixosSystem {
           nameValuePair
           name
           {
-            imports = homeImports ++ [
+            imports = trivnixLib.resolveDir { dirPath = ./home; preset = "importList"; } ++ [
               { _module.args = { inherit userInfos; }; }
             ];
 
-            config = {
-              inherit userPrefs;
-            };
+            config = { inherit userPrefs; };
           }
         ) allUserPrefs;
       };

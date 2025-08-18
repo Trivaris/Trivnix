@@ -25,7 +25,7 @@ in
           {
             nativeBuildInputs = builtins.attrValues { inherit (pkgs) imagemagickBig yq; };
             inherit theme;
-            inputImage = trivnixLib.mkFlakePath /resources/wallpaper2.png;
+            inputImage = trivnixLib.mkStorePath "resources/wallpaper2.png";
           }
           ''
             cp "$inputImage" wallpaper.png

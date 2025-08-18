@@ -36,7 +36,7 @@ in
             };
 
             files = {
-              server-icon = trivnixLib.mkFlakePath /resources/minecraft-server-icon.png;
+              server-icon = trivnixLib.mkStorePath "resources/minecraft-server-icon.png";
             }
             // modpackPkg.files;
 

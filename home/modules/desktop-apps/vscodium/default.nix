@@ -10,7 +10,7 @@
 let
   inherit (lib) mkIf mkMerge;
   prefs = config.userPrefs;
-  selfPath = trivnixLib.mkFlakePath "/";
+  selfPath = trivnixLib.mkStorePath "";
 
   commonSettings = {
     "files.autoSave" = "afterDelay";

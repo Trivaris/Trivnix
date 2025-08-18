@@ -4,10 +4,11 @@
   lib,
   trivnixLib,
   allUserInfos,
+  allHostPubKeys,
   ...
 }:
 let
-  sshKeyFiles = trivnixLib.resolveDir { dirPath = "/resources/ssh-pub"; mode = "paths"; includeNonNix = true; };
+  sshKeys = trivnixLib.recursiveAttrValues allHostPubKeys;
 
   allUsers = (lib.mapAttrs' (username: userInfos:
     lib.nameValuePair
@@ -33,14 +34,14 @@ let
           "qemu-libvirtd"
           "docker"
         ];
-        openssh.authorizedKeys.keyFiles = sshKeyFiles;
+        openssh.authorizedKeys.keys = sshKeys;
         useDefaultShell = true;
       }
   ) allUserInfos)
   // {
     root = {
       hashedPasswordFile = config.sops.secrets."user-passwords/root".path;
-      openssh.authorizedKeys.keyFiles = sshKeyFiles;
+      openssh.authorizedKeys.keys = sshKeys;
     };
   };
 in 

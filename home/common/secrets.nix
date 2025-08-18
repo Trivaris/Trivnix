@@ -7,8 +7,8 @@
   ...
 }:
 let
-  commonSecrets = trivnixLib.mkFlakePath "/secrets/home/${userInfos.name}/common.yaml";
-  hostSecrets = trivnixLib.mkFlakePath "/secrets/home/${userInfos.name}/${hostInfos.configname}.yaml";
+  commonSecrets = trivnixLib.mkStorePath "secrets/home/${userInfos.name}/common.yaml";
+  hostSecrets = trivnixLib.mkStorePath "secrets/home/${userInfos.name}/${hostInfos.configname}.yaml";
 
   mkKey = name: {
     ${name} = {

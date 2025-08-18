@@ -8,8 +8,8 @@
   ...
 }:
 let
-  commonSecrets = trivnixLib.mkFlakePath "/secrets/hosts/common.yaml";
-  hostSecrets = trivnixLib.mkFlakePath "/secrets/hosts/${hostInfos.configname}.yaml";
+  commonSecrets = trivnixLib.mkStorePath "secrets/hosts/common.yaml";
+  hostSecrets = trivnixLib.mkStorePath "secrets/hosts/${hostInfos.configname}.yaml";
 
   cfg = config.hostPrefs;
 

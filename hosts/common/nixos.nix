@@ -24,7 +24,7 @@
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
     settings = {
-      experimental-features = "nix-command flakes";
+      experimental-features = "nix-command flakes pipe-operators";
       trusted-users = (builtins.attrNames allUserInfos) ++ [ "root" ];
       auto-optimise-store = true;
       warn-dirty = false;
