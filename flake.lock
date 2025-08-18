@@ -782,11 +782,11 @@
         "rev": "1b9d3a630532dd2d3459dfb5f67a48065a485508",
         "revCount": 6,
         "type": "git",
-        "url": "ssh://git@github.com/trivaris/trivnix-private"
+        "url": "ssh://git@github.com/Trivaris/trivnix-private"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/trivaris/trivnix-private"
+        "url": "ssh://git@github.com/Trivaris/trivnix-private"
       }
     }
   },

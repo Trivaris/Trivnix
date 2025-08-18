@@ -48,7 +48,7 @@
 
     # Private Information and other helper stuff
     trivnix-private = {
-      url = "git+ssh://git@github.com/trivaris/trivnix-private";
+      url = "git+ssh://git@github.com/Trivaris/trivnix-private";
     };
 
     trivnix-lib = {
