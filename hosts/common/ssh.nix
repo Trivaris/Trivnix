@@ -1,4 +1,10 @@
-{ ... }:
+{ allHostPubKeys, lib, ... }:
+let
+  knownHosts = lib.mapAttrs' (hostname: pubKeys: lib.nameValuePair hostname {
+    hostNames = [ hostname ];
+    publicKey = pubKeys."host.pub";
+  }) allHostPubKeys;
+in
 {
 
   programs.ssh = {
@@ -19,8 +25,7 @@
         hostNames = [ "github.com" ];
         publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=";
       };
-    };
-
+    } // knownHosts;
   };
 
 }
