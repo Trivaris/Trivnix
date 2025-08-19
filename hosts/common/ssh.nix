@@ -1,7 +1,7 @@
-{ allHostPubKeys, lib, ... }:
+{ allHostPubKeys, allHostInfos, lib, ... }:
 let
   knownHosts = lib.mapAttrs' (hostname: pubKeys: lib.nameValuePair hostname {
-    hostNames = [ hostname ];
+    hostNames = [ allHostInfos.${hostname}.ip ];
     publicKey = pubKeys."host.pub";
   }) allHostPubKeys;
 in
