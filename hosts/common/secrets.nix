@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   lib,
@@ -11,45 +12,31 @@ let
   commonSecrets = trivnixLib.mkStorePath "secrets/hosts/common.yaml";
   hostSecrets = trivnixLib.mkStorePath "secrets/hosts/${hostInfos.configname}.yaml";
 
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 
-  perUserSecrets = builtins.concatMap (
-    user:
-    let
-      base = [
-        {
-          name = "user-passwords/${user}";
-          value = {
-            neededForUsers = true;
-          };
-        }
-      ];
-      extra =
-        if (user == "root") then
-          [ ]
-        else
-          [
-            {
-              name = "sops-keys/${user}";
-              value = {
-                sopsFile = hostSecrets;
-                path = "/home/${user}/.config/sops/age/key.txt";
-                owner = user;
-                group = "users";
-                mode = "0600";
-              };
-            }
-          ];
-    in
-    base ++ extra
-  ) ((builtins.attrNames allUserInfos) ++ [ "root" ]);
+  perUserSecrets = lib.mapAttrs' (user: _: lib.nameValuePair
+    "sops-keys/${user}"
+    {
+      sopsFile = hostSecrets;
+      path = "/home/${user}/.config/sops/age/key.txt";
+      owner = user;
+      group = "users";
+      mode = "0600";
+    }
+  ) (lib.filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
+
+  wireguardSecrets = lib.mapAttrs' (interface: _: lib.nameValuePair
+    "wireguard-preshared-keys/${interface}"
+    {
+      owner = "root";
+      group = "root";
+      mode = "0600";
+    }
+  ) inputs.trivnix-private.wireguardInterfaces;
 in
 {
   environment.systemPackages = builtins.attrValues {
-    inherit (pkgs)
-      sops
-      age
-      ;
+    inherit (pkgs) sops age;
   };
 
   sops = {
@@ -59,10 +46,11 @@ in
     age.keyFile = "/var/lib/sops-nix/key.txt";
     age.generateKey = false;
 
-    secrets = lib.mkMerge [
-      (builtins.listToAttrs perUserSecrets)
+    secrets = (lib.mkMerge [
+      perUserSecrets
+      wireguardSecrets
 
-      (lib.mkIf cfg.openssh.enable {
+      (lib.mkIf prefs.openssh.enable {
         ssh-host-key = {
           sopsFile = hostSecrets;
           path = "/etc/ssh/ssh_host_ed25519_key";
@@ -74,7 +62,16 @@ in
         };
       })
 
-      (lib.mkIf cfg.reverseProxy.enable {
+      (lib.mkIf prefs.wireguard.enable {
+        wireguard-client-key = {
+          sopsFile = hostSecrets;
+          owner = "root";
+          group = "root";
+          mode = "0600";
+        };
+      })
+
+      (lib.mkIf prefs.reverseProxy.enable {
         cloudflare-api-token = {
           owner = "root";
           group = "root";
@@ -88,7 +85,7 @@ in
         };
       })
 
-      (lib.mkIf cfg.nextcloud.enable {
+      (lib.mkIf prefs.nextcloud.enable {
         nextcloud-admin-token = {
           owner = "nextcloud";
           group = "nextcloud";
@@ -96,14 +93,14 @@ in
         };
       })
 
-      (lib.mkIf cfg.suwayomi.enable {
+      (lib.mkIf prefs.suwayomi.enable {
         suwayomi-webui-password = {
           owner = "suwayomi";
           group = "suwayomi";
           mode = "0600";
         };
       })
-    ];
+    ]);
   };
 
 }

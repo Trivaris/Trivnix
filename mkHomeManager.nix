@@ -2,6 +2,7 @@
   inputs,
   outputs,
   trivnixLib,
+  commonInfos
 }:
 {
   configname,
@@ -61,6 +62,7 @@ let
       inputs
       outputs
       trivnixLib
+      commonInfos
       allHostInfos
       allHostPrefs
       allHostPubKeys

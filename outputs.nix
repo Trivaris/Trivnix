@@ -3,11 +3,11 @@ let
   outputs = self.outputs;
   trivnixLib = inputs.trivnix-lib.lib.for self;
   
-  inherit (inputs.trivnix-configs) configs;
+  inherit (inputs.trivnix-configs) configs commonInfos;
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair concatMapAttrs;
 
-  mkHomeManager = import ./mkHomeManager.nix { inherit inputs outputs trivnixLib configs; };
-  mkNixOS = import ./mkNixOS.nix { inherit inputs outputs trivnixLib configs; };
+  mkHomeManager = import ./mkHomeManager.nix { inherit inputs outputs trivnixLib configs commonInfos; };
+  mkNixOS = import ./mkNixOS.nix { inherit inputs outputs trivnixLib configs commonInfos; };
 in
 {
   overlays = (import ./overlays) inputs;

@@ -1,8 +1,8 @@
 {
-  config,
   pkgs,
   lib,
   trivnixLib,
+  hostInfos,
   allUserInfos,
   allHostPubKeys,
   ...
@@ -14,7 +14,7 @@ let
     lib.nameValuePair
       username
       {
-        hashedPasswordFile = config.sops.secrets."user-passwords/${username}".path;
+        hashedPassword = userInfos.hashedPassword;
         isNormalUser = true;
         createHome = true;
         home = "/home/${username}";
@@ -40,7 +40,7 @@ let
   ) allUserInfos)
   // {
     root = {
-      hashedPasswordFile = config.sops.secrets."user-passwords/root".path;
+      hashedPassword = hostInfos.hashedRootPassword;
       openssh.authorizedKeys.keys = sshKeys;
     };
   };

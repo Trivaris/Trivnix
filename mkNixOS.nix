@@ -3,6 +3,7 @@
   outputs,
   trivnixLib,
   configs,
+  commonInfos
 }:
 {
   configname,
@@ -10,6 +11,7 @@
 let
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair nixosSystem;
   
+
   hostConfig = configs.${configname};
   hostInfos = hostConfig.infos // { inherit configname; };
   hostPrefs = hostConfig.prefs;
@@ -54,6 +56,7 @@ let
       inputs
       outputs
       trivnixLib
+      commonInfos
       allHostInfos
       allHostPrefs
       allHostPubKeys

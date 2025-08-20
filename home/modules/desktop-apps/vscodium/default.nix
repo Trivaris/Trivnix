@@ -15,6 +15,8 @@ let
   commonSettings = {
     "files.autoSave" = "afterDelay";
     "files.autoSaveDelay" = 1000;
+    "explorer.confirmDelete" = false;
+    "svelte.enable-ts-plugin" = true;
   };
 
   lspSettings = {

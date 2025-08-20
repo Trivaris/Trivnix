@@ -14,6 +14,9 @@ let
     /** OVERRIDES ***/
     user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
     user_pref("places.history.enabled", false);
+    user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
+    user_pref("sidebar.revamp", true);
+    user_pref("sidebar.verticalTabs", true);
   '';
 in
 {
