@@ -3,9 +3,9 @@
   lib,
   ...
 }:
-let 
+let
   cfg = config.hostPrefs;
-in 
+in
 {
 
   options.hostPrefs.language = import ./config.nix {
@@ -15,7 +15,7 @@ in
   config = {
     console.keyMap = cfg.language.keyMap;
 
-    i18n = 
+    i18n =
       let
         language = "${cfg.language.locale}.${cfg.language.charset}";
         unitLanguage = "${cfg.language.units}.${cfg.language.charset}";
@@ -32,12 +32,14 @@ in
         ];
       in
       {
-      defaultLocale = language;
-      extraLocaleSettings = builtins.listToAttrs( map(unit: {
-        name = unit;
-        value = unitLanguage;
-      }) unitTypes );
-    };
+        defaultLocale = language;
+        extraLocaleSettings = builtins.listToAttrs (
+          map (unit: {
+            name = unit;
+            value = unitLanguage;
+          }) unitTypes
+        );
+      };
 
     services.xserver.xkb = {
       layout = cfg.language.keyMap;

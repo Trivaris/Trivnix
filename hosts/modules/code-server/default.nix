@@ -9,7 +9,10 @@ let
   cfg = config.hostPrefs;
 in
 {
-  options.hostPrefs.codeServer = import ./config.nix { inherit (lib) mkEnableOption; inherit (trivnixLib) mkReverseProxyOption; };
+  options.hostPrefs.codeServer = import ./config.nix {
+    inherit (lib) mkEnableOption;
+    inherit (trivnixLib) mkReverseProxyOption;
+  };
 
   config = mkIf (cfg.codeServer.enable) {
     services.code-server = {

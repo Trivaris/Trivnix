@@ -72,7 +72,9 @@ in
                 oldLazyMCPkgs.lazymc;
 
               config = {
-                public.address = "${prefs.minecraftServer.reverseProxy.domain}:${toString (prefs.minecraftServer.reverseProxy.port + 1)}";
+                public.address = "${prefs.minecraftServer.reverseProxy.domain}:${
+                  toString (prefs.minecraftServer.reverseProxy.port + 1)
+                }";
 
                 server.start_timeout = 180;
                 server.stop_timeout = 60;

@@ -23,7 +23,9 @@ in
         GatewayPorts = "clientspecified";
       };
 
-      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") (builtins.attrNames allUserInfos);
+      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") (
+        builtins.attrNames allUserInfos
+      );
 
       openFirewall = true;
 

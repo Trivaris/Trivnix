@@ -2,8 +2,14 @@
 let
   inherit (lib) types mkOption;
   inherit (trivnixLib) resolveDir;
-  modules = resolveDir { dirPath = ./.; preset = "moduleNames"; };
-  imports = resolveDir { dirPath = ./.; preset = "importList"; };
+  modules = resolveDir {
+    dirPath = ./.;
+    preset = "moduleNames";
+  };
+  imports = resolveDir {
+    dirPath = ./.;
+    preset = "importList";
+  };
 in
 {
   inherit imports;

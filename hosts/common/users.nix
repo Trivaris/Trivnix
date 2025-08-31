@@ -10,10 +10,10 @@
 let
   sshKeys = trivnixLib.recursiveAttrValues allHostPubKeys;
 
-  allUsers = (lib.mapAttrs' (username: userInfos:
-    lib.nameValuePair
-      username
-      {
+  allUsers =
+    (lib.mapAttrs' (
+      username: userInfos:
+      lib.nameValuePair username {
         hashedPassword = userInfos.hashedPassword;
         isNormalUser = true;
         createHome = true;
@@ -37,14 +37,14 @@ let
         openssh.authorizedKeys.keys = sshKeys;
         useDefaultShell = true;
       }
-  ) allUserInfos)
-  // {
-    root = {
-      hashedPassword = hostInfos.hashedRootPassword;
-      openssh.authorizedKeys.keys = sshKeys;
+    ) allUserInfos)
+    // {
+      root = {
+        hashedPassword = hostInfos.hashedRootPassword;
+        openssh.authorizedKeys.keys = sshKeys;
+      };
     };
-  };
-in 
+in
 {
   users.mutableUsers = false;
   users.defaultUserShell = pkgs.fish;

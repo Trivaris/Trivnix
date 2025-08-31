@@ -12,6 +12,8 @@ in
   options.hostPrefs.kde.enable = mkEnableOption "Enable KDE Plasma";
 
   config = mkIf cfg.kde.enable {
+    qt.platformTheme = lib.mkForce "kde";
+
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasma";
     services.displayManager.sddm.wayland.compositor = "kwin";

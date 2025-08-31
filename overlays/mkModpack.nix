@@ -4,21 +4,16 @@
   pkgs,
 }:
 let
-  modpack =
-    pkgs.runCommand "unpacked"
-      {
-        nativeBuildInputs = [ pkgs.unzip ];
+  modpack = pkgs.runCommand "unpacked" { nativeBuildInputs = [ pkgs.unzip ]; } ''
+    mkdir -p $out
+    unzip -q ${
+      pkgs.fetchurl {
+        url = modrinthUrl;
+        sha256 = hash;
       }
-      ''
-        mkdir -p $out
-        unzip -q ${
-          pkgs.fetchurl {
-            url = modrinthUrl;
-            sha256 = hash;
-          }
-        } -d $out
-        chmod -R u+rwX $out
-      '';
+    } -d $out
+    chmod -R u+rwX $out
+  '';
 
   fetchHashedUrl =
     file:

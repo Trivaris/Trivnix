@@ -3,53 +3,50 @@
   outputs,
   trivnixLib,
   configs,
-  commonInfos
+  commonInfos,
 }:
 {
   configname,
 }:
 let
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair nixosSystem;
-  
 
   hostConfig = configs.${configname};
-  hostInfos = hostConfig.infos // { inherit configname; };
+  hostInfos = hostConfig.infos // {
+    inherit configname;
+  };
   hostPrefs = hostConfig.prefs;
   hostPubKeys = hostConfig.pubKeys;
 
   allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
 
-  allHostInfos = (mapAttrs' (name: value:
-    nameValuePair name (value.infos)
-  ) allOtherHostConfigs);
+  allHostInfos = (mapAttrs' (name: value: nameValuePair name (value.infos)) allOtherHostConfigs);
 
-  allHostPrefs = (mapAttrs' (name: value:
-    nameValuePair name (value.prefs)
-  ) allOtherHostConfigs);
+  allHostPrefs = (mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherHostConfigs);
 
-  allHostPubKeys = (mapAttrs' (name: value:
-    nameValuePair name (value.pubKeys)
-  ) allOtherHostConfigs);
+  allHostPubKeys = (mapAttrs' (name: value: nameValuePair name (value.pubKeys)) allOtherHostConfigs);
 
-  allHostUserPrefs = (mapAttrs' (configname: config:
-    nameValuePair configname (mapAttrs' (usrname: userconfig:
-      nameValuePair usrname (userconfig.prefs)
-    )(config.users))
-  ) allOtherHostConfigs);
+  allHostUserPrefs = (
+    mapAttrs' (
+      configname: config:
+      nameValuePair configname (
+        mapAttrs' (usrname: userconfig: nameValuePair usrname (userconfig.prefs)) (config.users)
+      )
+    ) allOtherHostConfigs
+  );
 
-  allHostUserInfos = (mapAttrs' (configname: config:
-    nameValuePair configname ( mapAttrs'(usrname: userconfig:
-      nameValuePair usrname (userconfig.infos)
-    )(config.users))
-  ) allOtherHostConfigs);
+  allHostUserInfos = (
+    mapAttrs' (
+      configname: config:
+      nameValuePair configname (
+        mapAttrs' (usrname: userconfig: nameValuePair usrname (userconfig.infos)) (config.users)
+      )
+    ) allOtherHostConfigs
+  );
 
-  allUserPrefs = mapAttrs' (name: value:
-    nameValuePair name (value.prefs)
-  ) hostConfig.users;
+  allUserPrefs = mapAttrs' (name: value: nameValuePair name (value.prefs)) hostConfig.users;
 
-  allUserInfos = mapAttrs' (name: value:
-    nameValuePair name (value.infos)
-  ) hostConfig.users;
+  allUserInfos = mapAttrs' (name: value: nameValuePair name (value.infos)) hostConfig.users;
 
   generalArgs = {
     inherit
@@ -66,7 +63,7 @@ let
   };
 
   hostArgs = {
-    inherit 
+    inherit
       hostInfos
       hostPubKeys
       allUserPrefs
@@ -92,7 +89,10 @@ nixosSystem {
     hostConfig.hardware
 
     {
-      imports = trivnixLib.resolveDir { dirPath = ./hosts; preset = "importList"; };
+      imports = trivnixLib.resolveDir {
+        dirPath = ./hosts;
+        preset = "importList";
+      };
       config = { inherit hostPrefs; };
       config.disko.enableConfig = true;
 
@@ -105,17 +105,23 @@ nixosSystem {
         ];
 
         extraSpecialArgs = generalArgs // hostArgs;
-        
-        users = mapAttrs' (name: userPrefs:
+
+        users = mapAttrs' (
+          name: userPrefs:
           let
-            userInfos = hostConfig.users.${name}.infos // { inherit name; };
+            userInfos = hostConfig.users.${name}.infos // {
+              inherit name;
+            };
           in
-          nameValuePair
-          name
-          {
-            imports = trivnixLib.resolveDir { dirPath = ./home; preset = "importList"; } ++ [
-              { _module.args = { inherit userInfos; }; }
-            ];
+          nameValuePair name {
+            imports =
+              trivnixLib.resolveDir {
+                dirPath = ./home;
+                preset = "importList";
+              }
+              ++ [
+                { _module.args = { inherit userInfos; }; }
+              ];
 
             config = { inherit userPrefs; };
           }

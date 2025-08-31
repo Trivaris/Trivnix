@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf nameValuePair;
   prefs = config.userPrefs;
 
   calendarSettings = lib.flatten (
@@ -16,30 +16,12 @@ let
         prefix = "calendar.registry.${account.uuid}";
       in
       [
-        {
-          name = "${prefix}.type";
-          value = account.type;
-        }
-        {
-          name = "${prefix}.uri";
-          value = account.uri;
-        }
-        {
-          name = "${prefix}.username";
-          value = account.username;
-        }
-        {
-          name = "${prefix}.name";
-          value = name;
-        }
-        {
-          name = "${prefix}.color";
-          value = account.color;
-        }
-        {
-          name = "${prefix}.disabled";
-          value = false;
-        }
+        (nameValuePair "${prefix}.type" account.type)
+        (nameValuePair "${prefix}.uri" account.uri)
+        (nameValuePair "${prefix}.username" account.username)
+        (nameValuePair "${prefix}.name" name)
+        (nameValuePair "${prefix}.color" account.color)
+        (nameValuePair "${prefix}.disabled" false)
       ]
     ) inputs.trivnix-private.calendarAccounts
   );

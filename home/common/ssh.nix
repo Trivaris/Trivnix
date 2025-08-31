@@ -15,13 +15,10 @@ let
         infos = allHostInfos.${configname};
       in
       [
-        {
-          name = infos.name;
-          value = {
-            hostname = infos.ip;
-            user = userInfos.name;
-          };
-        }
+        (lib.nameValuePair infos.name {
+          hostname = infos.ip;
+          user = userInfos.name;
+        })
       ]
     ) (lib.attrNames (lib.filterAttrs (_: prefs: prefs.openssh.enable or false) allHostPrefs))
   );
@@ -30,11 +27,12 @@ in
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "no";
+    enableDefaultConfig = false;
 
     matchBlocks = {
       "*" = {
         identitiesOnly = true;
+        addKeysToAgent = "no";
         identityFile =
           if hostInfos.hardwareKey then
             [

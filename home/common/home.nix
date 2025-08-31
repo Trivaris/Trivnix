@@ -31,10 +31,9 @@
     };
   };
 
-  home.activation.runRmClobberingService =
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      /run/current-system/sw/bin/systemctl --user start rmClobbering.service || true
-    '';
+  home.activation.runRmClobberingService = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    /run/current-system/sw/bin/systemctl --user start rmClobbering.service || true
+  '';
 
   nixpkgs = {
     overlays = builtins.attrValues (outputs.overlays);

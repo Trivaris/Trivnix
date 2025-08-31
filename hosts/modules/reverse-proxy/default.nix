@@ -4,15 +4,19 @@ let
   prefs = config.hostPrefs;
 
   services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (builtins.attrValues prefs);
-  
-  activeServices = map (service: service.reverseProxy) (builtins.filter (service: service.reverseProxy.enable or false) services);
+
+  activeServices = map (service: service.reverseProxy) (
+    builtins.filter (service: service.reverseProxy.enable or false) services
+  );
 
   externalPorts = builtins.map (service: service.externalPort) (
     builtins.filter (service: service.externalPort != null) activeServices
   );
 in
 {
-  options.hostPrefs.reverseProxy = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.reverseProxy = import ./config.nix {
+    inherit (lib) mkEnableOption mkOption types;
+  };
 
   config =
     let
@@ -46,12 +50,14 @@ in
         };
       };
 
-      systemd.timers.ddclient = mkIf (prefs.reverseProxy.ddnsTime != null && prefs.reverseProxy.enableDDClient) {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = prefs.reverseProxy.ddnsTime;
-          Persistent = true;
-        };
-      };
+      systemd.timers.ddclient =
+        mkIf (prefs.reverseProxy.ddnsTime != null && prefs.reverseProxy.enableDDClient)
+          {
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+              OnCalendar = prefs.reverseProxy.ddnsTime;
+              Persistent = true;
+            };
+          };
     };
 }

@@ -9,7 +9,10 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.sunshine = import ./config.nix { inherit (trivnixLib) mkReverseProxyOption; inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.sunshine = import ./config.nix {
+    inherit (trivnixLib) mkReverseProxyOption;
+    inherit (lib) mkEnableOption mkOption types;
+  };
 
   config = mkIf prefs.sunshine.enable {
     services.sunshine = {

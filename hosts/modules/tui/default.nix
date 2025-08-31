@@ -9,7 +9,6 @@ let
   cfg = config.hostPrefs;
 in
 {
-
   options.hostPrefs.tui.enable = mkEnableOption "Enable CLI Tools related to TUIs";
 
   config = mkIf cfg.tui.enable {
@@ -22,5 +21,4 @@ in
         ;
     };
   };
-
 }
