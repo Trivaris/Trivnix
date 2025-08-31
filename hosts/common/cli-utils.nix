@@ -33,6 +33,8 @@
       espanso-wayland
       adbautoplayer
       android-tools
+      protonvpn-gui
+      chromium
       ;
 
   };
