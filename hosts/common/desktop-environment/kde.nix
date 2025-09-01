@@ -5,13 +5,11 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
   cfg = config.hostPrefs;
 in
 {
-  options.hostPrefs.kde.enable = mkEnableOption "Enable KDE Plasma";
-
-  config = mkIf cfg.kde.enable {
+  config = mkIf (cfg.desktopEnvironment == "kde") {
     qt.platformTheme = lib.mkForce "kde";
 
     services.desktopManager.plasma6.enable = true;
@@ -43,7 +41,7 @@ in
           ktorrent
           ;
       }
-      ++ (if (cfg.sddm.enable) then [ pkgs.kdePackages.sddm-kcm ] else [ ])
+      ++ (if (cfg.displayManager == "sddm") then [ pkgs.kdePackages.sddm-kcm ] else [ ])
     );
 
     # KDE Connect

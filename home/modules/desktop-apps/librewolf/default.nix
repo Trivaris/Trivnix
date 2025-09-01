@@ -47,10 +47,12 @@ in
           engines = {
             brave = {
               name = "Brave";
-              urls = [{
-                template = "https://search.brave.com/search";
-                params = [(lib.nameValuePair "q" "{searchTerms}")];
-              }];
+              urls = [
+                {
+                  template = "https://search.brave.com/search";
+                  params = [ (lib.nameValuePair "q" "{searchTerms}") ];
+                }
+              ];
             };
           };
         };

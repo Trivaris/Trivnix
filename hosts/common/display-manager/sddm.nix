@@ -1,12 +1,10 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   cfg = config.hostPrefs;
 in
 {
-  options.hostPrefs.sddm.enable = mkEnableOption "Enable SDDM Greeter";
-
-  config = mkIf cfg.sddm.enable {
+  config = mkIf (cfg.displayManager == "sddm") {
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;

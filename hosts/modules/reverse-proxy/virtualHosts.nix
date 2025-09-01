@@ -1,8 +1,12 @@
-{ prefs, activeServices, nameValuePair }:
+{
+  prefs,
+  activeServices,
+  nameValuePair,
+}:
 builtins.listToAttrs (
-  map (service: nameValuePair
-    service.domain
-    {
+  map (
+    service:
+    nameValuePair service.domain {
       forceSSL = true;
       useACMEHost = service.domain;
 

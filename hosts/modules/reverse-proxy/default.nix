@@ -3,7 +3,7 @@ let
   inherit (lib) mkIf nameValuePair;
   prefs = config.hostPrefs;
 
-  services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (builtins.attrValues prefs);
+  services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (builtins.filter (pref: builtins.isAttrs pref) (builtins.attrValues prefs));
 
   activeServices = map (service: service.reverseProxy) (
     builtins.filter (service: service.reverseProxy.enable or false) services
@@ -21,7 +21,14 @@ in
   config =
     let
       ddclient = import ./ddclient.nix { inherit prefs config activeServices; };
-      acme = import ./acme.nix { inherit prefs config activeServices nameValuePair; };
+      acme = import ./acme.nix {
+        inherit
+          prefs
+          config
+          activeServices
+          nameValuePair
+          ;
+      };
       virtualHosts = import ./virtualHosts.nix { inherit prefs activeServices nameValuePair; };
     in
     mkIf (prefs.reverseProxy.enable) {
