@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf nameValuePair;
   prefs = config.hostPrefs;
 
   services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (builtins.attrValues prefs);
@@ -21,8 +21,8 @@ in
   config =
     let
       ddclient = import ./ddclient.nix { inherit prefs config activeServices; };
-      acme = import ./acme.nix { inherit prefs config activeServices; };
-      virtualHosts = import ./virtualHosts.nix { inherit prefs activeServices; };
+      acme = import ./acme.nix { inherit prefs config activeServices nameValuePair; };
+      virtualHosts = import ./virtualHosts.nix { inherit prefs activeServices nameValuePair; };
     in
     mkIf (prefs.reverseProxy.enable) {
       networking.firewall.allowedTCPPorts = [ prefs.reverseProxy.port ] ++ externalPorts;

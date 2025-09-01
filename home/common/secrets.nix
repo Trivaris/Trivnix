@@ -28,21 +28,17 @@ let
   );
 
   emailSecrets = builtins.listToAttrs (
-    map (account: {
-      name = "email-passwords/${account}";
-      value = {
-        mode = "0600";
-      };
-    }) (builtins.attrNames inputs.trivnix-private.emailAccounts)
+    map (account: lib.nameValuePair
+      "email-passwords/${account}"
+      { mode = "0600"; }
+    ) (builtins.attrNames inputs.trivnix-private.emailAccounts)
   );
 
   calendarSecrets = builtins.listToAttrs (
-    map (account: {
-      name = "calendar-passwords/${account}";
-      value = {
-        mode = "0600";
-      };
-    }) (builtins.attrNames inputs.trivnix-private.calendarAccounts)
+    map (account: lib.nameValuePair
+      "calendar-passwords/${account}"
+      { mode = "0600"; }
+    ) (builtins.attrNames inputs.trivnix-private.calendarAccounts)
   );
 in
 {

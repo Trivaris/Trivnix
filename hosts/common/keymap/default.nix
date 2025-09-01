@@ -34,10 +34,7 @@ in
       {
         defaultLocale = language;
         extraLocaleSettings = builtins.listToAttrs (
-          map (unit: {
-            name = unit;
-            value = unitLanguage;
-          }) unitTypes
+          map (unit: lib.nameValuePair unit unitLanguage ) unitTypes
         );
       };
 
