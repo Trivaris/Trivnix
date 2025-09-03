@@ -327,11 +327,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756680064,
-        "narHash": "sha256-zvDsOu7cm9oI9iArvih5Qr/cBZCNJ5T7OQCFt8kJGYs=",
+        "lastModified": 1756833776,
+        "narHash": "sha256-m/nSouqgXd8dYwHhVoj6a6/0Y51qCF7PanCIrZaZHb4=",
         "ref": "nix-update",
-        "rev": "40414d560ec510f6b8d87503360d10198767ab30",
-        "revCount": 2057,
+        "rev": "0c38cb268f4c87eda949e560a00b86713a8c4816",
+        "revCount": 2067,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Trivaris/Millennium"

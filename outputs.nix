@@ -6,6 +6,9 @@ let
   inherit (inputs.trivnix-configs) configs commonInfos;
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair concatMapAttrs;
 
+  system = "x86_64-linux";
+  pkgs = import inputs.nixpkgs { inherit system; };
+
   mkHomeManager = import ./mkHomeManager.nix {
     inherit
       inputs
@@ -27,6 +30,8 @@ let
 in
 {
   overlays = (import ./overlays) inputs;
+
+  packages.${system}.me3 = pkgs.callPackage ./overlays/pkgs/me3.nix pkgs;
 
   # Define NixOS configs for each host
   # Format: configname = <NixOS config>

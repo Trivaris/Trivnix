@@ -35,6 +35,8 @@
       android-tools
       protonvpn-gui
       chromium
+      sdl3
+      me3
       ;
 
   };

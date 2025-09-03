@@ -8,9 +8,9 @@ in
   millennium = inputs.millennium.overlays.default;
 
   additions = final: pkgs: {
+    me3 = pkgs.callPackage ./pkgs/me3.nix pkgs;
     rmatrix = pkgs.callPackage ./pkgs/rmatrix.nix pkgs;
     rbonsai = pkgs.callPackage ./pkgs/rbonsai.nix pkgs;
-    vaultwarden-web-vault = pkgs.callPackage ./pkgs/vaultwarden-web-vault.nix pkgs;
     keeweb = pkgs.callPackage ./pkgs/keeweb.nix pkgs;
     instagram-cli = pkgs.callPackage ./pkgs/instagram-cli.nix pkgs;
     adbautoplayer = pkgs.callPackage ./pkgs/adbautoplayer.nix pkgs;
