@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "chatgpt" cfg.desktopApps) {
+  config = mkIf (builtins.elem "chatgpt" prefs.desktopApps) {
     home.packages = builtins.attrValues {
       inherit (pkgs) chatgpt;
     };

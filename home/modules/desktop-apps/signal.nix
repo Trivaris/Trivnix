@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "signal" cfg.desktopApps) {
+  config = mkIf (builtins.elem "signal" prefs.desktopApps) {
     home.packages = builtins.attrValues {
       inherit (pkgs) signal-desktop;
     };

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
 
@@ -13,12 +13,12 @@ in
   };
 
   config = {
-    console.keyMap = cfg.language.keyMap;
+    console.keyMap = prefs.language.keyMap;
 
     i18n =
       let
-        language = "${cfg.language.locale}.${cfg.language.charset}";
-        unitLanguage = "${cfg.language.units}.${cfg.language.charset}";
+        language = "${prefs.language.locale}.${prefs.language.charset}";
+        unitLanguage = "${prefs.language.units}.${prefs.language.charset}";
         unitTypes = [
           "LC_ADDRESS"
           "LC_IDENTIFICATION"
@@ -39,7 +39,7 @@ in
       };
 
     services.xserver.xkb = {
-      layout = cfg.language.keyMap;
+      layout = prefs.language.keyMap;
       variant = "";
     };
   };

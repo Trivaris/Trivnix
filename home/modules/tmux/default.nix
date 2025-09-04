@@ -6,12 +6,12 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
   options.userPrefs.tmux.enable = mkEnableOption "Extended Tmux Config";
 
-  config = mkIf cfg.tmux.enable {
+  config = mkIf prefs.tmux.enable {
     programs.tmux = {
       enable = true;
       prefix = "C-s";

@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "vesktop" cfg.desktopApps) {
+  config = mkIf (builtins.elem "vesktop" prefs.desktopApps) {
     programs.vesktop = {
       enable = true;
     };

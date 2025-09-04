@@ -5,12 +5,12 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.hyprland = import ./config.nix { };
 
-  config = mkIf (cfg.desktopEnvironment == "hyprland") {
+  config = mkIf (prefs.desktopEnvironment == "hyprland") {
     programs.hyprland.enable = true;
   };
 }

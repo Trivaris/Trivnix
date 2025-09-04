@@ -1,8 +1,6 @@
 {
-  outputs,
   pkgs,
   lib,
-  trivnixLib,
   hostInfos,
   userInfos,
   ...
@@ -34,9 +32,4 @@
   home.activation.runRmClobberingService = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     /run/current-system/sw/bin/systemctl --user start rmClobbering.service || true
   '';
-
-  nixpkgs = {
-    overlays = builtins.attrValues (outputs.overlays);
-    config = trivnixLib.pkgsConfig;
-  };
 }

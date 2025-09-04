@@ -3,21 +3,25 @@ let
   me3 = {
     pname = "me3";
     version = "v0.7.0";
-    
+
     src = pkgs.fetchurl {
       url = "https://github.com/garyttierney/me3/releases/download/${me3.version}/me3-linux-amd64.tar.gz";
       sha256 = "sha256-88WYgv82MShq35VgWaeBcmGJr6z5ktmlX73FcELRtXg=";
     };
 
     sourceRoot = ".";
-    nativeBuildInputs = [ pkgs.autoPatchelfHook pkgs.makeWrapper ];
+    nativeBuildInputs = [
+      pkgs.autoPatchelfHook
+      pkgs.makeWrapper
+    ];
     buildInputs = builtins.attrValues {
       inherit (pkgs.xorg) libX11;
       inherit (pkgs.gcc.cc) lib;
       inherit (pkgs)
-        glibc 
+        glibc
         libGL
-        zlib;
+        zlib
+        ;
     };
 
     installPhase = ''

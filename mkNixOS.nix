@@ -15,15 +15,13 @@ let
   hostInfos = hostConfig.infos // {
     inherit configname;
   };
+
   hostPrefs = hostConfig.prefs;
   hostPubKeys = hostConfig.pubKeys;
 
   allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
-
   allHostInfos = (mapAttrs' (name: value: nameValuePair name (value.infos)) allOtherHostConfigs);
-
   allHostPrefs = (mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherHostConfigs);
-
   allHostPubKeys = (mapAttrs' (name: value: nameValuePair name (value.pubKeys)) allOtherHostConfigs);
 
   allHostUserPrefs = (
@@ -45,7 +43,6 @@ let
   );
 
   allUserPrefs = mapAttrs' (name: value: nameValuePair name (value.prefs)) hostConfig.users;
-
   allUserInfos = mapAttrs' (name: value: nameValuePair name (value.infos)) hostConfig.users;
 
   generalArgs = {
@@ -73,6 +70,12 @@ let
 in
 nixosSystem {
   specialArgs = generalArgs // hostArgs;
+
+  pkgs = import inputs.nixpkgs {
+    system = hostConfig.infos.architecture;
+    overlays = builtins.attrValues (outputs.overlays);
+    config = hostConfig.pkgsConfig;
+  };
 
   modules = [
     # Flake NixOS entrypoint
@@ -105,6 +108,8 @@ nixosSystem {
         ];
 
         extraSpecialArgs = generalArgs // hostArgs;
+        useGlobalPkgs = true;
+        useUserPackages = true;
 
         users = mapAttrs' (
           name: userPrefs:

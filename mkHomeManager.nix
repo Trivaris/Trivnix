@@ -17,6 +17,7 @@ let
   hostInfos = hostConfig.infos // {
     inherit configname;
   };
+
   hostPrefs = hostConfig.prefs;
   hostPubKeys = hostConfig.pubKeys;
 
@@ -30,9 +31,7 @@ let
   allOtherUserConfigs = builtins.removeAttrs hostConfig.users [ username ];
 
   allHostInfos = (mapAttrs' (name: value: nameValuePair name (value.infos)) allOtherHostConfigs);
-
   allHostPrefs = (mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherHostConfigs);
-
   allHostPubKeys = (mapAttrs' (name: value: nameValuePair name (value.pubKeys)) allOtherHostConfigs);
 
   allHostUserPrefs = (
@@ -54,7 +53,6 @@ let
   );
 
   allUserPrefs = mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherUserConfigs;
-
   allUserInfos = mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherUserConfigs;
 
   generalArgs = {
@@ -91,7 +89,7 @@ homeManagerConfiguration {
   pkgs = import inputs.nixpkgs {
     system = hostConfig.infos.architecture;
     overlays = builtins.attrValues (outputs.overlays);
-    config = trivnixLib.pkgsConfig;
+    config = hostConfig.pkgsConfig;
   };
 
   extraSpecialArgs = generalArgs // hostArgs // homeArgs;

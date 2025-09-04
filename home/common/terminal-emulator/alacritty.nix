@@ -5,10 +5,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "alacritty" cfg.desktopApps) {
+  config = mkIf (prefs.terminalEmulator == "alacritty") {
     programs.alacritty = {
       enable = true;
 

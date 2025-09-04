@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "spotify" cfg.desktopApps) {
+  config = mkIf (builtins.elem "spotify" prefs.desktopApps) {
     programs.spicetify = {
       enable = true;
     };

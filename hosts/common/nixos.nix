@@ -1,19 +1,12 @@
 {
   inputs,
-  outputs,
   lib,
   pkgs,
-  trivnixLib,
   allUserInfos,
   ...
 }:
 {
   time.timeZone = "Europe/Berlin";
-
-  nixpkgs = {
-    overlays = builtins.attrValues (outputs.overlays);
-    config = trivnixLib.pkgsConfig;
-  };
 
   nix = {
     package = lib.mkDefault pkgs.nix;

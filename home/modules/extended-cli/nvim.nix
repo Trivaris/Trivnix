@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "nvim" cfg.extendedCli) {
+  config = mkIf (builtins.elem "nvim" prefs.extendedCli) {
     programs.nvf = {
       enable = true;
 

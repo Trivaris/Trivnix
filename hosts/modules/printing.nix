@@ -6,12 +6,12 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.printing.enable = mkEnableOption "Printing";
 
-  config = mkIf (cfg.printing.enable) {
+  config = mkIf (prefs.printing.enable) {
     services.printing = {
       enable = true;
       drivers = [ pkgs.samsung-unified-linux-driver ];

@@ -6,7 +6,7 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.suwayomi = import ./config.nix {
@@ -14,13 +14,13 @@ in
     inherit (trivnixLib) mkReverseProxyOption;
   };
 
-  config = mkIf cfg.suwayomi.enable {
+  config = mkIf prefs.suwayomi.enable {
     services.suwayomi-server = {
       enable = true;
 
       settings.server = {
-        host = cfg.suwayomi.reverseProxy.ipAddress;
-        port = cfg.suwayomi.reverseProxy.port;
+        host = prefs.suwayomi.reverseProxy.ipAddress;
+        port = prefs.suwayomi.reverseProxy.port;
 
         systemTrayEnabled = false;
         downloadAsCbz = true;

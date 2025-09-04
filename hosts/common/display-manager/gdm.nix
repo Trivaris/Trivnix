@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
-  config = mkIf (cfg.displayManager == "gdm") {
+  config = mkIf (prefs.displayManager == "gdm") {
     services.displayManager.gdm = {
       enable = true;
     };

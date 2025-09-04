@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "bat" cfg.extendedCli) {
+  config = mkIf (builtins.elem "bat" prefs.extendedCli) {
     programs.bat = {
       enable = true;
     };

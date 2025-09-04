@@ -6,12 +6,12 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.steam.enable = mkEnableOption "Enable Steam";
 
-  config = mkIf cfg.steam.enable {
+  config = mkIf prefs.steam.enable {
     programs.steam = {
       enable = true;
       package = pkgs.steam-millennium;

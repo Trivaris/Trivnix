@@ -6,12 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "bitwarden" cfg.desktopApps) {
-    home.packages = builtins.attrValues {
-      inherit (pkgs) bitwarden-desktop;
-    };
+  config = mkIf (builtins.elem "bitwarden" prefs.desktopApps) {
+    home.packages = [ pkgs.bitwarden-desktop ];
   };
 }

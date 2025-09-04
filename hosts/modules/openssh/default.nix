@@ -6,15 +6,15 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
-  config = mkIf (cfg.openssh.enable) {
+  config = mkIf (prefs.openssh.enable) {
     services.openssh = {
       enable = true;
-      ports = cfg.openssh.ports;
+      ports = prefs.openssh.ports;
 
       settings = {
         PasswordAuthentication = false;
@@ -37,6 +37,6 @@ in
       ];
     };
 
-    networking.firewall.allowedTCPPorts = cfg.openssh.ports;
+    networking.firewall.allowedTCPPorts = prefs.openssh.ports;
   };
 }

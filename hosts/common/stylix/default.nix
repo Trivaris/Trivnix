@@ -6,19 +6,19 @@
   ...
 }:
 let
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.stylix = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config.stylix =
     let
-      theme = "${pkgs.base16-schemes}/share/themes/${cfg.stylix.colorscheme}.yaml";
+      theme = "${pkgs.base16-schemes}/share/themes/${prefs.stylix.colorscheme}.yaml";
     in
     {
       enable = true;
       base16Scheme = theme;
-      polarity = if cfg.stylix.darkmode then "dark" else "light";
+      polarity = if prefs.stylix.darkmode then "dark" else "light";
 
       image =
         pkgs.runCommand "tinted-wallpaper.png"
@@ -33,9 +33,9 @@ in
             magick wallpaper.png -fill "$COLOR" -colorize 25% $out
           '';
 
-      cursor.package = pkgs.${cfg.stylix.cursorPackage};
-      cursor.name = cfg.stylix.cursorName;
-      cursor.size = cfg.stylix.cursorSize;
+      cursor.package = pkgs.${prefs.stylix.cursorPackage};
+      cursor.name = prefs.stylix.cursorName;
+      cursor.size = prefs.stylix.cursorSize;
 
       fonts = {
         monospace = {
@@ -44,8 +44,8 @@ in
         };
 
         sansSerif = {
-          name = cfg.stylix.nerdfont;
-          package = pkgs.nerd-fonts.${cfg.stylix.nerdfont};
+          name = prefs.stylix.nerdfont;
+          package = pkgs.nerd-fonts.${prefs.stylix.nerdfont};
         };
 
         serif = config.stylix.fonts.sansSerif;

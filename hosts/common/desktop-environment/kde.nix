@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.hostPrefs;
+  prefs = config.hostPrefs;
 in
 {
-  config = mkIf (cfg.desktopEnvironment == "kde") {
+  config = mkIf (prefs.desktopEnvironment == "kde") {
     qt.platformTheme = lib.mkForce "kde";
 
     services.desktopManager.plasma6.enable = true;
@@ -41,7 +41,7 @@ in
           ktorrent
           ;
       }
-      ++ (if (cfg.displayManager == "sddm") then [ pkgs.kdePackages.sddm-kcm ] else [ ])
+      ++ (if (prefs.displayManager == "sddm") then [ pkgs.kdePackages.sddm-kcm ] else [ ])
     );
 
     # KDE Connect

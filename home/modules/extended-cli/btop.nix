@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "btop" cfg.extendedCli) {
+  config = mkIf (builtins.elem "btop" prefs.extendedCli) {
     programs.btop.enable = true;
   };
 }

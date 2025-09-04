@@ -7,18 +7,18 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.userPrefs;
+  prefs = config.userPrefs;
 in
 {
   options.userPrefs.fish.enable = mkEnableOption "extended fish config";
 
-  config = mkIf cfg.fish.enable {
+  config = mkIf prefs.fish.enable {
     programs.fish = {
       enable = true;
 
       loginShellInit = ''
         set -x NIX_LOG info
-        ${if (builtins.elem "alacritty" cfg.desktopApps) then "set -x TERMINAL alacritty" else ""}
+        ${if prefs.terminalEmulator != null then "set -x TERMINAL ${prefs.terminalEmulator}" else ""}
       '';
 
       interactiveShellInit = ''
