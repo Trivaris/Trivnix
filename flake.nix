@@ -6,7 +6,6 @@
   inputs = {
     # Core Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # Nix Community Modules
     home-manager = {

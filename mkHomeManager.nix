@@ -3,6 +3,7 @@
   outputs,
   trivnixLib,
   commonInfos,
+  inputOverlays,
 }:
 {
   configname,
@@ -14,46 +15,39 @@ let
   inherit (trivnixLib) configs;
 
   hostConfig = configs.${configname};
+  hostPrefs = hostConfig.prefs;
+  hostPubKeys = hostConfig.pubKeys;
+  userConfig = hostConfig.users.${username};
+  userPrefs = userConfig.prefs;
+  allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
+  allOtherUserConfigs = builtins.removeAttrs hostConfig.users [ username ];
+  allHostInfos = mapAttrs' (name: value: nameValuePair name value.infos) allOtherHostConfigs;
+  allHostPrefs = mapAttrs' (name: value: nameValuePair name value.prefs) allOtherHostConfigs;
+  allHostPubKeys = mapAttrs' (name: value: nameValuePair name value.pubKeys) allOtherHostConfigs;
+  allUserPrefs = mapAttrs' (name: value: nameValuePair name value.prefs) allOtherUserConfigs;
+  allUserInfos = mapAttrs' (name: value: nameValuePair name value.prefs) allOtherUserConfigs;
+
   hostInfos = hostConfig.infos // {
     inherit configname;
   };
 
-  hostPrefs = hostConfig.prefs;
-  hostPubKeys = hostConfig.pubKeys;
-
-  userConfig = hostConfig.users.${username};
   userInfos = userConfig.infos // {
     name = username;
   };
-  userPrefs = userConfig.prefs;
 
-  allOtherHostConfigs = builtins.removeAttrs configs [ configname ];
-  allOtherUserConfigs = builtins.removeAttrs hostConfig.users [ username ];
+  allHostUserPrefs = mapAttrs' (
+    configname: config:
+    nameValuePair configname (
+      mapAttrs' (usrname: userconfig: nameValuePair usrname userconfig.prefs) config.users
+    )
+  ) allOtherHostConfigs;
 
-  allHostInfos = (mapAttrs' (name: value: nameValuePair name (value.infos)) allOtherHostConfigs);
-  allHostPrefs = (mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherHostConfigs);
-  allHostPubKeys = (mapAttrs' (name: value: nameValuePair name (value.pubKeys)) allOtherHostConfigs);
-
-  allHostUserPrefs = (
-    mapAttrs' (
-      configname: config:
-      nameValuePair configname (
-        mapAttrs' (usrname: userconfig: nameValuePair usrname (userconfig.prefs)) (config.users)
-      )
-    ) allOtherHostConfigs
-  );
-
-  allHostUserInfos = (
-    mapAttrs' (
-      configname: config:
-      nameValuePair configname (
-        mapAttrs' (usrname: userconfig: nameValuePair usrname (userconfig.infos)) (config.users)
-      )
-    ) allOtherHostConfigs
-  );
-
-  allUserPrefs = mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherUserConfigs;
-  allUserInfos = mapAttrs' (name: value: nameValuePair name (value.prefs)) allOtherUserConfigs;
+  allHostUserInfos = mapAttrs' (
+    configname: config:
+    nameValuePair configname (
+      mapAttrs' (usrname: userconfig: nameValuePair usrname userconfig.infos) config.users
+    )
+  ) allOtherHostConfigs;
 
   generalArgs = {
     inherit
@@ -86,13 +80,13 @@ let
   };
 in
 homeManagerConfiguration {
+  extraSpecialArgs = generalArgs // hostArgs // homeArgs;
+
   pkgs = import inputs.nixpkgs {
     system = hostConfig.infos.architecture;
-    overlays = builtins.attrValues (outputs.overlays);
+    overlays = builtins.attrValues (inputOverlays // outputs.overlays);
     config = hostConfig.pkgsConfig;
   };
-
-  extraSpecialArgs = generalArgs // hostArgs // homeArgs;
 
   modules = [
     # Flake entrypoint
@@ -102,12 +96,12 @@ homeManagerConfiguration {
     inputs.nvf.homeManagerModules.default
 
     {
+      config = { inherit userPrefs; };
+
       imports = trivnixLib.resolveDir {
         dirPath = ./home;
         preset = "importList";
       };
-
-      config = { inherit userPrefs; };
     }
   ];
 }

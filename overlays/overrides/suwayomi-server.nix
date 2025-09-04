@@ -5,13 +5,13 @@ let
     revision = null;
     version = "v2.0.1854";
 
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    dontUnpack = true;
+
     src = pkgs.fetchurl {
       url = "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/${suwayomi-server.version}/Suwayomi-Server-${suwayomi-server.version}.jar";
       hash = "sha256-oDE0b77qxTovZTd+P9J01wNxYZ3BrNqoX03biei03pM=";
     };
-
-    nativeBuildInputs = [ pkgs.makeWrapper ];
-    dontUnpack = true;
 
     buildPhase = ''
       runHook preBuild

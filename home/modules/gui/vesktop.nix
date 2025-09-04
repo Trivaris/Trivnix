@@ -5,8 +5,6 @@ let
 in
 {
   config = mkIf (builtins.elem "vesktop" prefs.gui) {
-    programs.vesktop = {
-      enable = true;
-    };
+    programs.vesktop.enable = true;
   };
 }

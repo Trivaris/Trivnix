@@ -5,15 +5,18 @@ let
 in
 {
   config = mkIf (builtins.elem "eza" prefs.cli) {
-    programs.eza = {
-      enable = true;
-      extraOptions = [
-        "-l"
-        "--icons"
-        "--git"
-        "-a"
-      ];
+    programs = {
+      eza = {
+        enable = true;
+        extraOptions = [
+          "-l"
+          "--icons"
+          "--git"
+          "-a"
+        ];
+      };
+
+      fish.functions.ls.body = "eza $argv";
     };
-    programs.fish.functions.ls.body = "eza $argv";
   };
 }

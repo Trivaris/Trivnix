@@ -9,12 +9,7 @@ in
   allowedCookies = mkOption {
     type = types.listOf types.str;
     default = [ ];
-    example = [
-      "https://accounts.google.com"
-      "https://www.youtube.com"
-    ];
-    description = ''
-      URLs of Domains that will keep their cookies after closing if `clearOnShutdown` is enabled 
-    '';
+    example = [ "https://accounts.google.com" ];
+    description = "URLs of Domains that will keep their cookies after closing if `clearOnShutdown` is enabled";
   };
 }

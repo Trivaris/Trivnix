@@ -5,8 +5,6 @@ let
 in
 {
   config = mkIf (builtins.elem "spotify" prefs.gui) {
-    programs.spicetify = {
-      enable = true;
-    };
+    programs.spicetify.enable = true;
   };
 }

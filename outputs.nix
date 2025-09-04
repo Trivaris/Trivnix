@@ -1,10 +1,20 @@
 { inputs, self }:
 let
-  outputs = self.outputs;
-  trivnixLib = inputs.trivnix-lib.lib.for self;
-
   inherit (inputs.trivnix-configs) configs commonInfos;
-  inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair concatMapAttrs;
+  inherit (inputs.nixpkgs) lib;
+  inherit (lib) mapAttrs' nameValuePair concatMapAttrs;
+  inherit (self) outputs;
+
+  trivnixLib = inputs.trivnix-lib.lib.for self;
+  systems = lib.mapAttrsToList (_: config: config.infos.architecture) configs;
+  forAllSystems =
+    func: builtins.listToAttrs (map (system: nameValuePair system (func system)) systems);
+
+  inputOverlays = {
+    nur = inputs.nur.overlays.default;
+    minecraft = inputs.nix-minecraft.overlay;
+    millennium = inputs.millennium.overlays.default;
+  };
 
   mkHomeManager = import ./mkHomeManager.nix {
     inherit
@@ -13,8 +23,10 @@ let
       trivnixLib
       configs
       commonInfos
+      inputOverlays
       ;
   };
+
   mkNixOS = import ./mkNixOS.nix {
     inherit
       inputs
@@ -22,19 +34,36 @@ let
       trivnixLib
       configs
       commonInfos
+      inputOverlays
       ;
   };
 in
 {
-  extraOverrides = trivnixLib.resolveDir {
-    dirPath = ./overlays/pkgs;
-    preset = "moduleNames";
-  };
-
   overlays = (import ./overlays) {
     inherit (trivnixLib) resolveDir;
-    inherit inputs mapAttrs' nameValuePair;
+    inherit mapAttrs' nameValuePair;
   };
+
+  devShells = forAllSystems (
+    system:
+    let
+      pkgs = import inputs.nixpkgs { inherit system; };
+    in
+    {
+      default = pkgs.mkShell {
+        shellHook = "git config --local core.hooksPath .githooks";
+        packages = builtins.attrValues {
+          inherit (pkgs)
+            git
+            nixfmt
+            statix
+            deadnix
+            shellcheck
+            ;
+        };
+      };
+    }
+  );
 
   # Define NixOS configs for each host
   # Format: configname = <NixOS config>

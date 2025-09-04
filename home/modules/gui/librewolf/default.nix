@@ -9,6 +9,7 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
+
   overrides = ''
 
     /** OVERRIDES ***/
@@ -44,6 +45,7 @@ in
         search = {
           default = "brave";
           order = [ "brave" ];
+
           engines = {
             brave = {
               name = "Brave";
@@ -61,8 +63,10 @@ in
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        SanitizeOnShutdown = mkIf (prefs.librewolf.clearOnShutdown) true;
-        ClearOnShutdown = mkIf (prefs.librewolf.clearOnShutdown) {
+        SanitizeOnShutdown = mkIf prefs.librewolf.clearOnShutdown true;
+        Cookies.Allow = prefs.librewolf.allowedCookies;
+
+        ClearOnShutdown = mkIf prefs.librewolf.clearOnShutdown {
           cache = true;
           cookies = true;
           downloads = true;
@@ -73,14 +77,12 @@ in
           siteSettings = false;
           offlineApps = true;
         };
-
-        Cookies.Allow = prefs.librewolf.allowedCookies;
       };
     };
 
     stylix.targets.librewolf.profileNames = [ userInfos.name ];
 
     home.file.".librewolf/${userInfos.name}/user.js".text =
-      if (prefs.librewolf.betterfox) then (inputs.betterfox + "/user.js") else "" + overrides;
+      if prefs.librewolf.betterfox then (inputs.betterfox + "/user.js") else "" + overrides;
   };
 }

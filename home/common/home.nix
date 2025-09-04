@@ -6,15 +6,18 @@
   ...
 }:
 {
-  home.username = lib.mkDefault userInfos.name;
-  home.homeDirectory = lib.mkDefault "/home/${userInfos.name}";
-  home.stateVersion = hostInfos.stateVersion;
+  home = {
+    inherit (hostInfos) stateVersion;
+    username = lib.mkDefault userInfos.name;
+    homeDirectory = lib.mkDefault "/home/${userInfos.name}";
+  };
 
   systemd.user.services.rmClobbering = {
     Unit = {
       Description = "Remove unwanted backup files";
       After = [ "default.target" ];
     };
+
     Service = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "rm-clobbering" ''
@@ -24,6 +27,7 @@
         rm -f ~/.config/gtk-3.0/gtk.css.backup 2>/dev/null || true
       '';
     };
+
     Install = {
       WantedBy = [ "default.target" ];
     };

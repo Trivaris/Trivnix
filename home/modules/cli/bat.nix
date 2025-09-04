@@ -5,9 +5,9 @@ let
 in
 {
   config = mkIf (builtins.elem "bat" prefs.cli) {
-    programs.bat = {
-      enable = true;
+    programs = {
+      bat.enable = true;
+      fish.functions.cat.body = "bat $argv";
     };
-    programs.fish.functions.cat.body = "bat $argv";
   };
 }

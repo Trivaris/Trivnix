@@ -11,6 +11,7 @@ let
   inherit (lib) mkIf mkMerge;
   prefs = config.userPrefs;
   selfPath = trivnixLib.mkStorePath "";
+  vscodiumSettings = commonSettings // (if prefs.vscodium.enableLsp then lspSettings else { });
 
   commonSettings = {
     "files.autoSave" = "afterDelay";
@@ -35,14 +36,11 @@ let
       };
     };
   };
-
-  vscodiumSettings = commonSettings // (if (prefs.vscodium.enableLsp) then lspSettings else { });
 in
 {
   options.userPrefs.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
 
   config = mkIf (builtins.elem "vscodium" prefs.gui) (mkMerge [
-
     {
       home.packages = builtins.attrValues (
         {
@@ -76,8 +74,10 @@ in
     }
 
     {
-      home.file.".vscodium-server/data/Machine/settings.json".text = builtins.toJSON vscodiumSettings;
-      home.file.".config/VSCodium/User/settings.json".text = builtins.toJSON vscodiumSettings;
+      home.file = {
+        ".vscodium-server/data/Machine/settings.json".text = builtins.toJSON vscodiumSettings;
+        ".config/VSCodium/User/settings.json".text = builtins.toJSON vscodiumSettings;
+      };
     }
 
     (mkIf prefs.vscodium.fixServer {

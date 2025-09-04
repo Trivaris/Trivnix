@@ -1,31 +1,24 @@
 { pkgs, ... }:
 {
-
   home.packages = builtins.attrValues {
-
     inherit (pkgs)
       coreutils
       wget
       zip
       jq
-
       eza
       fd
       ripgrep
       fzf
       zoxide
       tldr
-
       btop
       procs
       fastfetch
       rsclock
-
       git
       neovim
-
       httpie
-
       bat
       pipes-rs
       rmatrix
@@ -38,9 +31,5 @@
       sdl3
       me3
       ;
-
   };
-
-  programs.zoxide.enable = true;
-
 }

@@ -2,10 +2,12 @@
 let
   inherit (lib) types mkOption;
   inherit (trivnixLib) resolveDir;
+
   modules = resolveDir {
     dirPath = ./.;
     preset = "moduleNames";
   };
+
   imports = resolveDir {
     dirPath = ./.;
     preset = "importList";
@@ -13,16 +15,10 @@ let
 in
 {
   inherit imports;
-
   options.userPrefs.cli = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];
-    example = [
-      "btop"
-      "eza"
-    ];
-    description = ''
-      Advanced Configs of Cli Tools.
-    '';
+    example = [ "btop" ];
+    description = "Advanced Configs of Cli Tools";
   };
 }

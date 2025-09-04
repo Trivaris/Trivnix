@@ -190,6 +190,153 @@ This will include `./hosts/modules/openssh.nix` and `bluetooth.nix` automaticall
 
 ---
 
+## Formatting
+
+The Standard way of formatting here is nixfmt. Though since that leaves some things up to interpretations, here are some rules for manual formatting.
+
+First, Oneliners and Multi-line blocks.
+
+All Oneliners are treated as one big multiline block and in every attr set, all multiline blocks are separated by one space.
+
+```nix
+{
+  foo = "bar";
+  baz = "bum";
+
+  nix = {
+    awesome = true;
+    hello = "world";
+  }
+}
+```
+
+Since this is only the baseline, there are some exceptions.
+
+inherit statements will also be treated as one multiline block, except if there is only one onliner or one import statement:
+```nix
+{
+  inherit (lib) nameValuePair;
+  inherit (x) y;
+
+  foo = "bar";
+  baz = "bum";
+}
+```
+
+but
+
+```nix
+{
+  inherit (lib) nameValuePair;
+  hello = "world";
+  baz = "bum";
+
+  foo = {
+    bar = "bum";
+    x = "y";
+  }
+}
+```
+
+and
+
+```nix
+{
+  inherit (lib) nameValuePair;
+  inherit (hello) world;
+  baz = "bum";
+
+  foo = {
+    bar = "bum";
+    x = "y";
+  }
+}
+```
+
+If there is only one onliner and one block, they will have no space between them
+
+```nix
+{
+  foo = "bar";
+  nix = {
+    awesome = true;
+    hello = "world";
+  }
+}
+```
+
+
+## Project - Exclusive exceptions:
+
+When a module is defined and there is a toplevel config and options attribute, they will always have a space between them.
+
+```nix
+{
+  options.userPrefs.git.email = mkOption {
+    type = lib.types.str;
+    example = "you@example.com";
+    description = ''
+      Email address to associate with Git commits.
+      This will be used in the global Git config under `user.email`.
+      It should match the email used in your Git hosting provider (e.g., GitHub, GitLab)
+      to ensure commits are properly attributed.
+    '';
+  };
+
+  config = {
+    programs.git = {
+      enable = true;
+      userName = userInfos.name;
+      userEmail = prefs.git.email;
+      extraConfig = {
+        credential.helper = "store";
+        core.autocrlf = "input";
+        init.defaultBranch = "main";
+      };
+    };
+  };
+}
+
+```
+
+The Order of a option is always
+
+```nix
+mkOption {
+  type = types.listOf (types.enum modules);
+  default = [ ];
+  example = [ "btop" ];
+  description = "Advanced Configs of Cli Tools";
+}
+```
+
+When a Program is defined, its primary configuration always comes first, after that normal formatting applies:
+
+```nix
+{
+  programs = {
+    eza = {
+      enable = true;
+      extraOptions = [
+        "-l"
+        "--icons"
+        "--git"
+        "-a"
+      ];
+    };
+
+    fish.functions.ls.body = "eza $argv";
+    
+    foo = {
+      baz = "bar";
+      hello = "world";
+    };
+  };
+}
+```
+
+---
+
 ## License
 
 Licensed under the [MIT License](./LICENSE).

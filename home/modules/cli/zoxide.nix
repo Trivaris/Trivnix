@@ -5,8 +5,6 @@ let
 in
 {
   config = mkIf (builtins.elem "zoxide" prefs.cli) {
-    programs.zoxide = {
-      enable = true;
-    };
+    programs.zoxide.enable = true;
   };
 }

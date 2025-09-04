@@ -4,6 +4,13 @@
   pkgs,
 }:
 let
+  index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
+  minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
+  fabricVersion = index.dependencies.fabric-loader;
+  overrideEntries = builtins.attrNames (builtins.readDir "${modpack}/overrides");
+  overridesPath = "${modpack}/overrides";
+  files = overrides // mods;
+
   modpack = pkgs.runCommand "unpacked" { nativeBuildInputs = [ pkgs.unzip ]; } ''
     mkdir -p $out
     unzip -q ${
@@ -21,14 +28,6 @@ let
       url = builtins.head file.downloads;
       hash = "sha512:${file.hashes.sha512}";
     };
-
-  index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
-
-  minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
-  fabricVersion = index.dependencies.fabric-loader;
-
-  overrideEntries = builtins.attrNames (builtins.readDir "${modpack}/overrides");
-  overridesPath = "${modpack}/overrides";
 
   modFiles = builtins.filter (
     file: builtins.hasAttr "sha512" file.hashes && ((file.env.server or "required") != "unsupported")
@@ -51,8 +50,6 @@ let
       )
     else
       { };
-
-  files = overrides // mods;
 in
 {
   pname = index.name;

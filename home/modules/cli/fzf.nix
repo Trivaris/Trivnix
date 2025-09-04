@@ -7,14 +7,13 @@ in
   config = mkIf (builtins.elem "fzf" prefs.cli) {
     programs.fzf = {
       enable = true;
+      defaultCommand = "fd --type f --exclude .git --follow --hidden";
+      changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
 
       defaultOptions = [
         "--preview='bat --color=always -n {}'"
         "--bind 'ctrl-/:toggle-preview'"
       ];
-
-      defaultCommand = "fd --type f --exclude .git --follow --hidden";
-      changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
     };
   };
 }

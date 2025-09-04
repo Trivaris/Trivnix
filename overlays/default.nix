@@ -1,12 +1,11 @@
 {
   resolveDir,
-  inputs,
   mapAttrs',
   nameValuePair,
 }:
 let
   extraPkgs = resolveDir {
-    dirPath = ./pkgs;
+    dirPath = ./packages;
     preset = "namePathMap";
   };
 
@@ -16,14 +15,9 @@ let
   };
 in
 {
-
-  nur = inputs.nur.overlays.default;
-  minecraft = inputs.nix-minecraft.overlay;
-  millennium = inputs.millennium.overlays.default;
-
   additions =
     final: pkgs:
-    mapAttrs' (name: path: (nameValuePair name (pkgs.callPackage ./pkgs/${path} pkgs))) extraPkgs
+    mapAttrs' (name: path: (nameValuePair name (pkgs.callPackage ./packages/${path} pkgs))) extraPkgs
     // {
       modpacks = {
         elysiumDays = pkgs.callPackage ./mkModpack.nix {
@@ -46,11 +40,4 @@ in
       name: path:
       (nameValuePair name (pkgs.${name}.overrideAttrs (oldAttrs: import ./overrides/${path} pkgs)))
     ) extraOverrides;
-
-  stable-packages = final: pkgs: {
-    stable = import inputs.nixpkgs-stable {
-      inherit (pkgs) system;
-      config.allowUnfree = true;
-    };
-  };
 }
