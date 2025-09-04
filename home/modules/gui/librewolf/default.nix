@@ -22,7 +22,7 @@ in
 {
   options.userPrefs.librewolf = import ./config.nix lib;
 
-  config = mkIf (builtins.elem "librewolf" prefs.desktopApps) {
+  config = mkIf (builtins.elem "librewolf" prefs.gui) {
     programs.librewolf = {
       enable = true;
 

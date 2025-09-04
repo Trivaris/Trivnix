@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "btop" prefs.extendedCli) {
+  config = mkIf (builtins.elem "btop" prefs.cli) {
     programs.btop.enable = true;
   };
 }

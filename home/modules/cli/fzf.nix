@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "fzf" prefs.extendedCli) {
+  config = mkIf (builtins.elem "fzf" prefs.cli) {
     programs.fzf = {
       enable = true;
 

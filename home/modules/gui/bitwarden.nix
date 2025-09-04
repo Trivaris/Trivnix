@@ -9,7 +9,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "bitwarden" prefs.desktopApps) {
+  config = mkIf (builtins.elem "bitwarden" prefs.gui) {
     home.packages = [ pkgs.bitwarden-desktop ];
   };
 }

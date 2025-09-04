@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "bat" prefs.extendedCli) {
+  config = mkIf (builtins.elem "bat" prefs.cli) {
     programs.bat = {
       enable = true;
     };

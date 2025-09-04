@@ -41,7 +41,7 @@ in
 {
   options.userPrefs.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
 
-  config = mkIf (builtins.elem "vscodium" prefs.desktopApps) (mkMerge [
+  config = mkIf (builtins.elem "vscodium" prefs.gui) (mkMerge [
 
     {
       home.packages = builtins.attrValues (

@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "nvim" prefs.extendedCli) {
+  config = mkIf (builtins.elem "nvim" prefs.cli) {
     programs.nvf = {
       enable = true;
 

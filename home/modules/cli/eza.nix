@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "eza" prefs.extendedCli) {
+  config = mkIf (builtins.elem "eza" prefs.cli) {
     programs.eza = {
       enable = true;
       extraOptions = [

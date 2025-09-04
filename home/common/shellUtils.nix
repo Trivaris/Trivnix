@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
 
-  environment.systemPackages = builtins.attrValues {
+  home.packages = builtins.attrValues {
 
     inherit (pkgs)
       coreutils
@@ -41,8 +41,6 @@
 
   };
 
-  programs.fish.enable = true;
-  programs.tmux.enable = true;
   programs.zoxide.enable = true;
 
 }

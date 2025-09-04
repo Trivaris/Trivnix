@@ -26,8 +26,15 @@ let
   };
 in
 {
-  inherit configs;
-  overlays = (import ./overlays) inputs;
+  extraOverrides = trivnixLib.resolveDir {
+    dirPath = ./overlays/pkgs;
+    preset = "moduleNames";
+  };
+
+  overlays = (import ./overlays) {
+    inherit (trivnixLib) resolveDir;
+    inherit inputs mapAttrs' nameValuePair;
+  };
 
   # Define NixOS configs for each host
   # Format: configname = <NixOS config>

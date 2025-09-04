@@ -14,15 +14,12 @@ in
 {
   inherit imports;
 
-  options.userPrefs.extendedCli = mkOption {
+  options.hostPrefs.services = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];
-    example = [
-      "btop"
-      "eza"
-    ];
+    example = [ "bluetooth" ];
     description = ''
-      Advanced Configs of Cli Tools.
+      Services to be enabled.
     '';
   };
 }

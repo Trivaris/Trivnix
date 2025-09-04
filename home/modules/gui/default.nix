@@ -14,7 +14,7 @@ in
 {
   inherit imports;
 
-  options.userPrefs.desktopApps = mkOption {
+  options.userPrefs.gui = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];
     example = [

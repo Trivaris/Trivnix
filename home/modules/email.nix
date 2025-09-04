@@ -18,7 +18,7 @@ in
       lib.nameValuePair accountName (
         {
           passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
-          thunderbird = mkIf (builtins.elem "thunderbird" prefs.desktopApps) {
+          thunderbird = mkIf (builtins.elem "thunderbird" prefs.gui) {
             enable = true;
             profiles = [ userInfos.name ];
           };

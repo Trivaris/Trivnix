@@ -4,8 +4,8 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "zoxide" prefs.extendedCli) {
-    programs.zoxide = {
+  config = mkIf (builtins.elem "vesktop" prefs.gui) {
+    programs.vesktop = {
       enable = true;
     };
   };

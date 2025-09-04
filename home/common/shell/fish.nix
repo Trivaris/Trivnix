@@ -6,13 +6,11 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   prefs = config.userPrefs;
 in
 {
-  options.userPrefs.fish.enable = mkEnableOption "extended fish config";
-
-  config = mkIf prefs.fish.enable {
+  config = mkIf (prefs.shell == "fish") {
     programs.fish = {
       enable = true;
 
@@ -56,20 +54,6 @@ in
           rm -f ~/.librewolf/${userInfos.name}/search.json.mozlz4.backup
           sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
         '';
-      };
-    };
-
-    programs.starship = {
-      enable = true;
-      settings = {
-        add_newline = false;
-        character = {
-          success_symbol = "[❯](green)";
-          error_symbol = "[❯](red)";
-        };
-        directory = {
-          style = "blue";
-        };
       };
     };
 

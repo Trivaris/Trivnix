@@ -27,7 +27,7 @@ let
   );
 in
 {
-  config = mkIf (builtins.elem "thunderbird" prefs.desktopApps) {
+  config = mkIf (builtins.elem "thunderbird" prefs.gui) {
     programs.thunderbird = {
       enable = true;
       profiles.${userInfos.name} = {

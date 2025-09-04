@@ -9,9 +9,9 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "chatgpt" prefs.desktopApps) {
+  config = mkIf (builtins.elem "signal" prefs.gui) {
     home.packages = builtins.attrValues {
-      inherit (pkgs) chatgpt;
+      inherit (pkgs) signal-desktop;
     };
   };
 }
