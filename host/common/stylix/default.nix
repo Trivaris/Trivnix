@@ -6,10 +6,10 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  prefs = config.hostPrefs;
 in
 {
-  options.userPrefs.stylix = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.stylix = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config.stylix =
     let

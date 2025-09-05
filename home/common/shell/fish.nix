@@ -20,11 +20,6 @@ in
       fish = {
         enable = true;
 
-        loginShellInit = ''
-          set -x NIX_LOG info
-          ${if prefs.terminalEmulator != null then "set -x TERMINAL ${prefs.terminalEmulator}" else ""}
-        '';
-
         interactiveShellInit = ''
           set fish_greeting
           starship init fish | source
@@ -42,18 +37,13 @@ in
           "gpull" = "git pull";
           "gpush" = "git push";
           "gclone" = "git clone";
+          "fix-endings" = ''find . -type f -not -path "./.git/*" -exec sed -i 's/\r$//' {} +'';
         };
 
         functions = {
           cd.body = "z \"$argv\"";
           grep.body = "rg \"$argv\"";
           ls.body = "eza \"$argv\"";
-
-          fix-endings = ''
-            mv ./.git ../
-            find . -type f -exec sed -i 's/\r$//' {} +
-            mv ../.git ./
-          '';
 
           rm-clobbering = ''
             rm -f ~/.gtkrc-2.0.backup
@@ -63,15 +53,26 @@ in
 
           rebuild-dev = ''
             if test (count $argv) -lt 1
-              echo "Usage: rebuild <host>"
+              echo "Usage: rebuild-dev <host>"
               return 1
             end
             set host $argv[1]
-            sudo nixos-rebuild switch --flake ".#$host" --override-input trivnix-configs ~/Projects/trivnix-configs/
+            sudo nixos-rebuild switch --flake ".#$host" \
+              --override-input trivnix-configs ~/Projects/trivnix-configs/ \
+              --override-input trivnix-lib     ~/Projects/trivnix-lib/ \
+              --override-input trivnix-private ~/Projects/trivnix-private/
           '';
 
           check-dev = ''
-            nix flake check --override-input trivnix-configs ~/Projects/trivnix-configs/
+            if test (count $argv) -lt 1
+              echo "Usage: check-dev <flake-path>"
+              return 1
+            end
+            set path $argv[1]
+            nix flake check $path \
+              --override-input trivnix-configs ~/Projects/trivnix-configs/ \
+              --override-input trivnix-lib     ~/Projects/trivnix-lib/ \
+              --override-input trivnix-private ~/Projects/trivnix-private/
           '';
         };
       };

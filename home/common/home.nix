@@ -10,14 +10,22 @@ let
   prefs = config.userPrefs;
 in
 {
+  stylix.enable = true;
+
   home = {
     inherit (hostInfos) stateVersion;
     username = lib.mkDefault userInfos.name;
     homeDirectory = lib.mkDefault "/home/${userInfos.name}";
+
     sessionVariables = {
       TERMINAL = toString prefs.terminalEmulator;
+      NIX_LOG = "info";
       NIXOS_OZONE_WL = "1";
     };
+
+    activation.runRmClobberingService = lib.hm.dag.entryAfter [
+      "writeBoundary"
+    ] "/run/current-system/sw/bin/systemctl --user start rmClobbering.service || true";
   };
 
   systemd.user.services.rmClobbering = {
@@ -40,8 +48,4 @@ in
       WantedBy = [ "default.target" ];
     };
   };
-
-  home.activation.runRmClobberingService = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    /run/current-system/sw/bin/systemctl --user start rmClobbering.service || true
-  '';
 }

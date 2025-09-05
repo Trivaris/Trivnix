@@ -9,6 +9,8 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
+  isEnabled = builtins.elem "librewolf" prefs.browsers;
+  isMain = builtins.head prefs.browsers == "librewolf";
 
   getColor =
     name: scheme:
@@ -23,7 +25,7 @@ let
 
     /** OVERRIDES ***/
     user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
-    user_pref("places.history.enabled", false);
+    user_pref("places.history.enabled", false);e
     user_pref("sidebar.revamp", true);
     user_pref("sidebar.verticalTabs", true);
   '';
@@ -31,7 +33,7 @@ in
 {
   options.userPrefs.librewolf = import ./config.nix lib;
 
-  config = mkIf (builtins.elem "librewolf" prefs.browsers) {
+  config = mkIf isEnabled {
     programs.librewolf = {
       enable = true;
 
@@ -88,6 +90,7 @@ in
     };
 
     stylix.targets.librewolf.enable = false;
+    wayland.windowManager.hyprland.settings.bind = mkIf isMain [ "$mod, B, exec, librewolf" ];
 
     home.file = {
       ".librewolf/${userInfos.name}/user.js".text =

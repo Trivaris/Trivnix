@@ -102,7 +102,6 @@ nixosSystem {
             inputs.sops-nix.homeManagerModules.sops
             inputs.spicetify-nix.homeManagerModules.spicetify
             inputs.nvf.homeManagerModules.default
-            inputs.stylix.homeModules.stylix
           ];
 
           extraSpecialArgs = generalArgs // hostArgs // { inherit hostPrefs pkgs; };

@@ -17,12 +17,11 @@ in
       systemd.variables = [ "--all" ];
 
       settings = {
+        inherit (hostPrefs.hyprland) monitor;
         "$mod" = "SUPER";
 
         bind = [
           "$mod, RETURN,  exec, ${prefs.terminalEmulator}"
-          "$mod, B,       exec, ${builtins.head prefs.browsers}"
-          "$mod, SPACE,   exec, ${prefs.appLauncher.name} ${prefs.appLauncher.flags}"
           "$mod, Q,       killactive"
         ];
       };

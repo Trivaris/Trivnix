@@ -15,18 +15,10 @@ let
 in
 {
   inherit imports;
-  options.userPrefs.appLauncher = {
-    name = mkOption {
-      type = types.nullOr (types.enum modules);
-      default = null;
-      example = "rofi";
-      description = "Your App Launcher";
-    };
-
-    flags = mkOption {
-      type = types.str;
-      default = "";
-      description = "Automatically set flags for the chosen appLauncher";
-    };
+  options.userPrefs.appLauncher = mkOption {
+    type = types.nullOr (types.enum modules);
+    default = null;
+    example = "rofi";
+    description = "Your App Launcher";
   };
 }

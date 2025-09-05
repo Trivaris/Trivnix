@@ -10,6 +10,8 @@ let
   prefs = config.hostPrefs;
 in
 {
+  options.hostPrefs.hyprland = import ./config.nix lib;
+
   config = mkIf (prefs.desktopEnvironment == "hyprland") {
     programs.hyprland = {
       enable = true;
