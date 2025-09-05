@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+inputs@{ self, ... }:
 let
   inherit (inputs.nixpkgs.lib)
     mapAttrs'
@@ -10,6 +10,15 @@ let
 
   trivnixConfigs = inputs.trivnix-configs;
   trivnixLib = inputs.trivnix-lib.lib.for self;
+  mkHomeManager = trivnixLib.mkHomeManager dependencies;
+  mkNixOS = trivnixLib.mkNixOS dependencies;
+  systems = trivnixConfigs.configs |> mapAttrsToList (_: config: config.infos.architecture) |> unique;
+
+  forAllSystems =
+    func:
+    systems
+    |> map (system: nameValuePair system (func (import inputs.nixpkgs { inherit system; })))
+    |> builtins.listToAttrs;
 
   overlays = {
     nur = inputs.nur.overlays.default;
@@ -29,51 +38,42 @@ let
       trivnixConfigs
       ;
   };
-
-  mkHomeManager = trivnixLib.mkHomeManager dependencies;
-  mkNixOS = trivnixLib.mkNixOS dependencies;
 in
 {
-  systems = trivnixConfigs.configs |> mapAttrsToList (_: config: config.infos.architecture) |> unique;
+  inherit overlays;
 
-  flake = {
-    inherit overlays;
+  # Define NixOS configs for each host
+  # Format: configname = <NixOS config>
+  nixosConfigurations =
+    trivnixConfigs.configs |> mapAttrs' (configname: _: nameValuePair configname (mkNixOS configname));
 
-    # Define NixOS configs for each host
-    # Format: configname = <NixOS config>
-    nixosConfigurations =
-      trivnixConfigs.configs
-      |> builtins.attrNames 
-      |> map (configname: nameValuePair configname (mkNixOS configname))
-      |> builtins.listToAttrs;
-
-    # Define Home Manager configs for each user@hostname
-    # Format: <user>@<hostname> (configname) = <Home Manager config>
-    homeConfigurations = concatMapAttrs (
+  # Define Home Manager configs for each user@hostname
+  # Format: <user>@<hostname> (configname) = <Home Manager config>
+  homeConfigurations =
+    trivnixConfigs.configs
+    |> concatMapAttrs (
       configname: hostConfig:
-      mapAttrs' (
+      hostConfig.users
+      |> mapAttrs' (
         username: userconfig:
         nameValuePair "${username}@${configname}" (mkHomeManager {
           inherit configname username;
         })
-      ) hostConfig.users
-    ) trivnixConfigs.configs;
-  };
+      )
+    );
 
-  perSystem =
-    { pkgs, ... }:
-    {
-      devShells.default = pkgs.mkShell {
-        shellHook = "git config --local core.hooksPath .githooks";
-        packages = builtins.attrValues {
-          inherit (pkgs)
-            git
-            nixfmt
-            statix
-            deadnix
-            shellcheck
-            ;
-        };
+  devShells = forAllSystems (pkgs: {
+    default = pkgs.mkShell {
+      shellHook = "git config --local core.hooksPath .githooks";
+      packages = builtins.attrValues {
+        inherit (pkgs)
+          git
+          nixfmt
+          statix
+          deadnix
+          shellcheck
+          ;
       };
     };
+  });
 }
