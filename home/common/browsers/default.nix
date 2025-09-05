@@ -1,8 +1,11 @@
-{ lib, trivnixLib, config, hostPrefs, ... }:
+{
+  lib,
+  trivnixLib,
+  ...
+}:
 let
-  inherit (lib) types mkOption mkIf;
+  inherit (lib) types mkOption;
   inherit (trivnixLib) resolveDir;
-  prefs = config.userPrefs;
 
   modules = resolveDir {
     dirPath = ./.;
@@ -16,8 +19,6 @@ let
 in
 {
   inherit imports;
-  config.wayland.windowManager.hyprland.settings.bind = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland" && prefs.browsers != []) [ "$mod, B,  exec, ${builtins.head prefs.browsers}" ];
-  
   options.userPrefs.browsers = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];

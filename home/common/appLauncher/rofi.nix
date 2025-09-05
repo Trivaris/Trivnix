@@ -8,8 +8,8 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (prefs.appLauncher == "rofi") {
+  config = mkIf (prefs.appLauncher.name == "rofi") {
     programs.rofi.enable = true;
-    wayland.windowManager.hyprland.settings.bind = [ "$mod, SPACE, exec, rofi -show drun" ];
+    userPrefs.appLauncher.flags = "-show drun";
   };
 }

@@ -16,7 +16,7 @@ let
     millennium = inputs.millennium.overlays.default;
   };
 
-  mkHomeManager = import ./mkHomeManager.nix {
+  mkHomeManager = trivnixLib.mkHomeManager {
     inherit
       inputs
       outputs
@@ -27,7 +27,7 @@ let
       ;
   };
 
-  mkNixOS = import ./mkNixOS.nix {
+  mkNixOS = trivnixLib.mkNixOS {
     inherit
       inputs
       outputs
