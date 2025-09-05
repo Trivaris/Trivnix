@@ -7,6 +7,7 @@
 let
   inherit (lib) mkIf;
   binds = import ./keybinds.nix config |> builtins.attrValues |> lib.flatten;
+  visual = import ./visual.nix;
 in
 {
   config = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland") {
@@ -25,7 +26,8 @@ in
           "$mod, Q, killactive"
         ]
         ++ binds;
-      };
+      }
+      // visual;
 
       plugins = [
 
