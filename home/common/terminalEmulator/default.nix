@@ -1,7 +1,8 @@
-{ lib, trivnixLib, ... }:
+{ lib, trivnixLib, config, hostPrefs, ... }:
 let
-  inherit (lib) types mkOption;
+  inherit (lib) types mkOption mkIf;
   inherit (trivnixLib) resolveDir;
+  prefs = config.userPrefs;
 
   modules = resolveDir {
     dirPath = ./.;
@@ -15,6 +16,8 @@ let
 in
 {
   inherit imports;
+  config.wayland.windowManager.hyprland.settings.bind = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland") [ "$mod, RETURN, exec, ${toString prefs.terminalEmulator}" ];
+
   options.userPrefs.terminalEmulator = mkOption {
     type = types.nullOr (types.enum modules);
     default = null;

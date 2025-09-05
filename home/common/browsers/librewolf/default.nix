@@ -9,8 +9,6 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
-  isEnabled = builtins.elem "librewolf" prefs.browsers;
-  isMain = builtins.head prefs.browsers == "librewolf";
 
   getColor =
     name: scheme:
@@ -33,7 +31,7 @@ in
 {
   options.userPrefs.librewolf = import ./config.nix lib;
 
-  config = mkIf isEnabled {
+  config = mkIf (builtins.elem "librewolf" prefs.browsers) {
     programs.librewolf = {
       enable = true;
 
@@ -90,7 +88,6 @@ in
     };
 
     stylix.targets.librewolf.enable = false;
-    wayland.windowManager.hyprland.settings.bind = mkIf isMain [ "$mod, B, exec, librewolf" ];
 
     home.file = {
       ".librewolf/${userInfos.name}/user.js".text =
