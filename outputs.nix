@@ -1,56 +1,69 @@
-{ inputs, self }:
+{ self, inputs, ... }:
 let
-  inherit (inputs.trivnix-configs) configs commonInfos;
-  inherit (inputs.nixpkgs) lib;
-  inherit (lib) mapAttrs' nameValuePair concatMapAttrs;
-  inherit (self) outputs;
+  inherit (inputs.nixpkgs.lib)
+    mapAttrs'
+    nameValuePair
+    concatMapAttrs
+    mapAttrsToList
+    unique
+    ;
 
+  trivnixConfigs = inputs.trivnix-configs;
   trivnixLib = inputs.trivnix-lib.lib.for self;
-  systems = lib.mapAttrsToList (_: config: config.infos.architecture) configs;
-  forAllSystems =
-    func: builtins.listToAttrs (map (system: nameValuePair system (func system)) systems);
 
-  inputOverlays = {
+  overlays = {
     nur = inputs.nur.overlays.default;
     minecraft = inputs.nix-minecraft.overlay;
     millennium = inputs.millennium.overlays.default;
-  };
-
-  mkHomeManager = trivnixLib.mkHomeManager {
-    inherit
-      inputs
-      outputs
-      trivnixLib
-      configs
-      commonInfos
-      inputOverlays
-      ;
-  };
-
-  mkNixOS = trivnixLib.mkNixOS {
-    inherit
-      inputs
-      outputs
-      trivnixLib
-      configs
-      commonInfos
-      inputOverlays
-      ;
-  };
-in
-{
-  overlays = (import ./overlays) {
+  }
+  // (import ./overlays) {
     inherit (trivnixLib) resolveDir;
     inherit mapAttrs' nameValuePair;
   };
 
-  devShells = forAllSystems (
-    system:
-    let
-      pkgs = import inputs.nixpkgs { inherit system; };
-    in
+  dependencies = {
+    inherit
+      inputs
+      overlays
+      trivnixLib
+      trivnixConfigs
+      ;
+  };
+
+  mkHomeManager = trivnixLib.mkHomeManager dependencies;
+  mkNixOS = trivnixLib.mkNixOS dependencies;
+in
+{
+  systems = trivnixConfigs.configs |> mapAttrsToList (_: config: config.infos.architecture) |> unique;
+
+  flake = {
+    inherit overlays;
+
+    # Define NixOS configs for each host
+    # Format: configname = <NixOS config>
+    nixosConfigurations =
+      trivnixConfigs.configs
+      |> builtins.attrNames 
+      |> map (configname: nameValuePair configname (mkNixOS configname))
+      |> builtins.listToAttrs;
+
+    # Define Home Manager configs for each user@hostname
+    # Format: <user>@<hostname> (configname) = <Home Manager config>
+    homeConfigurations = concatMapAttrs (
+      configname: hostConfig:
+      mapAttrs' (
+        username: userconfig:
+        nameValuePair "${username}@${configname}" (mkHomeManager {
+          inherit configname username;
+        })
+      ) hostConfig.users
+    ) trivnixConfigs.configs;
+  };
+
+  perSystem =
+    { pkgs, ... }:
     {
-      default = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         shellHook = "git config --local core.hooksPath .githooks";
         packages = builtins.attrValues {
           inherit (pkgs)
@@ -62,27 +75,5 @@ in
             ;
         };
       };
-    }
-  );
-
-  # Define NixOS configs for each host
-  # Format: configname = <NixOS config>
-  nixosConfigurations = mapAttrs' (
-    configname: _:
-    nameValuePair configname (mkNixOS {
-      inherit configname;
-    })
-  ) configs;
-
-  # Define Home Manager configs for each user@hostname
-  # Format: <user>@<hostname> (configname) = <Home Manager config>
-  homeConfigurations = concatMapAttrs (
-    configname: hostConfig:
-    mapAttrs' (
-      username: userconfig:
-      nameValuePair "${username}@${configname}" (mkHomeManager {
-        inherit configname username;
-      })
-    ) hostConfig.users
-  ) configs;
+    };
 }

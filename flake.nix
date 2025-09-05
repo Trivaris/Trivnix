@@ -58,6 +58,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Private Information and other helper stuff
     trivnix-private = {
       url = "git+ssh://git@github.com/Trivaris/trivnix-private";
@@ -88,5 +93,7 @@
     };
   };
 
-  outputs = inputs@{ self, ... }: import ./outputs.nix { inherit inputs self; };
+  outputs =
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (import ./outputs.nix);
 }

@@ -22,7 +22,7 @@ in
       example = "rofi";
       description = "Your App Launcher";
     };
-    
+
     flags = mkOption {
       type = types.str;
       default = "";
