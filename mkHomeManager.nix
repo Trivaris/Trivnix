@@ -3,6 +3,7 @@
   outputs,
   trivnixLib,
   commonInfos,
+  configs,
   inputOverlays,
 }:
 {
@@ -12,7 +13,6 @@
 let
   inherit (inputs.nixpkgs.lib) mapAttrs' nameValuePair;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
-  inherit (trivnixLib) configs;
 
   hostConfig = configs.${configname};
   hostPrefs = hostConfig.prefs;

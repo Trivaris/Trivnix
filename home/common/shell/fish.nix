@@ -60,6 +60,19 @@ in
             rm -f ~/.librewolf/${userInfos.name}/search.json.mozlz4.backup
             sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
           '';
+
+          rebuild-dev = ''
+            if test (count $argv) -lt 1
+              echo "Usage: rebuild <host>"
+              return 1
+            end
+            set host $argv[1]
+            sudo nixos-rebuild switch --flake ".#$host" --override-input trivnix-configs ~/Projects/trivnix-configs/
+          '';
+
+          check-dev = ''
+            nix flake check --override-input trivnix-configs ~/Projects/trivnix-configs/
+          '';
         };
       };
     };

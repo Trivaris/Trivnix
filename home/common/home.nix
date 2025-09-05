@@ -3,13 +3,21 @@
   lib,
   hostInfos,
   userInfos,
+  config,
   ...
 }:
+let
+  prefs = config.userPrefs;
+in
 {
   home = {
     inherit (hostInfos) stateVersion;
     username = lib.mkDefault userInfos.name;
     homeDirectory = lib.mkDefault "/home/${userInfos.name}";
+    sessionVariables = {
+      TERMINAL = toString prefs.terminalEmulator;
+      NIXOS_OZONE_WL = "1";
+    };
   };
 
   systemd.user.services.rmClobbering = {

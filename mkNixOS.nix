@@ -62,15 +62,16 @@ let
       allUserInfos
       ;
   };
-in
-nixosSystem {
-  specialArgs = generalArgs // hostArgs;
 
   pkgs = import inputs.nixpkgs {
     system = hostConfig.infos.architecture;
     overlays = builtins.attrValues (inputOverlays // outputs.overlays);
     config = hostConfig.pkgsConfig;
   };
+in
+nixosSystem {
+  inherit pkgs;
+  specialArgs = generalArgs // hostArgs;
 
   modules = [
     # Flake NixOS entrypoint
@@ -101,10 +102,10 @@ nixosSystem {
             inputs.sops-nix.homeManagerModules.sops
             inputs.spicetify-nix.homeManagerModules.spicetify
             inputs.nvf.homeManagerModules.default
+            inputs.stylix.homeModules.stylix
           ];
 
-          extraSpecialArgs = generalArgs // hostArgs;
-          useGlobalPkgs = true;
+          extraSpecialArgs = generalArgs // hostArgs // { inherit hostPrefs pkgs; };
           useUserPackages = true;
 
           users = mapAttrs' (

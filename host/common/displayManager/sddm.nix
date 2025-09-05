@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkIf;
   prefs = config.hostPrefs;
@@ -9,5 +14,7 @@ in
       enable = true;
       wayland.enable = true;
     };
+
+    environment.systemPackages = mkIf (prefs.desktopEnvironment == "kde") [ pkgs.kdePackages.sddm-kcm ];
   };
 }

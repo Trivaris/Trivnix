@@ -10,12 +10,20 @@ let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
 
+  getColor =
+    name: scheme:
+    builtins.readFile (
+      pkgs.runCommand "color-${name}" {
+        inherit scheme;
+        nativeBuildInputs = [ pkgs.yq ];
+      } "yq -r '.palette.${name}' \"${scheme}\" > $out"
+    );
+
   overrides = ''
 
     /** OVERRIDES ***/
     user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
     user_pref("places.history.enabled", false);
-    user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
     user_pref("sidebar.revamp", true);
     user_pref("sidebar.verticalTabs", true);
   '';
@@ -23,7 +31,7 @@ in
 {
   options.userPrefs.librewolf = import ./config.nix lib;
 
-  config = mkIf (builtins.elem "librewolf" prefs.gui) {
+  config = mkIf (builtins.elem "librewolf" prefs.browsers) {
     programs.librewolf = {
       enable = true;
 
@@ -37,7 +45,6 @@ in
               adnauseam
               tab-session-manager
               bitwarden
-              plasma-integration
               ;
           };
         };
@@ -80,9 +87,29 @@ in
       };
     };
 
-    stylix.targets.librewolf.profileNames = [ userInfos.name ];
+    stylix.targets.librewolf.enable = false;
 
-    home.file.".librewolf/${userInfos.name}/user.js".text =
-      if prefs.librewolf.betterfox then (inputs.betterfox + "/user.js") else "" + overrides;
+    home.file = {
+      ".librewolf/${userInfos.name}/user.js".text =
+        let
+          betterfoxJs =
+            if prefs.librewolf.betterfox then builtins.readFile "${inputs.betterfox}/user.js" else "";
+        in
+        betterfoxJs + overrides;
+
+      ".librewolf/${userInfos.name}/chrome/userChrome.css".text =
+        let
+          scheme = config.stylix.base16Scheme;
+        in
+        ''
+          :root {
+            --lwt-accent-color: ${getColor "base00" scheme} !important;
+            --lwt-text-color: ${getColor "base05" scheme} !important;
+            --toolbar-bgcolor: ${getColor "base00" scheme} !important;
+            --toolbar-color: ${getColor "base05" scheme} !important;
+            --tab-selected-bgcolor: ${getColor "base01" scheme} !important;
+          }
+        '';
+    };
   };
 }

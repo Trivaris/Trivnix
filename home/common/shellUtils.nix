@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = builtins.attrValues {
+    inherit (pkgs.kdePackages) kcalc;
+
     inherit (pkgs)
       coreutils
       wget
@@ -30,6 +32,10 @@
       chromium
       sdl3
       me3
+      hardinfo2
+      vlc
+      wayland-utils
+      wl-clipboard-rs
       ;
   };
 }
