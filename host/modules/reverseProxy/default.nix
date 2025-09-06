@@ -11,8 +11,12 @@ let
     builtins.filter (service: service.reverseProxy.enable or false) services
   );
 
-  externalPorts = builtins.map (service: service.externalPort) (
+  externalPorts = map (service: service.externalPort) (
     builtins.filter (service: service.externalPort != null) activeServices
+  );
+
+  acmeUnits = map (service: "acme-${service.domain}.service") (
+    builtins.filter (service: service ? domain && service.enable) activeServices
   );
 in
 {
@@ -59,14 +63,19 @@ in
         };
       };
 
-      systemd.timers.ddclient =
-        mkIf (prefs.reverseProxy.ddnsTime != null && prefs.reverseProxy.enableDDClient)
-          {
-            wantedBy = [ "timers.target" ];
-            timerConfig = {
-              OnCalendar = prefs.reverseProxy.ddnsTime;
-              Persistent = true;
-            };
+      systemd = {
+        services.nginx = {
+          requires = acmeUnits;
+          after = acmeUnits;
+        };
+
+        timers.ddclient = mkIf (prefs.reverseProxy.ddnsTime != null && prefs.reverseProxy.enableDDClient) {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnCalendar = prefs.reverseProxy.ddnsTime;
+            Persistent = true;
           };
+        };
+      };
     };
 }

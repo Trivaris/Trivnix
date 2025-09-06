@@ -12,11 +12,6 @@ in
 {
   config = mkIf (prefs.shell == "fish") {
     programs = {
-      tmux.shell = "${pkgs.fish}/bin/fish";
-      eza.enableFishIntegration = true;
-      zoxide.enableFishIntegration = true;
-      fzf.enableFishIntegration = true;
-
       fish = {
         enable = true;
 
@@ -76,6 +71,11 @@ in
           '';
         };
       };
+
+      tmux.shell = "${pkgs.fish}/bin/fish";
+      eza.enableFishIntegration = true;
+      zoxide.enableFishIntegration = true;
+      fzf.enableFishIntegration = true;
     };
   };
 }
