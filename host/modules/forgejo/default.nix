@@ -20,11 +20,21 @@ in
       lfs.enable = true;
       database.type = "postgres";
 
-      settings.server = {
-        DOMAIN = prefs.forgejo.reverseProxy.domain;
-        ROOT_URL = "https://${prefs.forgejo.reverseProxy.domain}/";
-        HTTP_ADDR = prefs.forgejo.reverseProxy.ipAddress;
-        HTTP_PORT = prefs.forgejo.reverseProxy.port;
+      settings = {
+        session.COOKIE_SECURE = true;
+        service.DISABLE_REGISTRATION = true;
+
+        actions = {
+          ENABLED = true;
+          DEFAULT_ACTIONS_URL = "github";
+        };
+        
+        server = {
+          DOMAIN = prefs.forgejo.reverseProxy.domain;
+          ROOT_URL = "https://${prefs.forgejo.reverseProxy.domain}/";
+          HTTP_ADDR = prefs.forgejo.reverseProxy.ipAddress;
+          HTTP_PORT = prefs.forgejo.reverseProxy.port;
+        };
       };
     };
   };
