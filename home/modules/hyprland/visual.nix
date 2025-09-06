@@ -37,6 +37,7 @@
       "windowsOut, 1, 2, default, popin 80%"
       "border, 1, 3, default"
       "fade, 1, 2, default"
+      "fadeSwitch, 1, 2, default"
       "workspaces, 1, 1, default"
     ];
   };

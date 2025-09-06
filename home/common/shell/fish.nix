@@ -27,7 +27,7 @@ in
           "..." = "cd ../../";
 
           "gstat" = "git status --short";
-          "gadd" = "git add";
+          "gadd" = "git add .";
           "gcomm" = "git commit -m ";
           "gpull" = "git pull";
           "gpush" = "git push";
