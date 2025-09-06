@@ -34,6 +34,15 @@ in
   programs = [
     "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
     "$mod, SPACE, exec, ${prefs.appLauncher.name} ${prefs.appLauncher.flags}"
-    "$mod, B,  exec, ${builtins.head prefs.browsers}"
+    "$mod, B, exec, ${builtins.head prefs.browsers}"
+    "$mod, S, exec, spotify"
+    "$mod, D, exec, vesktop"
+    "$mod, V, exec, codium"
+  ];
+
+  volume = [
+      ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   ];
 }

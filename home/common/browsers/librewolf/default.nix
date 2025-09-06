@@ -45,6 +45,7 @@ in
               adnauseam
               tab-session-manager
               bitwarden
+              youtube-shorts-block
               ;
           };
         };
