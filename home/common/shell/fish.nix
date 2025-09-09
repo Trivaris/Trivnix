@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   userInfos,
   ...
@@ -18,7 +17,6 @@ in
         interactiveShellInit = ''
           set fish_greeting
           starship init fish | source
-          zoxide init fish | source
           fastfetch
         '';
 
@@ -40,6 +38,7 @@ in
             rm -f ~/.gtkrc-2.0.backup
             rm -f ~/.librewolf/${userInfos.name}/search.json.mozlz4.backup
             sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
+            sudo rm -f ~/.config/hypr/hyprland.conf.backup
           '';
 
           rebuild-prod = ''
@@ -83,11 +82,6 @@ in
           '';
         };
       };
-
-      tmux.shell = "${pkgs.fish}/bin/fish";
-      eza.enableFishIntegration = true;
-      zoxide.enableFishIntegration = true;
-      fzf.enableFishIntegration = true;
     };
   };
 }

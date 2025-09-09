@@ -15,10 +15,20 @@ let
 in
 {
   inherit imports;
-  options.hostPrefs.desktopEnvironment = mkOption {
-    type = types.nullOr (types.enum modules);
-    default = null;
-    example = "kde";
-    description = "Your Desktop Environment";
+
+  options.hostPrefs.desktopEnvironment = {
+    name = mkOption {
+      type = types.nullOr (types.enum modules);
+      default = null;
+      example = "kde";
+      description = "Your Desktop Environment";
+    };
+
+    binary = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Executable binary to launch when autologin is enabled for this desktop environment.";
+    };
   };
+
 }

@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }:
@@ -10,6 +11,7 @@ let
     mkEnableOption
     types
     ;
+
   prefs = config.hostPrefs;
 in
 {
@@ -24,11 +26,19 @@ in
   };
 
   config = mkIf (prefs.displayManager == "autologin") {
-    services = {
-      getty = {
-        autologinUser = prefs.autologin.user;
-        autologinOnce = prefs.autologin.loginOnce;
+    services.greetd =
+      let
+        settings = {
+          default_session = settings.initial_session;
+          initial_session = {
+            inherit (prefs.autologin) user;
+            command = prefs.desktopEnvironment.binary;
+          };
+        };
+      in
+      {
+        enable = true;
+        inherit settings;
       };
-    };
   };
 }

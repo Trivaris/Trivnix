@@ -9,6 +9,9 @@ in
       enable = true;
       defaultCommand = "fd --type f --exclude .git --follow --hidden";
       changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
+      enableFishIntegration = prefs.shell == "fish";
+      enableBashIntegration = prefs.shell == "bash";
+      enableZshIntegration = prefs.shell == "zsh";
 
       defaultOptions = [
         "--preview='bat --color=always -n {}'"

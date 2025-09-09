@@ -82,7 +82,7 @@ in
     };
   };
 
-  # TODO: Expand on later 
+  # TODO: Expand on later
   windowrulev2 = [
     # "opacity 0.95, class:^(?i)alacritty$"
     # "rounding 6, class:^(?i)alacritty$"

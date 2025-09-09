@@ -8,6 +8,9 @@ in
     programs = {
       eza = {
         enable = true;
+        enableFishIntegration = prefs.shell == "fish";
+        enableBashIntegration = prefs.shell == "bash";
+        enableZshIntegration = prefs.shell == "zsh";
         extraOptions = [
           "-l"
           "--icons"
@@ -16,7 +19,7 @@ in
         ];
       };
 
-      fish.functions.ls.body = "eza $argv";
+      fish.functions.ls.body = mkIf (prefs.shell == "fish") "eza $argv";
     };
   };
 }

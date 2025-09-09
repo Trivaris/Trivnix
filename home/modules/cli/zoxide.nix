@@ -13,7 +13,7 @@ in
         enableZshIntegration = prefs.shell == "zsh";
       };
 
-      fish.functions.cd.body = "z \"$argv\"";
+      fish.functions.cd.body = mkIf (prefs.shell == "fish") "z \"$argv\"";
     };
   };
 }

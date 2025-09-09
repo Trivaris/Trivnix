@@ -14,7 +14,7 @@ let
   visual = import ./visual.nix { inherit lib getColor; };
 in
 {
-  config = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland") {
+  config = mkIf (lib.hasAttrByPath [ "desktopEnvironment" "name" ] hostPrefs && hostPrefs.desktopEnvironment.name == "hyprland") {
     wayland.windowManager.hyprland = {
       enable = true;
       package = null;
@@ -38,8 +38,8 @@ in
       enable = true;
       settings = {
         preload = [ (trivnixLib.mkStorePath "resources/wallpaper2.png") ];
-        wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper2.png" }" ];
-        splash = false; 
+        wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper2.png"}" ];
+        splash = false;
       };
     };
   };

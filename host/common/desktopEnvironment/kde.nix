@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  config = mkIf (prefs.desktopEnvironment == "kde") {
+  config = mkIf (prefs.desktopEnvironment.name == "kde") {
     services = {
       desktopManager.plasma6.enable = true;
       displayManager = {
@@ -34,5 +34,6 @@ in
     };
 
     qt.platformTheme = lib.mkForce "kde";
+    hostPrefs.desktopEnvironment.binary = "${pkgs.kde}/bin/startplasma-wayland";
   };
 }
