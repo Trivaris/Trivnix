@@ -1,13 +1,17 @@
 {
+  trivnixLib,
   hostPrefs,
   config,
+  pkgs,
   lib,
   ...
 }:
 let
   inherit (lib) mkIf;
-  binds = import ./keybinds.nix config |> builtins.attrValues |> lib.flatten;
-  visual = import ./visual.nix;
+  scheme = config.stylix.base16Scheme;
+  getColor = trivnixLib.getColor { inherit pkgs scheme; };
+  bind = import ./keybinds.nix config |> builtins.attrValues |> lib.flatten;
+  visual = import ./visual.nix { inherit lib getColor; };
 in
 {
   config = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland") {
@@ -18,20 +22,25 @@ in
       systemd.variables = [ "--all" ];
 
       settings = {
+        inherit bind;
         inherit (hostPrefs.hyprland) monitor;
+
         "$mod" = "SUPER";
         "$alt_mod" = "ALT";
-
-        bind = [
-          "$mod, Q, killactive"
-        ]
-        ++ binds;
       }
       // visual;
+    };
 
-      plugins = [
+    stylix.targets.hyprland.enable = false;
+    programs.waybar.enable = true;
 
-      ];
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        preload = [ (trivnixLib.mkStorePath "resources/wallpaper2.png") ];
+        wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper2.png" }" ];
+        splash = false; 
+      };
     };
   };
 }

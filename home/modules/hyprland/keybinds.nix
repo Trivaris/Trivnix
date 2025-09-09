@@ -15,6 +15,11 @@ in
     "$mod SHIFT, RIGHT, movewindow, mon:r"
     "$mod SHIFT, UP,    movewindow, mon:u"
     "$mod SHIFT, DOWN,  movewindow, mon:d"
+
+    # Split window horizontally/vertically
+    "$alt_mod, H, layoutmsg, preselect d"
+    "$alt_mod, V, layoutmsg, preselect r"
+    "$alt_mod, Y, togglesplit"
   ];
 
   windowFocus = [
@@ -32,12 +37,16 @@ in
   ];
 
   programs = [
+    "$mod, Q, killactive"
+
     "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
     "$mod, SPACE, exec, ${prefs.appLauncher.name} ${prefs.appLauncher.flags}"
     "$mod, B, exec, ${builtins.head prefs.browsers}"
     "$mod, S, exec, spotify"
     "$mod, D, exec, vesktop"
-    "$mod, V, exec, codium"
+    "$mod, C, exec, codium"
+    "$mod, T, exec, thunderbird"
+    "$mod, E, exec, dolphin"
   ];
 
   volume = [

@@ -36,14 +36,27 @@ in
         };
 
         functions = {
-          cd.body = "z \"$argv\"";
-          grep.body = "rg \"$argv\"";
-          ls.body = "eza \"$argv\"";
-
           rm-clobbering = ''
             rm -f ~/.gtkrc-2.0.backup
             rm -f ~/.librewolf/${userInfos.name}/search.json.mozlz4.backup
             sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
+          '';
+
+          rebuild-prod = ''
+            if test (count $argv) -lt 1
+              echo "Usage: rebuild-dev <host>"
+              return 1
+            end
+            set host $argv[1]
+            sudo nixos-rebuild switch --flake ".#$host"
+          '';
+
+          check-prod = ''
+            set path "."
+            if test (count $argv) -ge 1
+              set path $argv[1]
+            end
+            nix flake check $path
           '';
 
           rebuild-dev = ''
@@ -59,11 +72,10 @@ in
           '';
 
           check-dev = ''
-            if test (count $argv) -lt 1
-              echo "Usage: check-dev <flake-path>"
-              return 1
+            set path "."
+            if test (count $argv) -ge 1
+              set path $argv[1]
             end
-            set path $argv[1]
             nix flake check $path \
               --override-input trivnix-configs ~/Projects/trivnix-configs/ \
               --override-input trivnix-lib     ~/Projects/trivnix-lib/ \

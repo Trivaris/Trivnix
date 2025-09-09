@@ -4,20 +4,14 @@
   config,
   inputs,
   userInfos,
+  trivnixLib,
   ...
 }:
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
-
-  getColor =
-    name: scheme:
-    builtins.readFile (
-      pkgs.runCommand "color-${name}" {
-        inherit scheme;
-        nativeBuildInputs = [ pkgs.yq ];
-      } "yq -r '.palette.${name}' \"${scheme}\" > $out"
-    );
+  scheme = config.stylix.base16Scheme;
+  getColor = trivnixLib.getColor { inherit pkgs scheme; };
 
   overrides = ''
 
@@ -98,19 +92,15 @@ in
         in
         betterfoxJs + overrides;
 
-      ".librewolf/${userInfos.name}/chrome/userChrome.css".text =
-        let
-          scheme = config.stylix.base16Scheme;
-        in
-        ''
-          :root {
-            --lwt-accent-color: ${getColor "base00" scheme} !important;
-            --lwt-text-color: ${getColor "base05" scheme} !important;
-            --toolbar-bgcolor: ${getColor "base00" scheme} !important;
-            --toolbar-color: ${getColor "base05" scheme} !important;
-            --tab-selected-bgcolor: ${getColor "base01" scheme} !important;
-          }
-        '';
+      ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
+        :root {
+          --lwt-accent-color: ${getColor "base00"} !important;
+          --lwt-text-color: ${getColor "base05"} !important;
+          --toolbar-bgcolor: ${getColor "base00"} !important;
+          --toolbar-color: ${getColor "base05"} !important;
+          --tab-selected-bgcolor: ${getColor "base01"} !important;
+        }
+      '';
     };
   };
 }

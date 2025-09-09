@@ -28,7 +28,7 @@ in
           ENABLED = true;
           DEFAULT_ACTIONS_URL = "github";
         };
-        
+
         server = {
           DOMAIN = prefs.forgejo.reverseProxy.domain;
           ROOT_URL = "https://${prefs.forgejo.reverseProxy.domain}/";
