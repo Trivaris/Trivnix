@@ -1,10 +1,8 @@
 {
   lib,
   getColor,
-# config,
 }:
 let
-  # prefs = config.userPrefs;
   clean = string: builtins.replaceStrings [ "\r\n" "\n" "\r" " " ] [ "" "" "" "" ] string;
   get = name: clean (getColor name);
   toARGB = color: "0xff${lib.removePrefix "#" color}";
@@ -82,7 +80,6 @@ in
     };
   };
 
-  # TODO: Expand on later
   windowrulev2 = [
     # "opacity 0.95, class:^(?i)alacritty$"
     # "rounding 6, class:^(?i)alacritty$"

@@ -10,14 +10,12 @@ secrets/
 ├── hosts/
 │   ├── common.yaml           # Shared host secrets
 │   ├── desktop.yaml
-│   ├── laptop.yaml
-│   └── wsl.yaml
+│   └── laptop.yaml
 └── home/
     └── <username>/
         ├── common.yaml       # Shared user secrets
         ├── desktop.yaml
-        ├── laptop.yaml
-        └── wsl.yaml
+        └── laptop.yaml
 ```
 
 ## Key Groups

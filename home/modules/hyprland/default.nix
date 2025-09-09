@@ -14,33 +14,49 @@ let
   visual = import ./visual.nix { inherit lib getColor; };
 in
 {
-  config = mkIf (lib.hasAttrByPath [ "desktopEnvironment" "name" ] hostPrefs && hostPrefs.desktopEnvironment.name == "hyprland") {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      package = null;
-      portalPackage = null;
-      systemd.variables = [ "--all" ];
+  config =
+    mkIf
+      (
+        lib.hasAttrByPath [ "desktopEnvironment" "name" ] hostPrefs
+        && hostPrefs.desktopEnvironment.name == "hyprland"
+      )
+      {
+        wayland.windowManager.hyprland = {
+          enable = true;
+          package = null;
+          portalPackage = null;
+          systemd.variables = [ "--all" ];
 
-      settings = {
-        inherit bind;
-        inherit (hostPrefs.hyprland) monitor;
+          settings = {
+            inherit bind;
+            inherit (hostPrefs.hyprland) monitor;
 
-        "$mod" = "SUPER";
-        "$alt_mod" = "ALT";
-      }
-      // visual;
-    };
+            "$mod" = "SUPER";
+            "$alt_mod" = "ALT";
+          }
+          // visual;
+        };
 
-    stylix.targets.hyprland.enable = false;
-    programs.waybar.enable = true;
+        stylix.targets.hyprland.enable = false;
 
-    services.hyprpaper = {
-      enable = true;
-      settings = {
-        preload = [ (trivnixLib.mkStorePath "resources/wallpaper2.png") ];
-        wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper2.png"}" ];
-        splash = false;
+        programs.waybar = {
+          enable = true;
+          # Use unified Waybar config from a single file
+          settings = import ./waybar.nix;
+
+          systemd = {
+            enable = true;
+            target = "hyprland-session.target";
+          };
+        };
+
+        services.hyprpaper = {
+          enable = true;
+          settings = {
+            preload = [ (trivnixLib.mkStorePath "resources/wallpaper2.png") ];
+            wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper2.png"}" ];
+            splash = false;
+          };
+        };
       };
-    };
-  };
 }

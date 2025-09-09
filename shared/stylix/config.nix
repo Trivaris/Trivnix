@@ -46,4 +46,3 @@ in
     serif = config.stylix.fonts.sansSerif;
   };
 }
-
