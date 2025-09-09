@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.suwayomi = import ./config.nix {
+  options.hostPrefs.suwayomi = import ./options.nix {
     inherit (lib) mkEnableOption;
     inherit (trivnixLib) mkReverseProxyOption;
   };

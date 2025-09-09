@@ -10,7 +10,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.minecraftServer = import ./config.nix {
+  options.hostPrefs.minecraftServer = import ./options.nix {
     inherit (lib) mkEnableOption mkOption types;
     inherit (trivnixLib) mkReverseProxyOption;
     inherit pkgs;

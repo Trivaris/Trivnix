@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.vaultwarden = import ./config.nix {
+  options.hostPrefs.vaultwarden = import ./options.nix {
     inherit (lib) mkEnableOption;
     inherit (trivnixLib) mkReverseProxyOption;
   };

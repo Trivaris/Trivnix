@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.codeServer = import ./config.nix {
+  options.hostPrefs.codeServer = import ./options.nix {
     inherit (lib) mkEnableOption;
     inherit (trivnixLib) mkReverseProxyOption;
   };

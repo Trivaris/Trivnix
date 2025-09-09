@@ -10,7 +10,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.nextcloud = import ./config.nix {
+  options.hostPrefs.nextcloud = import ./options.nix {
     inherit (lib) mkEnableOption;
     inherit (trivnixLib) mkReverseProxyOption;
   };

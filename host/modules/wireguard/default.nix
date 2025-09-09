@@ -10,7 +10,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.wireguard = import ./config.nix { inherit (lib) mkEnableOption; };
+  options.hostPrefs.wireguard = import ./options.nix { inherit (lib) mkEnableOption; };
 
   config = mkIf prefs.wireguard.enable {
     networking.firewall.allowedUDPPorts = [ 51820 ];

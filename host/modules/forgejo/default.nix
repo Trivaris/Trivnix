@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.forgejo = import ./config.nix {
+  options.hostPrefs.forgejo = import ./options.nix {
     inherit (lib) mkEnableOption;
     inherit (trivnixLib) mkReverseProxyOption;
   };

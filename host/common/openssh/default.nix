@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.openssh = import ./config.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.hostPrefs.openssh = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
 
   config = mkIf prefs.openssh.enable {
     services.openssh = {

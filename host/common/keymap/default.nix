@@ -7,7 +7,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.language = import ./config.nix {
+  options.hostPrefs.language = import ./options.nix {
     inherit (lib) types mkOption;
   };
 

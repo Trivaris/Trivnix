@@ -11,7 +11,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.hyprland = import ./config.nix lib;
+  options.hostPrefs.hyprland = import ./options.nix lib;
 
   config = mkIf (prefs.desktopEnvironment.name == "hyprland") {
     programs.hyprland = {

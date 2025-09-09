@@ -9,7 +9,7 @@ let
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.sunshine = import ./config.nix {
+  options.hostPrefs.sunshine = import ./options.nix {
     inherit (trivnixLib) mkReverseProxyOption;
     inherit (lib) mkEnableOption mkOption types;
   };

@@ -17,13 +17,13 @@ let
 
     /** OVERRIDES ***/
     user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
-    user_pref("places.history.enabled", false);e
+    user_pref("places.history.enabled", false);
     user_pref("sidebar.revamp", true);
     user_pref("sidebar.verticalTabs", true);
   '';
 in
 {
-  options.userPrefs.librewolf = import ./config.nix lib;
+  options.userPrefs.librewolf = import ./options.nix lib;
 
   config = mkIf (builtins.elem "librewolf" prefs.browsers) {
     programs.librewolf = {

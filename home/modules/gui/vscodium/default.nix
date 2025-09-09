@@ -38,7 +38,7 @@ let
   };
 in
 {
-  options.userPrefs.vscodium = import ./config.nix { inherit (lib) mkEnableOption; };
+  options.userPrefs.vscodium = import ./options.nix { inherit (lib) mkEnableOption; };
 
   config = mkIf (builtins.elem "vscodium" prefs.gui) (mkMerge [
     {
