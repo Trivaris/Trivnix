@@ -1370,11 +1370,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757511895,
-        "narHash": "sha256-iMYxQRQgXrf3LFa8x8yTJCgCU67i4t6Ew5UTAVmW1jI=",
+        "lastModified": 1757534761,
+        "narHash": "sha256-4WI2TlNNknbXCfXp4VycuU2XzkiXu0NkGOrG9KQ2NyI=",
         "owner": "trivaris",
         "repo": "trivnix-configs",
-        "rev": "cd0bc6e738e4b07610d7ecc25d7ade5fa40f3461",
+        "rev": "d88f7a949266abb0738816d7c64c794e904c44df",
         "type": "github"
       },
       "original": {
