@@ -7,6 +7,8 @@
 }:
 {
   time.timeZone = "Europe/Berlin";
+  nixowos.enable = true;
+
   nix = {
     package = lib.mkDefault pkgs.nix;
     optimise.automatic = true;

@@ -58,6 +58,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixowos = {
+      url = "github:yunfachi/nixowos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Private Information and other helper stuff
     trivnix-private = {
       url = "git+ssh://git@github.com/Trivaris/trivnix-private";

@@ -12,6 +12,23 @@ let
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
   bind = import ./keybinds.nix config |> builtins.attrValues |> lib.flatten;
   visual = import ./visual.nix { inherit lib getColor; };
+
+  waybar =
+    {
+      dirPath = ./waybar;
+      flags = [
+        "foldDefault"
+        "onlyNixFiles"
+        "collapse"
+        "mapImports"
+      ];
+    }
+    |> trivnixLib.resolveDir
+    |> builtins.attrValues
+    |> map (module: module { inherit getColor config; });
+
+  waybarSettings = waybar |> map (module: module.settings) |> lib.mergeAttrsList;
+  waybarStyle = waybar |> map (module: module.style) |> lib.concatStringsSep "\n";
 in
 {
   config =
@@ -39,10 +56,19 @@ in
 
         stylix.targets.hyprland.enable = false;
 
+        home.packages = builtins.attrValues {
+          inherit (pkgs)
+            python313
+            playerctl
+            light
+            brightnessctl
+            ;
+        };
+
         programs.waybar = {
           enable = true;
-          # Use unified Waybar config from a single file
-          settings = import ./waybar.nix;
+          style = waybarStyle;
+          settings.mainBar = waybarSettings;
 
           systemd = {
             enable = true;
@@ -53,8 +79,8 @@ in
         services.hyprpaper = {
           enable = true;
           settings = {
-            preload = [ (trivnixLib.mkStorePath "resources/wallpaper2.png") ];
-            wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper2.png"}" ];
+            preload = [ (trivnixLib.mkStorePath "resources/wallpaper3.png") ];
+            wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper3.png"}" ];
             splash = false;
           };
         };

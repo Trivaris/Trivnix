@@ -15,7 +15,6 @@ let
 in
 {
   inherit imports;
-
   options.userPrefs.gui = mkOption {
     type = types.listOf (types.enum modules);
     default = [ ];
