@@ -33,6 +33,7 @@ in
         ;
     };
 
+    stylix.targets.qt.platform = lib.mkForce "qtct";
     qt.platformTheme = lib.mkForce "kde";
     vars.desktopEnvironmentBinary = "${pkgs.kde}/bin/startplasma-wayland";
   };

@@ -12,14 +12,15 @@ Common tasks and how to toggle modules.
 
 If your `userPrefs.shell` is `"fish"`, this config adds handy functions for local development. They live in `home/common/shell/fish.nix` and appear in your shell after switching.
 
-- `rebuild-prod <host>`: Rebuilds using locked inputs from `flake.lock`.
-- `check-prod [path=. ]`: Runs `nix flake check` with locked inputs.
-- `rebuild-dev <host>`: Same as `rebuild-prod`, but overrides inputs to local checkouts:
-  - `~/Projects/trivnix-configs/`
-  - `~/Projects/trivnix-lib/`
-  - `~/Projects/trivnix-private/`
-  Use this to iterate on modules/configs without committing or updating locks.
-- `check-dev [path=. ]`: Runs `nix flake check` with the same local overrides.
+- `rebuild [--prod] [host]`: Rebuilds the system for a host. Defaults to dev overrides and to the current host (`<configname>`). Pass `--prod` to use locked inputs from `flake.lock`.
+- `check [--prod] [path=. ]`: Runs `nix flake check`. Defaults to dev overrides and current directory. Pass `--prod` to use locked inputs.
+
+Dev overrides point to local checkouts:
+- `~/Projects/trivnix-configs/`
+- `~/Projects/trivnix-lib/`
+- `~/Projects/trivnix-private/`
+
+Use dev mode to iterate on modules/configs without committing or updating locks.
 
 Notes
 
