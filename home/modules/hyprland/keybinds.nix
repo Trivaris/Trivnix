@@ -40,7 +40,7 @@ in
     "$mod, Q, killactive"
 
     "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
-    "$mod, SPACE, exec, ${prefs.appLauncher.name} ${prefs.appLauncher.flags}"
+    "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
     "$mod, B, exec, ${builtins.head prefs.browsers}"
     "$mod, S, exec, spotify"
     "$mod, D, exec, vesktop"
@@ -50,8 +50,8 @@ in
   ];
 
   volume = [
-    ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
-    ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-"
+    ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%+"
+    ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%-"
     ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   ];
 }

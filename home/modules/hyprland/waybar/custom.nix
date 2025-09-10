@@ -17,8 +17,8 @@ in
 
     "custom/launcher" = {
       format = " ";
-      on-click = "${prefs.appLauncher.name} ${prefs.appLauncher.flags}";
-      on-click-right = "killall ${prefs.appLauncher.name}";
+      on-click = "${prefs.appLauncher} ${config.vars.appLauncherFlags}";
+      on-click-right = "killall ${prefs.appLauncher}";
     };
 
     "custom/power" = {

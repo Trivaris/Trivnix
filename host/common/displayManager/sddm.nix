@@ -15,7 +15,7 @@ in
       wayland.enable = true;
     };
 
-    environment.systemPackages = mkIf (prefs.desktopEnvironment.name == "kde") [
+    environment.systemPackages = mkIf (prefs.desktopEnvironment == "kde") [
       pkgs.kdePackages.sddm-kcm
     ];
   };

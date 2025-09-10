@@ -23,7 +23,7 @@ outputs = { self, ... }: {
       # Host-level preferences consumed by host modules in this repo
       prefs = {
         displayManager = "gdm";             # e.g. "gdm" | "sddm"
-        desktopEnvironment.name = "kde";    # e.g. "kde" | "hyprland"
+        desktopEnvironment = "kde";         # e.g. "kde" | "hyprland"
         language.keyMap = "de";             # keyboard layout
 
         # Module toggles (examples)

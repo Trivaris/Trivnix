@@ -38,7 +38,7 @@ Examples:
   steam.enable = true;             # host/modules/steam
   wireguard.enable = true;         # host/modules/wireguard
   displayManager = "gdm";          # host/common/displayManager
-  desktopEnvironment.name = "kde"; # or "hyprland"
+  desktopEnvironment = "kde";      # or "hyprland"
   
   users.<user>.prefs = {
     browsers = [ "librewolf" ];

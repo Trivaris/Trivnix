@@ -53,7 +53,7 @@ Host desktop environment and display manager:
 
 ```nix
 hostPrefs.displayManager = "gdm";          # see host/common/displayManager
-hostPrefs.desktopEnvironment.name = "kde";  # or "hyprland" (see host/common/desktopEnvironment)
+hostPrefs.desktopEnvironment = "kde";      # or "hyprland" (see host/common/desktopEnvironment)
 ```
 
 User program sets:

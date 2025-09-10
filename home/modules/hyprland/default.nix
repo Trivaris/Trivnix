@@ -31,58 +31,52 @@ let
   waybarStyle = waybar |> map (module: module.style) |> lib.concatStringsSep "\n";
 in
 {
-  config =
-    mkIf
-      (
-        lib.hasAttrByPath [ "desktopEnvironment" "name" ] hostPrefs
-        && hostPrefs.desktopEnvironment.name == "hyprland"
-      )
-      {
-        wayland.windowManager.hyprland = {
-          enable = true;
-          package = null;
-          portalPackage = null;
-          systemd.variables = [ "--all" ];
+  config = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland") {
+    wayland.windowManager.hyprland = {
+      enable = true;
+      package = null;
+      portalPackage = null;
+      systemd.variables = [ "--all" ];
 
-          settings = {
-            inherit bind;
-            inherit (hostPrefs.hyprland) monitor;
+      settings = {
+        inherit bind;
+        inherit (hostPrefs.hyprland) monitor;
 
-            "$mod" = "SUPER";
-            "$alt_mod" = "ALT";
-          }
-          // visual;
-        };
+        "$mod" = "SUPER";
+        "$alt_mod" = "ALT";
+      }
+      // visual;
+    };
 
-        stylix.targets.hyprland.enable = false;
+    stylix.targets.hyprland.enable = false;
 
-        home.packages = builtins.attrValues {
-          inherit (pkgs)
-            python313
-            playerctl
-            light
-            brightnessctl
-            ;
-        };
+    home.packages = builtins.attrValues {
+      inherit (pkgs)
+        python313
+        playerctl
+        light
+        brightnessctl
+        ;
+    };
 
-        programs.waybar = {
-          enable = true;
-          style = waybarStyle;
-          settings.mainBar = waybarSettings;
+    programs.waybar = {
+      enable = true;
+      style = waybarStyle;
+      settings.mainBar = waybarSettings;
 
-          systemd = {
-            enable = true;
-            target = "hyprland-session.target";
-          };
-        };
-
-        services.hyprpaper = {
-          enable = true;
-          settings = {
-            preload = [ (trivnixLib.mkStorePath "resources/wallpaper3.png") ];
-            wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper3.png"}" ];
-            splash = false;
-          };
-        };
+      systemd = {
+        enable = true;
+        target = "hyprland-session.target";
       };
+    };
+
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        preload = [ (trivnixLib.mkStorePath "resources/wallpaper3.png") ];
+        wallpaper = [ ",${trivnixLib.mkStorePath "resources/wallpaper3.png"}" ];
+        splash = false;
+      };
+    };
+  };
 }

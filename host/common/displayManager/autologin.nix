@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -32,7 +31,7 @@ in
           default_session = settings.initial_session;
           initial_session = {
             inherit (prefs.autologin) user;
-            command = prefs.desktopEnvironment.binary;
+            command = config.vars.desktopEnvironmentBinary;
           };
         };
       in
