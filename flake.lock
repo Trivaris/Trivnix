@@ -1370,11 +1370,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757534761,
-        "narHash": "sha256-4WI2TlNNknbXCfXp4VycuU2XzkiXu0NkGOrG9KQ2NyI=",
+        "lastModified": 1757557226,
+        "narHash": "sha256-N0LswAmEilkFa3fD261YI0Aqjai2GgLIBxNr/vhYbq0=",
         "owner": "trivaris",
         "repo": "trivnix-configs",
-        "rev": "d88f7a949266abb0738816d7c64c794e904c44df",
+        "rev": "a6e68a5e5caabc613ffc0728d574c89f87ecaeb3",
         "type": "github"
       },
       "original": {
@@ -1390,11 +1390,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757511866,
-        "narHash": "sha256-8uEAknY5VASDwIMPkYKXImci/Tdu9ofBsf9f7R9jhYY=",
+        "lastModified": 1757557267,
+        "narHash": "sha256-kGtLlJRs4w5iwLuqgP/LmPUISZ/sQlxS90uYNzAF9uw=",
         "owner": "trivaris",
         "repo": "trivnix-lib",
-        "rev": "b1136ded2ecd3b8325808881926db302fd175931",
+        "rev": "59ad8894f842273e1c58df5f46674af12908cdea",
         "type": "github"
       },
       "original": {

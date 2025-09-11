@@ -47,6 +47,7 @@ let
     nur = inputs.nur.overlays.default;
     minecraft = inputs.nix-minecraft.overlay;
     millennium = inputs.millennium.overlays.default;
+    nixowos = inputs.nixowos.overlays.fastfetch;
   }
   // (import ./overlays) {
     inherit (trivnixLib) resolveDir;

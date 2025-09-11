@@ -15,7 +15,6 @@
       tldr
       btop
       procs
-      fastfetch
       git
       httpie
       bat

@@ -3,8 +3,6 @@
   getColor,
 }:
 let
-  clean = string: builtins.replaceStrings [ "\r\n" "\n" "\r" " " ] [ "" "" "" "" ] string;
-  get = name: clean (getColor name);
   toARGB = color: "0xff${lib.removePrefix "#" color}";
   withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
 in
@@ -17,10 +15,10 @@ in
     gaps_out = 10;
     border_size = 2;
     layout = "dwindle";
-    "col.active_border" = "${toARGB (get "base0D")} ${toARGB (get "base0E")} 45deg";
-    "col.inactive_border" = toARGB (get "base03");
-    "col.nogroup_border" = toARGB (get "base02");
-    "col.nogroup_border_active" = toARGB (get "base0A");
+    "col.active_border" = "${toARGB (getColor "base0D")} ${toARGB (getColor "base0E")} 45deg";
+    "col.inactive_border" = toARGB (getColor "base03");
+    "col.nogroup_border" = toARGB (getColor "base02");
+    "col.nogroup_border_active" = toARGB (getColor "base0A");
   };
 
   decoration = {
@@ -39,7 +37,7 @@ in
       range = 15;
       render_power = 3;
       offset = "0 0";
-      color = withAlpha "aa" (get "base00");
+      color = withAlpha "aa" (getColor "base00");
     };
   };
 
@@ -69,20 +67,20 @@ in
   };
 
   group = {
-    "col.border_active" = toARGB (get "base0D");
-    "col.border_inactive" = toARGB (get "base03");
+    "col.border_active" = toARGB (getColor "base0D");
+    "col.border_inactive" = toARGB (getColor "base03");
 
     groupbar = {
       enabled = true;
-      text_color = toARGB (get "base05");
-      "col.active" = toARGB (get "base0D");
-      "col.inactive" = toARGB (get "base02");
+      text_color = toARGB (getColor "base05");
+      "col.active" = toARGB (getColor "base0D");
+      "col.inactive" = toARGB (getColor "base02");
     };
   };
 
   windowrulev2 = [
     # "opacity 0.95, class:^(?i)alacritty$"
     # "rounding 6, class:^(?i)alacritty$"
-    # "bordercolor, ${toARGB (get "base0A")} ${toARGB (get "base0B")}, class:^(?i)alacritty$"
+    # "bordercolor, ${toARGB (getColor "base0A")} ${toARGB (getColor "base0B")}, class:^(?i)alacritty$"
   ];
 }
