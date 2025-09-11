@@ -1,11 +1,11 @@
 {
-  pkgs,
   lib,
-  trivnixLib,
-  hostInfos,
+  pkgs,
+  allHostPubKeys,
   allUserInfos,
   allUserPrefs,
-  allHostPubKeys,
+  hostInfos,
+  trivnixLib,
   ...
 }:
 let

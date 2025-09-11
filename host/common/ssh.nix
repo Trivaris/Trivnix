@@ -1,7 +1,7 @@
 {
-  allHostPubKeys,
-  allHostInfos,
   lib,
+  allHostInfos,
+  allHostPubKeys,
   ...
 }:
 let

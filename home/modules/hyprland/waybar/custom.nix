@@ -1,6 +1,6 @@
 {
-  getColor,
   config,
+  getColor,
   ...
 }:
 let

@@ -1,8 +1,8 @@
 {
-  pkgs,
-  trivnixLib,
   config,
   lib,
+  pkgs,
+  trivnixLib,
   ...
 }:
 let

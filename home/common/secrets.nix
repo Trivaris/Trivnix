@@ -1,9 +1,9 @@
 {
-  inputs,
   lib,
+  inputs,
+  hostInfos,
   trivnixLib,
   userInfos,
-  hostInfos,
   ...
 }:
 let

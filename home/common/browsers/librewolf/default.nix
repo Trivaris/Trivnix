@@ -1,10 +1,10 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   inputs,
-  userInfos,
   trivnixLib,
+  userInfos,
   ...
 }:
 let

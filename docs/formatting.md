@@ -129,3 +129,32 @@ mkOption {
 }
 ```
 
+## Module arguments (home/host)
+
+- Order module arguments as: `config, lib, pkgs, inputs, <extras...>, ...`.
+- Place extras (project-specific args like `trivnixLib`, `hostInfos`, `userInfos`, `hostPrefs`, etc.) alphabetically after the standard ones.
+- Always keep `...` last.
+
+Example
+
+```nix
+{ config, lib, pkgs, inputs, hostInfos, hostPrefs, trivnixLib, ... }:
+```
+
+Rationale: mirrors common NixOS/Home Manager conventions (`config, lib, pkgs, ...`) while keeping flake `inputs` nearby and extras predictable and easy to scan.
+
+## Trailing commas in argument sets
+
+- Do not leave a trailing comma before the closing brace of a function argument set.
+
+Good
+
+```nix
+{ config, lib, pkgs, ... }:
+```
+
+Avoid
+
+```nix
+{ config, lib, pkgs, ..., }:
+```

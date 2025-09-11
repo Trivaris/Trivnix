@@ -1,9 +1,9 @@
 {
-  inputs,
-  pkgs,
-  hostInfos,
   config,
   lib,
+  pkgs,
+  inputs,
+  hostInfos,
   ...
 }:
 let

@@ -1,9 +1,9 @@
 {
-  trivnixLib,
-  hostPrefs,
   config,
-  pkgs,
   lib,
+  pkgs,
+  hostPrefs,
+  trivnixLib,
   ...
 }:
 let

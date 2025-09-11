@@ -1,9 +1,9 @@
 {
-  pkgs,
   config,
   lib,
-  trivnixLib,
+  pkgs,
   hostInfos,
+  trivnixLib,
   userInfos,
   ...
 }:

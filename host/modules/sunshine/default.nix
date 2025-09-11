@@ -1,7 +1,7 @@
 {
-  trivnixLib,
   config,
   lib,
+  trivnixLib,
   ...
 }:
 let

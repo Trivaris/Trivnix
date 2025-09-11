@@ -1,10 +1,10 @@
 {
   config,
-  pkgs,
   lib,
-  trivnixLib,
-  isNixos,
+  pkgs,
   hostPrefs,
+  isNixos,
+  trivnixLib,
   ...
 }:
 let

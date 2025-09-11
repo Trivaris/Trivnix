@@ -1,10 +1,10 @@
 {
   config,
   lib,
+  allHostInfos,
+  allHostPrefs,
   hostInfos,
   userInfos,
-  allHostPrefs,
-  allHostInfos,
   ...
 }:
 let
