@@ -12,7 +12,7 @@ in
 {
   options.hostPrefs.autoUpgrade.enable = mkEnableOption "Wether to automatically update flake once a new commit is pushed";
 
-  config = mkIf (prefs.autoUpgrade.enable) {
+  config = mkIf prefs.autoUpgrade.enable {
     system.autoUpgrade = {
       enable = true;
       dates = "hourly";

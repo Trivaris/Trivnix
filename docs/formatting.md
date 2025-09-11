@@ -7,6 +7,8 @@ The default formatter is `nixfmt`. For consistency in ambiguous spots, apply the
 - Treat all oneliners as one block.
 - Separate multiline blocks in an attrset with a single blank line.
 
+Exception: Interleave oneliners with related blocks when it improves clarity. It's fine to split a group of oneliners and place some immediately before or after the multi-line blocks they conceptually belong to (e.g., values derived from a preceding `let` attrset or helpers sitting next to the block that uses them). Keep one blank line between multi-line blocks; keep related items close together even if that mixes styles.
+
 Example
 
 ```nix
@@ -81,6 +83,25 @@ If there is only one oneliner and one block, do not insert a blank line between 
 
 - Modules that define both `options` and `config` must separate those top-level attrs by one blank line.
 
+- If a module defines `assertions`, place them first in the `config` attrset, or top-level attrset when no top-level `config` attrset exists. This keeps fast-fail checks prominent and prevents scattering across files.
+
+```nix
+{
+  options.userPrefs.foo.enable = mkEnableOption "Enable Foo";
+
+  config = mkIf prefs.foo.enable {
+    assertions = [
+      {
+        assertion = someCondition;
+        message = "Explain the failure and how to fix it.";
+      }
+    ];
+
+    programs.foo.enable = true;
+  };
+}
+```
+
 ```nix
 {
   options.hostPrefs.steam.enable = mkEnableOption "Enable Steam";
@@ -145,7 +166,7 @@ Rationale: mirrors common NixOS/Home Manager conventions (`config, lib, pkgs, ..
 
 ## Trailing commas in argument sets
 
-- Do not leave a trailing comma before the closing brace of a function argument set.
+- Do not leave a trailing comma before the closing brace of a function argument set, except if nixfmt calls for it.
 
 Good
 

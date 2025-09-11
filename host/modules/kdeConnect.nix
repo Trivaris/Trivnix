@@ -11,7 +11,7 @@ in
 {
   options.hostPrefs.kdeConnect.enable = mkEnableOption "Enable KDE Connect";
 
-  config = mkIf (prefs.kdeConnect.enable == true) {
+  config = mkIf prefs.kdeConnect.enable {
     environment.systemPackages = [ pkgs.kdePackages.kdeconnect-kde ];
     networking.firewall = {
       enable = true;

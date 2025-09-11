@@ -15,7 +15,6 @@ let
 in
 {
   inherit imports;
-
   options = {
     hostPrefs.desktopEnvironment = mkOption {
       type = types.nullOr (types.enum modules);

@@ -6,22 +6,40 @@
   ...
 }:
 let
+  inherit (inputs.trivnix-private) emailAccounts;
   inherit (lib)
     mkEnableOption
     mkIf
     mapAttrs'
     nameValuePair
+    pipe
     ;
-  inherit (inputs.trivnix-private) emailAccounts;
+
+  hasPrivate = inputs ? trivnix-private;
   prefs = config.userPrefs;
+
+  hasEmail =
+    hasPrivate
+    && (inputs.trivnix-private ? emailAccounts)
+    && builtins.isAttrs inputs.trivnix-private.emailAccounts;
 in
 {
   options.userPrefs.email.enable = mkEnableOption "Enable Email Accounts";
 
   config = mkIf prefs.email.enable {
-    accounts.email.accounts =
-      emailAccounts
-      |> mapAttrs' (
+    assertions = [
+      {
+        assertion = (!prefs.email.enable) || hasPrivate;
+        message = ''Email module enabled but input "trivnix-private" is missing. See docs/trivnix-private.md.'';
+      }
+      {
+        assertion = (!prefs.email.enable) || hasEmail;
+        message = ''Email module enabled but inputs.trivnix-private.emailAccounts is missing or not an attrset.'';
+      }
+    ];
+
+    accounts.email.accounts = pipe emailAccounts [
+      (mapAttrs' (
         accountName: account:
         nameValuePair accountName (
           {
@@ -33,11 +51,11 @@ in
           }
           // account
         )
-      );
+      ))
+    ];
 
-    home.file.".config/mailaccounts.json".text =
-      emailAccounts
-      |> mapAttrs' (
+    home.file.".config/mailaccounts.json".text = pipe emailAccounts [
+      (mapAttrs' (
         accountName: account:
         nameValuePair accountName {
           inherit (account.imap.tls) useStartTls;
@@ -46,7 +64,8 @@ in
           username = account.userName;
           passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
         }
-      )
-      |> builtins.toJSON;
+      ))
+      builtins.toJSON
+    ];
   };
 }

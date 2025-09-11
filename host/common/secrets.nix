@@ -9,6 +9,11 @@
   ...
 }:
 let
+  hasPrivate = inputs ? trivnix-private;
+  private = if hasPrivate then inputs.trivnix-private else { };
+  hasWireguard =
+    hasPrivate && (private ? wireguardInterfaces) && builtins.isAttrs private.wireguardInterfaces;
+
   commonSecrets = trivnixLib.mkStorePath "secrets/host/common.yaml";
   hostSecrets = trivnixLib.mkStorePath "secrets/host/${hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
@@ -31,9 +36,22 @@ let
       group = "root";
       mode = "0600";
     }
-  ) inputs.trivnix-private.wireguardInterfaces;
+  ) private.wireguardInterfaces;
 in
 {
+  assertions = [
+    {
+      assertion = hasPrivate;
+      message = ''
+        Missing input "trivnix-private". Provide your private flake or override the input.
+              See docs/trivnix-private.md and use: nix build --override-input trivnix-private <your_repo>'';
+    }
+    {
+      assertion = hasWireguard || (!prefs.wireguard.enable);
+      message = ''Invalid or missing inputs.trivnix-private.wireguardInterfaces (expected attrset) while hostPrefs.wireguard.enable = true.'';
+    }
+  ];
+
   environment.systemPackages = builtins.attrValues { inherit (pkgs) sops age; };
   sops = {
     defaultSopsFile = commonSecrets;

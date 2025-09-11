@@ -7,28 +7,42 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf pipe;
   scheme = config.stylix.base16Scheme;
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
-  bind = import ./keybinds.nix config |> builtins.attrValues |> lib.flatten;
   visual = import ./visual.nix { inherit lib getColor; };
 
-  waybar =
-    {
-      dirPath = ./waybar;
-      flags = [
-        "foldDefault"
-        "onlyNixFiles"
-        "collapse"
-        "mapImports"
-      ];
-    }
-    |> trivnixLib.resolveDir
-    |> builtins.attrValues
-    |> map (module: module { inherit getColor config; });
+  bind = pipe (import ./keybinds.nix config) [
+    builtins.attrValues
+    lib.flatten
+  ];
 
-  waybarSettings = waybar |> map (module: module.settings) |> lib.mergeAttrsList;
-  waybarStyle = waybar |> map (module: module.style) |> lib.concatStringsSep "\n";
+  waybar =
+    pipe
+      {
+        dirPath = ./waybar;
+        flags = [
+          "foldDefault"
+          "onlyNixFiles"
+          "collapse"
+          "mapImports"
+        ];
+      }
+      [
+        trivnixLib.resolveDir
+        builtins.attrValues
+        (map (module: module { inherit getColor config; }))
+      ];
+
+  waybarSettings = pipe waybar [
+    (map (module: module.settings))
+    lib.mergeAttrsList
+  ];
+
+  waybarStyle = pipe waybar [
+    (map (module: module.style))
+    (lib.concatStringsSep "\n")
+  ];
 in
 {
   config = mkIf (hostPrefs ? desktopEnvironment && hostPrefs.desktopEnvironment == "hyprland") {

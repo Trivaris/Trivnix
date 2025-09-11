@@ -5,13 +5,13 @@
       "locked": {
         "lastModified": 1756475207,
         "narHash": "sha256-hdPepukUyKOfNtZOU36IQrJxxf+EurkD1y7fAZJkERQ=",
-        "owner": "AppFlowy-IO",
+        "owner": "appflowy-io",
         "repo": "AppFlowy-Cloud",
         "rev": "f71977044a830a8e59cabe66575b08eacf829a85",
         "type": "github"
       },
       "original": {
-        "owner": "AppFlowy-IO",
+        "owner": "appflowy-io",
         "repo": "AppFlowy-Cloud",
         "type": "github"
       }
@@ -800,19 +800,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1756833776,
-        "narHash": "sha256-m/nSouqgXd8dYwHhVoj6a6/0Y51qCF7PanCIrZaZHb4=",
+        "lastModified": 1756680064,
+        "narHash": "sha256-zvDsOu7cm9oI9iArvih5Qr/cBZCNJ5T7OQCFt8kJGYs=",
         "ref": "nix-update",
-        "rev": "0c38cb268f4c87eda949e560a00b86713a8c4816",
-        "revCount": 2067,
+        "rev": "40414d560ec510f6b8d87503360d10198767ab30",
+        "revCount": 2057,
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/Trivaris/Millennium"
+        "url": "https://github.com/trivaris/Millennium"
       },
       "original": {
         "ref": "nix-update",
         "type": "git",
-        "url": "https://github.com/Trivaris/Millennium"
+        "url": "https://github.com/trivaris/Millennium"
       }
     },
     "mnw": {
@@ -1390,11 +1390,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757557267,
-        "narHash": "sha256-kGtLlJRs4w5iwLuqgP/LmPUISZ/sQlxS90uYNzAF9uw=",
+        "lastModified": 1757561529,
+        "narHash": "sha256-sZqdC9hnnp81mQp/a1k+zN6z1opqVqUqvUoOzCnWICg=",
         "owner": "trivaris",
         "repo": "trivnix-lib",
-        "rev": "59ad8894f842273e1c58df5f46674af12908cdea",
+        "rev": "dd7779cbdb95cfa237d05540475a7d8deeb598e3",
         "type": "github"
       },
       "original": {
@@ -1411,11 +1411,11 @@
         "rev": "eda25e30a3136d6be471ecae24af94f5a265584a",
         "revCount": 13,
         "type": "git",
-        "url": "ssh://git@github.com/Trivaris/trivnix-private"
+        "url": "ssh://git@github.com/trivaris/trivnix-private"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/Trivaris/trivnix-private"
+        "url": "ssh://git@github.com/trivaris/trivnix-private"
       }
     },
     "xdph": {
