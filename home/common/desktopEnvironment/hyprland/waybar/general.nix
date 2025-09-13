@@ -5,6 +5,11 @@
 {
   settings = {
     layer = "top";
+    margin-top = 0;
+    margin-left = 0;
+    margin-right = 0;
+    margin-bottom = 12;
+    height = 42;
     modules-center = [ "hyprland/workspaces" ];
 
     modules-left = [
@@ -36,7 +41,10 @@
     }
 
     window#waybar {
-      background: transparent;
+      background: ${getColor "base00"};
+      margin: 0;
+      padding: 8px 12px; /* add vertical room so background is taller */
+      border-radius: 0 0 20px 20px; /* round bottom only to frame wallpaper */
     }
 
     window#waybar.hidden {
@@ -44,7 +52,8 @@
     }
 
     #window {
-      margin-top: 6px;
+      /* reset inherited margins to let window padding control vertical spacing */
+      margin-top: 0;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
@@ -53,10 +62,10 @@
     }
 
     #workspaces {
-      margin: 6px 12px 0;
+      margin: 0 12px;
       font-size: 4px;
       border-radius: 10px;
-      background: ${getColor "base00"};
+      background: transparent;
       transition: none;
     }
 

@@ -30,39 +30,39 @@
 
   style = ''
     #clock {
-      margin: 6px 8px 0;
+      margin: 0 8px;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base00"};
-      background: ${getColor "base0B"};
+      color: ${getColor "base0B"};
+      background: transparent;
     }
 
     #tray {
-      margin: 6px 8px 0;
+      margin: 0 8px;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
       color: ${getColor "base0C"};
-      background: ${getColor "base00"};
+      background: transparent;
     }
 
     #cpu {
-      margin: 6px 8px 0;
+      margin: 0 8px;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base00"};
-      background: ${getColor "base0D"};
+      color: ${getColor "base0D"};
+      background: transparent;
     }
 
     #memory {
-      margin: 6px 8px 0;
+      margin: 0 8px;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base00"};
-      background: ${getColor "base0E"};
+      color: ${getColor "base0E"};
+      background: transparent;
     }
   '';
 }

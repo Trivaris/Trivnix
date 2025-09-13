@@ -26,23 +26,22 @@
 
   style = ''
     #battery {
-      margin: 6px 8px 0;
+      margin: 0 8px;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base00"};
-      background: ${getColor "base0C"};
+      color: ${getColor "base0C"};
+      background: transparent;
     }
 
     #battery.charging, #battery.plugged {
-      color: ${getColor "base00"};
-      background-color: ${getColor "base0C"};
+      color: ${getColor "base0B"};
+      background-color: transparent;
     }
 
     #battery.critical:not(.charging) {
-      background-color: ${getColor "base0C"};
-      color: ${getColor "base00"};
-      animation: blink 0.5s linear infinite alternate;
+      background-color: transparent;
+      color: ${getColor "base08"};
     }
   '';
 }

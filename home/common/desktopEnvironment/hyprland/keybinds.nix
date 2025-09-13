@@ -52,10 +52,9 @@ in
       "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
       "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
       "$mod, B, exec, ${builtins.head prefs.browsers}"
-      "$mod, S, exec, spotify"
     ]
     ++ [
-      # (mkIf (isEnabled "spotify") "$mod, S, exec, spotify")
+      (mkIf (isEnabled "spotify") "$mod, S, exec, spotify")
       (mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
       (mkIf (isEnabled "vscodium") "$mod, C, exec, codium")
       (mkIf (isEnabled "thunderbird") "$mod, T, exec, thunderbird")
@@ -79,6 +78,9 @@ in
       # Drag and resize windows with mouse
       "$mod, mouse:272, movewindow"
       "$mod SHIFT, mouse:272, movewindow"
+
+      # Resize tiled or floating windows by dragging with Mod + Right Click
+      "$mod, mouse:273, resizewindow"
       "$mod SHIFT, mouse:273, resizewindow"
     ];
   };

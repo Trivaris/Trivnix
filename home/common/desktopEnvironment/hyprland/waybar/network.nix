@@ -14,12 +14,12 @@
 
   style = ''
     #network {
-      margin: 6px 8px 0;
+      margin: 0 8px;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base00"};
-      background: ${getColor "base0E"};
+      color: ${getColor "base0E"};
+      background: transparent;
     }
   '';
 }

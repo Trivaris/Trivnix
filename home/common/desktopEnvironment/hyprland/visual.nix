@@ -15,6 +15,9 @@ in
     gaps_out = 10;
     border_size = 2;
     layout = "dwindle";
+    resize_on_border = true;
+    extend_border_grab_area = 15;
+    hover_icon_on_border = true;
     "col.active_border" = "${toARGB (getColor "base0D")} ${toARGB (getColor "base0E")} 45deg";
     "col.inactive_border" = toARGB (getColor "base03");
     "col.nogroup_border" = toARGB (getColor "base02");

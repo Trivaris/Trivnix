@@ -10,6 +10,11 @@ let
   prefs = config.userPrefs;
   scheme = config.stylix.base16Scheme;
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
+  c1 = getColor "base0D"; # blue
+  c2 = getColor "base0C"; # cyan
+  c3 = getColor "base0B"; # green
+  c4 = getColor "base0A"; # yellow/orange
+  c5 = getColor "base08"; # red
 in
 {
   config = mkIf (builtins.elem "fastfetch" prefs.cli) {

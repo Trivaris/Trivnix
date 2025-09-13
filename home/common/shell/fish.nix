@@ -2,7 +2,6 @@
   config,
   lib,
   hostInfos,
-  userInfos,
   ...
 }:
 let
@@ -35,13 +34,6 @@ in
         };
 
         functions = {
-          rm-clobbering = ''
-            rm -f ~/.gtkrc-2.0.backup
-            rm -f ~/.librewolf/${userInfos.name}/search.json.mozlz4.backup
-            sudo rm -f ~/.config/gtk-3.0/gtk.css.backup
-            sudo rm -f ~/.config/hypr/hyprland.conf.backup
-          '';
-
           rebuild = ''
             set prod 0
             set host "${hostInfos.configname}"
