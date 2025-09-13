@@ -12,8 +12,8 @@ let
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
   visual = import ./visual.nix { inherit lib getColor; };
 
-  keybinds = mapAttrs (name: value: lib.flatten (builtins.attrValues value)) (
-    import ./keybinds.nix config
+  keybinds = mapAttrs (_: value: lib.flatten (builtins.attrValues value)) (
+    import ./keybinds.nix config lib
   );
 
   waybar =

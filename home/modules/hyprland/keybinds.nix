@@ -1,6 +1,8 @@
-config:
+config: lib:
 let
+  inherit (lib) mkIf;
   prefs = config.userPrefs;
+  isEnabled = module: builtins.elem module prefs.gui;
 in
 {
   bind = {
@@ -24,6 +26,7 @@ in
     ];
 
     mouseFloat = [
+      # Make active window floating for mouse drag/resize
       "$mod SHIFT, mouse:272, setfloating, active"
       "$mod SHIFT, mouse:273, setfloating, active"
     ];
@@ -44,30 +47,35 @@ in
 
     programs = [
       "$mod, Q, killactive"
+      "$mod, E, exec, dolphin"
 
       "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
       "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
       "$mod, B, exec, ${builtins.head prefs.browsers}"
-      "$mod, S, exec, spotify"
-      "$mod, D, exec, vesktop"
-      "$mod, C, exec, codium"
-      "$mod, T, exec, thunderbird"
-      "$mod, E, exec, dolphin" 
+    ]
+    ++ [
+      (mkIf (isEnabled "spotify") "$mod, S, exec, spotify")
+      (mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
+      (mkIf (isEnabled "vscodium") "$mod, C, exec, codium")
+      (mkIf (isEnabled "thunderbird") "$mod, T, exec, thunderbird")
     ];
 
     volume = [
+      # Control system volume (PipeWire) via wpctl
       ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
 
     screenshot = [
+      # Region screenshot with selection (hyprshot)
       ", Print, exec, hyprshot -m region"
     ];
   };
 
   bindm = {
     windowDrag = [
+      # Drag and resize windows with mouse
       "$mod, mouse:272, movewindow"
       "$mod SHIFT, mouse:272, movewindow"
       "$mod SHIFT, mouse:273, resizewindow"
@@ -76,6 +84,7 @@ in
 
   bindc = {
     mouseClick = [
+      # Force tiling on click to escape floating
       "$mod SHIFT, mouse:272, settiled, active"
     ];
   };
