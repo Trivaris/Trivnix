@@ -3,55 +3,82 @@ let
   prefs = config.userPrefs;
 in
 {
-  windowMove = [
-    # Send window in direction
-    "$mod, LEFT,  movewindow, l"
-    "$mod, RIGHT, movewindow, r"
-    "$mod, UP,    movewindow, u"
-    "$mod, down,  movewindow, d"
+  bind = {
+    windowMove = [
+      # Send window in direction
+      "$mod, LEFT,  movewindow, l"
+      "$mod, RIGHT, movewindow, r"
+      "$mod, UP,    movewindow, u"
+      "$mod, down,  movewindow, d"
 
-    # Send window to monitor in direction
-    "$mod SHIFT, LEFT,  movewindow, mon:l"
-    "$mod SHIFT, RIGHT, movewindow, mon:r"
-    "$mod SHIFT, UP,    movewindow, mon:u"
-    "$mod SHIFT, DOWN,  movewindow, mon:d"
+      # Send window to monitor in direction
+      "$mod SHIFT, LEFT,  movewindow, mon:l"
+      "$mod SHIFT, RIGHT, movewindow, mon:r"
+      "$mod SHIFT, UP,    movewindow, mon:u"
+      "$mod SHIFT, DOWN,  movewindow, mon:d"
 
-    # Split window horizontally/vertically
-    "$alt_mod, H, layoutmsg, preselect d"
-    "$alt_mod, V, layoutmsg, preselect r"
-    "$alt_mod, Y, togglesplit"
-  ];
+      # Split window horizontally/vertically
+      "$alt_mod, H, layoutmsg, preselect d"
+      "$alt_mod, V, layoutmsg, preselect r"
+      "$alt_mod, Y, togglesplit"
+    ];
 
-  windowFocus = [
-    # Focus window in direction
-    "$alt_mod, LEFT,  movefocus, l"
-    "$alt_mod, RIGHT, movefocus, r"
-    "$alt_mod, UP,    movefocus, u"
-    "$alt_mod, DOWN,  movefocus, d"
+    mouseFloat = [
+      # Make window floating as soon as Alt+Shift+LMB is pressed
+      "$alt_mod SHIFT, mouse:272, setfloating, active"
+      # Also float on Alt+Shift+RMB press to allow resize-on-drag
+      "$alt_mod SHIFT, mouse:273, setfloating, active"
+    ];
 
-    # Focus window on monitor in direction
-    "$alt_mod SHIFT, LEFT,  focusmonitor, l"
-    "$alt_mod SHIFT, RIGHT, focusmonitor, r"
-    "$alt_mod SHIFT, UP,    focusmonitor, u"
-    "$alt_mod SHIFT, DOWN,  focusmonitor, d"
-  ];
+    windowFocus = [
+      # Focus window in direction
+      "$alt_mod, LEFT,  movefocus, l"
+      "$alt_mod, RIGHT, movefocus, r"
+      "$alt_mod, UP,    movefocus, u"
+      "$alt_mod, DOWN,  movefocus, d"
 
-  programs = [
-    "$mod, Q, killactive"
+      # Focus window on monitor in direction
+      "$alt_mod SHIFT, LEFT,  focusmonitor, l"
+      "$alt_mod SHIFT, RIGHT, focusmonitor, r"
+      "$alt_mod SHIFT, UP,    focusmonitor, u"
+      "$alt_mod SHIFT, DOWN,  focusmonitor, d"
+    ];
 
-    "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
-    "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
-    "$mod, B, exec, ${builtins.head prefs.browsers}"
-    "$mod, S, exec, spotify"
-    "$mod, D, exec, vesktop"
-    "$mod, C, exec, codium"
-    "$mod, T, exec, thunderbird"
-    "$mod, E, exec, dolphin"
-  ];
+    programs = [
+      "$mod, Q, killactive"
 
-  volume = [
-    ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%+"
-    ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%-"
-    ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-  ];
+      "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
+      "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
+      "$mod, B, exec, ${builtins.head prefs.browsers}"
+      "$mod, S, exec, spotify"
+      "$mod, D, exec, vesktop"
+      "$mod, C, exec, codium"
+      "$mod, T, exec, thunderbird"
+      "$mod, E, exec, dolphin"
+    ];
+
+    volume = [
+      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    ];
+  };
+
+  bindm = {
+    windowDrag = [
+      "$alt_mod, mouse:272, movewindow"
+      # Alt+Shift+LMB drag: move floating windows (paired with setfloating above)
+      "$alt_mod SHIFT, mouse:272, movewindow"
+      # Alt+Shift+RMB drag: resize floating windows
+      "$alt_mod SHIFT, mouse:273, resizewindow"
+    ];
+  };
+
+  # Click bind (fires only if movement is below binds.drag_threshold)
+  bindc = {
+    mouseClick = [
+      # Alt+Shift+LMB click: return to tiling
+      "$alt_mod SHIFT, mouse:272, settiled, active"
+    ];
+  };
 }

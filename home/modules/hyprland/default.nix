@@ -7,15 +7,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf pipe;
+  inherit (lib) mkIf pipe mapAttrs;
   scheme = config.stylix.base16Scheme;
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
   visual = import ./visual.nix { inherit lib getColor; };
 
-  bind = pipe (import ./keybinds.nix config) [
-    builtins.attrValues
-    lib.flatten
-  ];
+  keybinds = mapAttrs (name: value: lib.flatten (builtins.attrValues value)) (
+    import ./keybinds.nix config
+  );
 
   waybar =
     pipe
@@ -53,13 +52,14 @@ in
       systemd.variables = [ "--all" ];
 
       settings = {
-        inherit bind;
         inherit (hostPrefs.hyprland) monitor;
 
         "$mod" = "SUPER";
         "$alt_mod" = "ALT";
+        binds.drag_threshold = 10;
       }
-      // visual;
+      // visual
+      // keybinds;
     };
 
     stylix.targets.hyprland.enable = false;
@@ -70,6 +70,7 @@ in
         playerctl
         light
         brightnessctl
+        bluez
         ;
     };
 

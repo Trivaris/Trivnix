@@ -12,6 +12,7 @@
       "cpu"
       "memory"
       "network"
+      "bluetooth"
       "tray"
     ];
 

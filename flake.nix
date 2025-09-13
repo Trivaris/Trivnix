@@ -77,7 +77,7 @@
     };
 
     millennium = {
-      url = "git+https://github.com/trivaris/Millennium?ref=nix-update";
+      url = "github:trivaris/Millennium";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
