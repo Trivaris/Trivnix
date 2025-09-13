@@ -71,6 +71,7 @@ in
         light
         brightnessctl
         bluez
+        hyprshot
         ;
     };
 

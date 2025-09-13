@@ -24,10 +24,8 @@ in
     ];
 
     mouseFloat = [
-      # Make window floating as soon as Alt+Shift+LMB is pressed
-      "$alt_mod SHIFT, mouse:272, setfloating, active"
-      # Also float on Alt+Shift+RMB press to allow resize-on-drag
-      "$alt_mod SHIFT, mouse:273, setfloating, active"
+      "$mod SHIFT, mouse:272, setfloating, active"
+      "$mod SHIFT, mouse:273, setfloating, active"
     ];
 
     windowFocus = [
@@ -54,31 +52,31 @@ in
       "$mod, D, exec, vesktop"
       "$mod, C, exec, codium"
       "$mod, T, exec, thunderbird"
-      "$mod, E, exec, dolphin"
+      "$mod, E, exec, dolphin" 
     ];
 
     volume = [
       ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    ];
+
+    screenshot = [
+      ", Print, exec, hyprshot -m region"
     ];
   };
 
   bindm = {
     windowDrag = [
-      "$alt_mod, mouse:272, movewindow"
-      # Alt+Shift+LMB drag: move floating windows (paired with setfloating above)
-      "$alt_mod SHIFT, mouse:272, movewindow"
-      # Alt+Shift+RMB drag: resize floating windows
-      "$alt_mod SHIFT, mouse:273, resizewindow"
+      "$mod, mouse:272, movewindow"
+      "$mod SHIFT, mouse:272, movewindow"
+      "$mod SHIFT, mouse:273, resizewindow"
     ];
   };
 
-  # Click bind (fires only if movement is below binds.drag_threshold)
   bindc = {
     mouseClick = [
-      # Alt+Shift+LMB click: return to tiling
-      "$alt_mod SHIFT, mouse:272, settiled, active"
+      "$mod SHIFT, mouse:272, settiled, active"
     ];
   };
 }
