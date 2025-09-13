@@ -17,4 +17,9 @@
       modpacks defined in `pkgs.modpacks`.
     '';
   };
+
+  serverIcon = mkOption {
+    type = types.path;
+    description = "Server Icon";
+  };
 }

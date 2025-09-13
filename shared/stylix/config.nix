@@ -2,7 +2,7 @@
   prefs,
   pkgs,
   config,
-  trivnixLib,
+  ...
 }:
 let
   theme = "${pkgs.base16-schemes}/share/themes/${prefs.stylix.colorscheme}.yaml";
@@ -12,19 +12,6 @@ in
   base16Scheme = theme;
   polarity = if prefs.stylix.darkmode then "dark" else "light";
   targets.gtk.enable = true;
-
-  image =
-    pkgs.runCommand "tinted-wallpaper.png"
-      {
-        nativeBuildInputs = builtins.attrValues { inherit (pkgs) imagemagickBig yq; };
-        inherit theme;
-        inputImage = trivnixLib.mkStorePath "resources/wallpaper2.png";
-      }
-      ''
-        cp "$inputImage" wallpaper.png
-        COLOR=$(yq -r '.palette.base03' "$theme")
-        magick wallpaper.png -fill "$COLOR" -colorize 25% $out
-      '';
 
   cursor = {
     package = pkgs.${prefs.stylix.cursorPackage};

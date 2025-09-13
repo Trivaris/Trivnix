@@ -30,17 +30,15 @@ in
           ${modpack} = {
             enable = true;
             openFirewall = true;
+            jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
 
             package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override {
               loaderVersion = modpackPkg.fabricVersion;
             };
 
-            files = {
-              server-icon = trivnixLib.mkStorePath "resources/minecraft-server-icon.png";
-            }
-            // modpackPkg.files;
-
-            jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
+            files = modpackPkg.files // {
+              server-icon = prefs.serverIcon;
+            };
 
             serverProperties = {
               gamemode = "survival";
@@ -49,7 +47,7 @@ in
               server-port = prefs.minecraftServer.reverseProxy.port;
               whitelist = true;
               max-tick-time = -1;
-              "enable-rcon" = true;
+              enable-rcon = true;
               "rcon.port" = prefs.minecraftServer.reverseProxy.port - 2;
               motd = "Awake and Ready!";
             };
