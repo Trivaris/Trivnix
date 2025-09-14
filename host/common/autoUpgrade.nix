@@ -20,7 +20,7 @@ in
 
     repoUrl = mkOption {
       type = types.str;
-      default = "https://github.com/Trivaris/trivnix.git";
+      default = "git@github.com:Trivaris/trivnix.git";
       description = "Git URL of the flake repository to track";
     };
 
