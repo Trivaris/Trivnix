@@ -65,6 +65,16 @@ in
       perUserSecrets
       wireguardSecrets
 
+      {
+        ssh-root-key = {
+          sopsFile = hostSecrets;
+          path = "/root/.ssh/id_ed25519";
+          owner = "root";
+          group = "root";
+          mode = "0600";
+        };
+      }
+
       (lib.mkIf prefs.openssh.enable {
         ssh-host-key = {
           sopsFile = hostSecrets;

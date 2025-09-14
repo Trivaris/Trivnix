@@ -17,7 +17,7 @@ in
         interactiveShellInit = ''
           set fish_greeting
           starship init fish | source
-          fastfetch
+          ${if (builtins.elem "fastfetch" prefs.cli.enabled) then "fastfetch" else ""}
         '';
 
         shellAbbrs = {

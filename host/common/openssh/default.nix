@@ -13,8 +13,9 @@ in
 
   config = mkIf prefs.openssh.enable {
     services.openssh = {
-      enable = true;
       inherit (prefs.openssh) ports;
+      enable = true;
+      openFirewall = true;
 
       settings = {
         PasswordAuthentication = false;
@@ -26,8 +27,6 @@ in
       authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") (
         builtins.attrNames allUserInfos
       );
-
-      openFirewall = true;
 
       hostKeys = [
         {

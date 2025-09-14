@@ -48,6 +48,7 @@ the corresponding YAML files
 - `user-passwords/<user>` [common] – hashed passwords for system users. Referenced by `hosts/common/users/*` (in `hosts/common.yaml`)
 - `sops-keys/<user>` – the AGE private key for each user. Written to `/home/<user>/.config/sops/age/keys.txt` during activation
 - `ssh-host-key` – host SSH key installed to `/etc/ssh/ssh_host_ed25519_key`
+- `ssh-root-key` – root user's private SSH key installed to `/root/.ssh/id_ed25519`
 - `code-server-password` - Password for accessing the vscode server
 - `cloudflare-api-token` - Cloudflare API token for ACME Certification
 - `cloudflare-api-account-token` - Cloudflare API Account token for DDNS
@@ -68,4 +69,3 @@ the corresponding YAML files
 4. Run `sops --encrypt --in-place <file>` to encrypt each file
 
 After encryption, commit the `.sops.yaml` and the encrypted secrets. Keep your private keys out of version control.
-

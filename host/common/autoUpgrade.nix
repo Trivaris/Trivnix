@@ -44,7 +44,6 @@ in
   };
 
   config = mkIf prefs.autoUpgrade.enable {
-    # Poll upstream git and rebuild when it advances.
     systemd.services.trivnix-auto-upgrade =
       let
         upgradeScript = ''
