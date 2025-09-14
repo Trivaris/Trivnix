@@ -78,13 +78,14 @@ You can point this repo to your configs flake without editing files using `--ove
 ```bash
 sudo nixos-rebuild switch \
   --flake github:trivaris/trivnix#<configname> \
-  --override-input trivnix-configs github:<you>/<your-configs-repo>
+  --override-input trivnixConfigs github:<you>/<your-configs-repo>
 ```
 
-If working from a local clone and you prefer a permanent link, you can also edit this repo’s `flake.nix` input `trivnix-configs` to your repository and then run:
+If working from a local clone and you prefer a permanent link, you can also edit this repo’s `flake.nix` input `trivnixConfigs` to your repository and then run:
 
 ```bash
 sudo nixos-rebuild switch --flake .#<configname>
 ```
 
 Remote deploy works the same with `--target-host <user>@<ip> --sudo`.
+

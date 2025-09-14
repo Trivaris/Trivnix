@@ -23,7 +23,7 @@ let
         (nameValuePair "${prefix}.color" account.color)
         (nameValuePair "${prefix}.disabled" false)
       ]
-    ) inputs.trivnix-private.calendarAccounts
+    ) inputs.trivnixPrivate.calendarAccounts.${userInfos.name}
   );
 in
 {

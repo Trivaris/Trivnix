@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (inputs.trivnix-private) emailAccounts;
+  inherit (inputs.trivnixPrivate) emailAccounts;
   inherit (lib)
     mkEnableOption
     mkIf
@@ -15,13 +15,13 @@ let
     pipe
     ;
 
-  hasPrivate = inputs ? trivnix-private;
+  hasPrivate = inputs ? trivnixPrivate;
   prefs = config.userPrefs;
 
   hasEmail =
     hasPrivate
-    && (inputs.trivnix-private ? emailAccounts)
-    && builtins.isAttrs inputs.trivnix-private.emailAccounts;
+    && (inputs.trivnixPrivate ? emailAccounts)
+    && builtins.isAttrs inputs.trivnixPrivate.emailAccounts;
 in
 {
   options.userPrefs.email.enable = mkEnableOption "Enable Email Accounts";
@@ -30,11 +30,11 @@ in
     assertions = [
       {
         assertion = prefs.email.enable -> hasPrivate;
-        message = ''Email module enabled but input "trivnix-private" is missing. See docs/trivnix-private.md.'';
+        message = ''Email module enabled but input "trivnixPrivate" is missing. See docs/trivnix-private.md.'';
       }
       {
         assertion = prefs.email.enable -> hasEmail;
-        message = ''Email module enabled but inputs.trivnix-private.emailAccounts is missing or not an attrset.'';
+        message = ''Email module enabled but inputs.trivnixPrivate.emailAccounts is missing or not an attrset.'';
       }
     ];
 
@@ -50,9 +50,9 @@ in
         }
         // account
       )
-    ) emailAccounts;
+    ) emailAccounts.${userInfos.name};
 
-    home.file.".config/mailaccounts.json".text = pipe emailAccounts [
+    home.file.".config/mailaccounts.json".text = pipe emailAccounts.${userInfos.name} [
       (mapAttrs' (
         accountName: account:
         nameValuePair accountName {

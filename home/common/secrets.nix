@@ -7,8 +7,8 @@
   ...
 }:
 let
-  hasPrivate = inputs ? trivnix-private;
-  private = if hasPrivate then inputs.trivnix-private else { };
+  hasPrivate = inputs ? trivnixPrivate;
+  private = if hasPrivate then inputs.trivnixPrivate else { };
   hasEmail = hasPrivate && (private ? emailAccounts) && builtins.isAttrs private.emailAccounts;
   hasCalendar =
     hasPrivate && (private ? calendarAccounts) && builtins.isAttrs private.calendarAccounts;
@@ -35,13 +35,13 @@ let
 
   emailSecrets = builtins.listToAttrs (
     map (account: lib.nameValuePair "email-passwords/${account}" { mode = "0600"; }) (
-      builtins.attrNames private.emailAccounts
+      builtins.attrNames private.emailAccounts.${userInfos.name}
     )
   );
 
   calendarSecrets = builtins.listToAttrs (
     map (account: lib.nameValuePair "calendar-passwords/${account}" { mode = "0600"; }) (
-      builtins.attrNames private.calendarAccounts
+      builtins.attrNames private.calendarAccounts.${userInfos.name}
     )
   );
 in
@@ -50,16 +50,16 @@ in
     {
       assertion = hasPrivate;
       message = ''
-        Missing input "trivnix-private". Provide your private flake or override the input.
-              See docs/trivnix-private.md and use: nix build --override-input trivnix-private <your_repo>'';
+        Missing input "trivnixPrivate". Provide your private flake or override the input.
+              See docs/trivnix-private.md and use: nix build --override-input trivnixPrivate <your_repo>'';
     }
     {
       assertion = hasEmail;
-      message = ''Invalid or missing inputs.trivnix-private.emailAccounts (expected attrset).'';
+      message = ''Invalid or missing inputs.trivnixPrivate.emailAccounts (expected attrset).'';
     }
     {
       assertion = hasCalendar;
-      message = ''Invalid or missing inputs.trivnix-private.calendarAccounts (expected attrset).'';
+      message = ''Invalid or missing inputs.trivnixPrivate.calendarAccounts (expected attrset).'';
     }
   ];
 

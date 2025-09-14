@@ -8,18 +8,18 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Personal repos
-    trivnix-private.url = "git+ssh://git@github.com/trivaris/trivnix-private";
+    trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
 
-    trivnix-lib = {
-      url = "github:trivaris/trivnix-lib";
+    trivnixLib = {
+      url = "github:Trivaris/TrivnixLib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    trivnix-configs = {
-      url = "github:trivaris/trivnix-configs";
+    trivnixConfigs = {
+      url = "github:Trivaris/TrivnixConfigs";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        trivnix-lib.follows = "trivnix-lib";
+        trivnixLib.follows = "trivnixLib";
       };
     };
 
@@ -46,6 +46,11 @@
 
     stylix = {
       url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

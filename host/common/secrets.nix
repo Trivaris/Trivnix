@@ -9,8 +9,8 @@
   ...
 }:
 let
-  hasPrivate = inputs ? trivnix-private;
-  private = if hasPrivate then inputs.trivnix-private else { };
+  hasPrivate = inputs ? trivnixPrivate;
+  private = if hasPrivate then inputs.trivnixPrivate else { };
   hasWireguard =
     hasPrivate && (private ? wireguardInterfaces) && builtins.isAttrs private.wireguardInterfaces;
 
@@ -43,13 +43,13 @@ in
     {
       assertion = hasPrivate;
       message = ''
-        Missing input "trivnix-private". Provide your private flake or override the input.
-        See docs/trivnix-private.md and use: nix build --override-input trivnix-private <your_repo>
+        Missing input "trivnixPrivate". Provide your private flake or override the input.
+        See docs/trivnix-private.md and use: nix build --override-input trivnixPrivate <your_repo>
       '';
     }
     {
       assertion = hasWireguard || (!prefs.wireguard.enable);
-      message = ''Invalid or missing inputs.trivnix-private.wireguardInterfaces (expected attrset) while hostPrefs.wireguard.enable = true.'';
+      message = ''Invalid or missing inputs.trivnixPrivate.wireguardInterfaces (expected attrset) while hostPrefs.wireguard.enable = true.'';
     }
   ];
 

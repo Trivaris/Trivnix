@@ -3,17 +3,17 @@
 This repo provides reusable NixOS and Home Manager modules and overlays. It works together with two companion repositories and one private input:
 
 - `trivnix` (this repo): common NixOS/Home modules, overlays, shared logic
-- `trivnix-lib`: helper library (`resolveDir`, `mkNixOS`, `mkHomeManager`, etc.)
-- `trivnix-configs`: per-host and per-user configuration source of truth
-- `trivnix-private`: private inputs and glue for secrets
+- `trivnixLib`: helper library (`resolveDir`, `mkNixOS`, `mkHomeManager`, etc.)
+- `trivnixConfigs`: per-host and per-user configuration source of truth
+- `trivnixPrivate`: private inputs and glue for secrets
 
 ## Outputs Flow
 
 `outputs.nix` wires everything together:
 
-- Reads host definitions from `trivnix-configs.configs`.
-- For each host, builds a NixOS config using `trivnix-lib.mkNixOS`.
-- For each user on a host, builds a Home Manager config using `trivnix-lib.mkHomeManager`.
+- Reads host definitions from `trivnixConfigs.configs`.
+- For each host, builds a NixOS config using `trivnixLib.mkNixOS`.
+- For each user on a host, builds a Home Manager config using `trivnixLib.mkHomeManager`.
 - Exposes results under `nixosConfigurations` and `homeConfigurations`.
 
 Paths to check in this repo:
@@ -23,7 +23,7 @@ Paths to check in this repo:
 - `home/common`, `home/modules`
 - `shared/`, `secrets/`, `resources/`
 
-In `trivnix-configs`, each host lives under `configs/<configname>/` and typically includes:
+In `trivnixConfigs`, each host lives under `configs/<configname>/` and typically includes:
 - `infos.nix`: hostname, architecture, stateVersion, network info, etc.
 - `prefs.nix`: host-level preferences (desktop environment, services, etc.)
 - `users.nix`: users on this host and their preferences
@@ -71,4 +71,3 @@ Overlays are defined in `overlays/` and merged in `outputs.nix`. Custom or patch
 
 - Secrets are managed via `sops-nix`. See `secrets/README.md` for layout and rules.
 - Theming is centralized via Stylix; see `shared/stylix/` and `host/common/stylix.nix`.
-

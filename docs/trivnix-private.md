@@ -1,6 +1,6 @@
 # Trivnix-Private Contract
 
-Provide private, non-committable data as a flake that exports a few well-known attributes. Trivnix reads these from `inputs.trivnix-private`.
+Provide private, non-committable data as a flake that exports a few well-known attributes. Trivnix reads these from `inputs.trivnixPrivate`.
 
 Your internal layout is up to you — only the outputs matter.
 
@@ -113,16 +113,17 @@ Secrets
 
 ## Wiring Your Private Flake
 
-You can override this repo’s `trivnix-private` input at build time:
+You can override this repo’s `trivnixPrivate` input at build time:
 
 ```bash
 sudo nixos-rebuild switch \
   --flake github:trivaris/trivnix#<configname> \
-  --override-input trivnix-private github:<you>/<your-private-repo>
+  --override-input trivnixPrivate github:<you>/<your-private-repo>
 ```
 
-Or edit `flake.nix` locally to point `trivnix-private` to your repository.
+Or edit `flake.nix` locally to point `trivnixPrivate` to your repository.
 
 ## Access
 
-Because this repository is private, ensure your machine has SSH access to it (SSH key loaded/agent forwarding). If access fails, rebuilds that reference `trivnix-private` will error.
+Because this repository is private, ensure your machine has SSH access to it (SSH key loaded/agent forwarding). If access fails, rebuilds that reference `trivnixPrivate` will error.
+

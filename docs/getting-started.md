@@ -4,7 +4,7 @@ This guide covers installation and day-to-day rebuilds.
 
 Prerequisites
 
-- Access to `trivnix-private` and any required SSH keys (see `docs/trivnix-private.md`)
+- Access to `trivnixPrivate` and any required SSH keys (see `docs/trivnix-private.md`)
 - AGE keys for hosts/users (see `docs/secrets.md`)
 - A NixOS ISO with flakes enabled
 
@@ -27,7 +27,7 @@ sudo nix --experimental-features 'nix-command flakes' \
   --mode destroy,format,mount /path/to/partitions.nix
 ```
 
-Note: In `trivnix-configs`, disk layout typically resides at `configs/<configname>/partitions.nix`.
+Note: In `trivnixConfigs`, disk layout typically resides at `configs/<configname>/partitions.nix`.
 
 4) Install NixOS using this flake:
 
@@ -37,7 +37,7 @@ sudo nixos-install --no-root-passwd --flake github:trivaris/trivnix#<configname>
 
 If using a local clone, replace the flake URL with `.#<configname>`.
 
-5) Reboot. The system will fetch `trivnix-configs` and apply the selected modules.
+5) Reboot. The system will fetch `trivnixConfigs` and apply the selected modules.
 
 ## Rebuilds
 

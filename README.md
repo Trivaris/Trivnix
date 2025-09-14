@@ -2,9 +2,9 @@
 
 Flake-based NixOS and Home Manager modules powering my machines. This repo provides common modules, overlays, and utilities that work together with:
 
-- `trivnix-lib` – helper library (functions like `resolveDir`, `mkNixOS`, `mkHomeManager`)
-- `trivnix-configs` – per-host and per-user configuration source of truth
-- `trivnix-private` – private inputs and secrets glue
+- `trivnixLib` – helper library (functions like `resolveDir`, `mkNixOS`, `mkHomeManager`)
+- `trivnixConfigs` – per-host and per-user configuration source of truth
+- `trivnixPrivate` – private inputs and secrets glue
 
 This README is an overview. Detailed guides live under `docs/`.
 
@@ -12,7 +12,7 @@ This README is an overview. Detailed guides live under `docs/`.
 
 ## Highlights
 - Flake-based setup with `nixpkgs`, `home-manager`, `sops-nix`, `disko`, `hyprland`, `stylix` and more.
-- Clean split between reusable modules (this repo) and concrete configs (`trivnix-configs`).
+- Clean split between reusable modules (this repo) and concrete configs (`trivnixConfigs`).
 - Optional modules for desktop environments, services, and user programs toggled via prefs.
 - Secrets via `sops-nix` with per-host and per-user key separation.
 

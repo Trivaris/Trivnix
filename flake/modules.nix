@@ -10,6 +10,7 @@
     inputs.spicetify-nix.nixosModules.spicetify
     inputs.nvf.nixosModules.default
     inputs.nixowos.nixosModules.default
+    inputs.mailserver.nixosModules.default
   ];
 
   homeModules = [

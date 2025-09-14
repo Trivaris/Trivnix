@@ -3,7 +3,7 @@
 Key directories in this repo:
 
 - `flake.nix`, `flake.lock`: flake inputs and locking
-- `outputs.nix`: defines outputs using helpers from `trivnix-lib` and configs from `trivnix-configs`
+- `outputs.nix`: defines outputs using helpers from `trivnixLib` and configs from `trivnixConfigs`
 - `overlays/`: package overlays and custom packages
 - `host/`
   - `common/`: shared NixOS settings (users, secrets, display manager, desktop env, services)
@@ -17,7 +17,6 @@ Key directories in this repo:
 
 External to this repo:
 
-- `trivnix-lib` (library functions)
-- `trivnix-configs` (host and user definitions)
-- `trivnix-private` (private input)
-
+- `trivnixLib` (library functions)
+- `trivnixConfigs` (host and user definitions)
+- `trivnixPrivate` (private input)

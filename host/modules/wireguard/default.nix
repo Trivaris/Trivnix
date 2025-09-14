@@ -25,7 +25,7 @@ in
           presharedKeyFile = config.sops.secrets."wireguard-preshared-keys/${interfaceName}".path;
           ipAddr = hostInfos.ip;
         })
-      ) inputs.trivnix-private.wireguardInterfaces;
+      ) inputs.trivnixPrivate.wireguardInterfaces;
     };
   };
 }

@@ -1,10 +1,9 @@
 inputs@{ self, ... }:
 let
   inherit (inputs.nixpkgs) lib;
+  inherit (inputs) trivnixConfigs;
 
-  trivnixConfigs = inputs.trivnix-configs;
-  trivnixLib = inputs.trivnix-lib.lib.for self;
-
+  trivnixLib = inputs.trivnixLib.lib.for self;
   overlays = import ./overlays.nix { inherit inputs trivnixLib lib; };
   modules = import ./modules.nix { inherit inputs; };
   systems = import ./systems.nix { inherit trivnixConfigs lib; };

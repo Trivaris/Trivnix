@@ -16,9 +16,9 @@ If your `userPrefs.shell` is `"fish"`, this config adds handy functions for loca
 - `check [--prod] [path=. ]`: Runs `nix flake check`. Defaults to dev overrides and current directory. Pass `--prod` to use locked inputs.
 
 Dev overrides point to local checkouts:
-- `~/Projects/trivnix-configs/`
-- `~/Projects/trivnix-lib/`
-- `~/Projects/trivnix-private/`
+- `~/Projects/trivnixConfigs/`
+- `~/Projects/trivnixLib/`
+- `~/Projects/trivnixPrivate/`
 
 Use dev mode to iterate on modules/configs without committing or updating locks.
 
@@ -29,8 +29,8 @@ Notes
 
 ## Toggle Host Modules
 
-Host-level preferences live in `trivnix-configs.configs.<configname>.prefs` and map to `host/common` and `host/modules` here.
-User-level preferences live in `trivnix-configs.configs.<configname>.users.<user>.prefs` and map to `home/common` and `home/modules` here.
+Host-level preferences live in `trivnixConfigs.configs.<configname>.prefs` and map to `host/common` and `host/modules` here.
+User-level preferences live in `trivnixConfigs.configs.<configname>.users.<user>.prefs` and map to `home/common` and `home/modules` here.
 
 Examples:
 
