@@ -15,7 +15,7 @@ in
       (builtins.elem "hyprland" (
         pipe allUserPrefs [
           builtins.attrValues
-          (map (prefs: prefs.desktopEnvironment))
+          (map (prefs: prefs.desktopEnvironment or ""))
         ]
       ))
       {
@@ -31,6 +31,5 @@ in
           package = inputs.hyprland.packages.${hostInfos.architecture}.hyprland;
           portalPackage = inputs.hyprland.packages.${hostInfos.architecture}.xdg-desktop-portal-hyprland;
         };
-
       };
 }

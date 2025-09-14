@@ -38,7 +38,7 @@ Modules in this repo use two major option trees:
   - Example single options: `host/common/displayManager`, `host/common/desktopEnvironment/*`
 
 - `userPrefs`: user-level options used by Home Manager modules
-  - Example lists: `home/modules/cli/default.nix` (`options.userPrefs.cli`)
+  - Example lists: `home/modules/cli/default.nix` (`options.userPrefs.cli.enabled`)
   - Other options under `home/modules/*` (e.g., `gui`, `browsers`, `vscodium`, etc.)
 
 Examples
@@ -60,7 +60,7 @@ User program sets:
 
 ```nix
 userPrefs.gui = [ "vscodium" "spotify" "bitwarden" ];
-userPrefs.cli = [ "bat" "fzf" "zoxide" "nvim" ];
+userPrefs.cli.enabled = [ "bat" "fzf" "zoxide" "nvim" ];
 ```
 
 ## Overlays and Packages

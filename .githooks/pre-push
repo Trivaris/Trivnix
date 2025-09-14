@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "[hooks] Running nix flake check before push..."
+
+if ! command -v nix >/dev/null 2>&1; then
+  echo "[hooks] nix is not available in PATH; aborting push." >&2
+  echo "         Install Nix or push with --no-verify if you must." >&2
+  exit 1
+fi
+
+if ! nix flake check; then
+  echo "[hooks] nix flake check failed; blocking push." >&2
+  echo "         Fix failures or push with --no-verify to override." >&2
+  exit 1
+fi
+
+echo "[hooks] nix flake check passed. Proceeding with push."
+exit 0
+

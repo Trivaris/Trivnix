@@ -13,6 +13,6 @@ in
   nur = inputs.nur.overlays.default;
   minecraft = inputs.nix-minecraft.overlay;
   millennium = inputs.millennium.overlays.default;
-  # nixowos = inputs.nixowos.overlays.fastfetch;
+  nixowos = inputs.nixowos.overlays.fastfetch;
 }
 // overlaysFromRepo

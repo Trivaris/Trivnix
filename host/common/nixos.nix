@@ -2,6 +2,7 @@
   lib,
   pkgs,
   inputs,
+  config,
   allUserInfos,
   ...
 }:
@@ -15,15 +16,25 @@ let
     filterAttrs
     isType
     ;
+
+  prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.mainUser = mkOption {
-    type = types.str;
-    default = pipe allUserInfos [
-      builtins.attrNames
-      builtins.head
-    ];
-    description = "The main user of this host. Used by sevices like autlogin if enabled";
+  options.hostPrefs = {
+    oldProfileDeleteInterval = mkOption {
+      type = types.str;
+      default = "3d";
+      description = "How old a profile nix should be before its deleted";
+    };
+
+    mainUser = mkOption {
+      type = types.str;
+      default = pipe allUserInfos [
+        builtins.attrNames
+        builtins.head
+      ];
+      description = "The main user of this host. Used by sevices like autlogin if enabled";
+    };
   };
 
   config = {
@@ -38,7 +49,7 @@ in
       gc = {
         automatic = true;
         dates = "daily";
-        options = "--delete-older-than 3d";
+        options = "--delete-older-than ${prefs.oldProfileDeleteInterval}";
       };
 
       settings = {

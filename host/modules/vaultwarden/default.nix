@@ -17,10 +17,10 @@ in
   config = mkIf prefs.vaultwarden.enable {
     services.vaultwarden = {
       enable = true;
+      environmentFile = config.sops.secrets.vaultwarden-admin-token.path;
       config = {
-        ADMIN_TOKEN = "$argon2id$v=19$m=65540,t=3,p=4$7q/+GP5hFwGIp8RG+/XDctDhkM3d+P0yaIBjx2Q6q4g$3eDxkpcfRopvzTtZUPTX387qiYTG1ACbRB6k5Td9ogI";
         DOMAIN = "https://${prefs.vaultwarden.reverseProxy.domain}:${toString prefs.reverseProxy.port}";
-        ROCKET_ADDRESS = "127.0.0.1";
+        ROCKET_ADDRESS = prefs.vaultwarden.reverseProxy.ipAddress;
         ROCKET_PORT = prefs.vaultwarden.reverseProxy.port;
         SIGNUPS_ALLOWED = false;
       };

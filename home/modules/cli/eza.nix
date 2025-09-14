@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "eza" prefs.cli) {
+  config = mkIf (builtins.elem "eza" prefs.cli.enabled) {
     programs = {
       eza = {
         enable = true;
@@ -21,5 +21,7 @@ in
 
       fish.functions.ls.body = mkIf (prefs.shell == "fish") "eza $argv";
     };
+
+    vars.defaultReplacementModules = [ "eza" ];
   };
 }

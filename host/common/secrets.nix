@@ -44,7 +44,8 @@ in
       assertion = hasPrivate;
       message = ''
         Missing input "trivnix-private". Provide your private flake or override the input.
-              See docs/trivnix-private.md and use: nix build --override-input trivnix-private <your_repo>'';
+        See docs/trivnix-private.md and use: nix build --override-input trivnix-private <your_repo>
+      '';
     }
     {
       assertion = hasWireguard || (!prefs.wireguard.enable);
@@ -111,6 +112,14 @@ in
         suwayomi-webui-password = {
           owner = "suwayomi";
           group = "suwayomi";
+          mode = "0600";
+        };
+      })
+
+      (lib.mkIf prefs.vaultwarden.enable {
+        vaultwarden-admin-token = {
+          owner = "vaultwarden";
+          group = "vaultwarden";
           mode = "0600";
         };
       })

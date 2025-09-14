@@ -24,7 +24,7 @@ in
         downloadAsCbz = true;
         extensionsRepos = [ "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json" ];
         basicAuthEnabled = true;
-        basicAuthUsername = "admin";
+        basicAuthUsername = prefs.mainUser;
         basicAuthPasswordFile = config.sops.secrets.suwayomi-webui-password.path;
       };
     };

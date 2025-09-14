@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "nvim" prefs.cli) {
+  config = mkIf (builtins.elem "nvim" prefs.cli.enabled) {
     programs.nvf = {
       enable = true;
       settings.vim = {
@@ -15,7 +15,6 @@ in
 
         languages = {
           enableTreesitter = true;
-
           nix.enable = true;
           java.enable = true;
           kotlin.enable = true;

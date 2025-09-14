@@ -1,5 +1,4 @@
-pkgs:
-{
+pkgs: {
   src = pkgs.fetchFromGitHub {
     owner = "tinted-theming";
     repo = "schemes";

@@ -57,3 +57,9 @@ Examples:
 ```
 
 Refer to the modules under `home/modules` and `host/modules` for the available options.
+
+## Git Hooks
+
+- This repo ships a pre-push hook at `.githooks/pre-push` that runs `nix flake check` and blocks the push on failure.
+- The repo is configured locally to use it via `git config core.hooksPath .githooks`.
+- If cloning fresh, run `git config core.hooksPath .githooks` once in the repo to enable the hook.

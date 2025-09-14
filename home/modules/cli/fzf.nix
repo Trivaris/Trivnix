@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "fzf" prefs.cli) {
+  config = mkIf (builtins.elem "fzf" prefs.cli.enabled) {
     programs.fzf = {
       enable = true;
       defaultCommand = "fd --type f --exclude .git --follow --hidden";

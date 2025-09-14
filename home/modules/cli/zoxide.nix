@@ -4,7 +4,7 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (builtins.elem "zoxide" prefs.cli) {
+  config = mkIf (builtins.elem "zoxide" prefs.cli.enabled) {
     programs = {
       zoxide = {
         enable = true;
@@ -15,5 +15,7 @@ in
 
       fish.functions.cd.body = mkIf (prefs.shell == "fish") "z \"$argv\"";
     };
+
+    vars.defaultReplacementModules = [ "zoxide" ];
   };
 }
