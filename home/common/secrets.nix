@@ -4,6 +4,7 @@
   hostInfos,
   trivnixLib,
   userInfos,
+  hostPrefs,
   ...
 }:
 let
@@ -74,6 +75,11 @@ in
       sshSecrets
       emailSecrets
       calendarSecrets
+      (lib.mkIf (hostPrefs ? mailserver && hostPrefs.mailserver.enable or false) {
+        "email-passwords/personal-hashed" = {
+          mode = "0600";
+        };
+      })
     ];
   };
 }

@@ -3,6 +3,6 @@
   mkEnableOption,
 }:
 {
-  enable = mkEnableOption "Enable forgejo server";
+  enable = mkEnableOption "Enable email server";
   reverseProxy = mkReverseProxyOption { defaultPort = 25; };
 }

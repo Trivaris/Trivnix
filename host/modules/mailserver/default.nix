@@ -25,8 +25,9 @@ let
 
   loginAccounts = mapAttrs' (
     name: value:
-    nameValuePair value.personal.address {
-      hashedPasswordFile = config.home-manager.users.${name}.sops.secrets."email-passwords/personal".path;
+    nameValuePair value.personal.userName {
+      hashedPasswordFile =
+        config.home-manager.users.${name}.sops.secrets."email-passwords/personal-hashed".path;
       aliases = [ "@${domain}" ];
     }
   ) inputs.trivnixPrivate.emailAccounts;
@@ -44,12 +45,23 @@ in
       fqdn = domain;
       domains = [ baseDomain ];
       certificateScheme = "acme-nginx";
+      enableImap = false;
+      enableImapSsl = true;
+      enableSubmission = true;
+      enableSubmissionSsl = true;
       stateVersion = pipe hostInfos.stateVersion [
         (lib.splitString ".")
         lib.head
         lib.toInt
       ];
     };
+
+    networking.firewall.allowedTCPPorts = [
+      25
+      465
+      587
+      993
+    ];
 
     security.acme = {
       acceptTerms = true;
