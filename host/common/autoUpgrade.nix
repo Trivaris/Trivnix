@@ -95,6 +95,7 @@ in
             nix
             coreutils
             bash
+            openssh
             ;
         };
       };
