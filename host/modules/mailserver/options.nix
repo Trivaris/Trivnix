@@ -19,4 +19,5 @@ in
   ipV6Interface = mkStrOption "The ipv6 interface of your mail server";
   domain = mkStrOption "The domain your server will run on";
   baseDomain = mkStrOption "The base domain that you control";
+  providerName = mkStrOption "The name of your Mail Server";
 }

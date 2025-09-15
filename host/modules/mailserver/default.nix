@@ -94,5 +94,30 @@ in
       acceptTerms = true;
       defaults.email = prefs.reverseProxy.email;
     };
+
+    services.automx2 = {
+      enable = true;
+      domain = prefs.mailserver.baseDomain;
+      settings = {
+        provider = prefs.mailserver.providerName;
+
+        domains = builtins.attrValues {
+          inherit (prefs.mailserver) baseDomain domain;
+        };
+
+        servers = [
+          {
+            type = "imap";
+            name = "imap.${prefs.mailserver.baseDomain}";
+            port = 993;
+          }
+          {
+            type = "smtp";
+            name = "smtp.${prefs.mailserver.baseDomain}";
+            port = 587;
+          }
+        ];
+      };
+    };
   };
 }
