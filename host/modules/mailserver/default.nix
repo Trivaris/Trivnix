@@ -3,38 +3,28 @@
   config,
   inputs,
   hostInfos,
-  trivnixLib,
   ...
 }:
 let
-  inherit (prefs.mailserver.reverseProxy) domain;
   inherit (lib)
     mkIf
     pipe
     mapAttrs'
     nameValuePair
     splitString
-    tail
     head
     toInt
-    concatStringsSep
     findFirst
     hasSuffix
     ;
 
   prefs = config.hostPrefs;
 
-  baseDomain = pipe domain [
-    (splitString ".")
-    tail
-    (concatStringsSep ".")
-  ];
-
   loginAccounts = pipe inputs.trivnixPrivate.emailAccounts.${prefs.mainUser} [
     (mapAttrs' (name: value: nameValuePair name (value // { profileName = name; })))
     builtins.attrValues
-    (findFirst (account: hasSuffix "@${domain}" account.address) (
-      throw "Email Server enabled but no email accounts set!"
+    (findFirst (account: hasSuffix "@${prefs.mailserver.domain}" account.address) (
+      throw "Email Server enabled but no email accounts with addresses ending on @${prefs.mailserver.domain} set!"
     ))
     (account: {
       ${account.userName} = {
@@ -42,8 +32,8 @@ let
           config.home-manager.users.${prefs.mainUser}.sops.secrets."email-passwords/${account.profileName}-hashed".path;
 
         aliases = [
-          "@${domain}"
-          "@${baseDomain}"
+          "@${prefs.mailserver.domain}"
+          "@${prefs.mailserver.baseDomain}"
         ];
       };
     })
@@ -52,7 +42,6 @@ in
 {
   options.hostPrefs.mailserver = import ./options.nix {
     inherit (lib) mkEnableOption types mkOption;
-    inherit (trivnixLib) mkReverseProxyOption;
   };
 
   config = mkIf prefs.mailserver.enable {
@@ -61,19 +50,21 @@ in
       inherit loginAccounts;
 
       enable = true;
-      fqdn = domain;
+      fqdn = prefs.mailserver.domain;
       certificateScheme = "acme-nginx";
       enablePop3Ssl = prefs.mailserver.enablePop3;
 
-      domains = [
-        baseDomain
-        domain
-      ];
+      dkimSelector = "default";
+      dkimKeyType = "ed25519";
+
+      domains = builtins.attrValues {
+        inherit (prefs.mailserver) baseDomain domain;
+      };
 
       certificateDomains = [
-        "imap.${baseDomain}"
-        "smtp.${baseDomain}"
-        (mkIf prefs.mailserver.enablePop3 "pop3.${baseDomain}")
+        "imap.${prefs.mailserver.baseDomain}"
+        "smtp.${prefs.mailserver.baseDomain}"
+        (mkIf prefs.mailserver.enablePop3 "pop3.${prefs.mailserver.baseDomain}")
       ];
 
       stateVersion = pipe hostInfos.stateVersion [
