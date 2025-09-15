@@ -1,4 +1,7 @@
-pkgs:
+{ pkgs, ... }:
+let
+  inherit (pkgs.lib) licenses;
+in
 pkgs.buildGoModule {
   pname = "udp-proxy-2020";
   version = "v0.0.11";
@@ -17,6 +20,6 @@ pkgs.buildGoModule {
   meta = {
     description = "UDP Proxy 2020";
     homepage = "https://github.com/synfinatic/udp-proxy-2020";
-    license = pkgs.lib.licenses.mit;
+    license = licenses.mit;
   };
 }

@@ -17,7 +17,9 @@ in
 {
   additions =
     _: pkgs:
-    mapAttrs' (name: path: (nameValuePair name (pkgs.callPackage ./packages/${path} pkgs))) extraPkgs
+    mapAttrs' (
+      name: path: (nameValuePair name (pkgs.callPackage ./packages/${path} { inherit pkgs; }))
+    ) extraPkgs
     // {
       modpacks = {
         elysiumDays = pkgs.callPackage ./mkModpack.nix {
@@ -37,6 +39,7 @@ in
   modifications =
     _: pkgs:
     mapAttrs' (
-      name: path: (nameValuePair name (pkgs.${name}.overrideAttrs (_: import ./overrides/${path} pkgs)))
+      name: path:
+      (nameValuePair name (pkgs.${name}.overrideAttrs (_: import ./overrides/${path} { inherit pkgs; })))
     ) extraOverrides;
 }

@@ -1,5 +1,6 @@
-pkgs:
+{ pkgs, ... }:
 let
+  inherit (pkgs.lib) licenses;
   keeweb = {
     pname = "keeweb";
     version = "1.18.7";
@@ -18,7 +19,7 @@ let
     meta = {
       description = "Free cross-platform password manager compatible with KeePass ";
       homepage = "https://github.com/keeweb/keeweb";
-      license = pkgs.lib.licenses.gpl3Plus;
+      license = licenses.gpl3Plus;
     };
   };
 in

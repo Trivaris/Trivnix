@@ -5,9 +5,10 @@
   ...
 }:
 let
-  knownHosts = lib.mapAttrs' (
+  inherit (lib) mapAttrs' nameValuePair;
+  knownHosts = mapAttrs' (
     hostname: pubKeys:
-    lib.nameValuePair hostname {
+    nameValuePair hostname {
       hostNames = [ allHostInfos.${hostname}.ip ];
       publicKey = pubKeys."host.pub";
     }

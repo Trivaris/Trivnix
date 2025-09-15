@@ -4,6 +4,7 @@
   ...
 }:
 let
+  inherit (lib) nameValuePair;
   prefs = config.hostPrefs;
 in
 {
@@ -32,9 +33,7 @@ in
       in
       {
         defaultLocale = language;
-        extraLocaleSettings = builtins.listToAttrs (
-          map (unit: lib.nameValuePair unit unitLanguage) unitTypes
-        );
+        extraLocaleSettings = builtins.listToAttrs (map (unit: nameValuePair unit unitLanguage) unitTypes);
       };
 
     services.xserver.xkb = {

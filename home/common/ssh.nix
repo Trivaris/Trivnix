@@ -8,19 +8,34 @@
   ...
 }:
 let
+  inherit (lib)
+    concatMap
+    nameValuePair
+    attrNames
+    filterAttrs
+    pipe
+    ;
+
   aliases = builtins.listToAttrs (
-    lib.concatMap (
-      configname:
-      let
-        infos = allHostInfos.${configname};
-      in
-      [
-        (lib.nameValuePair infos.name {
-          hostname = infos.ip;
-          user = userInfos.name;
-        })
-      ]
-    ) (lib.attrNames (lib.filterAttrs (_: prefs: prefs.openssh.enable or false) allHostPrefs))
+    concatMap
+      (
+        configname:
+        let
+          infos = allHostInfos.${configname};
+        in
+        [
+          (nameValuePair infos.name {
+            hostname = infos.ip;
+            user = userInfos.name;
+          })
+        ]
+      )
+      (
+        pipe allHostPrefs [
+          (filterAttrs (_: prefs: prefs.openssh.enable or false))
+          attrNames
+        ]
+      )
   );
 in
 {

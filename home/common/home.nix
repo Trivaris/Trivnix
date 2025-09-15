@@ -6,6 +6,7 @@
   ...
 }:
 let
+  inherit (lib) mkDefault;
   prefs = config.userPrefs;
 in
 {
@@ -14,8 +15,8 @@ in
 
   home = {
     inherit (hostInfos) stateVersion;
-    username = lib.mkDefault userInfos.name;
-    homeDirectory = lib.mkDefault "/home/${userInfos.name}";
+    username = mkDefault userInfos.name;
+    homeDirectory = mkDefault "/home/${userInfos.name}";
 
     sessionVariables = {
       TERMINAL = toString prefs.terminalEmulator;

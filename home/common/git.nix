@@ -5,12 +5,12 @@
   ...
 }:
 let
-  inherit (lib) mkOption;
+  inherit (lib) mkOption types;
   prefs = config.userPrefs;
 in
 {
   options.userPrefs.git.email = mkOption {
-    type = lib.types.str;
+    type = types.str;
     example = "you@example.com";
     description = ''
       Email address to associate with Git commits.

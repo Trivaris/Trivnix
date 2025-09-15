@@ -3,8 +3,11 @@
   systems,
   lib,
 }:
+let
+  inherit (lib) pipe nameValuePair;
+in
 func:
-lib.pipe systems [
-  (map (system: lib.nameValuePair system (func (import inputs.nixpkgs { inherit system; }))))
+pipe systems [
+  (map (system: nameValuePair system (func (import inputs.nixpkgs { inherit system; }))))
   builtins.listToAttrs
 ]

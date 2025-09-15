@@ -9,6 +9,14 @@
   ...
 }:
 let
+  inherit (lib)
+    mapAttrs'
+    nameValuePair
+    filterAttrs
+    mkIf
+    mkMerge
+    ;
+
   hasPrivate = inputs ? trivnixPrivate;
   private = if hasPrivate then inputs.trivnixPrivate else { };
   hasWireguard =
@@ -18,20 +26,20 @@ let
   hostSecrets = trivnixLib.mkStorePath "secrets/host/${hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
 
-  perUserSecrets = lib.mapAttrs' (
+  perUserSecrets = mapAttrs' (
     user: _:
-    lib.nameValuePair "sops-keys/${user}" {
+    nameValuePair "sops-keys/${user}" {
       sopsFile = hostSecrets;
       path = "/home/${user}/.config/sops/age/key.txt";
       owner = user;
       group = "users";
       mode = "0600";
     }
-  ) (lib.filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
+  ) (filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
 
-  wireguardSecrets = lib.mapAttrs' (
+  wireguardSecrets = mapAttrs' (
     interface: _:
-    lib.nameValuePair "wireguard-preshared-keys/${interface}" {
+    nameValuePair "wireguard-preshared-keys/${interface}" {
       owner = "root";
       group = "root";
       mode = "0600";
@@ -61,7 +69,7 @@ in
     age.keyFile = "/var/lib/sops-nix/key.txt";
     age.generateKey = false;
 
-    secrets = lib.mkMerge [
+    secrets = mkMerge [
       perUserSecrets
       wireguardSecrets
 
@@ -75,7 +83,7 @@ in
         };
       }
 
-      (lib.mkIf prefs.openssh.enable {
+      (mkIf prefs.openssh.enable {
         ssh-host-key = {
           sopsFile = hostSecrets;
           path = "/etc/ssh/ssh_host_ed25519_key";
@@ -87,7 +95,7 @@ in
         };
       })
 
-      (lib.mkIf prefs.wireguard.enable {
+      (mkIf prefs.wireguard.enable {
         wireguard-client-key = {
           sopsFile = hostSecrets;
           owner = "root";
@@ -96,7 +104,7 @@ in
         };
       })
 
-      (lib.mkIf prefs.reverseProxy.enable {
+      (mkIf prefs.reverseProxy.enable {
         cloudflare-api-token = {
           owner = "root";
           group = "root";
@@ -110,7 +118,7 @@ in
         };
       })
 
-      (lib.mkIf prefs.nextcloud.enable {
+      (mkIf prefs.nextcloud.enable {
         nextcloud-admin-token = {
           owner = "nextcloud";
           group = "nextcloud";
@@ -118,7 +126,7 @@ in
         };
       })
 
-      (lib.mkIf prefs.suwayomi.enable {
+      (mkIf prefs.suwayomi.enable {
         suwayomi-webui-password = {
           owner = "suwayomi";
           group = "suwayomi";
@@ -126,7 +134,7 @@ in
         };
       })
 
-      (lib.mkIf prefs.vaultwarden.enable {
+      (mkIf prefs.vaultwarden.enable {
         vaultwarden-admin-token = {
           owner = "vaultwarden";
           group = "vaultwarden";

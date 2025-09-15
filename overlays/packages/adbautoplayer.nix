@@ -1,5 +1,6 @@
-pkgs:
+{ pkgs, ... }:
 let
+  inherit (pkgs.lib) platforms licenses;
   adbutils =
     let
       adbutils = {
@@ -57,7 +58,7 @@ pkgs.python3Packages.buildPythonApplication {
   meta = {
     description = "Automated Android game player using ADB";
     homepage = "https://adbautoplayer.github.io";
-    license = pkgs.lib.licenses.mit;
-    platforms = pkgs.lib.platforms.linux;
+    license = licenses.mit;
+    platforms = platforms.linux;
   };
 }

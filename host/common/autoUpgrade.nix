@@ -11,7 +11,10 @@ let
     mkEnableOption
     mkOption
     types
+    getExe
+    getExe'
     ;
+
   prefs = config.hostPrefs;
 in
 {
@@ -58,20 +61,20 @@ in
 
           if [ ! -d "$WORKDIR/.git" ]; then
             echo "[trivnix] Cloning $REPO_URL ($BRANCH) into $WORKDIR"
-            ${lib.getExe pkgs.git} clone --depth=1 -b "$BRANCH" "$REPO_URL" "$WORKDIR"
+            ${getExe pkgs.git} clone --depth=1 -b "$BRANCH" "$REPO_URL" "$WORKDIR"
           else
             echo "[trivnix] Fetching updates for $WORKDIR"
-            ${lib.getExe pkgs.git} -C "$WORKDIR" fetch --prune origin "$BRANCH"
+            ${getExe pkgs.git} -C "$WORKDIR" fetch --prune origin "$BRANCH"
           fi
 
-          LOCAL="$(${lib.getExe pkgs.git} -C "$WORKDIR" rev-parse HEAD || true)"
-          REMOTE="$(${lib.getExe pkgs.git} -C "$WORKDIR" rev-parse "origin/$BRANCH" || true)"
+          LOCAL="$(${getExe pkgs.git} -C "$WORKDIR" rev-parse HEAD || true)"
+          REMOTE="$(${getExe pkgs.git} -C "$WORKDIR" rev-parse "origin/$BRANCH" || true)"
 
           if [ "$LOCAL" != "$REMOTE" ] && [ -n "$REMOTE" ]; then
             echo "[trivnix] Updating to origin/$BRANCH"
-            ${lib.getExe pkgs.git} -C "$WORKDIR" reset --hard "origin/$BRANCH"
+            ${getExe pkgs.git} -C "$WORKDIR" reset --hard "origin/$BRANCH"
             echo "[trivnix] Rebuilding NixOS for $HOST"
-            ${lib.getExe' pkgs.nixos-rebuild "nixos-rebuild"} switch --flake "$WORKDIR#$HOST" --refresh
+            ${getExe' pkgs.nixos-rebuild "nixos-rebuild"} switch --flake "$WORKDIR#$HOST" --refresh
           else
             echo "[trivnix] No changes; skipping rebuild"
           fi

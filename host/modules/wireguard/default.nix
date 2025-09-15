@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mapAttrs' nameValuePair;
   prefs = config.hostPrefs;
 in
 {
@@ -18,9 +18,9 @@ in
     services.resolved.dnssec = "allow-downgrade";
 
     networking.wg-quick = {
-      interfaces = lib.mapAttrs' (
+      interfaces = mapAttrs' (
         interfaceName: interface:
-        lib.nameValuePair interfaceName (interface {
+        nameValuePair interfaceName (interface {
           privateKeyFile = config.sops.secrets.wireguard-client-key.path;
           presharedKeyFile = config.sops.secrets."wireguard-preshared-keys/${interfaceName}".path;
           ipAddr = hostInfos.ip;

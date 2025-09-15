@@ -1,4 +1,4 @@
-pkgs:
+{ pkgs, ... }:
 let
   jdk = pkgs.jdk21_headless;
   suwayomi-server = {

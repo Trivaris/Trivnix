@@ -9,13 +9,14 @@
   ...
 }:
 let
+  inherit (lib) mapAttrsToList mapAttrs' nameValuePair;
   sshKeys = trivnixLib.recursiveAttrValues allHostPubKeys;
-  allShells = lib.mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
+  allShells = mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
 
   allUsers =
-    (lib.mapAttrs' (
+    (mapAttrs' (
       username: userInfos:
-      lib.nameValuePair username {
+      nameValuePair username {
         inherit (userInfos) hashedPassword;
         isNormalUser = true;
         createHome = true;
@@ -48,7 +49,7 @@ let
     };
 in
 {
-  programs = builtins.listToAttrs (map (shell: lib.nameValuePair shell { enable = true; }) allShells);
+  programs = builtins.listToAttrs (map (shell: nameValuePair shell { enable = true; }) allShells);
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.fish;

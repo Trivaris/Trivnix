@@ -4,6 +4,7 @@
   pkgs,
 }:
 let
+  inherit (pkgs.lib) pathExists;
   index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
   minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
   fabricVersion = index.dependencies.fabric-loader;
@@ -41,7 +42,7 @@ let
   );
 
   overrides =
-    if pkgs.lib.pathExists overridesPath then
+    if pathExists overridesPath then
       builtins.listToAttrs (
         builtins.map (name: {
           inherit name;

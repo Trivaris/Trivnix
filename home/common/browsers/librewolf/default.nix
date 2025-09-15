@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf nameValuePair;
   prefs = config.userPrefs;
   scheme = config.stylix.base16Scheme;
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
@@ -61,7 +61,7 @@ in
               urls = [
                 {
                   template = "https://search.brave.com/search";
-                  params = [ (lib.nameValuePair "q" "{searchTerms}") ];
+                  params = [ (nameValuePair "q" "{searchTerms}") ];
                 }
               ];
             };

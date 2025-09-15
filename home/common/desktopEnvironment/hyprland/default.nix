@@ -7,13 +7,21 @@
   ...
 }:
 let
-  inherit (lib) mkIf pipe mapAttrs;
+  inherit (lib)
+    mkIf
+    pipe
+    mapAttrs
+    flatten
+    mergeAttrsList
+    concatStringsSep
+    ;
+
   prefs = config.userPrefs;
   scheme = config.stylix.base16Scheme;
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
   visual = import ./visual.nix { inherit lib getColor; };
 
-  keybinds = mapAttrs (_: value: lib.flatten (builtins.attrValues value)) (
+  keybinds = mapAttrs (_: value: flatten (builtins.attrValues value)) (
     import ./keybinds.nix config lib
   );
 
@@ -36,12 +44,12 @@ let
 
   waybarSettings = pipe waybar [
     (map (module: module.settings))
-    lib.mergeAttrsList
+    mergeAttrsList
   ];
 
   waybarStyle = pipe waybar [
     (map (module: module.style))
-    (lib.concatStringsSep "\n")
+    (concatStringsSep "\n")
   ];
 in
 {

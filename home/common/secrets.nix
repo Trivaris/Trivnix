@@ -8,6 +8,7 @@
   ...
 }:
 let
+  inherit (lib) mkMerge nameValuePair mkIf;
   hasPrivate = inputs ? trivnixPrivate;
   private = if hasPrivate then inputs.trivnixPrivate else { };
   hasEmail = hasPrivate && (private ? emailAccounts) && builtins.isAttrs private.emailAccounts;
@@ -24,7 +25,7 @@ let
     };
   };
 
-  sshSecrets = lib.mkMerge (
+  sshSecrets = mkMerge (
     if hostInfos.hardwareKey then
       [
         (mkKey "ssh-private-key-a")
@@ -35,13 +36,13 @@ let
   );
 
   emailSecrets = builtins.listToAttrs (
-    map (account: lib.nameValuePair "email-passwords/${account}" { mode = "0600"; }) (
+    map (account: nameValuePair "email-passwords/${account}" { mode = "0600"; }) (
       builtins.attrNames private.emailAccounts.${userInfos.name}
     )
   );
 
   calendarSecrets = builtins.listToAttrs (
-    map (account: lib.nameValuePair "calendar-passwords/${account}" { mode = "0600"; }) (
+    map (account: nameValuePair "calendar-passwords/${account}" { mode = "0600"; }) (
       builtins.attrNames private.calendarAccounts.${userInfos.name}
     )
   );
@@ -71,11 +72,11 @@ in
     age.keyFile = "/home/${userInfos.name}/.config/sops/age/key.txt";
     age.generateKey = false;
 
-    secrets = lib.mkMerge [
+    secrets = mkMerge [
       sshSecrets
       emailSecrets
       calendarSecrets
-      (lib.mkIf (hostPrefs ? mailserver && hostPrefs.mailserver.enable or false) {
+      (mkIf (hostPrefs ? mailserver && hostPrefs.mailserver.enable or false) {
         "email-passwords/personal-hashed" = {
           mode = "0600";
         };

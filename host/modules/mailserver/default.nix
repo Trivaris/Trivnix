@@ -13,69 +13,91 @@ let
     pipe
     mapAttrs'
     nameValuePair
+    splitString
+    tail
+    head
+    toInt
+    concatStringsSep
+    findFirst
+    hasSuffix
     ;
 
   prefs = config.hostPrefs;
 
   baseDomain = pipe domain [
-    (lib.splitString ".")
-    lib.tail
-    (lib.concatStringsSep ".")
+    (splitString ".")
+    tail
+    (concatStringsSep ".")
   ];
 
-  loginAccounts = mapAttrs' (
-    name: value:
-    nameValuePair value.personal.userName {
-      hashedPasswordFile =
-        config.home-manager.users.${name}.sops.secrets."email-passwords/personal-hashed".path;
+  loginAccounts = pipe inputs.trivnixPrivate.emailAccounts.${prefs.mainUser} [
+    (mapAttrs' (name: value: nameValuePair name (value // { profileName = name; })))
+    builtins.attrValues
+    (findFirst (account: hasSuffix "@${domain}" account.address) (
+      throw "Email Server enabled but no email accounts set!"
+    ))
+    (account: {
+      ${account.userName} = {
+        hashedPasswordFile =
+          config.home-manager.users.${prefs.mainUser}.sops.secrets."email-passwords/${account.profileName}-hashed".path;
 
-      aliases = [
-        "@${domain}"
-        "@${baseDomain}"
-      ];
-    }
-  ) inputs.trivnixPrivate.emailAccounts;
+        aliases = [
+          "@${domain}"
+          "@${baseDomain}"
+        ];
+      };
+    })
+  ];
 in
 {
   options.hostPrefs.mailserver = import ./options.nix {
-    inherit (lib) mkEnableOption;
+    inherit (lib) mkEnableOption types mkOption;
     inherit (trivnixLib) mkReverseProxyOption;
   };
 
   config = mkIf prefs.mailserver.enable {
     mailserver = {
+      inherit (prefs.mailserver) enablePop3;
       inherit loginAccounts;
+
       enable = true;
       fqdn = domain;
+      certificateScheme = "acme-nginx";
+      enablePop3Ssl = prefs.mailserver.enablePop3;
+
       domains = [
         baseDomain
         domain
       ];
-      certificateScheme = "acme-nginx";
-      enableImap = false;
-      enableImapSsl = true;
-      enableSubmission = true;
-      enableSubmissionSsl = true;
 
       certificateDomains = [
         "imap.${baseDomain}"
         "smtp.${baseDomain}"
-        "pop3.${baseDomain}"
+        (mkIf prefs.mailserver.enablePop3 "pop3.${baseDomain}")
       ];
 
       stateVersion = pipe hostInfos.stateVersion [
-        (lib.splitString ".")
-        lib.head
-        lib.toInt
+        (splitString ".")
+        head
+        toInt
       ];
     };
 
-    networking.firewall.allowedTCPPorts = [
-      25
-      465
-      587
-      993
-    ];
+    networking = mkIf prefs.mailserver.enableIpV6 {
+      interfaces.${prefs.mailserver.ipV6Interface} = {
+        ipv6.addresses = [
+          {
+            address = prefs.mailserver.ipV6Address;
+            prefixLength = 64;
+          }
+        ];
+      };
+
+      defaultGateway6 = {
+        address = "fe80::1";
+        interface = prefs.mailserver.ipV6Interface;
+      };
+    };
 
     security.acme = {
       acceptTerms = true;

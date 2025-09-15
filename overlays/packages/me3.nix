@@ -1,5 +1,6 @@
-pkgs:
+{ pkgs, ... }:
 let
+  inherit (pkgs.lib) licenses;
   me3 = {
     pname = "me3";
     version = "v0.7.0";
@@ -48,7 +49,7 @@ let
     meta = {
       description = "A framework for modding and instrumenting games.";
       homepage = "https://https://github.com/garyttierney/me3";
-      license = pkgs.lib.licenses.mit;
+      license = licenses.mit;
     };
   };
 in

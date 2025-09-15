@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf nameValuePair;
+  inherit (lib) mkIf nameValuePair mkAfter;
   prefs = config.hostPrefs;
 
   services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (
@@ -54,7 +54,7 @@ in
 
           sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
-          appendHttpConfig = lib.mkAfter ''
+          appendHttpConfig = mkAfter ''
             map $http_upgrade $connection_upgrade {
               default upgrade;
               \'\'      close;

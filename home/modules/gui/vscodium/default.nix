@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge hm;
   prefs = config.userPrefs;
   selfPath = trivnixLib.mkStorePath "";
   vscodiumSettings = commonSettings // (if prefs.vscodium.enableLsp then lspSettings else { });
@@ -81,7 +81,7 @@ in
     }
 
     (mkIf prefs.vscodium.fixServer {
-      home.activation.fixVSCodiumServer = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      home.activation.fixVSCodiumServer = hm.dag.entryAfter [ "writeBoundary" ] ''
         for d in ${config.home.homeDirectory}/.vscodium-server/bin/*; do
           [ -d "$d" ] || continue
           target="$d/node"

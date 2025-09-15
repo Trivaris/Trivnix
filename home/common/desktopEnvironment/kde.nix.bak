@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkForce;
   prefs = config.userPrefs;
 in
 {
@@ -35,8 +35,8 @@ in
       };
     };
 
-    stylix.targets.qt.platform = lib.mkForce "qtct";
-    qt.platformTheme = lib.mkForce "kde";
+    stylix.targets.qt.platform = mkForce "qtct";
+    qt.platformTheme = mkForce "kde";
     vars.desktopEnvironmentBinary = "${pkgs.kde}/bin/startplasma-wayland";
   };
 }

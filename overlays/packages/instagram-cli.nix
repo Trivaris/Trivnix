@@ -1,4 +1,7 @@
-pkgs:
+{ pkgs, ... }:
+let
+  inherit (pkgs.lib) licenses;
+in
 pkgs.python3Packages.buildPythonApplication {
   pname = "instagram-cli";
   version = "1.3.5";
@@ -14,6 +17,6 @@ pkgs.python3Packages.buildPythonApplication {
   meta = {
     description = "The ultimate weapon against brainrot ";
     homepage = "https://pypi.org/project/instagram-cli/";
-    license = pkgs.lib.licenses.mit;
+    license = licenses.mit;
   };
 }

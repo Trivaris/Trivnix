@@ -5,13 +5,21 @@
   homeManagerModules,
   lib,
 }:
-lib.pipe trivnixConfigs.configs [
-  (lib.concatMapAttrs (
+let
+  inherit (lib)
+    pipe
+    concatMapAttrs
+    mapAttrs'
+    nameValuePair
+    ;
+in
+pipe trivnixConfigs.configs [
+  (concatMapAttrs (
     configname: hostConfig:
-    lib.pipe hostConfig.users [
-      (lib.mapAttrs' (
+    pipe hostConfig.users [
+      (mapAttrs' (
         username: _:
-        lib.nameValuePair "${username}@${configname}" (mkHomeManager {
+        nameValuePair "${username}@${configname}" (mkHomeManager {
           inherit configname username;
           homeModules = homeModules ++ homeManagerModules;
         })

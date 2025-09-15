@@ -1,4 +1,7 @@
-pkgs:
+{ pkgs, ... }:
+let
+  inherit (pkgs.lib) licenses;
+in
 pkgs.rustPlatform.buildRustPackage {
   pname = "r-matrix";
   version = "0.2.7";
@@ -17,6 +20,6 @@ pkgs.rustPlatform.buildRustPackage {
   meta = {
     description = "Rust port of cmatrix";
     homepage = "https://github.com/Fierthraix/rmatrix";
-    license = pkgs.lib.licenses.mit;
+    license = licenses.mit;
   };
 }

@@ -3,8 +3,9 @@
   getColor,
 }:
 let
-  toARGB = color: "0xff${lib.removePrefix "#" color}";
-  withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
+  inherit (lib) removePrefix;
+  toARGB = color: "0xff${removePrefix "#" color}";
+  withAlpha = alpha: color: "0x${alpha}${removePrefix "#" color}";
 in
 {
   layerrule = [ "blur, logout_dialog" ];

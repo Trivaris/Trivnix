@@ -1,4 +1,7 @@
-pkgs:
+{ pkgs, ... }:
+let
+  inherit (pkgs.lib) licenses;
+in
 pkgs.rustPlatform.buildRustPackage {
   pname = "rbonsai";
   version = "0.1.5";
@@ -17,6 +20,6 @@ pkgs.rustPlatform.buildRustPackage {
   meta = {
     description = "A terminal bonsai tree generator";
     homepage = "https://github.com/roberte777/rbonsai";
-    license = pkgs.lib.licenses.gpl3Plus;
+    license = licenses.gpl3Plus;
   };
 }

@@ -4,11 +4,11 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.bluetooth.enable = lib.mkEnableOption "Enable Bluetooth";
+  options.hostPrefs.bluetooth.enable = mkEnableOption "Enable Bluetooth";
 
   config = mkIf prefs.bluetooth.enable {
     hardware.bluetooth.enable = true;

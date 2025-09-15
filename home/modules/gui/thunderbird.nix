@@ -6,11 +6,17 @@
   ...
 }:
 let
-  inherit (lib) mkIf nameValuePair;
+  inherit (lib)
+    mkIf
+    nameValuePair
+    flatten
+    mapAttrsToList
+    ;
+
   prefs = config.userPrefs;
 
-  calendarSettings = lib.flatten (
-    lib.mapAttrsToList (
+  calendarSettings = flatten (
+    mapAttrsToList (
       name: account:
       let
         prefix = "calendar.registry.${account.uuid}";
