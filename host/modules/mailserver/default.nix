@@ -28,7 +28,11 @@ let
     nameValuePair value.personal.userName {
       hashedPasswordFile =
         config.home-manager.users.${name}.sops.secrets."email-passwords/personal-hashed".path;
-      aliases = [ "@${domain}" ];
+
+      aliases = [
+        "@${domain}"
+        "@${baseDomain}"
+      ];
     }
   ) inputs.trivnixPrivate.emailAccounts;
 in
@@ -43,12 +47,22 @@ in
       inherit loginAccounts;
       enable = true;
       fqdn = domain;
-      domains = [ baseDomain ];
+      domains = [
+        baseDomain
+        domain
+      ];
       certificateScheme = "acme-nginx";
       enableImap = false;
       enableImapSsl = true;
       enableSubmission = true;
       enableSubmissionSsl = true;
+
+      certificateDomains = [
+        "imap.${baseDomain}"
+        "smtp.${baseDomain}"
+        "pop3.${baseDomain}"
+      ];
+
       stateVersion = pipe hostInfos.stateVersion [
         (lib.splitString ".")
         lib.head
