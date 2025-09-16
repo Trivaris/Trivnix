@@ -9,19 +9,20 @@ This repo provides reusable NixOS and Home Manager modules and overlays. It work
 
 ## Outputs Flow
 
-`outputs.nix` wires everything together:
+`flake/outputs.nix` wires everything together:
 
 - Reads host definitions from `trivnixConfigs.configs`.
-- For each host, builds a NixOS config using `trivnixLib.mkNixOS`.
-- For each user on a host, builds a Home Manager config using `trivnixLib.mkHomeManager`.
+- Imports helpers from `flake/nixosConfigurations.nix` and `flake/homeConfigurations.nix` to map each entry.
+- For every host, calls `trivnixLib.mkNixOS`.
+- For every user on a host, calls `trivnixLib.mkHomeManager`.
 - Exposes results under `nixosConfigurations` and `homeConfigurations`.
 
 Paths to check in this repo:
-- `outputs.nix`
+- `flake/outputs.nix`, `flake/modules.nix`, `flake/nixosConfigurations.nix`, `flake/homeConfigurations.nix`
 - `overlays/`
 - `host/common`, `host/modules`
 - `home/common`, `home/modules`
-- `shared/`, `secrets/`, `resources/`
+- `shared/`, `secrets/`
 
 In `trivnixConfigs`, each host lives under `configs/<configname>/` and typically includes:
 - `infos.nix`: hostname, architecture, stateVersion, network info, etc.
@@ -65,9 +66,9 @@ userPrefs.cli.enabled = [ "bat" "fzf" "zoxide" "nvim" ];
 
 ## Overlays and Packages
 
-Overlays are defined in `overlays/` and merged in `outputs.nix`. Custom or patched packages live under `overlays/packages/`.
+Overlays are defined in `overlays/` and merged via `flake/overlays.nix` in `flake/outputs.nix`. Custom or patched packages live under `overlays/packages/`.
 
 ## Secrets and Theming
 
-- Secrets are managed via `sops-nix`. See `secrets/README.md` for layout and rules.
+- Secrets are managed via `sops-nix`. See `docs/secrets.md` for layout and rules.
 - Theming is centralized via Stylix; see `shared/stylix/` and `host/common/stylix.nix`.

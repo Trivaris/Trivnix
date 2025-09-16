@@ -3,6 +3,7 @@
   lib,
   pkgs,
   hostInfos,
+  hostPrefs,
   trivnixLib,
   ...
 }:
@@ -14,12 +15,44 @@ let
     flatten
     mergeAttrsList
     concatStringsSep
+    replaceStrings
+    sort
+    splitString
     ;
 
   prefs = config.userPrefs;
   scheme = config.stylix.base16Scheme;
   getColor = trivnixLib.getColor { inherit pkgs scheme; };
   visual = import ./visual.nix { inherit lib getColor; };
+
+  monitorStrings = hostInfos.monitor or [ ];
+
+  parseMonitor =
+    monitor:
+    let
+      parts = splitString "," monitor;
+      namePart = builtins.head parts;
+      positionPart = if builtins.length parts > 2 then builtins.elemAt parts 2 else "0x0";
+      coords = splitString "x" positionPart;
+      xString = builtins.head coords;
+      sanitized = replaceStrings [ "+" ] [ "" ] xString;
+    in
+    {
+      name = namePart;
+      x = builtins.fromJSON sanitized;
+    };
+
+  parsedMonitors = map parseMonitor monitorStrings;
+  sortedMonitors = sort (a: b: a.x < b.x) parsedMonitors;
+  monitorCount = builtins.length sortedMonitors;
+  middleIndex = if monitorCount == 0 then 0 else builtins.div (monitorCount - 1) 2;
+
+  mainMonitorName =
+    if monitorCount == 0 then "" else (builtins.elemAt sortedMonitors middleIndex).name;
+
+  hyprlock = import ./hyprlock.nix {
+    inherit mainMonitorName;
+  };
 
   keybinds = mapAttrs (_: value: flatten (builtins.attrValues value)) (
     import ./keybinds.nix config lib
@@ -39,7 +72,17 @@ let
       [
         trivnixLib.resolveDir
         builtins.attrValues
-        (map (module: module { inherit getColor config; }))
+        (map (
+          module:
+          module {
+            inherit
+              config
+              getColor
+              lib
+              hostPrefs
+              ;
+          }
+        ))
       ];
 
   waybarSettings = pipe waybar [
@@ -86,34 +129,45 @@ in
         ;
     };
 
-    programs.waybar = {
-      enable = true;
-      style = waybarStyle;
-      settings.mainBar = waybarSettings;
-
-      systemd = {
+    programs = {
+      waybar = {
         enable = true;
-        target = "hyprland-session.target";
+        style = waybarStyle;
+        settings.mainBar = waybarSettings;
+
+        systemd = {
+          enable = true;
+          target = "hyprland-session.target";
+        };
+      };
+
+      hyprlock = {
+        enable = true;
+        settings = hyprlock;
       };
     };
 
-    services.swaync = {
-      enable = true;
-      settings = {
-        layer = "overlay";
-        control-center-layer = "top";
-        layer-shell = true;
-        positionX = "right";
-        positionY = "top";
-      };
-    };
+    services = {
+      hypridle.enable = true;
 
-    services.hyprpaper = {
-      enable = true;
-      settings = {
-        preload = prefs.hyprland.wallpapers;
-        wallpaper = map (path: ",${path}") prefs.hyprland.wallpapers;
-        splash = false;
+      swaync = {
+        enable = true;
+        settings = {
+          layer = "overlay";
+          control-center-layer = "top";
+          layer-shell = true;
+          positionX = "right";
+          positionY = "top";
+        };
+      };
+
+      hyprpaper = {
+        enable = true;
+        settings = {
+          preload = prefs.hyprland.wallpapers;
+          wallpaper = map (path: ",${path}") prefs.hyprland.wallpapers;
+          splash = false;
+        };
       };
     };
   };

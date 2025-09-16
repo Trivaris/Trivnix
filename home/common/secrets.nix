@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  config,
   hostInfos,
   trivnixLib,
   userInfos,
@@ -8,7 +9,13 @@
   ...
 }:
 let
-  inherit (lib) mkMerge nameValuePair mkIf;
+  inherit (lib)
+    mkMerge
+    nameValuePair
+    mkIf
+    pipe
+    ;
+
   hasPrivate = inputs ? trivnixPrivate;
   private = if hasPrivate then inputs.trivnixPrivate else { };
   hasEmail = hasPrivate && (private ? emailAccounts) && builtins.isAttrs private.emailAccounts;
@@ -35,17 +42,17 @@ let
       [ (mkKey "ssh-private-key") ]
   );
 
-  emailSecrets = builtins.listToAttrs (
-    map (account: nameValuePair "email-passwords/${account}" { mode = "0600"; }) (
-      builtins.attrNames private.emailAccounts.${userInfos.name}
-    )
-  );
+  emailSecrets = pipe config.vars.filteredEmailAccounts [
+    builtins.attrNames
+    (map (account: nameValuePair "email-passwords/${account}" { mode = "0600"; }))
+    builtins.listToAttrs
+  ];
 
-  calendarSecrets = builtins.listToAttrs (
-    map (account: nameValuePair "calendar-passwords/${account}" { mode = "0600"; }) (
-      builtins.attrNames private.calendarAccounts.${userInfos.name}
-    )
-  );
+  calendarSecrets = pipe (private.calendarAccounts.${userInfos.name} or { }) [
+    builtins.attrNames
+    (map (account: nameValuePair "calendar-passwords/${account}" { mode = "0600"; }))
+    builtins.listToAttrs
+  ];
 in
 {
   assertions = [

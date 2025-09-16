@@ -8,34 +8,37 @@ Your internal layout is up to you — only the outputs matter.
 
 Expose the following top-level attributes from your flake outputs:
 
-- `emailAccounts`: attrset of Home Manager email account definitions
-- `calendarAccounts`: attrset of Thunderbird calendar definitions
+- `emailAccounts`: attrset keyed by username; each value is an attrset of Home Manager email account definitions for that user
+- `calendarAccounts`: attrset keyed by username; each value is an attrset of Thunderbird calendar definitions for that user
 - `wireguardInterfaces`: attrset of builders for wg-quick interfaces
 
 ### `emailAccounts`
 
-Type: attrset where each key is an account name and each value matches the Home Manager `accounts.email.accounts.<name>` schema.
+Type: nested attrset. The outer keys are usernames (matching `userInfos.name`), each value is an attrset whose keys are email account names and whose values match the Home Manager `accounts.email.accounts.<name>` schema.
 
+- Add an entry for every user defined in `trivnixConfigs`. The attrset can be empty when a user has no accounts.
 - Trivnix augments each account with:
-  - `passwordCommand = "cat ${config.sops.secrets.\"email-passwords/<name>\".path}"`
-  - Thunderbird profile settings if Thunderbird is enabled for the user
+  - `passwordCommand = "cat ${config.sops.secrets.\"email-passwords/<account>\".path}"`
+  - Thunderbird profile settings when the user enables Thunderbird
 - Provide the usual fields for the HM email module (examples):
   - `address`, `realName`, `userName`, `primary`
   - `imap = { host; port; tls; }`
   - `smtp = { host; port; tls; }`
   - Any other options accepted by Home Manager
 
-Minimal example
+Example
 
 ```nix
 emailAccounts = {
-  personal = {
-    address = "you@example.com";
-    realName = "You";
-    userName = "you";
-    primary = true;
-    imap = { host = "imap.example.com"; port = 993; tls = true; };
-    smtp = { host = "smtp.example.com"; port = 587; tls = true; };
+  trivaris = {
+    personal = {
+      address = "you@example.com";
+      realName = "You";
+      userName = "you";
+      primary = true;
+      imap = { host = "imap.example.com"; port = 993; tls = true; };
+      smtp = { host = "smtp.example.com"; port = 587; tls = true; };
+    };
   };
 };
 ```
@@ -43,36 +46,39 @@ emailAccounts = {
 Secrets
 
 - Provide `email-passwords/<account>` in the user’s SOPS file (`secrets/home/<user>/common.yaml`).
+- If the mail server module is enabled, also provide `email-passwords/<account>-hashed` for the accounts served from that host (hashed password expected by the module).
 
 ### `calendarAccounts`
 
-Type: attrset where each key is a calendar name and each value is an attrset with:
+Type: nested attrset. The outer keys are usernames, and each value is an attrset whose keys are calendar names.
 
-- `uuid` (string): stable unique ID used as `calendar.registry.<uuid>`
-- `type` (string): e.g. `"caldav"`
-- `uri` (string): full CalDAV URL
-- `username` (string)
-- `color` (string): e.g. `"#d3869b"`
-
-Trivnix maps these into Thunderbird profile settings.
+- Each calendar value is an attrset with:
+  - `uuid` (string): stable unique ID used as `calendar.registry.<uuid>`
+  - `type` (string): e.g. `"caldav"`
+  - `uri` (string): full CalDAV URL
+  - `username` (string)
+  - `color` (string): e.g. `"#d3869b"`
+- Supply an entry for every user (can be empty).
 
 Example
 
 ```nix
 calendarAccounts = {
-  work = {
-    uuid = "0deaff7b-53a9-4c0d-8b8b-2aefbd9c2f10";
-    type = "caldav";
-    uri = "https://cal.example.com/dav/you/calendar";
-    username = "you";
-    color = "#5e81ac";
+  trivaris = {
+    work = {
+      uuid = "0deaff7b-53a9-4c0d-8b8b-2aefbd9c2f10";
+      type = "caldav";
+      uri = "https://cal.example.com/dav/you/calendar";
+      username = "you";
+      color = "#5e81ac";
+    };
   };
 };
 ```
 
 Secrets
 
-- Provide `calendar-passwords/<account>` in the user’s SOPS file (`secrets/home/<user>/common.yaml`).
+- Provide `calendar-passwords/<calendar>` in the user’s SOPS file (`secrets/home/<user>/common.yaml`).
 
 ### `wireguardInterfaces`
 
@@ -126,4 +132,3 @@ Or edit `flake.nix` locally to point `trivnixPrivate` to your repository.
 ## Access
 
 Because this repository is private, ensure your machine has SSH access to it (SSH key loaded/agent forwarding). If access fails, rebuilds that reference `trivnixPrivate` will error.
-

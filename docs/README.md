@@ -10,4 +10,4 @@ Quick links to focused guides:
 - Private Inputs Contract: `docs/trivnix-private.md`
 - Formatting Rules: `docs/formatting.md`
 - Troubleshooting: `docs/troubleshooting.md`
-- Secrets Reference: `secrets/README.md`
+- Secrets Reference: `docs/secrets.md`

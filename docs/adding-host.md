@@ -50,7 +50,7 @@ outputs = { self, ... }: {
             terminalEmulator = "alacritty";
             browsers = [ "librewolf" ];
             gui = [ "vscodium" ];
-            cli = [ "bat" "fzf" ];
+            cli.enabled = [ "bat" "fzf" ];
             git.email = "alice@example.com";
           };
         };
@@ -69,7 +69,7 @@ outputs = { self, ... }: {
 
 ## Secrets
 
-Provide the required AGE/SOPS secrets for each host and user as described in `secrets/README.md` of this repo. Ensure your `.sops.yaml` policy allows the new host and its users to decrypt their files.
+Provide the required AGE/SOPS secrets for each host and user as described in `docs/secrets.md`. Ensure your `.sops.yaml` policy allows the new host and its users to decrypt their files.
 
 ## Using Your Configs With Trivnix
 
@@ -88,4 +88,3 @@ sudo nixos-rebuild switch --flake .#<configname>
 ```
 
 Remote deploy works the same with `--target-host <user>@<ip> --sudo`.
-

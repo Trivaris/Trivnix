@@ -23,6 +23,7 @@
 
     modules-right = [
       "custom/spotify"
+      "custom/mail"
       "backlight"
       "pulseaudio"
       "battery"

@@ -3,7 +3,7 @@
 Key directories in this repo:
 
 - `flake.nix`, `flake.lock`: flake inputs and locking
-- `outputs.nix`: defines outputs using helpers from `trivnixLib` and configs from `trivnixConfigs`
+- `flake/`: split output wiring (`outputs.nix`, `modules.nix`, `nixosConfigurations.nix`, `homeConfigurations.nix`, etc.)
 - `overlays/`: package overlays and custom packages
 - `host/`
   - `common/`: shared NixOS settings (users, secrets, display manager, desktop env, services)
@@ -12,8 +12,7 @@ Key directories in this repo:
   - `common/`: shared user settings (shell, git, secrets, browsers)
   - `modules/`: reusable Home Manager modules (CLI tools, GUI apps, Hyprland, Waybar, etc.)
 - `shared/`: shared configuration pieces (e.g., Stylix options)
-- `secrets/`: secrets documentation and example layout (encrypted with SOPS)
-- `resources/`: scripts and static assets (e.g., wallpapers, config files outside nixos)
+- `secrets/`: encrypted secrets (see `docs/secrets.md` for layout)
 
 External to this repo:
 

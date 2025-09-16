@@ -7,7 +7,7 @@
     tooltip = false;
     scroll-step = 5;
     format = "{icon} {volume}%";
-    format-muted = "{icon} {volume}%";
+    format-muted = "  {volume}%";
     on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
     format-icons.default = [

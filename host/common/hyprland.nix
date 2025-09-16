@@ -31,5 +31,7 @@ in
           package = inputs.hyprland.packages.${hostInfos.architecture}.hyprland;
           portalPackage = inputs.hyprland.packages.${hostInfos.architecture}.xdg-desktop-portal-hyprland;
         };
+
+        security.pam.services.hyprlock = { };
       };
 }

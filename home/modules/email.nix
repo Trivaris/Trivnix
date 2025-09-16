@@ -9,10 +9,13 @@ let
   inherit (inputs.trivnixPrivate) emailAccounts;
   inherit (lib)
     mkEnableOption
+    mkOption
     mkIf
     mapAttrs'
     nameValuePair
     pipe
+    types
+    filterAttrs
     ;
 
   hasPrivate = inputs ? trivnixPrivate;
@@ -24,7 +27,30 @@ let
     && builtins.isAttrs inputs.trivnixPrivate.emailAccounts;
 in
 {
-  options.userPrefs.email.enable = mkEnableOption "Enable Email Accounts";
+  options = {
+    userPrefs.email = {
+      enable = mkEnableOption "Enable Email Accounts";
+      exclude = mkOption {
+        type = pipe emailAccounts.${userInfos.name} or { } [
+          builtins.attrNames
+          types.enum
+          types.listOf
+        ];
+        default = [ ];
+        description = "Mail accounts to omit";
+      };
+    };
+
+    vars.filteredEmailAccounts = mkOption {
+      type = types.attrs;
+      default = (
+        filterAttrs (accountName: _: !(builtins.elem accountName prefs.email.exclude)) (
+          emailAccounts.${userInfos.name} or { }
+        )
+      );
+      description = "Email accounts, but filtered. Set automatically";
+    };
+  };
 
   config = mkIf prefs.email.enable {
     assertions = [
@@ -50,17 +76,32 @@ in
         }
         // account
       )
-    ) emailAccounts.${userInfos.name};
+    ) config.vars.filteredEmailAccounts;
 
-    home.file.".config/mailaccounts.json".text = pipe emailAccounts.${userInfos.name} [
+    home.file.".config/mailaccounts.json".text = pipe config.vars.filteredEmailAccounts [
       (mapAttrs' (
         accountName: account:
+        let
+          imap = account.imap or { };
+          tls = imap.tls or { };
+          tlsEnabled =
+            (tls.enable or false)
+            || (tls.useStartTls or false)
+            || (builtins.length (builtins.attrNames tls) > 0);
+          useStartTls = tls.useStartTls or false;
+          security =
+            if !tlsEnabled then
+              "plain"
+            else if useStartTls then
+              "starttls"
+            else
+              "ssl";
+        in
         nameValuePair accountName {
-          inherit (account.imap.tls) useStartTls;
-          inherit (account.imap) host port;
-
+          inherit (imap) host port;
           username = account.userName;
           passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
+          inherit useStartTls security;
         }
       ))
       builtins.toJSON

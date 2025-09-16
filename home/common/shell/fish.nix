@@ -55,9 +55,9 @@ in
               sudo nixos-rebuild switch --flake ".#$host"
             else
               sudo nixos-rebuild switch --flake ".#$host" \
-                --override-input trivnixConfigs ~/Projects/trivnixConfigs/ \
-                --override-input trivnixLib     ~/Projects/trivnixLib/ \
-                --override-input trivnixPrivate ~/Projects/trivnixPrivate/
+                --override-input trivnixConfigs ../TrivnixConfigs/ \
+                --override-input trivnixLib     ../TrivnixLib/ \
+                --override-input trivnixPrivate ../TrivnixPrivate/
             end
           '';
 

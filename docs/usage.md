@@ -47,7 +47,7 @@ Examples:
     shell = "fish";
 
     gui = [ "vscodium" "bitwarden" "spotify" ];
-    cli = [ "bat" "btop" "eza" "fzf" "nvim" "zoxide" ];
+    cli.enabled = [ "bat" "btop" "eza" "fzf" "nvim" "zoxide" ];
 
     email.enable = true;
     vscodium.enableLsp = true;

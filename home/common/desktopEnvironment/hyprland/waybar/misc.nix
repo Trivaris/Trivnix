@@ -6,7 +6,7 @@
   settings = {
     clock = {
       format = " {:%H:%M}";
-      tooltip-format = "{:%A, %d %B %Y}";
+      format-alt = "󰃭 {:%A, %d %B %Y}";
       interval = 60;
     };
 

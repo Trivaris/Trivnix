@@ -48,16 +48,17 @@ in
     programs = [
       "$mod, Q, killactive"
       "$mod, E, exec, dolphin"
+      "$mod, L, exec, hyprlock"
 
       "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
       "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
-      "$mod, B, exec, ${builtins.head prefs.browsers}"
+      "$mod, W, exec, ${builtins.head prefs.browsers}"
     ]
     ++ [
       (mkIf (isEnabled "spotify") "$mod, S, exec, spotify")
       (mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
-      (mkIf (isEnabled "vscodium") "$mod, C, exec, codium")
-      (mkIf (isEnabled "thunderbird") "$mod, T, exec, thunderbird")
+      (mkIf (isEnabled "vscodium") "$mod, A, exec, codium")
+      (mkIf (isEnabled "thunderbird") "$mod, Z, exec, thunderbird")
     ];
 
     volume = [
