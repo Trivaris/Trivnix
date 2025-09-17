@@ -18,7 +18,10 @@ in
   options.userPrefs.shell = mkOption {
     type = types.enum modules;
     example = "fish";
-    description = "Your Shell";
+    description = ''
+      Primary login shell to configure for this user via Home Manager.
+      Picks a module from `home/common/shell` which sets interpreter-specific tweaks.
+    '';
   };
 
   config.programs.starship = {

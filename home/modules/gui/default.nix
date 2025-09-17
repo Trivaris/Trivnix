@@ -19,6 +19,9 @@ in
     type = types.listOf (types.enum modules);
     default = [ ];
     example = [ "spotify" ];
-    description = "Desktop Apps that you want to enable";
+    description = ''
+      GUI application modules to enable from `home/modules/gui`.
+      Each entry installs and configures the named desktop program.
+    '';
   };
 }

@@ -3,13 +3,23 @@ let
   inherit (lib) mkEnableOption mkOption types;
 in
 {
-  betterfox = mkEnableOption "Enable Betterfox User Config";
-  clearOnShutdown = mkEnableOption "Clear all Site Data when closing Browser";
+  betterfox = mkEnableOption ''
+    Merge the Betterfox hardening profile into LibreWolf's user.js.
+    Enable when the Betterfox input is available and you want the tweaks applied.
+  '';
+
+  clearOnShutdown = mkEnableOption ''
+    Purge browsing data each time LibreWolf exits.
+    Toggle this for extra privacy when using shared machines.
+  '';
 
   allowedCookies = mkOption {
     type = types.listOf types.str;
     default = [ ];
     example = [ "https://accounts.google.com" ];
-    description = "URLs of Domains that will keep their cookies after closing if `clearOnShutdown` is enabled";
+    description = ''
+      Sites allowed to keep cookies even when `clearOnShutdown` is true.
+      Provide full origins (scheme + host) to whitelist specific domains.
+    '';
   };
 }

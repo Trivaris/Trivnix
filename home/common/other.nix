@@ -9,7 +9,10 @@ let
   prefs = config.userPrefs;
 in
 {
-  options.userPrefs.enableRandomStuff = mkEnableOption "Enable other utilities, grouped in no particular order";
+  options.userPrefs.enableRandomStuff = mkEnableOption ''
+    Pull in a grab bag of miscellaneous desktop utilities.
+    Enable this when you want the curated extras listed in this module.
+  '';
 
   config = mkIf prefs.enableRandomStuff {
     home.packages = builtins.attrValues {

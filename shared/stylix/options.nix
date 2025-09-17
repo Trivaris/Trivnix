@@ -4,14 +4,17 @@
   types,
 }:
 {
-  darkmode = mkEnableOption "Wether to enable dark mode";
+  darkmode = mkEnableOption ''
+    Enable the dark Stylix palette for this system.
+    When true, Stylix renders themes using the dark color variant.
+  '';
 
   colorscheme = mkOption {
     type = types.str;
     example = "tokyo-night-dark";
     description = ''
-      Name of the base16 color scheme to apply system-wide.
-      This must match a file in {pkgs.base16-schemes}/share/themes/, excluding the `.yaml` extension.
+      Base16 color scheme name applied across Stylix-managed themes.
+      Provide the scheme filename without `.yaml`; it decides the palette source.
     '';
   };
 
@@ -19,8 +22,8 @@
     type = types.str;
     example = "catppuccin-cursors";
     description = ''
-      The name of the cursor theme package in the Nixpkgs package set.
-      This will be resolved as `pkgs.<package>`.
+      Package attribute providing the cursor theme pulled in by Stylix.
+      It is looked up under `pkgs.<name>` when building your configuration.
     '';
   };
 
@@ -28,8 +31,8 @@
     type = types.str;
     example = "Catppuccin-Mocha-Dark-Cursors";
     description = ''
-      The internal name of the cursor theme within the package.
-      This must match a theme name that the package provides.
+      Internal theme name Stylix selects from the chosen cursor package.
+      Match it to one of the themes exposed by the package to avoid build errors.
     '';
   };
 
@@ -37,7 +40,8 @@
     type = types.int;
     default = 24;
     description = ''
-      Size of the cursor
+      Pixel size for the cursor when Stylix applies the theme.
+      Impacts pointer scaling across X11 and Wayland desktops.
     '';
   };
 
@@ -45,7 +49,8 @@
     type = types.str;
     example = "ubuntu";
     description = ''
-      The name of the Nerd Font to use for all font categories (monospace, sansSerif, serif).
+      Nerd Font base name used for monospace, sans-serif, and serif fonts.
+      Stylix resolves this to `pkgs.nerdfonts.<name>` when rendering fonts.
     '';
   };
 }

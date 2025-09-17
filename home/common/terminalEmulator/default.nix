@@ -23,6 +23,9 @@ in
     type = types.nullOr (types.enum modules);
     default = null;
     example = "alacritty";
-    description = "Your Terminal Emulator";
+    description = ''
+      Preferred terminal emulator module provided under `home/common/terminalEmulator`.
+      Choose a name to install/configure it or leave null to rely on system defaults.
+    '';
   };
 }

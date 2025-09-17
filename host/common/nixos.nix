@@ -24,7 +24,10 @@ in
     oldProfileDeleteInterval = mkOption {
       type = types.str;
       default = "3d";
-      description = "How old a profile nix should be before its deleted";
+      description = ''
+        Maximum age for system profiles before garbage collection removes them.
+        Passed directly to `nix-collect-garbage --delete-older-than`.
+      '';
     };
 
     mainUser = mkOption {
@@ -33,7 +36,10 @@ in
         builtins.attrNames
         builtins.head
       ];
-      description = "The main user of this host. Used by sevices like autlogin if enabled";
+      description = ''
+        Primary user account considered owner of the host configuration.
+        Used by modules such as autologin and service defaults needing a username.
+      '';
     };
   };
 

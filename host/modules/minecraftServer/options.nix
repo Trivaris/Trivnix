@@ -6,8 +6,12 @@
   pkgs,
 }:
 {
-  enable = mkEnableOption "Enable Minecraft servers.";
   reverseProxy = mkReverseProxyOption { defaultPort = 25565; };
+
+  enable = mkEnableOption ''
+    Provision the Minecraft server service backed by selected modpacks.
+    Enable when this host should run the configured multiplayer world.
+  '';
 
   modpack = mkOption {
     type = types.enum (builtins.attrNames pkgs.modpacks);
@@ -20,6 +24,9 @@
 
   serverIcon = mkOption {
     type = types.path;
-    description = "Server Icon";
+    description = ''
+      Path to the 64x64 PNG used as the Minecraft server icon.
+      The file is copied into the modpack directory during deployment.
+    '';
   };
 }

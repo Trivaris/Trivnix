@@ -29,21 +29,30 @@ in
         type = types.listOf (types.enum modules);
         default = [ ];
         example = [ "btop" ];
-        description = "Advanced Configs of Cli Tools";
+        description = ''
+          CLI modules to enable for this user from `home/modules/cli`.
+          Each selection loads additional config for the named tool.
+        '';
       };
 
       replaceDefaults = mkOption {
         type = types.listOf (types.enum replacementModules);
         default = replacementModules;
         example = [ "eza" ];
-        description = "The CLI tools you want to replace the defaults";
+        description = ''
+          CLI programs that should replace system defaults when available.
+          Use this to swap out commands like `ls` or `cat` with enhanced variants.
+        '';
       };
     };
 
     vars.defaultReplacementModules = mkOption {
       type = types.listOf (types.enum modules);
       default = [ ];
-      description = "All of the cli modules that can replace defaults";
+      description = ''
+        Internal list of CLI modules capable of replacing default binaries.
+        Individual modules append to this so replacements stay deduplicated.
+      '';
     };
 
   };

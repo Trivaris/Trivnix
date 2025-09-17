@@ -37,7 +37,7 @@ in
             };
 
             files = modpackPkg.files // {
-              server-icon = prefs.serverIcon;
+              server-icon = prefs.minecraftServer.serverIcon;
             };
 
             serverProperties = {

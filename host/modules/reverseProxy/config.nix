@@ -4,8 +4,15 @@
   types,
 }:
 {
-  enable = mkEnableOption "Enable reverse proxy for all enabled services.";
-  enableDDClient = mkEnableOption "Enable Dynamic DNS Client";
+  enable = mkEnableOption ''
+    Turn on the shared Nginx reverse proxy for modules exposing web services.
+    When enabled, any service defining `reverseProxy` will register here.
+  '';
+
+  enableDDClient = mkEnableOption ''
+    Enable ddclient to update dynamic DNS records for the configured zone.
+    Useful when public IPs change and Cloudflare or other providers must sync.
+  '';
 
   email = mkOption {
     type = types.str;
@@ -58,11 +65,8 @@
     example = "04:00";
 
     description = ''
-      Systemd OnCalendar timestamp to schedule DDNS updates with ddclient.
-      Follows systemd time syntax. Examples:
-        - "daily"
-        - "04:00"
-        - "Mon *-*-* 02:00:00"
+      Systemd OnCalendar expression controlling when ddclient runs.
+      Leave null to disable the timer or provide values like "daily" or "04:00".
     '';
   };
 }

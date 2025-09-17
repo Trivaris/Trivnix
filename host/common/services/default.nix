@@ -20,7 +20,8 @@ in
     default = [ ];
     example = [ "bluetooth" ];
     description = ''
-      Services to be enabled.
+      Optional host service modules to activate from `host/common/services`.
+      Select entries to merge their NixOS service definitions into the system.
     '';
   };
 }

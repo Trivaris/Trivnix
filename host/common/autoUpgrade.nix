@@ -19,30 +19,45 @@ let
 in
 {
   options.hostPrefs.autoUpgrade = {
-    enable = mkEnableOption "Automatically pull and rebuild when upstream changes";
+    enable = mkEnableOption ''
+      Enable unattended upgrades driven by git pulls and nixos-rebuild.
+      Turn this on for hosts that should track the configured flake branch.
+    '';
 
     repoUrl = mkOption {
       type = types.str;
       default = "git@github.com:Trivaris/trivnix.git";
-      description = "Git URL of the flake repository to track";
+      description = ''
+        Git remote cloned by the auto-upgrade service before rebuilding.
+        Point this at the flake that exports the host configuration.
+      '';
     };
 
     branch = mkOption {
       type = types.str;
       default = "main";
-      description = "Branch to track for upgrades";
+      description = ''
+        Branch name fetched on each upgrade cycle.
+        Changes landed on this branch trigger a nixos-rebuild switch.
+      '';
     };
 
     workdir = mkOption {
       type = types.str;
       default = "/var/lib/trivnix";
-      description = "Local clone path used for building the flake";
+      description = ''
+        Directory where the flake is cloned and kept between runs.
+        The service performs git operations and builds inside this path.
+      '';
     };
 
     interval = mkOption {
       type = types.str;
       default = "1min";
-      description = "How often to check for upstream changes (systemd time span)";
+      description = ''
+        Systemd time string controlling how frequently upgrades run.
+        Applies to both the initial delay and the recurring check interval.
+      '';
     };
   };
 

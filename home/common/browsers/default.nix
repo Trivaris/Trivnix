@@ -23,6 +23,9 @@ in
     type = types.listOf (types.enum modules);
     default = [ ];
     example = [ "chromium" ];
-    description = "Your Browsers";
+    description = ''
+      Browser modules to install and configure from `home/common/browsers`.
+      Each entry ensures the corresponding package is available for the user.
+    '';
   };
 }

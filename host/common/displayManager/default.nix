@@ -19,6 +19,9 @@ in
     type = types.nullOr (types.enum modules);
     default = null;
     example = "sddm";
-    description = "Your Display Manager";
+    description = ''
+      Display manager module to use from `host/common/displayManager`.
+      Choose one to manage graphical logins or keep null for a console setup.
+    '';
   };
 }
