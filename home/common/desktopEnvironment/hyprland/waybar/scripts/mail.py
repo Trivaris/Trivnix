@@ -98,8 +98,13 @@ def summarize_accounts(accounts: Dict[str, Dict[str, str]]) -> Tuple[List[str], 
 
     for name, details in accounts.items():
         host = details.get("host")
-        port = int(details.get("port", 993))
+        raw_port = details.get("port", 993)
+        try:
+            port = int(raw_port)
+        except (TypeError, ValueError):
+            port = 993
         username = details.get("username")
+        address = details.get("address", "")
         password_command = details.get("passwordCommand", "")
         security = str(details.get("security", "")).lower()
         use_starttls = bool(details.get("useStartTls", False))
@@ -149,7 +154,18 @@ def summarize_accounts(accounts: Dict[str, Dict[str, str]]) -> Tuple[List[str], 
             continue
 
         total_unread += unread
-        summary_lines.append(f"{name}: {unread}")
+        display_name = address or username or name
+        extras: List[str] = []
+
+        if username and username != display_name:
+            extras.append(f"user {username}")
+        if host:
+            extras.append(f"imap {host}:{port}")
+        if connection_mode:
+            extras.append(connection_mode.upper())
+
+        extras_text = f" ({', '.join(extras)})" if extras else ""
+        summary_lines.append(f"{display_name}: {unread}{extras_text}")
 
     if not summary_lines:
         summary_lines.append("No mailboxes configured")

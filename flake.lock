@@ -1565,11 +1565,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758492599,
-        "narHash": "sha256-ZiSo5X4ZGDbzDW6CrIxj5VO0PjgIWaWfr6A89OmIybY=",
+        "lastModified": 1758495294,
+        "narHash": "sha256-O8jZHdUwM/roHwDiwG1LtDLmSwiP/M+kvNATWur6bAw=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "0619f8541ca3f3af3c05e05064f834320cad1407",
+        "rev": "e5a6690ddf2eb252197849cb881f21cc91c52733",
         "type": "github"
       },
       "original": {
@@ -1600,11 +1600,11 @@
     },
     "trivnixPrivate": {
       "locked": {
-        "lastModified": 1758492656,
-        "narHash": "sha256-SjYPxQvORUIWkF7UJBwDOWMtRYCeqYse14bOUfxxybc=",
+        "lastModified": 1758495047,
+        "narHash": "sha256-x6tnrCJawzBTHaC8gS5ccWZP44w9U3ZzJ93Q+10GG5Q=",
         "ref": "refs/heads/main",
-        "rev": "4f2d44ffb947fd170aa0f05d31f2bd78146185d6",
-        "revCount": 22,
+        "rev": "281213d2c05917d5b3712f8a73ae0eef20f3a435",
+        "revCount": 23,
         "type": "git",
         "url": "ssh://git@github.com/Trivaris/TrivnixPrivate"
       },

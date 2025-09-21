@@ -128,11 +128,14 @@ in
                 "starttls"
               else
                 "ssl";
+            computedAddress =
+              if account ? address && account.address != "" then account.address else account.userName or "";
           in
           nameValuePair accountName {
             inherit (imap) host port;
             inherit useStartTls security;
 
+            address = computedAddress;
             username = account.userName;
             passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
           }
