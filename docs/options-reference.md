@@ -53,6 +53,8 @@ This page condenses every option exported by modules under `home/common`, `home/
 | --- | --- | --- | --- |
 | `userPrefs.enableRandomStuff` | bool | `false` | Installs a curated bundle of miscellaneous desktop utilities (KDE tools, media apps, etc.). Toggle when you want the extras. |
 | `userPrefs.git.email` | string | — | Email address written to the global Git config as `user.email`. Match your forge account to keep commit attribution intact. |
+| `userPrefs.git.name` | string | `userInfos.name` | User Name written to the global Git config as `user.name`. Match your forge account to keep commit attribution intact. |
+| `userPrefs.git.enableSigning` | bool | `false` | Enable commit and tag signing with the key defined in secrets |
 
 ## Stylix Theme Options (`userPrefs.stylix.*` / `hostPrefs.stylix.*`)
 | Option | Type | Default | Description |

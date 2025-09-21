@@ -74,6 +74,7 @@ Add additional entries here as you enable more host modules.
   - `email-passwords/<account>` for every account listed in `inputs.trivnixPrivate.emailAccounts.<user>`
   - `email-passwords/<account>-hashed` for accounts served by the mail server module (defaults to `personal-hashed`)
   - `calendar-passwords/<calendar>` for every calendar listed in `inputs.trivnixPrivate.calendarAccounts.<user>`
+  - `git-signing-key` if `userPrefs.git.enableSigning` is toggled on. Expects a plain ssh key.
 
 Provide an entry in `inputs.trivnixPrivate.emailAccounts` and `calendarAccounts` for each user, even if it is an empty attrset; `home/common/secrets.nix` asserts that those attrsets exist.
 

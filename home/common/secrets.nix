@@ -16,6 +16,8 @@ let
     pipe
     ;
 
+  prefs = config.userPrefs;
+  gitSigningKeyPath = ".ssh/git-signing-key";
   hasPrivate = inputs ? trivnixPrivate;
   private = if hasPrivate then inputs.trivnixPrivate else { };
   hasEmail = hasPrivate && (private ? emailAccounts) && builtins.isAttrs private.emailAccounts;
@@ -60,7 +62,8 @@ in
       assertion = hasPrivate;
       message = ''
         Missing input "trivnixPrivate". Provide your private flake or override the input.
-              See docs/trivnix-private.md and use: nix build --override-input trivnixPrivate <your_repo>'';
+        See docs/trivnix-private.md and use: nix build --override-input trivnixPrivate <your_repo>
+      '';
     }
     {
       assertion = hasEmail;
@@ -84,10 +87,18 @@ in
       emailSecrets
       calendarSecrets
       (mkIf (hostPrefs ? mailserver && hostPrefs.mailserver.enable or false) {
-        "email-passwords/personal-hashed" = {
+        "email-passwords/personal-hashed".mode = "0600";
+      })
+      (mkIf prefs.git.enableSigning {
+        git-signing-key = {
           mode = "0600";
+          path = "/home/${config.home.username}/${gitSigningKeyPath}";
         };
       })
     ];
+  };
+
+  home.file = mkIf prefs.git.enableSigning {
+    "${gitSigningKeyPath}.pub".source = inputs.trivnixPrivate.git-signing-key-pub.${userInfos.name};
   };
 }
