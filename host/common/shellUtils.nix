@@ -13,6 +13,7 @@
       git
       httpie
       openssh
+      file
       ;
   };
 }

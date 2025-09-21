@@ -25,6 +25,7 @@ This page condenses every option exported by modules under `home/common`, `home/
 | `userPrefs.lutris.enable` | bool | `false` | Installs Lutris into the user profile. Enable on machines that run game launchers outside Steam. |
 | `userPrefs.vscodium.enableLsp` | bool | `false` | Adds Nix language tooling (nixd, nixfmt) and configures VSCodium for LSP integration. Toggle when you want IDE support for `.nix` files. |
 | `userPrefs.vscodium.fixServer` | bool | `false` | Patches the VSCodium remote server to use the packaged Node.js binary. Useful when remote editing fails because node is missing. |
+| `userPrefs.jetbrainsIDEs` | enum ( `pkgs.jetbrains` modules ) | `[]` | Each entry simply adds the package to the profile. |
 
 ### Browsers
 | Option | Type | Default | Description |
