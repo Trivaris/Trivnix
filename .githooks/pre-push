@@ -17,4 +17,3 @@ fi
 
 echo "[hooks] nix flake check passed. Proceeding with push."
 exit 0
-

@@ -18,6 +18,7 @@ let
     "files.autoSaveDelay" = 1000;
     "explorer.confirmDelete" = false;
     "svelte.enable-ts-plugin" = true;
+    "explorer.confirmDragAndDrop" = false;
   };
 
   lspSettings = {

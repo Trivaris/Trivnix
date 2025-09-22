@@ -61,7 +61,7 @@ in
         gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
         core = {
           autocrlf = "input";
-          hookspath = ".githooks";
+          hooksPath = ".githooks";
         };
       };
     };
