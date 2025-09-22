@@ -16,6 +16,7 @@ let
     toInt
     findFirst
     hasSuffix
+    mkForce
     ;
 
   prefs = config.hostPrefs;
@@ -99,28 +100,37 @@ in
       defaults.email = prefs.reverseProxy.email;
     };
 
-    services.automx2 = {
-      enable = true;
-      domain = prefs.mailserver.baseDomain;
-      settings = {
-        provider = prefs.mailserver.providerName;
+    services = {
+      automx2 = {
+        enable = true;
+        domain = prefs.mailserver.baseDomain;
+        settings = {
+          provider = prefs.mailserver.providerName;
 
-        domains = builtins.attrValues {
-          inherit (prefs.mailserver) baseDomain domain;
+          domains = builtins.attrValues {
+            inherit (prefs.mailserver) baseDomain domain;
+          };
+
+          servers = [
+            {
+              type = "imap";
+              name = "imap.${prefs.mailserver.baseDomain}";
+              port = 993;
+            }
+            {
+              type = "smtp";
+              name = "smtp.${prefs.mailserver.baseDomain}";
+              port = 587;
+            }
+          ];
         };
+      };
 
-        servers = [
-          {
-            type = "imap";
-            name = "imap.${prefs.mailserver.baseDomain}";
-            port = 993;
-          }
-          {
-            type = "smtp";
-            name = "smtp.${prefs.mailserver.baseDomain}";
-            port = 587;
-          }
-        ];
+      nginx.virtualHosts."autoconfig.${prefs.mailserver.baseDomain}" = {
+        forceSSL = true;
+        enableACME = mkForce false;
+        useACMEHost = mkForce "mail.${prefs.mailserver.baseDomain}";
+        locations."/".proxyPass = mkForce "http://127.0.0.1:${toString config.services.automx2.port}";
       };
     };
   };
