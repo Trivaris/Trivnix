@@ -14,6 +14,19 @@ from typing import Dict, List, Tuple
 CONFIG_PATH = Path.home() / ".config" / "mailaccounts.json"
 
 
+class MailConfigError(Exception):
+    """Raised when the mailbox configuration cannot be loaded."""
+
+
+def _normalize_field(value: object) -> str:
+    text = "" if value is None else str(value).strip()
+    return text or "-"
+
+
+def format_summary_line(name: object, address: object, trailing: object) -> str:
+    return f"{_normalize_field(name)} | {_normalize_field(address)} | {_normalize_field(trailing)}"
+
+
 def get_password(command: str) -> str:
     return subprocess.check_output(
         command,
@@ -87,8 +100,13 @@ def load_accounts() -> Dict[str, Dict[str, str]]:
     if not CONFIG_PATH.exists():
         return {}
 
-    with CONFIG_PATH.open() as handle:
-        return json.load(handle)
+    try:
+        with CONFIG_PATH.open() as handle:
+            return json.load(handle)
+    except json.JSONDecodeError as exc:
+        raise MailConfigError(
+            f"Invalid JSON in {CONFIG_PATH}: {exc.msg} (line {exc.lineno}, column {exc.colno})"
+        ) from exc
 
 
 def summarize_accounts(accounts: Dict[str, Dict[str, str]]) -> Tuple[List[str], int, bool]:
@@ -108,6 +126,7 @@ def summarize_accounts(accounts: Dict[str, Dict[str, str]]) -> Tuple[List[str], 
         password_command = details.get("passwordCommand", "")
         security = str(details.get("security", "")).lower()
         use_starttls = bool(details.get("useStartTls", False))
+        display_address = address or username or name
 
         if security in {"ssl", "starttls", "plain", "none"}:
             connection_mode = security
@@ -130,7 +149,9 @@ def summarize_accounts(accounts: Dict[str, Dict[str, str]]) -> Tuple[List[str], 
             connection_mode = "plain"
 
         if not all([host, port, username, password_command]):
-            summary_lines.append(f"{name}: ! missing configuration")
+            summary_lines.append(
+                format_summary_line(name, display_address, "missing configuration")
+            )
             had_error = True
             continue
 
@@ -145,30 +166,23 @@ def summarize_accounts(accounts: Dict[str, Dict[str, str]]) -> Tuple[List[str], 
                 timeout=15,
             )
         except (subprocess.CalledProcessError, FileNotFoundError):
-            summary_lines.append(f"{name}: ! password command failed")
+            summary_lines.append(
+                format_summary_line(name, display_address, "password command failed")
+            )
             had_error = True
             continue
         except (imaplib.IMAP4.error, socket.timeout, TimeoutError, OSError) as exc:
-            summary_lines.append(f"{name}: ! {exc.__class__.__name__}")
+            summary_lines.append(
+                format_summary_line(name, display_address, exc.__class__.__name__)
+            )
             had_error = True
             continue
 
         total_unread += unread
-        display_name = address or username or name
-        extras: List[str] = []
-
-        if username and username != display_name:
-            extras.append(f"user {username}")
-        if host:
-            extras.append(f"imap {host}:{port}")
-        if connection_mode:
-            extras.append(connection_mode.upper())
-
-        extras_text = f" ({', '.join(extras)})" if extras else ""
-        summary_lines.append(f"{display_name}: {unread}{extras_text}")
+        summary_lines.append(format_summary_line(name, display_address, unread))
 
     if not summary_lines:
-        summary_lines.append("No mailboxes configured")
+        summary_lines.append(format_summary_line("mailboxes", "none", 0))
 
     return summary_lines, total_unread, had_error
 
@@ -193,12 +207,12 @@ def render_json(summary: List[str], total_unread: int, had_error: bool) -> str:
     })
 
 
-def render_loading() -> str:
+def render_error(message: str) -> str:
     return json.dumps({
-        "text": "",
-        "alt": "loading",
-        "tooltip": "Checking mailboxes...",
-        "class": ["mail", "loading"],
+        "text": "!",
+        "alt": "error",
+        "tooltip": message,
+        "class": ["mail", "error"],
     })
 
 
@@ -211,15 +225,28 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    accounts = load_accounts()
+    try:
+        accounts = load_accounts()
+    except MailConfigError as exc:
+        message = str(exc)
+        if args.summary:
+            print(message, file=sys.stderr)
+            return 1
+        print(render_error(message), flush=True)
+        return 1
 
     if args.summary:
         summary, _, _ = summarize_accounts(accounts)
         print("\n".join(summary))
         return 0
 
-    print(render_loading(), flush=True)
-    summary, total_unread, had_error = summarize_accounts(accounts)
+    try:
+        summary, total_unread, had_error = summarize_accounts(accounts)
+    except Exception as exc:
+        message = f"Unexpected error: {exc.__class__.__name__}: {exc}"
+        print(render_error(message), flush=True)
+        return 1
+
     print(render_json(summary, total_unread, had_error), flush=True)
     return 0
 

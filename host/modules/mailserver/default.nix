@@ -61,13 +61,15 @@ in
         inherit (prefs.mailserver) baseDomain domain;
       };
 
-      certificateDomains = map (name: "${name}.${prefs.mailserver.baseDomain}") [
-        "imap"
-        "smtp"
-        "autoconfig"
-        "autodiscovery"
-        (if prefs.mailserver.enablePop3 then "pop3" else "")
-      ];
+      certificateDomains = map (name: "${name}.${prefs.mailserver.baseDomain}") (
+        [
+          "imap"
+          "smtp"
+          "autoconfig"
+          "autodiscovery"
+        ]
+        ++ (if prefs.mailserver.enablePop3 then [ "pop3" ] else [ ])
+      );
 
       stateVersion = pipe hostInfos.stateVersion [
         (splitString ".")

@@ -6,11 +6,12 @@
   ...
 }:
 let
+  inherit (lib) optionalAttrs optionalString;
   prefs = config.userPrefs;
   displayManager = hostPrefs.displayManager or null;
   logoutCommand = if displayManager == "autologin" then null else "hyprctl dispatch exit";
   tooltipText =
-    "Left: Lock | Right: Poweroff" + lib.optionalString (logoutCommand != null) " | Middle: Logout";
+    "Left: Lock | Right: Poweroff" + optionalString (logoutCommand != null) " | Middle: Logout";
 in
 {
   settings = {
@@ -34,7 +35,7 @@ in
       tooltip = true;
       tooltip-format = tooltipText;
     }
-    // lib.optionalAttrs (logoutCommand != null) {
+    // optionalAttrs (logoutCommand != null) {
       on-click-middle = logoutCommand;
     };
 

@@ -44,7 +44,7 @@ let
   overrides =
     if pathExists overridesPath then
       builtins.listToAttrs (
-        builtins.map (name: {
+        map (name: {
           inherit name;
           value = "${overridesPath}/${name}";
         }) overrideEntries

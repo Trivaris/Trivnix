@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf pipe;
   prefs = config.hostPrefs;
 in
 {
@@ -24,9 +24,10 @@ in
         GatewayPorts = "clientspecified";
       };
 
-      authorizedKeysFiles = builtins.map (user: "/etc/ssh/authorized_keys.d/${user}") (
-        builtins.attrNames allUserInfos
-      );
+      authorizedKeysFiles = pipe allUserInfos [
+        builtins.attrNames
+        (map (user: "/etc/ssh/authorized_keys.d/${user}"))
+      ];
 
       hostKeys = [
         {
