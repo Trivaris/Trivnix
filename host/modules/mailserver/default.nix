@@ -24,8 +24,8 @@ let
   loginAccounts = pipe inputs.trivnixPrivate.emailAccounts.${prefs.mainUser} [
     (mapAttrs' (name: value: nameValuePair name (value // { profileName = name; })))
     builtins.attrValues
-    (findFirst (account: hasSuffix "@${prefs.mailserver.domain}" account.address) (
-      throw "Email Server enabled but no email accounts with addresses ending on @${prefs.mailserver.domain} set!"
+    (findFirst (account: hasSuffix "@${prefs.mailserver.baseDomain}" account.address) (
+      throw "Email Server enabled but no email accounts with addresses ending on @${prefs.mailserver.baseDomain} set!"
     ))
     (account: {
       ${account.userName} = {
@@ -51,18 +51,17 @@ in
       inherit loginAccounts;
 
       enable = true;
-      fqdn = prefs.mailserver.domain;
+      fqdn = prefs.mailserver.baseDomain;
       certificateScheme = "acme-nginx";
       enablePop3Ssl = prefs.mailserver.enablePop3;
-
-      dkimSelector = "default";
+      dkimSelector = "dkim";
       dkimKeyType = "ed25519";
+      domains = [ prefs.mailserver.baseDomain ];
 
-      domains = builtins.attrValues {
-        inherit (prefs.mailserver) baseDomain domain;
-      };
-
-      certificateDomains = map (name: "${name}.${prefs.mailserver.baseDomain}") (
+      certificateDomains = [
+        prefs.mailserver.domain
+      ]
+      ++ (map (name: "${name}.${prefs.mailserver.baseDomain}") (
         [
           "imap"
           "smtp"
@@ -70,7 +69,7 @@ in
           "autodiscovery"
         ]
         ++ (if prefs.mailserver.enablePop3 then [ "pop3" ] else [ ])
-      );
+      ));
 
       stateVersion = pipe hostInfos.stateVersion [
         (splitString ".")
@@ -106,10 +105,7 @@ in
         domain = prefs.mailserver.baseDomain;
         settings = {
           provider = prefs.mailserver.providerName;
-
-          domains = builtins.attrValues {
-            inherit (prefs.mailserver) baseDomain domain;
-          };
+          domains = [ prefs.mailserver.baseDomain ];
 
           servers = [
             {
@@ -129,7 +125,7 @@ in
       nginx.virtualHosts."autoconfig.${prefs.mailserver.baseDomain}" = {
         forceSSL = true;
         enableACME = mkForce false;
-        useACMEHost = mkForce "mail.${prefs.mailserver.baseDomain}";
+        useACMEHost = mkForce prefs.mailserver.baseDomain;
         locations."/".proxyPass = mkForce "http://127.0.0.1:${toString config.services.automx2.port}";
       };
     };
