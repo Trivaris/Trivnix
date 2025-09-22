@@ -186,11 +186,11 @@ The following fields exist under `hostPrefs.<service>.reverseProxy` for every se
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `hostPrefs.mailserver.enable` | bool | `false` | Turns on the mailserver stack (Postfix, Dovecot, automx). |
-| `hostPrefs.mailserver.enablePop3` | bool | `false` | Enables POP3 alongside IMAP for legacy clients. |
-| `hostPrefs.mailserver.enableIpV6` | bool | `false` | Configures IPv6 addresses and firewall rules for mail services. |
-| `hostPrefs.mailserver.ipV6Address` | string | — | IPv6 address assigned to the interface serving mail. |
-| `hostPrefs.mailserver.ipV6Interface` | string | — | Network interface name carrying the mail IPv6 address. |
-| `hostPrefs.mailserver.domain` | string | — | Primary mail FQDN (also used as the server's MX). |
-| `hostPrefs.mailserver.baseDomain` | string | — | Root domain you control for MX/SRV records and ACME issuance. |
-| `hostPrefs.mailserver.providerName` | string | — | Human-friendly provider name advertised via AutoMX responses. |
-
+| `hostPrefs.mailserver.enableIpV6` | bool | `false` | Configures IPv6 addresses and firewall rules for the mail stack. |
+| `hostPrefs.mailserver.ipV6Address` | string | — | IPv6 address bound to the interface serving mail. |
+| `hostPrefs.mailserver.ipV6Interface` | string | — | Network interface name that carries the mail IPv6 address. |
+| `hostPrefs.mailserver.domain` | string | — | Fully-qualified domain clients use to reach the mail services. |
+| `hostPrefs.mailserver.baseDomain` | string | — | Base DNS zone used for MX/SRV records and ACME certificates. |
+| `hostPrefs.mailserver.providerName` | string | — | Human-readable provider name surfaced by AutoMX. |
+| `hostPrefs.mailserver.smtpPort` | int | `587` | TCP submission port advertised to clients (often 587 or 465). |
+| `hostPrefs.mailserver.imapPort` | int | `993` | TCP port exposed for IMAP access (typically 993 or 143). |

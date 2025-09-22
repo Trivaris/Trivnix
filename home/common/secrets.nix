@@ -5,7 +5,6 @@
   hostInfos,
   trivnixLib,
   userInfos,
-  hostPrefs,
   ...
 }:
 let
@@ -86,9 +85,6 @@ in
       sshSecrets
       emailSecrets
       calendarSecrets
-      (mkIf (hostPrefs ? mailserver && hostPrefs.mailserver.enable or false) {
-        "email-passwords/personal-hashed".mode = "0600";
-      })
       (mkIf prefs.git.enableSigning {
         git-signing-key = {
           mode = "0600";

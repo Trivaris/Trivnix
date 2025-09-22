@@ -46,7 +46,6 @@ emailAccounts = {
 Secrets
 
 - Provide `email-passwords/<account>` in the user’s SOPS file (`secrets/home/<user>/common.yaml`).
-- If the mail server module is enabled, also provide `email-passwords/<account>-hashed` for the accounts served from that host (hashed password expected by the module).
 
 ### `calendarAccounts`
 

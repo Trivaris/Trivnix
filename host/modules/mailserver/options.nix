@@ -17,11 +17,6 @@ in
     Enable only when the host should accept and deliver email locally.
   '';
 
-  enablePop3 = mkEnableOption ''
-    Expose POP3/POP3S endpoints alongside IMAP.
-    Required for legacy clients that cannot speak IMAP.
-  '';
-
   enableIpV6 = mkEnableOption ''
     Configure IPv6 addresses and firewall rules for the mail stack.
     Enable when the host has routed IPv6 connectivity for mail services.
@@ -51,4 +46,23 @@ in
     Human-readable provider name advertised via AutoMX.
     Appears in client autoconfiguration dialogs.
   '';
+
+  smtpPort = mkOption {
+    type = types.port;
+    default = 587;
+    description = ''
+      TCP port used by the SMTP service (submission).
+      Common values: 587 (submission, STARTTLS) or 465 (smtps, implicit TLS).
+    '';
+  };
+
+  imapPort = mkOption {
+    type = types.port;
+    default = 993;
+    description = ''
+      TCP port used by the IMAP service (message retrieval).
+      Common values: 993 (imaps, implicit TLS) or 143 (imap, STARTTLS).
+    '';
+  };
+
 }

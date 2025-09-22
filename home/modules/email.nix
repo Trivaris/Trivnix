@@ -110,16 +110,13 @@ in
     ) config.vars.filteredEmailAccounts;
 
     home.file = mkIf prefs.email.generateAccountsFile {
-      ".config/mailaccounts.json".text = pipe config.vars.filteredEmailAccounts [
-        (mapAttrs' (
+      ".config/mailaccounts.json".text = builtins.toJSON (
+        mapAttrs' (
           accountName: account:
           let
             imap = account.imap or { };
             tls = imap.tls or { };
-            tlsEnabled =
-              (tls.enable or false)
-              || (tls.useStartTls or false)
-              || (builtins.length (builtins.attrNames tls) > 0);
+            tlsEnabled = tls.enable || tls.useStartTls;
             useStartTls = tls.useStartTls or false;
             security =
               if !tlsEnabled then
@@ -128,8 +125,7 @@ in
                 "starttls"
               else
                 "ssl";
-            computedAddress =
-              if account ? address && account.address != "" then account.address else account.userName or "";
+            computedAddress = if (account.address or "") != "" then account.address else account.userName or "";
           in
           nameValuePair accountName {
             inherit (imap) host port;
@@ -139,9 +135,8 @@ in
             username = account.userName;
             passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
           }
-        ))
-        builtins.toJSON
-      ];
+        ) config.accounts.email.accounts
+      );
     };
   };
 }

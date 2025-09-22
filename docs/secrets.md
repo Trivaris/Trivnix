@@ -72,7 +72,6 @@ Add additional entries here as you enable more host modules.
   - `ssh-private-key-a` and `ssh-private-key-c` when hardware-backed keys are enabled
 - `secrets/home/<user>/common.yaml` (shared across hosts) stores application secrets
   - `email-passwords/<account>` for every account listed in `inputs.trivnixPrivate.emailAccounts.<user>`
-  - `email-passwords/<account>-hashed` for accounts served by the mail server module (defaults to `personal-hashed`)
   - `calendar-passwords/<calendar>` for every calendar listed in `inputs.trivnixPrivate.calendarAccounts.<user>`
   - `git-signing-key` if `userPrefs.git.enableSigning` is toggled on. Expects a plain ssh key.
 

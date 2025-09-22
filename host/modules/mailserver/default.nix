@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  inputs,
   hostInfos,
   ...
 }:
@@ -9,51 +8,32 @@ let
   inherit (lib)
     mkIf
     pipe
-    mapAttrs'
-    nameValuePair
     splitString
     head
     toInt
-    findFirst
-    hasSuffix
     mkForce
+    mkAliasOptionModule
     ;
 
   prefs = config.hostPrefs;
-
-  loginAccounts = pipe inputs.trivnixPrivate.emailAccounts.${prefs.mainUser} [
-    (mapAttrs' (name: value: nameValuePair name (value // { profileName = name; })))
-    builtins.attrValues
-    (findFirst (account: hasSuffix "@${prefs.mailserver.baseDomain}" account.address) (
-      throw "Email Server enabled but no email accounts with addresses ending on @${prefs.mailserver.baseDomain} set!"
-    ))
-    (account: {
-      ${account.userName} = {
-        hashedPasswordFile =
-          config.home-manager.users.${prefs.mainUser}.sops.secrets."email-passwords/${account.profileName}-hashed".path;
-
-        aliases = [
-          "@${prefs.mailserver.domain}"
-          "@${prefs.mailserver.baseDomain}"
-        ];
-      };
-    })
-  ];
 in
 {
+  imports = [
+    (mkAliasOptionModule [ "hostPrefs" "mailserver" "loginAccounts" ] [ "mailserver" "loginAccounts" ])
+  ];
   options.hostPrefs.mailserver = import ./options.nix {
-    inherit (lib) mkEnableOption types mkOption;
+    inherit (lib)
+      mkEnableOption
+      types
+      mkOption
+      ;
   };
 
   config = mkIf prefs.mailserver.enable {
     mailserver = {
-      inherit (prefs.mailserver) enablePop3;
-      inherit loginAccounts;
-
       enable = true;
       fqdn = prefs.mailserver.baseDomain;
       certificateScheme = "acme-nginx";
-      enablePop3Ssl = prefs.mailserver.enablePop3;
       dkimSelector = "dkim";
       dkimKeyType = "ed25519";
       domains = [ prefs.mailserver.baseDomain ];
@@ -61,15 +41,12 @@ in
       certificateDomains = [
         prefs.mailserver.domain
       ]
-      ++ (map (name: "${name}.${prefs.mailserver.baseDomain}") (
-        [
-          "imap"
-          "smtp"
-          "autoconfig"
-          "autodiscovery"
-        ]
-        ++ (if prefs.mailserver.enablePop3 then [ "pop3" ] else [ ])
-      ));
+      ++ (map (name: "${name}.${prefs.mailserver.baseDomain}") [
+        "imap"
+        "smtp"
+        "autoconfig"
+        "autodiscover"
+      ]);
 
       stateVersion = pipe hostInfos.stateVersion [
         (splitString ".")
@@ -111,12 +88,12 @@ in
             {
               type = "imap";
               name = "imap.${prefs.mailserver.baseDomain}";
-              port = 993;
+              port = prefs.mailserver.imapPort;
             }
             {
               type = "smtp";
               name = "smtp.${prefs.mailserver.baseDomain}";
-              port = 587;
+              port = prefs.mailserver.smtpPort;
             }
           ];
         };

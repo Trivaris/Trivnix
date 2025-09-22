@@ -82,9 +82,9 @@ in
               nix flake check $path
             else
               nix flake check $path \
-                --override-input trivnixConfigs ~/Projects/trivnixConfigs/ \
-                --override-input trivnixLib     ~/Projects/trivnixLib/ \
-                --override-input trivnixPrivate ~/Projects/trivnixPrivate/
+                --override-input trivnixConfigs ../TrivnixConfigs/ \
+                --override-input trivnixLib     ../TrivnixLib/ \
+                --override-input trivnixPrivate ../TrivnixPrivate/
             end
           '';
         };
