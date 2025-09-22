@@ -85,10 +85,7 @@ in
       emailSecrets
       calendarSecrets
       (mkIf prefs.git.enableSigning {
-        git-signing-key = {
-          mode = "0600";
-          path = "/home/${config.home.username}/.ssh/id_ed25519_git_signing";
-        };
+        git-signing-key.mode = "0600";
       })
     ];
   };

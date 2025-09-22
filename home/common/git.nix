@@ -52,7 +52,7 @@ in
       signing = mkIf prefs.git.enableSigning {
         format = "ssh";
         signByDefault = true;
-        key = "${inputs.trivnixPrivate.pubKeys.common.${userInfos.name}."id_git_signing.pub"}";
+        key = "${config.sops.secrets.git-signing-key.path}";
       };
 
       extraConfig = {
