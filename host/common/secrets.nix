@@ -5,7 +5,6 @@
   inputs,
   allUserInfos,
   hostInfos,
-  trivnixLib,
   ...
 }:
 let
@@ -22,8 +21,8 @@ let
   hasWireguard =
     hasPrivate && (private ? wireguardInterfaces) && builtins.isAttrs private.wireguardInterfaces;
 
-  commonSecrets = trivnixLib.mkStorePath "secrets/host/common.yaml";
-  hostSecrets = trivnixLib.mkStorePath "secrets/host/${hostInfos.configname}.yaml";
+  commonSecrets = "${inputs.trivnixPrivate.secrets}/host/common.yaml";
+  hostSecrets = "${inputs.trivnixPrivate.secrets}/host/${hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
 
   perUserSecrets = mapAttrs' (

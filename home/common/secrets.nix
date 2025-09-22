@@ -3,7 +3,6 @@
   inputs,
   config,
   hostInfos,
-  trivnixLib,
   userInfos,
   ...
 }:
@@ -22,8 +21,8 @@ let
   hasCalendar =
     hasPrivate && (private ? calendarAccounts) && builtins.isAttrs private.calendarAccounts;
 
-  commonSecrets = trivnixLib.mkStorePath "secrets/home/${userInfos.name}/common.yaml";
-  hostSecrets = trivnixLib.mkStorePath "secrets/home/${userInfos.name}/${hostInfos.configname}.yaml";
+  commonSecrets = "${inputs.trivnixPrivate.secrets}/home/${userInfos.name}/common.yaml";
+  hostSecrets = "${inputs.trivnixPrivate.secrets}/home/${userInfos.name}/${hostInfos.configname}.yaml";
 
   mkKey = name: {
     ${name} = {
