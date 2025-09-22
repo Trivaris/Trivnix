@@ -36,7 +36,11 @@ in
       certificateScheme = "acme-nginx";
       dkimSelector = "dkim";
       dkimKeyType = "ed25519";
-      domains = [ prefs.mailserver.baseDomain ];
+
+      domains = [
+        prefs.mailserver.baseDomain
+        prefs.mailserver.domain
+      ];
 
       certificateDomains = [
         prefs.mailserver.domain
