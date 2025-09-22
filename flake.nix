@@ -17,10 +17,7 @@
 
     trivnixConfigs = {
       url = "github:Trivaris/TrivnixConfigs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        trivnixLib.follows = "trivnixLib";
-      };
+      inputs.trivnixLib.follows = "trivnixLib";
     };
 
     # Core/community modules

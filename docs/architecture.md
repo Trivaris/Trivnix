@@ -28,7 +28,7 @@ In `trivnixConfigs`, each host lives under `configs/<configname>/` and typically
 - `infos.nix`: hostname, architecture, stateVersion, network info, etc.
 - `prefs.nix`: host-level preferences (desktop environment, services, etc.)
 - `users.nix`: users on this host and their preferences
-- `hardware.nix`, `partitions.nix`, `pkgsConfig.nix`, `pubKeys/` as needed
+- `hardware.nix`, `partitions.nix`, `pkgsConfig.nix` as needed
 
 ## Prefs Model
 

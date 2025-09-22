@@ -16,7 +16,6 @@ let
     ;
 
   prefs = config.userPrefs;
-  gitSigningKeyPath = ".ssh/git-signing-key";
   hasPrivate = inputs ? trivnixPrivate;
   private = if hasPrivate then inputs.trivnixPrivate else { };
   hasEmail = hasPrivate && (private ? emailAccounts) && builtins.isAttrs private.emailAccounts;
@@ -88,13 +87,9 @@ in
       (mkIf prefs.git.enableSigning {
         git-signing-key = {
           mode = "0600";
-          path = "/home/${config.home.username}/${gitSigningKeyPath}";
+          path = "/home/${config.home.username}/.ssh/id_ed25519_git_signing";
         };
       })
     ];
-  };
-
-  home.file = mkIf prefs.git.enableSigning {
-    "${gitSigningKeyPath}.pub".source = inputs.trivnixPrivate.git-signing-key-pub.${userInfos.name};
   };
 }

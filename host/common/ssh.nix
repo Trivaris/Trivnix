@@ -1,18 +1,27 @@
 {
   lib,
+  inputs,
+  hostInfos,
   allHostInfos,
-  allHostPubKeys,
   ...
 }:
 let
   inherit (lib) mapAttrs' nameValuePair;
-  knownHosts = mapAttrs' (
-    hostname: pubKeys:
-    nameValuePair hostname {
-      hostNames = [ allHostInfos.${hostname}.ip ];
-      publicKey = pubKeys."host.pub";
-    }
-  ) allHostPubKeys;
+  knownHosts =
+    mapAttrs'
+      (
+        hostname: pubKeys:
+        nameValuePair hostname {
+          hostNames = [ allHostInfos.${hostname}.ip ];
+          publicKey = pubKeys."host.pub";
+        }
+      )
+      (
+        removeAttrs inputs.trivnixPrivate.pubKeys [
+          "common"
+          hostInfos.configname
+        ]
+      );
 in
 {
   programs.ssh = {

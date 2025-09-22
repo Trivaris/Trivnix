@@ -57,11 +57,6 @@ outputs = { self, ... }: {
       };
 
       pkgsConfig = { allowUnfree = true; };
-
-      # Optional extras
-      pubKeys = {
-        "host.pub" = "ssh-ed25519 AAAA...";   # used for known_hosts/authorized_keys
-      };
     };
   };
 };

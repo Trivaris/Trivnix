@@ -43,6 +43,26 @@ emailAccounts = {
 };
 ```
 
+### `pubKeys`
+
+Type: nested attrset.
+
+Example
+
+```nix
+pubKeys = {
+  common."id_git_signing.pub" = "ssh-ed25519 AAAA... git@trivaris.org";
+
+  <host> = {
+    "host.pub" = "ssh-ed25519 AAAA... root@<host>";
+    users = {
+      root."default.pub" = "ssh-ed25519 AAAA... root@<host>";
+      <user>."default.pub" = "ssh-ed25519 AAAA... <user>@<host>";
+    };
+  };
+};
+```
+
 Secrets
 
 - Provide `email-passwords/<account>` in the user’s SOPS file (`secrets/home/<user>/common.yaml`).

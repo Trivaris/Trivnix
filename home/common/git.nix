@@ -11,7 +11,6 @@ let
     mkEnableOption
     types
     mkIf
-    removeSuffix
     ;
 
   prefs = config.userPrefs;
@@ -53,7 +52,7 @@ in
       signing = mkIf prefs.git.enableSigning {
         format = "ssh";
         signByDefault = true;
-        key = "${config.sops.secrets.git-signing-key.path}.pub";
+        key = "${inputs.trivnixPrivate.pubKeys.common.${userInfos.name}."id_git_signing.pub"}";
       };
 
       extraConfig = {
@@ -65,9 +64,7 @@ in
     };
 
     home.file.${allowedSignersFile}.text = mkIf prefs.git.enableSigning ''
-      ${prefs.git.email} ${
-        removeSuffix "\n" (builtins.readFile inputs.trivnixPrivate.git-signing-key-pub.${userInfos.name})
-      }
+      ${prefs.git.email} ${inputs.trivnixPrivate.pubKeys.common.${userInfos.name}."id_git_signing.pub"}
     '';
   };
 }
