@@ -85,15 +85,8 @@ let
         ))
       ];
 
-  waybarSettings = pipe waybar [
-    (map (module: module.settings))
-    mergeAttrsList
-  ];
-
-  waybarStyle = pipe waybar [
-    (map (module: module.style))
-    (concatStringsSep "\n")
-  ];
+  waybarSettings = mergeAttrsList (map (module: module.settings) waybar);
+  waybarStyle = concatStringsSep "\n" (map (module: module.style) waybar);
 in
 {
   options.userPrefs.hyprland = import ./options.nix lib;

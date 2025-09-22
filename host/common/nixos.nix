@@ -10,7 +10,6 @@ let
   inherit (lib)
     mkOption
     types
-    pipe
     mkDefault
     mapAttrs
     filterAttrs
@@ -32,10 +31,7 @@ in
 
     mainUser = mkOption {
       type = types.str;
-      default = pipe allUserInfos [
-        builtins.attrNames
-        builtins.head
-      ];
+      default = builtins.head (builtins.attrNames allUserInfos);
       description = ''
         Primary user account considered owner of the host configuration.
         Used by modules such as autologin and service defaults needing a username.

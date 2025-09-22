@@ -4,10 +4,9 @@
   lib,
 }:
 let
-  inherit (lib) pipe nameValuePair;
+  inherit (lib) nameValuePair;
 in
 func:
-pipe systems [
-  (map (system: nameValuePair system (func (import inputs.nixpkgs { inherit system; }))))
-  builtins.listToAttrs
-]
+builtins.listToAttrs (
+  map (system: nameValuePair system (func (import inputs.nixpkgs { inherit system; }))) systems
+)

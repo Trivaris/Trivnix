@@ -1,8 +1,5 @@
 { trivnixConfigs, lib }:
 let
-  inherit (lib) pipe mapAttrsToList unique;
+  inherit (lib) mapAttrsToList unique;
 in
-pipe trivnixConfigs.configs [
-  (mapAttrsToList (_: config: config.infos.architecture))
-  unique
-]
+unique (mapAttrsToList (_: config: config.infos.architecture) trivnixConfigs.configs)

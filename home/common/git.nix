@@ -57,9 +57,12 @@ in
 
       extraConfig = {
         credential.helper = "store";
-        core.autocrlf = "input";
         init.defaultBranch = "main";
         gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
+        core = {
+          autocrlf = "input";
+          hookspath = ".githooks";
+        };
       };
     };
 

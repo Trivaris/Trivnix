@@ -12,12 +12,11 @@ in
 
   config =
     mkIf
-      (builtins.elem "hyprland" (
-        pipe allUserPrefs [
-          builtins.attrValues
-          (map (prefs: prefs.desktopEnvironment or ""))
-        ]
-      ))
+      (pipe allUserPrefs [
+        builtins.attrValues
+        (map (prefs: prefs.desktopEnvironment or ""))
+        (builtins.elem "hyprland")
+      ])
       {
         assertions = [
           {

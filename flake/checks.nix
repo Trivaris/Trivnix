@@ -11,7 +11,6 @@ pkgs:
 let
   inherit (pkgs.lib)
     filterAttrs
-    pipe
     mapAttrs'
     nameValuePair
     concatMapAttrs
@@ -19,45 +18,39 @@ let
 
   hostsForSystem = filterAttrs (_: cfg: cfg.infos.architecture == pkgs.system) trivnixConfigs.configs;
 
-  evalNixos = pipe hostsForSystem [
-    (mapAttrs' (
-      configname: _:
+  evalNixos = mapAttrs' (
+    configname: _:
+    let
+      nixos = mkNixOS { inherit configname hostModules homeModules; };
+    in
+    nameValuePair "eval-nixos-${configname}" (
+      builtins.seq nixos.config.system.build.toplevel.drvPath (
+        pkgs.runCommand "eval-nixos-${configname}" { } ''
+          echo ok > $out
+        ''
+      )
+    )
+  ) hostsForSystem;
+
+  evalHM = concatMapAttrs (
+    configname: hostConfig:
+    mapAttrs' (
+      username: _:
       let
-        nixos = mkNixOS { inherit configname hostModules homeModules; };
+        hm = mkHomeManager {
+          inherit configname username;
+          homeModules = homeModules ++ homeManagerModules;
+        };
       in
-      nameValuePair "eval-nixos-${configname}" (
-        builtins.seq nixos.config.system.build.toplevel.drvPath (
-          pkgs.runCommand "eval-nixos-${configname}" { } ''
+      nameValuePair "eval-home-${username}@${configname}" (
+        builtins.seq (hm.activationPackage.drvPath or hm.activationPackage) (
+          pkgs.runCommand "eval-home-${username}@${configname}" { } ''
             echo ok > $out
           ''
         )
       )
-    ))
-  ];
-
-  evalHM = pipe hostsForSystem [
-    (concatMapAttrs (
-      configname: hostConfig:
-      pipe hostConfig.users [
-        (mapAttrs' (
-          username: _:
-          let
-            hm = mkHomeManager {
-              inherit configname username;
-              homeModules = homeModules ++ homeManagerModules;
-            };
-          in
-          nameValuePair "eval-home-${username}@${configname}" (
-            builtins.seq (hm.activationPackage.drvPath or hm.activationPackage) (
-              pkgs.runCommand "eval-home-${username}@${configname}" { } ''
-                echo ok > $out
-              ''
-            )
-          )
-        ))
-      ]
-    ))
-  ];
+    ) hostConfig.users
+  ) hostsForSystem;
 
   lint =
     pkgs.runCommand "lint"
