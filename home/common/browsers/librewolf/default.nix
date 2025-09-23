@@ -5,6 +5,7 @@
   inputs,
   trivnixLib,
   userInfos,
+  hostInfos,
   ...
 }:
 let
@@ -57,6 +58,31 @@ in
                 {
                   template = "https://search.brave.com/search";
                   params = [ (nameValuePair "q" "{searchTerms}") ];
+                }
+              ];
+            };
+
+            mynixos = {
+              name = "MyNixOS";
+              urls = [
+                {
+                  template = "https://mynixos.com/search";
+                  definedAliases = [ "@mn" ];
+                  params = [ (nameValuePair "q" "{searchTerms}") ];
+                }
+              ];
+            };
+
+            nixos-search = {
+              name = "Nix Packages";
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  definedAliases = [ "@np" ];
+                  params = [
+                    (nameValuePair "channel" hostInfos.stateVersion)
+                    (nameValuePair "query" "{searchTerms}")
+                  ];
                 }
               ];
             };

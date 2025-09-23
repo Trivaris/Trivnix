@@ -17,10 +17,7 @@ in
 {
   additions =
     _: pkgs:
-    mapAttrs' (
-      name: path: (nameValuePair name (pkgs.callPackage ./packages/${path} { inherit pkgs; }))
-    ) extraPkgs
-    // {
+    {
       modpacks = {
         elysiumDays = pkgs.callPackage ./mkModpack.nix {
           inherit pkgs;
@@ -34,7 +31,10 @@ in
           hash = "sha256-kCMJ6PUSaVr5Tpa9gFbBOE80kUQ4BaNLE1ZVzTfqTFM=";
         };
       };
-    };
+    }
+    // (mapAttrs' (
+      name: path: (nameValuePair name (pkgs.callPackage ./packages/${path} { inherit pkgs; }))
+    ) extraPkgs);
 
   modifications =
     _: pkgs:

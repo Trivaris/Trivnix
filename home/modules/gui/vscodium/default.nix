@@ -8,11 +8,16 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkMerge hm;
+  inherit (lib)
+    mkIf
+    mkMerge
+    hm
+    optionalAttrs
+    ;
 
   prefs = config.userPrefs;
   selfPath = trivnixLib.mkStorePath "";
-  vscodiumSettings = commonSettings // (if prefs.vscodium.enableLsp then lspSettings else { });
+  vscodiumSettings = commonSettings // (optionalAttrs prefs.vscodium.enableLsp lspSettings);
 
   commonSettings = {
     "files.autoSave" = "afterDelay";
