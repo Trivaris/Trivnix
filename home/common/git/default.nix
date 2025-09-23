@@ -6,41 +6,14 @@
   ...
 }:
 let
-  inherit (lib)
-    mkOption
-    mkEnableOption
-    types
-    mkIf
-    ;
-
+  inherit (lib) mkIf nameValuePair mapAttrs';
   prefs = config.userPrefs;
   allowedSignersFile = ".config/git/allowed_signers";
 in
 {
-  options.userPrefs.git = {
-    enableSigning = mkEnableOption ''
-      Enables commit and tag signing in Git using a configured ssh key defined via sops-nix.
-      Ensures authenticity of your commits, marking them as verified on platforms like GitHub/GitLab.
-    '';
-
-    name = mkOption {
-      type = types.str;
-      default = userInfos.name;
-      example = "trivaris";
-      description = ''
-        Name written to the global Git config as `user.name`.
-        Match your forge account name so commits stay attributed correctly.
-      '';
-    };
-
-    email = mkOption {
-      type = types.str;
-      example = "you@example.com";
-      description = ''
-        Email address written to the global Git config as `user.email`.
-        Match your forge account address so commits stay attributed correctly.
-      '';
-    };
+  options.userPrefs.git = import ./options.nix {
+    inherit (lib) mkEnableOption mkOption types;
+    inherit userInfos;
   };
 
   config = {
@@ -59,6 +32,12 @@ in
         credential.helper = "store";
         init.defaultBranch = "main";
         gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
+        url = mapAttrs' (name: value: nameValuePair name { insteadOf = value; }) prefs.git.urlAliases;
+
+        status = {
+
+        };
+
         core = {
           autocrlf = "input";
           hooksPath = ".githooks";
