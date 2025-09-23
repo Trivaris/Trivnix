@@ -5,6 +5,7 @@
   inputs,
   allUserInfos,
   hostInfos,
+  # trivnixLib,
   ...
 }:
 let
@@ -27,7 +28,6 @@ let
       path = "/home/${user}/.config/sops/age/key.txt";
       owner = user;
       group = "users";
-      mode = "0600";
     }
   ) (filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
 
@@ -36,7 +36,6 @@ let
     nameValuePair "wireguard-preshared-keys/${interface}" {
       owner = "root";
       group = "root";
-      mode = "0600";
     }
   ) inputs.trivnixPrivate.wireguardInterfaces;
 in
@@ -61,7 +60,6 @@ in
           path = "/root/.ssh/id_ed25519";
           owner = "root";
           group = "root";
-          mode = "0600";
         };
       }
 
@@ -71,7 +69,6 @@ in
           path = "/etc/ssh/ssh_host_ed25519_key";
           owner = "root";
           group = "root";
-          mode = "0600";
           restartUnits = [ "sshd.service" ];
           neededForUsers = true;
         };
@@ -82,7 +79,6 @@ in
           sopsFile = hostSecrets;
           owner = "root";
           group = "root";
-          mode = "0600";
         };
       })
 
@@ -90,13 +86,11 @@ in
         cloudflare-api-token = {
           owner = "root";
           group = "root";
-          mode = "0600";
         };
 
         cloudflare-api-account-token = {
           owner = "root";
           group = "root";
-          mode = "0600";
         };
       })
 
@@ -104,15 +98,13 @@ in
         nextcloud-admin-token = {
           owner = "nextcloud";
           group = "nextcloud";
-          mode = "0600";
         };
       })
 
       (mkIf prefs.suwayomi.enable {
         suwayomi-webui-password = {
-          owner = "suwayomi";
-          group = "suwayomi";
-          mode = "0600";
+          inherit (config.suwayomi-server) group;
+          owner = config.suwayomi-server.user;
         };
       })
 
@@ -120,7 +112,15 @@ in
         vaultwarden-admin-token = {
           owner = "vaultwarden";
           group = "vaultwarden";
-          mode = "0600";
+        };
+      })
+
+      (mkIf prefs.sabnzbd.enable {
+        sabnzbd-webui-password = {
+          inherit (config.services.sabnzbd) group;
+          owner = config.services.sabnzbd.user;
+          # path = trivnixLib.mkStorePath "sabnzbd.txt";
+          # neededForUsers = true;
         };
       })
     ];

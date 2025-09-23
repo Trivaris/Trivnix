@@ -21,7 +21,6 @@ let
   mkKey = name: {
     ${name} = {
       sopsFile = hostSecrets;
-      mode = "0600";
     };
   };
 
@@ -37,13 +36,13 @@ let
 
   emailSecrets = pipe config.vars.filteredEmailAccounts [
     builtins.attrNames
-    (map (account: nameValuePair "email-passwords/${account}" { mode = "0600"; }))
+    (map (account: nameValuePair "email-passwords/${account}" { }))
     builtins.listToAttrs
   ];
 
   calendarSecrets = pipe (inputs.trivnixPrivate.calendarAccounts.${userInfos.name} or { }) [
     builtins.attrNames
-    (map (account: nameValuePair "calendar-passwords/${account}" { mode = "0600"; }))
+    (map (account: nameValuePair "calendar-passwords/${account}" { }))
     builtins.listToAttrs
   ];
 in
@@ -63,7 +62,7 @@ in
       emailSecrets
       calendarSecrets
       (mkIf prefs.git.enableSigning {
-        git-signing-key.mode = "0600";
+        git-signing-key = { };
       })
     ];
   };
