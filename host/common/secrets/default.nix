@@ -114,15 +114,6 @@ in
           group = "vaultwarden";
         };
       })
-
-      (mkIf prefs.sabnzbd.enable {
-        sabnzbd-webui-password = {
-          inherit (config.services.sabnzbd) group;
-          owner = config.services.sabnzbd.user;
-          # path = trivnixLib.mkStorePath "sabnzbd.txt";
-          # neededForUsers = true;
-        };
-      })
     ];
   };
 }
