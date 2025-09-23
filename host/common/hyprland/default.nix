@@ -18,12 +18,7 @@ in
         (builtins.elem "hyprland")
       ])
       {
-        assertions = [
-          {
-            assertion = builtins.hasAttr hostInfos.architecture inputs.hyprland.packages;
-            message = "Hyprland: architecture ${hostInfos.architecture} not available in inputs.hyprland.packages";
-          }
-        ];
+        assertions = import ./assertions.nix { inherit hostInfos inputs; };
 
         programs.hyprland = {
           enable = true;

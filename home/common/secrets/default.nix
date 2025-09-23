@@ -15,12 +15,6 @@ let
     ;
 
   prefs = config.userPrefs;
-  hasPrivate = inputs ? trivnixPrivate;
-  private = if hasPrivate then inputs.trivnixPrivate else { };
-  hasEmail = hasPrivate && (private ? emailAccounts) && builtins.isAttrs private.emailAccounts;
-  hasCalendar =
-    hasPrivate && (private ? calendarAccounts) && builtins.isAttrs private.calendarAccounts;
-
   commonSecrets = "${inputs.trivnixPrivate.secrets}/home/${userInfos.name}/common.yaml";
   hostSecrets = "${inputs.trivnixPrivate.secrets}/home/${userInfos.name}/${hostInfos.configname}.yaml";
 
@@ -47,37 +41,22 @@ let
     builtins.listToAttrs
   ];
 
-  calendarSecrets = pipe (private.calendarAccounts.${userInfos.name} or { }) [
+  calendarSecrets = pipe (inputs.trivnixPrivate.calendarAccounts.${userInfos.name} or { }) [
     builtins.attrNames
     (map (account: nameValuePair "calendar-passwords/${account}" { mode = "0600"; }))
     builtins.listToAttrs
   ];
 in
 {
-  assertions = [
-    {
-      assertion = hasPrivate;
-      message = ''
-        Missing input "trivnixPrivate". Provide your private flake or override the input.
-        See docs/trivnix-private.md and use: nix build --override-input trivnixPrivate <your_repo>
-      '';
-    }
-    {
-      assertion = hasEmail;
-      message = ''Invalid or missing inputs.trivnixPrivate.emailAccounts (expected attrset).'';
-    }
-    {
-      assertion = hasCalendar;
-      message = ''Invalid or missing inputs.trivnixPrivate.calendarAccounts (expected attrset).'';
-    }
-  ];
-
+  assertions = import ./assertions.nix { inherit inputs; };
   sops = {
     defaultSopsFile = commonSecrets;
     validateSopsFiles = true;
 
-    age.keyFile = "/home/${userInfos.name}/.config/sops/age/key.txt";
-    age.generateKey = false;
+    age = {
+      keyFile = "/home/${userInfos.name}/.config/sops/age/key.txt";
+      generateKey = false;
+    };
 
     secrets = mkMerge [
       sshSecrets

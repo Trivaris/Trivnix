@@ -9,6 +9,7 @@
 }:
 let
   inherit (lib) mkIf mkMerge hm;
+
   prefs = config.userPrefs;
   selfPath = trivnixLib.mkStorePath "";
   vscodiumSettings = commonSettings // (if prefs.vscodium.enableLsp then lspSettings else { });
@@ -42,37 +43,18 @@ in
   options.userPrefs.vscodium = import ./options.nix { inherit (lib) mkEnableOption; };
 
   config = mkIf (builtins.elem "vscodium" prefs.gui) (mkMerge [
-    {
-      home.packages = builtins.attrValues (
-        {
-          inherit (pkgs) vscodium;
-        }
-
-        // (
-          if prefs.vscodium.enableLsp then
-            {
-              inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;
-
-              inherit (pkgs)
-                nixd
-                nixfmt-rfc-style
-                nix-ld
-                ;
-            }
-          else
-            { }
-        )
-
-        // (
-          if prefs.vscodium.fixServer then
-            {
-              inherit (pkgs) nodejs_20;
-            }
-          else
-            { }
-        )
-      );
-    }
+    { home.packages = [ pkgs.vscodium ]; }
+    (mkIf prefs.vscodium.fixServer { home.packages = [ pkgs.nodejs_20 ]; })
+    (mkIf prefs.vscodium.enableLsp {
+      home.packages = builtins.attrValues {
+        inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;
+        inherit (pkgs)
+          nixd
+          nixfmt-rfc-style
+          nix-ld
+          ;
+      };
+    })
 
     {
       home.file = {

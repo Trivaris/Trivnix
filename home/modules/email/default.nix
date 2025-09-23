@@ -8,63 +8,35 @@
 let
   inherit (inputs.trivnixPrivate) emailAccounts;
   inherit (lib)
-    mkEnableOption
     mkOption
     mkIf
     mapAttrs'
     nameValuePair
-    pipe
     types
     filterAttrs
     ;
 
-  hasPrivate = inputs ? trivnixPrivate;
   prefs = config.userPrefs;
-
-  hasEmail =
-    hasPrivate
-    && (inputs.trivnixPrivate ? emailAccounts)
-    && builtins.isAttrs inputs.trivnixPrivate.emailAccounts;
+  getSecurity =
+    tlsEnabled: useStartTls:
+    if !tlsEnabled then
+      "plain"
+    else if useStartTls then
+      "starttls"
+    else
+      "ssl";
 in
 {
   options = {
-    userPrefs.email = {
-      enable = mkEnableOption ''
-        Turn on SOPS-backed email account provisioning for this user.
-        When enabled, mail settings and secrets sync from trivnixPrivate.
-      '';
+    userPrefs.email = import ./options.nix {
+      inherit (lib)
+        mkEnableOption
+        mkOption
+        pipe
+        types
+        ;
 
-      exclude = mkOption {
-        type = pipe emailAccounts.${userInfos.name} or { } [
-          builtins.attrNames
-          types.enum
-          types.listOf
-        ];
-
-        default = [ ];
-        description = ''
-          Email account identifiers to ignore when provisioning profiles.
-          Filter names listed under `inputs.trivnixPrivate.emailAccounts.<user>`.
-        '';
-      };
-
-      generateAccountsFile = mkOption {
-        type = types.bool;
-        default = true;
-        description = ''
-          Control whether a JSON summary of filtered accounts is written.
-          Set to false when an external tool manages `mailaccounts.json`.
-        '';
-      };
-
-      enableThunderbirdIntegration = mkOption {
-        type = types.bool;
-        default = true;
-        description = ''
-          Allow this module to auto-configure Thunderbird profiles from secrets.
-          Disable if you prefer to manage Thunderbird settings manually.
-        '';
-      };
+      inherit emailAccounts userInfos;
     };
 
     vars.filteredEmailAccounts = mkOption {
@@ -82,16 +54,7 @@ in
   };
 
   config = mkIf prefs.email.enable {
-    assertions = [
-      {
-        assertion = prefs.email.enable -> hasPrivate;
-        message = ''Email module enabled but input "trivnixPrivate" is missing. See docs/trivnix-private.md.'';
-      }
-      {
-        assertion = prefs.email.enable -> hasEmail;
-        message = ''Email module enabled but inputs.trivnixPrivate.emailAccounts is missing or not an attrset.'';
-      }
-    ];
+    assertions = import ./assertions.nix { inherit inputs prefs; };
 
     accounts.email.accounts = mapAttrs' (
       accountName: account:
@@ -118,13 +81,7 @@ in
             tls = imap.tls or { };
             tlsEnabled = tls.enable || tls.useStartTls;
             useStartTls = tls.useStartTls or false;
-            security =
-              if !tlsEnabled then
-                "plain"
-              else if useStartTls then
-                "starttls"
-              else
-                "ssl";
+            security = getSecurity tlsEnabled useStartTls;
             computedAddress = if (account.address or "") != "" then account.address else account.userName or "";
           in
           nameValuePair accountName {

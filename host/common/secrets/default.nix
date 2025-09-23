@@ -16,11 +16,6 @@ let
     mkMerge
     ;
 
-  hasPrivate = inputs ? trivnixPrivate;
-  private = if hasPrivate then inputs.trivnixPrivate else { };
-  hasWireguard =
-    hasPrivate && (private ? wireguardInterfaces) && builtins.isAttrs private.wireguardInterfaces;
-
   commonSecrets = "${inputs.trivnixPrivate.secrets}/host/common.yaml";
   hostSecrets = "${inputs.trivnixPrivate.secrets}/host/${hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
@@ -43,22 +38,10 @@ let
       group = "root";
       mode = "0600";
     }
-  ) private.wireguardInterfaces;
+  ) inputs.trivnixPrivate.wireguardInterfaces;
 in
 {
-  assertions = [
-    {
-      assertion = hasPrivate;
-      message = ''
-        Missing input "trivnixPrivate". Provide your private flake or override the input.
-        See docs/trivnix-private.md and use: nix build --override-input trivnixPrivate <your_repo>
-      '';
-    }
-    {
-      assertion = hasWireguard || (!prefs.wireguard.enable);
-      message = ''Invalid or missing inputs.trivnixPrivate.wireguardInterfaces (expected attrset) while hostPrefs.wireguard.enable = true.'';
-    }
-  ];
+  assertions = import ./assertions.nix { inherit prefs inputs; };
 
   environment.systemPackages = builtins.attrValues { inherit (pkgs) sops age; };
   sops = {

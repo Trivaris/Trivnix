@@ -9,13 +9,7 @@ let
 in
 {
   config = mkIf (prefs.displayManager == "autologin") {
-    assertions = [
-      {
-        assertion = config.home-manager.users.${prefs.mainUser}.vars.desktopEnvironmentBinary != null;
-        message = ''Autologin requires a desktop environment. Set userPrefs.desktopEnvironment to a module that sets vars.desktopEnvironmentBinary.'';
-      }
-    ];
-
+    assertions = import ./assertions.nix { inherit config prefs; };
     services.greetd =
       let
         settings = {
@@ -27,8 +21,8 @@ in
         };
       in
       {
-        enable = true;
         inherit settings;
+        enable = true;
       };
   };
 }

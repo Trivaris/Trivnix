@@ -8,12 +8,12 @@ let
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (prefs.shell == "fish") {
-    programs.fish = {
+  config = mkIf (prefs.shell == "zsh") {
+    programs.zsh = {
       enable = true;
-      shellAbbrs = config.vars.shellAbbreviations;
-      functions = config.vars.shellFunctions;
-      interactiveShellInit = ''
+      shellAliases = config.vars.shellAbbreviations;
+      siteFunctions = config.vars.shellFunctions;
+      initContent = ''
         ${if (builtins.elem "fastfetch" prefs.cli.enabled) then "fastfetch" else ""}
       '';
     };
