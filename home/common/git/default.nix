@@ -35,7 +35,9 @@ in
         url = mapAttrs' (name: value: nameValuePair name { insteadOf = value; }) prefs.git.urlAliases;
 
         status = {
-
+          branch = true;
+          showStash = true;
+          showUntrackedFiles = true;
         };
 
         core = {
