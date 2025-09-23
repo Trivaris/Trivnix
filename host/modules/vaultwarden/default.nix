@@ -26,9 +26,9 @@ in
         SIGNUPS_ALLOWED = false;
       }
       // (optionalAttrs prefs.vaultwarden.sendMails {
+        SMTP_SSL = false;
         SMTP_HOST = "127.0.0.1";
         SMTP_PORT = 25;
-        SMTP_SSL = false;
         SMTP_FROM = "vaultwarden@${prefs.mailserver.baseDomain}";
         SMTP_FROM_NAME = "Vaultwarden";
       });

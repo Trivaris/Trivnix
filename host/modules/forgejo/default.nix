@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf optionalAttrs;
   prefs = config.hostPrefs;
 in
 {
@@ -15,6 +15,7 @@ in
   };
 
   config = mkIf prefs.forgejo.enable {
+    assertions = import ./assertions.nix { inherit prefs; };
     services.forgejo = {
       enable = true;
       lfs.enable = true;
@@ -34,6 +35,14 @@ in
           ROOT_URL = "https://${prefs.forgejo.reverseProxy.domain}/";
           HTTP_ADDR = prefs.forgejo.reverseProxy.ipAddress;
           HTTP_PORT = prefs.forgejo.reverseProxy.port;
+        };
+
+        mailer = optionalAttrs prefs.forgejo.sendMails {
+          ENABLED = true;
+          PROTOCOL = "smtp";
+          SMTP_ADDR = "127.0.0.1";
+          SMTP_PORT = 25;
+          FROM = "forgejo@trivaris.org";
         };
       };
     };
