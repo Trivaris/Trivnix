@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) optionalAttrs optionalString;
+  inherit (lib) mkIf optionalString;
   prefs = config.userPrefs;
   displayManager = hostPrefs.displayManager or null;
   logoutCommand = if displayManager == "autologin" then null else "hyprctl dispatch exit";
@@ -34,9 +34,7 @@ in
       on-click-right = "poweroff -p";
       tooltip = true;
       tooltip-format = tooltipText;
-    }
-    // optionalAttrs (logoutCommand != null) {
-      on-click-middle = logoutCommand;
+      on-click-middle = mkIf (logoutCommand != null) logoutCommand;
     };
 
     "hyprland/workspaces" = {

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) optionalAttrs;
+  inherit (lib) mkIf;
   prefs = config.userPrefs;
   guiModules = prefs.gui or [ ];
   thunderbirdEnabled = builtins.elem "thunderbird" guiModules;
@@ -19,6 +19,7 @@ in
     exec = "${./scripts/mail.py}";
     signal = 4;
     on-click-middle = "pkill -RTMIN+4 waybar";
+    on-click = mkIf thunderbirdEnabled "thunderbird";
 
     format-icons = {
       loading = "";
@@ -26,9 +27,6 @@ in
       empty = "";
       error = "";
     };
-  }
-  // optionalAttrs thunderbirdEnabled {
-    on-click = "thunderbird";
   };
 
   style = ''
