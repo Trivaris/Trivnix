@@ -28,11 +28,24 @@ in
         key = "${config.sops.secrets.git-signing-key.path}";
       };
 
+      diff-so-fancy = {
+        enable = true;
+        markEmptyLines = false;
+      };
+
       extraConfig = {
         credential.helper = "store";
         init.defaultBranch = "main";
         gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
         url = mapAttrs' (name: value: nameValuePair name { insteadOf = value; }) prefs.git.urlAliases;
+
+        color.diff = {
+          meta = "black bold";
+          frag = "magenta";
+          context = "white";
+          whitespace = "yellow reverse";
+          old = "red";
+        };
 
         status = {
           branch = true;
