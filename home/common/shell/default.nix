@@ -106,4 +106,6 @@ in
       };
     };
   };
+
+  config.programs.starship.enable = true;
 }

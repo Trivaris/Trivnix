@@ -21,6 +21,7 @@ in
   imports = [
     (mkAliasOptionModule [ "hostPrefs" "mailserver" "loginAccounts" ] [ "mailserver" "loginAccounts" ])
   ];
+
   options.hostPrefs.mailserver = import ./options.nix {
     inherit (lib)
       mkEnableOption

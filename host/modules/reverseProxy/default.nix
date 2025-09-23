@@ -1,44 +1,58 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf nameValuePair mkAfter;
+  inherit (lib)
+    mkIf
+    pipe
+    nameValuePair
+    mkAfter
+    mkOption
+    types
+    mapAttrsToList
+    filterAttrs
+    ;
+
   prefs = config.hostPrefs;
-
-  services = builtins.filter (pref: builtins.hasAttr "reverseProxy" pref) (
-    builtins.filter (pref: builtins.isAttrs pref) (builtins.attrValues prefs)
-  );
-
-  activeServices = map (service: service.reverseProxy) (
-    builtins.filter (service: service.reverseProxy.enable or false) services
-  );
-
-  externalPorts = map (service: service.externalPort) (
-    builtins.filter (service: service.externalPort != null) activeServices
-  );
-
-  acmeUnits = map (service: "acme-${service.domain}.service") (
-    builtins.filter (service: service ? domain && service.enable) activeServices
-  );
+  acmeUnits = map (service: "acme-${service.domain}.service") config.vars.activeServices;
 in
 {
-  options.hostPrefs.reverseProxy = import ./config.nix {
-    inherit (lib) mkEnableOption mkOption types;
+  options = {
+    hostPrefs.reverseProxy = import ./options.nix {
+      inherit (lib) mkEnableOption mkOption types;
+    };
+
+    vars.activeServices = mkOption {
+      type = types.listOf (types.attrsOf types.anything);
+      default = pipe prefs [
+        (filterAttrs (_: pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false))
+        (mapAttrsToList (name: service: service.reverseProxy // { inherit name; }))
+      ];
+    };
   };
 
   config =
     let
-      ddclient = import ./ddclient.nix { inherit prefs config activeServices; };
-      acme = import ./acme.nix {
-        inherit
-          prefs
-          config
-          activeServices
-          nameValuePair
-          ;
+      ddclient = import ./ddclient.nix {
+        inherit (config.vars) activeServices;
+        inherit prefs config;
       };
-      virtualHosts = import ./virtualHosts.nix { inherit prefs activeServices nameValuePair; };
+
+      acme = import ./acme.nix {
+        inherit (config.vars) activeServices;
+        inherit prefs config nameValuePair;
+      };
+
+      virtualHosts = import ./virtualHosts.nix {
+        inherit (config.vars) activeServices;
+        inherit prefs nameValuePair;
+      };
     in
     mkIf prefs.reverseProxy.enable {
-      networking.firewall.allowedTCPPorts = [ prefs.reverseProxy.port ] ++ externalPorts;
+      networking.firewall.allowedTCPPorts = [
+        prefs.reverseProxy.port
+      ]
+      ++ (map (service: service.externalPort) (
+        builtins.filter (service: service.externalPort != null) config.vars.activeServices
+      ));
       security = { inherit acme; };
 
       services = {

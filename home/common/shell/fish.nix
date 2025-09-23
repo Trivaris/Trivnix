@@ -14,6 +14,7 @@ in
       shellAbbrs = config.vars.shellAbbreviations;
       functions = config.vars.shellFunctions;
       interactiveShellInit = ''
+        set fish_greeting
         ${if (builtins.elem "fastfetch" prefs.cli.enabled) then "fastfetch" else ""}
       '';
     };
