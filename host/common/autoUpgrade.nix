@@ -89,10 +89,13 @@ in
             echo "[trivnix] Updating to origin/$BRANCH"
             ${getExe pkgs.git} -C "$WORKDIR" reset --hard "origin/$BRANCH"
             echo "[trivnix] Rebuilding NixOS for $HOST"
-            ${getExe' pkgs.nixos-rebuild "nixos-rebuild"} switch --flake "$WORKDIR#$HOST"
+            ${getExe' pkgs.nixos-rebuild "nixos-rebuild"} switch --flake "$WORKDIR#$HOST" --rebuild
           else
             echo "[trivnix] No changes; skipping rebuild"
           fi
+
+          echo "[trivnix] Rebuild succeded, cleaning up garbage"
+          nix-collect-garbage
         '';
       in
       {

@@ -15,7 +15,12 @@ in
       [ "hostPrefs" "homepage" "widgets" ]
       [ "services" "homepage-dashboard" "widgets" ]
     )
+    (mkAliasOptionModule
+      [ "hostPrefs" "homepage" "settings" ]
+      [ "services" "homepage-dashboard" "settings" ]
+    )
   ];
+
   options.hostPrefs.homepage = import ./options.nix {
     inherit (config.vars) activeServices;
     inherit (trivnixLib) mkReverseProxyOption;
