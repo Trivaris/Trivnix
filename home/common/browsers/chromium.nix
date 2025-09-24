@@ -10,6 +10,6 @@ let
 in
 {
   config = mkIf (builtins.elem "chromium" prefs.browsers) {
-    home.packages = [ pkgs.chromium ];
+    home.packages = [ pkgs.ungoogled-chromium ];
   };
 }

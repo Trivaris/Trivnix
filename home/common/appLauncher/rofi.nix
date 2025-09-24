@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -13,7 +12,6 @@ in
   config = mkIf (prefs.appLauncher == "rofi") {
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
 
       extraConfig = {
         modi = "drun,run,window";

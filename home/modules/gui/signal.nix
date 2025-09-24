@@ -10,6 +10,6 @@ let
 in
 {
   config = mkIf (builtins.elem "signal" prefs.gui) {
-    home.packages = [ pkgs.signal-desktop ];
+    home.packages = [ pkgs.signal-desktop-bin ];
   };
 }

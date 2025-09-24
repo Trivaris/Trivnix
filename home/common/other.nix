@@ -36,6 +36,7 @@ in
         vlc
         wayland-utils
         wl-clipboard-rs
+        ksud
         ;
     };
   };

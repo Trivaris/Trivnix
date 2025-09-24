@@ -3,6 +3,7 @@
   lib,
   inputs,
   userInfos,
+  pkgs,
   ...
 }:
 let
@@ -36,6 +37,7 @@ in
   config = mkIf (builtins.elem "thunderbird" prefs.gui) {
     programs.thunderbird = {
       enable = true;
+      package = pkgs.thunderbird-bin;
       profiles.${userInfos.name} = {
         isDefault = true;
         settings = builtins.listToAttrs calendarSettings;

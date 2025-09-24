@@ -5,7 +5,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
     # Personal repos
     trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
@@ -78,10 +78,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    millennium = {
-      url = "github:trivaris/Millennium";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    millennium.url = "github:Trivaris/Millennium";
 
     # Non-flake sources
     betterfox = {

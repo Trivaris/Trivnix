@@ -952,24 +952,22 @@
         "crow": "crow",
         "fmt": "fmt",
         "ini": "ini",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs-stable": "nixpkgs-stable",
         "nlohmann": "nlohmann",
         "sdk": "sdk",
         "vcpkg": "vcpkg",
         "websocketpp": "websocketpp"
       },
       "locked": {
-        "lastModified": 1757723595,
-        "narHash": "sha256-3j3MDZOULds1kdUugwJLvwSqy5zCeFENUmTkvRwsJmQ=",
-        "owner": "trivaris",
+        "lastModified": 1758717125,
+        "narHash": "sha256-+BRAH41Dfaa+6KG3Q74A01MMoeJBcMIJp4mdfzminpQ=",
+        "owner": "Trivaris",
         "repo": "Millennium",
-        "rev": "cd295f03bae727bd550f271ae404a2f3e266bffd",
+        "rev": "4c2bd9f4c6f5b37ced0c17aeeccf0baa67778f5f",
         "type": "github"
       },
       "original": {
-        "owner": "trivaris",
+        "owner": "Trivaris",
         "repo": "Millennium",
         "type": "github"
       }
@@ -1103,6 +1101,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1758660139,
+        "narHash": "sha256-cx4NsO/vQKecV1Ms5fqgLlprIwqTCOYtIZBB3/Lk8uk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "824b0ed85e2daa262f104097bd523e08e9c0fcbe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1754340878,
@@ -1121,11 +1135,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1757487488,
-        "narHash": "sha256-zwE/e7CuPJUWKdvvTCB7iunV4E/+G0lKfv4kk/5Izdg=",
+        "lastModified": 1758427187,
+        "narHash": "sha256-pHpxZ/IyCwoTQPtFIAG2QaxuSm8jWzrzBGjwQZIttJc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ab0f3607a6c7486ea22229b92ed2d355f1482ee0",
+        "rev": "554be6495561ff07b6c724047bdd7e0716aa7b46",
         "type": "github"
       },
       "original": {
@@ -1578,11 +1592,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758673562,
-        "narHash": "sha256-fRg1kDUWelxPv/SQ5VVVfJdY2jtPMT7EHkQvH611IcA=",
+        "lastModified": 1758736306,
+        "narHash": "sha256-2V7UduO2EWk2hIkbgnHgxIr1tv+DhJSjc5BJWKPpSys=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "2af2e832dba8f2e5597b241a0e8039d1ea6c2fcb",
+        "rev": "58c58ad582bd0155a88b1940768250344ce01041",
         "type": "github"
       },
       "original": {
