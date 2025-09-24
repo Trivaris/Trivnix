@@ -20,15 +20,6 @@ in
       on-click = "${prefs.appLauncher} ${config.vars.appLauncherFlags}";
       on-click-right = "killall ${prefs.appLauncher}";
     };
-
-    "custom/power" = {
-      format = " ";
-      on-click = "hyprland";
-      on-click-right = "poweroff -p";
-      tooltip = true;
-      tooltip-format = "Left: Lock | Middle: Log Out | Right: Poweroff";
-      on-click-middle = "hyprctl dispatch exit";
-    };
   };
 
   style = ''
@@ -48,16 +39,6 @@ in
       border-radius: 10px;
       transition: none;
       color: ${getColor "base0C"};
-      background: transparent;
-    }
-
-    #custom-power {
-      font-size: 20px;
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
-      color: ${getColor "base08"};
       background: transparent;
     }
 

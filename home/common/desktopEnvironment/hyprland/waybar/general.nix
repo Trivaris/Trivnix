@@ -27,7 +27,6 @@
       "pulseaudio"
       "battery"
       "clock"
-      "custom/power"
     ];
   };
 
