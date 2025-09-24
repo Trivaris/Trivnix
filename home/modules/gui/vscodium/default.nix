@@ -25,6 +25,7 @@ let
     "explorer.confirmDelete" = false;
     "svelte.enable-ts-plugin" = true;
     "explorer.confirmDragAndDrop" = false;
+    "terminal.integrated.stickyScroll.enabled" = false;
   };
 
   lspSettings = {
