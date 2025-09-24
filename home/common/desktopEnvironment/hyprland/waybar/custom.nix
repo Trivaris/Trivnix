@@ -1,17 +1,10 @@
 {
   config,
   getColor,
-  hostPrefs,
-  lib,
   ...
 }:
 let
-  inherit (lib) mkIf optionalString;
   prefs = config.userPrefs;
-  displayManager = hostPrefs.displayManager or null;
-  logoutCommand = if displayManager == "autologin" then null else "hyprctl dispatch exit";
-  tooltipText =
-    "Left: Lock | Right: Poweroff" + optionalString (logoutCommand != null) " | Middle: Logout";
 in
 {
   settings = {
@@ -33,15 +26,8 @@ in
       on-click = "hyprland";
       on-click-right = "poweroff -p";
       tooltip = true;
-      tooltip-format = tooltipText;
-      on-click-middle = mkIf (logoutCommand != null) logoutCommand;
-    };
-
-    "hyprland/workspaces" = {
-      format = "{icon}";
-      on-scroll-up = "hyprctl dispatch workspace e+1";
-      on-scroll-down = "hyprctl dispatch workspace e-1";
-      on-click = "activate";
+      tooltip-format = "Left: Lock | Middle: Log Out | Right: Poweroff";
+      on-click-middle = "hyprctl dispatch exit";
     };
   };
 

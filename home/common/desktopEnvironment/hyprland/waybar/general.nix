@@ -10,7 +10,6 @@
     margin-right = 0;
     margin-bottom = 12;
     height = 42;
-    modules-center = [ "hyprland/workspaces" ];
 
     modules-left = [
       "custom/launcher"

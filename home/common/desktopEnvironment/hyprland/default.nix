@@ -3,8 +3,8 @@
   lib,
   pkgs,
   hostInfos,
-  hostPrefs,
   trivnixLib,
+  osConfig,
   ...
 }:
 let
@@ -75,12 +75,8 @@ let
         (map (
           module:
           module {
-            inherit
-              config
-              getColor
-              lib
-              hostPrefs
-              ;
+            inherit (osConfig) hostPrefs;
+            inherit config getColor lib;
           }
         ))
       ];

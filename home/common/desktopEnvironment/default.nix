@@ -1,4 +1,8 @@
-{ lib, trivnixLib, ... }:
+{
+  lib,
+  trivnixLib,
+  ...
+}:
 let
   inherit (lib) types mkOption;
   inherit (trivnixLib) resolveDir;

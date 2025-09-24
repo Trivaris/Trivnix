@@ -2,13 +2,13 @@
   config,
   lib,
   pkgs,
-  hostPrefs,
   isNixos,
   trivnixLib,
+  osConfig,
   ...
 }:
 let
-  prefs = if !isNixos then config.userPrefs else hostPrefs;
+  prefs = if !isNixos then config.userPrefs else osConfig.hostPrefs;
 
   stylixOptions = import (trivnixLib.mkStorePath "shared/stylix/options.nix") {
     inherit (lib) mkEnableOption mkOption types;
