@@ -16,7 +16,6 @@ in
     services.glances = {
       inherit (prefs.glances) port;
       enable = true;
-      openFirewall = true;
       extraArgs = [
         "--webserver"
         "--disable-webui"

@@ -23,15 +23,14 @@ in
         package = pkgs.nextcloud31;
         hostName = prefs.nextcloud.reverseProxy.domain;
         https = true;
+        database.createLocally = true;
+        configureRedis = true;
 
         config = {
           adminuser = "admin";
           adminpassFile = config.sops.secrets.nextcloud-admin-token.path;
           dbtype = "pgsql";
         };
-
-        database.createLocally = true;
-        configureRedis = true;
       };
 
       postgresql = {
@@ -46,11 +45,9 @@ in
         ];
       };
 
-      redis = {
-        servers.${prefs.nextcloud.reverseProxy.domain} = {
-          enable = true;
-          unixSocketPerm = 770;
-        };
+      redis.servers.${prefs.nextcloud.reverseProxy.domain} = {
+        enable = true;
+        unixSocketPerm = 770;
       };
     };
   };

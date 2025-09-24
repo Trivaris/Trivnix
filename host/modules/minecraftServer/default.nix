@@ -29,7 +29,7 @@ in
         {
           ${modpack} = {
             enable = true;
-            openFirewall = true;
+            openFirewall = !prefs.minecraftServer.reverseProxy.enable;
             jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
 
             package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override {

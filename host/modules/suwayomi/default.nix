@@ -20,6 +20,7 @@ in
       settings.server = {
         inherit (prefs.suwayomi.reverseProxy) port;
         host = prefs.suwayomi.reverseProxy.ipAddress;
+        openFireWall = !prefs.suwayomi.reverseProxy.enable;
         systemTrayEnabled = false;
         downloadAsCbz = true;
         extensionsRepos = [ "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json" ];

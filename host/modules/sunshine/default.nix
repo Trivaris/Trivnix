@@ -19,14 +19,11 @@ in
       enable = true;
       autoStart = true;
       capSysAdmin = true;
-      openFirewall = true;
+      openFirewall = !prefs.sunshine.reverseProxy.enable;
 
       settings = {
         inherit (prefs.sunshine.reverseProxy) port;
         gamepad = "x360";
-        # motion_as_ds4 = "disabled";
-        # touchpad_as_ds4 = "disabled";
-        # upnp = "enabled";
         capture = "kms";
         output_name = 2;
         external_ip = prefs.sunshine.reverseProxy.domain;

@@ -26,7 +26,7 @@ in
   config = mkIf prefs.homepage.enable {
     services.homepage-dashboard = {
       enable = true;
-      openFirewall = true;
+      openFirewall = !prefs.homepage.reverseProxy.enable;
       allowedHosts = prefs.homepage.reverseProxy.domain;
       listenPort = prefs.homepage.reverseProxy.port;
       services = prefs.homepage.serviceGroups;
