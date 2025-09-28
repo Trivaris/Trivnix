@@ -3,7 +3,6 @@
   isNixos,
   lib,
   osConfig,
-  pkgs,
   trivnixLib,
   ...
 }:
@@ -11,7 +10,7 @@ let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
   scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
-  getColor = trivnixLib.getColor { inherit pkgs scheme; };
+  getColor = trivnixLib.getColor scheme;
 in
 {
   config = mkIf (builtins.elem "fastfetch" prefs.cli.enabled) {

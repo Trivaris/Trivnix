@@ -2,51 +2,20 @@
   config,
   hostInfos,
   inputs,
+  isNixos,
   lib,
+  osConfig,
   pkgs,
   trivnixLib,
   userInfos,
-  osConfig ? { },
   ...
 }:
 let
-  inherit (lib)
-    attrByPath
-    findFirst
-    mkIf
-    nameValuePair
-    ;
+  inherit (lib) mkIf nameValuePair;
   prefs = config.userPrefs;
-  stylixScheme =
-    let
-      fromConfig = attrByPath [ "stylix" "base16Scheme" ] null config;
-      fromOsConfig = attrByPath [ "stylix" "base16Scheme" ] null osConfig;
-      stylixPrefs =
-        let
-          userStylix = attrByPath [ "userPrefs" "stylix" ] null config;
-          hostStylix = attrByPath [ "hostPrefs" "stylix" ] null osConfig;
-        in
-        if userStylix != null then userStylix else hostStylix;
-      fromPrefs =
-        if stylixPrefs != null && stylixPrefs ? colorscheme then
-          "${pkgs.base16-schemes}/share/themes/${stylixPrefs.colorscheme}.yaml"
-        else
-          null;
-    in
-    findFirst (value: value != null) null [
-      fromConfig
-      fromOsConfig
-      fromPrefs
-    ];
-  getColor =
-    let
-      scheme =
-        if stylixScheme != null then
-          stylixScheme
-        else
-          throw ''Stylix base16 scheme missing; set `userPrefs.stylix.colorscheme` or `hostPrefs.stylix.colorscheme`.'';
-    in
-    trivnixLib.getColor { inherit pkgs scheme; };
+
+  scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
+  getColor = trivnixLib.getColor scheme;
 
   overrides = ''
 

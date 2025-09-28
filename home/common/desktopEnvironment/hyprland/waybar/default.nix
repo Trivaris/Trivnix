@@ -3,7 +3,6 @@
   isNixos,
   lib,
   osConfig,
-  pkgs,
   trivnixLib,
   ...
 }:
@@ -19,8 +18,7 @@ in
   config = mkIf (config.userPrefs.desktopEnvironment == "hyprland") (
     let
       scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
-      getColor = trivnixLib.getColor { inherit pkgs scheme; };
-
+      getColor = trivnixLib.getColor scheme;
       waybar =
         pipe
           {

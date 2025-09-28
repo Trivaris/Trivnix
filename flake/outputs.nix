@@ -4,32 +4,16 @@ let
   inherit (inputs) trivnixConfigs;
 
   systems = import ./systems.nix { inherit lib trivnixConfigs; };
-  trivnixLib = inputs.trivnixLib.lib.for self;
+  trivnixLib = inputs.trivnixLib.lib.for { selfArg = self; };
 
   forAllSystems = import ./forAllSystems.nix { inherit inputs lib systems; };
   modules = import ./modules.nix { inherit inputs; };
-  overlays = import ./overlays.nix { inherit inputs lib trivnixLib; };
+  overlays = import ./overlays.nix { inherit inputs; };
 
-  dependencies = {
-    inherit
-      inputs
-      overlays
-      trivnixConfigs
-      trivnixLib
-      ;
-  };
-
-  mkHomeManager = trivnixLib.mkHomeManager dependencies;
-  mkNixOS = trivnixLib.mkNixOS dependencies;
+  mkHomeManager = trivnixLib.mkHomeManager { inherit inputs overlays trivnixConfigs; };
+  mkNixOS = trivnixLib.mkNixOS { inherit inputs overlays trivnixConfigs; };
 in
 {
-  inherit overlays;
-
-  imports = trivnixLib.resolveDir {
-    dirPath = ../home/common/desktopEnvironment/hyprland/waybar;
-    preset = "importList";
-  };
-
   devShells = forAllSystems (import ./devShells.nix);
 
   checks = forAllSystems (
