@@ -1546,11 +1546,11 @@
         "trivnixLib": "trivnixLib_2"
       },
       "locked": {
-        "lastModified": 1758653540,
-        "narHash": "sha256-M1n6/cXUcxrJzVYWlxRiLZegQY4O0qbSWROO0H7iXwA=",
+        "lastModified": 1759099336,
+        "narHash": "sha256-e1VA2Xhi0lwwQFfzcbH8PR5lIISzD0g1/yfnXmoEIzw=",
         "ref": "refs/heads/main",
-        "rev": "f9ba2989b128ff7778a7ca8c4b18c647250d9842",
-        "revCount": 30,
+        "rev": "0b33e1b16f62d31af8721efb89f68b1383994b4f",
+        "revCount": 31,
         "type": "git",
         "url": "ssh://git@github.com/Trivaris/TrivnixPrivate"
       },
