@@ -25,7 +25,6 @@ in
         https = true;
         database.createLocally = true;
         configureRedis = true;
-
         config = {
           adminuser = "admin";
           adminpassFile = config.sops.secrets.nextcloud-admin-token.path;
@@ -36,7 +35,6 @@ in
       postgresql = {
         enable = true;
         ensureDatabases = [ "nextcloud" ];
-
         ensureUsers = [
           {
             name = "nextcloud";

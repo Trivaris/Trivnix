@@ -42,7 +42,7 @@ in
           PROTOCOL = "smtp";
           SMTP_ADDR = "127.0.0.1";
           SMTP_PORT = 25;
-          FROM = "forgejo@trivaris.org";
+          FROM = "forgejo@${prefs.mailserver.baseDomain}";
         };
       };
     };

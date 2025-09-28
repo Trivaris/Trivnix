@@ -8,7 +8,7 @@ let
     description:
     mkOption {
       inherit description;
-      type = types.str;
+      type = types.nullOr types.str;
     };
 in
 {

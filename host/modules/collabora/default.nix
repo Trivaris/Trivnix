@@ -38,7 +38,7 @@ in
           };
 
           net = {
-            listen = if rPEnabled then prefs.collabora.reverseProxy.ipAddress else "0.0.0.0";
+            listen = prefs.collabora.reverseProxy.ipAddress;
             post_allow.host = [ prefs.collabora.reverseProxy.ipAddress ];
           };
 

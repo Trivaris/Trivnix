@@ -8,6 +8,7 @@
   enable = true;
   protocol = "cloudflare";
   usev4 = "webv4,webv4=ipify-ipv4";
+  usev6 = "webv6,webv6=ipify-ipv6";
   ssl = true;
   verbose = true;
   domains = (map (service: service.domain) activeServices) ++ prefs.reverseProxy.extraDomains;

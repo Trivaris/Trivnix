@@ -61,14 +61,11 @@ in
         nginx = {
           inherit virtualHosts;
           enable = true;
-
           recommendedGzipSettings = true;
           recommendedOptimisation = true;
           recommendedProxySettings = true;
           recommendedTlsSettings = true;
-
           sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
-
           appendHttpConfig = mkAfter ''
             map $http_upgrade $connection_upgrade {
               default upgrade;
