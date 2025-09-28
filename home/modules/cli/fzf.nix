@@ -2,6 +2,7 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
+  isShell = shell: prefs.shell == shell;
 in
 {
   config = mkIf (builtins.elem "fzf" prefs.cli.enabled) {
@@ -9,9 +10,9 @@ in
       enable = true;
       defaultCommand = "fd --type f --exclude .git --follow --hidden";
       changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
-      enableFishIntegration = prefs.shell == "fish";
-      enableBashIntegration = prefs.shell == "bash";
-      enableZshIntegration = prefs.shell == "zsh";
+      enableFishIntegration = isShell "fish";
+      enableBashIntegration = isShell "bash";
+      enableZshIntegration = isShell "zsh";
 
       defaultOptions = [
         "--preview='bat --color=always -n {}'"

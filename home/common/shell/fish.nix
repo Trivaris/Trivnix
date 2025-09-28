@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkMerge;
   prefs = config.userPrefs;
 in
 {
@@ -12,7 +12,14 @@ in
     programs.fish = {
       enable = true;
       shellAbbrs = config.vars.shellAbbreviations;
-      functions = config.vars.shellFunctions;
+
+      functions = mkMerge [
+        config.vars.shellFunctions
+        (mkIf (builtins.elem "bat" prefs.cli.replaceDefaults) { cat.body = "bat $argv"; })
+        (mkIf (builtins.elem "eza" prefs.cli.replaceDefaults) { ls.body = "eza $argv"; })
+        (mkIf (builtins.elem "zoxide" prefs.cli.replaceDefaults) { cd.body = "z $argv"; })
+      ];
+
       interactiveShellInit = ''
         set fish_greeting
         ${if (builtins.elem "fastfetch" prefs.cli.enabled) then "fastfetch" else ""}

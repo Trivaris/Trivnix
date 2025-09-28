@@ -2,26 +2,23 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
+  name = "eza";
+  isShell = shell: prefs.shell == shell;
 in
 {
-  config = mkIf (builtins.elem "eza" prefs.cli.enabled) {
-    programs = {
-      eza = {
-        enable = true;
-        enableFishIntegration = prefs.shell == "fish";
-        enableBashIntegration = prefs.shell == "bash";
-        enableZshIntegration = prefs.shell == "zsh";
-        extraOptions = [
-          "-l"
-          "--icons"
-          "--git"
-          "-a"
-        ];
-      };
-
-      fish.functions.ls.body = mkIf (prefs.shell == "fish") "eza $argv";
+  config = mkIf (builtins.elem name prefs.cli.enabled) {
+    vars.cliReplacements = [ name ];
+    programs.eza = {
+      enable = true;
+      enableFishIntegration = isShell "fish";
+      enableBashIntegration = isShell "bash";
+      enableZshIntegration = isShell "zsh";
+      extraOptions = [
+        "-l"
+        "--icons"
+        "--git"
+        "-a"
+      ];
     };
-
-    vars.defaultReplacementModules = [ "eza" ];
   };
 }

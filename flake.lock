@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "adbAutoPlayer": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758932248,
+        "narHash": "sha256-Z1csQvrCICznwbQxStmoSaQOWE2VrE30YuE1Zy+Q9As=",
+        "owner": "Trivaris",
+        "repo": "AdbAutoPlayer",
+        "rev": "18210ac8c0ceb6730841ea0ae4479d1b53781519",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Trivaris",
+        "ref": "config-overhaul",
+        "repo": "AdbAutoPlayer",
+        "type": "github"
+      }
+    },
     "appflowy": {
       "flake": false,
       "locked": {
@@ -1317,6 +1338,7 @@
     },
     "root": {
       "inputs": {
+        "adbAutoPlayer": "adbAutoPlayer",
         "appflowy": "appflowy",
         "betterfox": "betterfox",
         "disko": "disko",
@@ -1592,11 +1614,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758738846,
-        "narHash": "sha256-Lu540uG+gVKlmcLYzGmwKhk3RtptqwEaVgQzU4w3PEI=",
+        "lastModified": 1759066534,
+        "narHash": "sha256-JE1ZSdrxO+h5wYaLziaNPmvKj4J2fWChrF6ODheetOE=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "81490e858a44f1762c9e5153f434bbb8f8c70974",
+        "rev": "d7a7dd98bc22d0bc67774590acf0dba6c2954e20",
         "type": "github"
       },
       "original": {
@@ -1612,11 +1634,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758672981,
-        "narHash": "sha256-MhX22FalkEWqA05u81/NUYt3PpRk8YJ9ssfnHsNo2Ac=",
+        "lastModified": 1758782853,
+        "narHash": "sha256-fxVCXm57sS/tIbrQukNJNQLZRDuoOwJd8FlWrmq6zrs=",
         "owner": "Trivaris",
         "repo": "TrivnixLib",
-        "rev": "a061bd5c94f9e6c926d27777167fe9c44407e79d",
+        "rev": "62e08f202142ce5ab869c7ee217a4bb7f8d550d5",
         "type": "github"
       },
       "original": {

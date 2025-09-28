@@ -20,6 +20,14 @@
       inputs.trivnixLib.follows = "trivnixLib";
     };
 
+    # Personal Forks
+    millennium.url = "github:Trivaris/Millennium";
+
+    adbAutoPlayer = {
+      url = "github:Trivaris/AdbAutoPlayer/config-overhaul";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Core/community modules
     disko = {
       url = "github:nix-community/disko";
@@ -77,8 +85,6 @@
       url = "github:yunfachi/nixowos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    millennium.url = "github:Trivaris/Millennium";
 
     # Non-flake sources
     betterfox = {

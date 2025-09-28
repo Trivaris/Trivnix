@@ -17,8 +17,8 @@ in
   inherit imports;
   options.userPrefs.gui = mkOption {
     type = types.listOf (types.enum modules);
-    default = [ ];
-    example = [ "spotify" ];
+    default = modules;
+    example = [ "vscodium" ];
     description = ''
       GUI application modules to enable from `home/modules/gui`.
       Each entry installs and configures the named desktop program.

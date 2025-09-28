@@ -2,20 +2,17 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
+  name = "zoxide";
+  isShell = shell: prefs.shell == shell;
 in
 {
-  config = mkIf (builtins.elem "zoxide" prefs.cli.enabled) {
-    programs = {
-      zoxide = {
-        enable = true;
-        enableFishIntegration = prefs.shell == "fish";
-        enableBashIntegration = prefs.shell == "bash";
-        enableZshIntegration = prefs.shell == "zsh";
-      };
-
-      fish.functions.cd.body = mkIf (prefs.shell == "fish") "z \"$argv\"";
+  config = mkIf (builtins.elem name prefs.cli.enabled) {
+    vars.cliReplacements = [ name ];
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = isShell "fish";
+      enableBashIntegration = isShell "bash";
+      enableZshIntegration = isShell "zsh";
     };
-
-    vars.defaultReplacementModules = [ "zoxide" ];
   };
 }

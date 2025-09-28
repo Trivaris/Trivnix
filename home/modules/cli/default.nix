@@ -1,15 +1,11 @@
 {
   lib,
-  config,
   trivnixLib,
   ...
 }:
 let
   inherit (lib) types mkOption;
   inherit (trivnixLib) resolveDir;
-  replacementModules = builtins.filter (
-    module: builtins.elem module config.vars.defaultReplacementModules
-  ) modules;
 
   modules = resolveDir {
     dirPath = ./.;
@@ -27,8 +23,8 @@ in
     userPrefs.cli = {
       enabled = mkOption {
         type = types.listOf (types.enum modules);
-        default = [ ];
-        example = [ "btop" ];
+        default = modules;
+        example = [ "eza" ];
         description = ''
           CLI modules to enable for this user from `home/modules/cli`.
           Each selection loads additional config for the named tool.
@@ -36,8 +32,8 @@ in
       };
 
       replaceDefaults = mkOption {
-        type = types.listOf (types.enum replacementModules);
-        default = replacementModules;
+        type = types.listOf (types.enum modules);
+        default = modules;
         example = [ "eza" ];
         description = ''
           CLI programs that should replace system defaults when available.
@@ -46,14 +42,9 @@ in
       };
     };
 
-    vars.defaultReplacementModules = mkOption {
+    vars.cliReplacements = mkOption {
       type = types.listOf (types.enum modules);
       default = [ ];
-      description = ''
-        Internal list of CLI modules capable of replacing default binaries.
-        Individual modules append to this so replacements stay deduplicated.
-      '';
     };
-
   };
 }
