@@ -1,12 +1,12 @@
 {
   config,
-  lib,
   inputs,
+  lib,
   userInfos,
   ...
 }:
 let
-  inherit (lib) mkIf nameValuePair mapAttrs';
+  inherit (lib) mapAttrs' mkIf nameValuePair;
   prefs = config.userPrefs;
   allowedSignersFile = ".config/git/allowed_signers";
 in

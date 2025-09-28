@@ -5,16 +5,15 @@
   inputs,
   allUserInfos,
   hostInfos,
-  # trivnixLib,
   ...
 }:
 let
   inherit (lib)
-    mapAttrs'
-    nameValuePair
     filterAttrs
+    mapAttrs'
     mkIf
     mkMerge
+    nameValuePair
     ;
 
   commonSecrets = "${inputs.trivnixPrivate.secrets}/host/common.yaml";
@@ -40,7 +39,7 @@ let
   ) inputs.trivnixPrivate.wireguardInterfaces;
 in
 {
-  assertions = import ./assertions.nix { inherit prefs inputs; };
+  assertions = import ./assertions.nix { inherit inputs prefs; };
 
   environment.systemPackages = builtins.attrValues { inherit (pkgs) sops age; };
   sops = {

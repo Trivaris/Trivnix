@@ -21,8 +21,7 @@
     };
 
     # Personal Forks
-    millennium.url = "github:Trivaris/Millennium";
-
+    # millennium.url = "github:Trivaris/Millennium";
     adbAutoPlayer = {
       url = "github:Trivaris/AdbAutoPlayer/config-overhaul";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,6 +35,11 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -54,25 +58,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Desktop/WM
+    # Extras and ecosystem modules
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Extras and ecosystem modules
-    nvf = {
-      url = "github:NotAShelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -86,16 +74,27 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Non-flake sources
-    betterfox = {
-      url = "github:yokoffing/Betterfox";
-      flake = false;
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Non-flake sources
     appflowy = {
       url = "github:appflowy-io/AppFlowy-Cloud";
       flake = false;
     };
+
+    betterfox = {
+      url = "github:yokoffing/Betterfox";
+      flake = false;
+    };
   };
+
   outputs = inputs: import ./flake/outputs.nix inputs;
 }

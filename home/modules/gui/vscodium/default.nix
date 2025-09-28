@@ -1,22 +1,23 @@
 {
   config,
+  hostInfos,
   lib,
   pkgs,
-  hostInfos,
   trivnixLib,
   userInfos,
   ...
 }:
 let
   inherit (lib)
+    hm
     mkIf
     mkMerge
-    hm
     optionalAttrs
     ;
 
   prefs = config.userPrefs;
   selfPath = trivnixLib.mkStorePath "";
+
   vscodiumSettings = commonSettings // (optionalAttrs prefs.vscodium.enableLsp lspSettings);
 
   commonSettings = {
@@ -55,9 +56,9 @@ in
       home.packages = builtins.attrValues {
         inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;
         inherit (pkgs)
+          nix-ld
           nixd
           nixfmt-rfc-style
-          nix-ld
           ;
       };
     })

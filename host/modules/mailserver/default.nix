@@ -1,18 +1,18 @@
 {
-  lib,
   config,
   hostInfos,
+  lib,
   ...
 }:
 let
   inherit (lib)
+    head
+    mkAliasOptionModule
+    mkForce
     mkIf
     pipe
     splitString
-    head
     toInt
-    mkForce
-    mkAliasOptionModule
     ;
 
   prefs = config.hostPrefs;
@@ -25,8 +25,8 @@ in
   options.hostPrefs.mailserver = import ./options.nix {
     inherit (lib)
       mkEnableOption
-      types
       mkOption
+      types
       ;
   };
 

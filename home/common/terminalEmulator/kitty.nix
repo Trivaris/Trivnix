@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
@@ -12,7 +8,6 @@ in
     programs.kitty = {
       enable = true;
       enableGitIntegration = true;
-
       shellIntegration = {
         enableFishIntegration = prefs.shell == "fish";
         enableBashIntegration = prefs.shell == "bash";

@@ -1,15 +1,11 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   inherit (lib) nameValuePair;
   prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.language = import ./options.nix {
-    inherit (lib) types mkOption;
+    inherit (lib) mkOption types;
   };
 
   config = {

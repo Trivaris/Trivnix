@@ -1,8 +1,4 @@
-{
-  config,
-  getColor,
-  ...
-}:
+{ config, getColor, ... }:
 let
   prefs = config.userPrefs;
 in
@@ -10,13 +6,14 @@ in
   settings = {
     "custom/spotify" = {
       exec = ./scripts/spotify.sh;
-      interval = 5;
       format = "{}";
+      interval = 5;
       tooltip = false;
     };
 
     "custom/launcher" = {
       format = " ";
+
       on-click = "${prefs.appLauncher} ${config.vars.appLauncherFlags}";
       on-click-right = "killall ${prefs.appLauncher}";
     };

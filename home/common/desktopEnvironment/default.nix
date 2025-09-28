@@ -1,10 +1,6 @@
-{
-  lib,
-  trivnixLib,
-  ...
-}:
+{ lib, trivnixLib, ... }:
 let
-  inherit (lib) types mkOption;
+  inherit (lib) mkOption types;
   inherit (trivnixLib) resolveDir;
 
   modules = resolveDir {

@@ -6,12 +6,12 @@
 }:
 let
   inherit (lib)
-    mkOption
-    types
-    nameValuePair
-    mapAttrsToList
     flatten
+    mapAttrsToList
+    mkOption
+    nameValuePair
     pipe
+    types
     ;
 
   prefs = config.userPrefs;

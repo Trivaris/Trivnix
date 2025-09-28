@@ -1,15 +1,12 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings.pulseaudio = {
-    tooltip = false;
+    on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
     scroll-step = 5;
+    tooltip = false;
+
     format = "{icon} {volume}%";
     format-muted = "  {volume}%";
-    on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-
     format-icons.default = [
       ""
       ""

@@ -1,14 +1,12 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings.backlight = {
-    tooltip = false;
     format = " {}%";
     interval = 1;
-    on-scroll-up = "light -A 5";
+    tooltip = false;
+
     on-scroll-down = "light -U 5";
+    on-scroll-up = "light -A 5";
   };
 
   style = ''

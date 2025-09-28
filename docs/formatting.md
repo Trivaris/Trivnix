@@ -26,6 +26,7 @@ Example
 ## Inherit statements
 
 Group `inherit` statements into one multiline block unless there is exactly one oneliner or one inherit, in which case they can be inline with surrounding code.
+Sort them alphabetically.
 
 ```nix
 {
@@ -81,44 +82,6 @@ If there is only one oneliner and one block, do not insert a blank line between 
 
 ## Project-specific
 
-- Modules that define both `options` and `config` must separate those top-level attrs by one blank line.
-
-- If a module defines `assertions`, place them first in the `config` attrset, or top-level attrset when no top-level `config` attrset exists. This keeps fast-fail checks prominent and prevents scattering across files.
-
-```nix
-{
-  options.userPrefs.foo.enable = mkEnableOption "Enable Foo";
-
-  config = mkIf prefs.foo.enable {
-    assertions = [
-      {
-        assertion = someCondition;
-        message = "Explain the failure and how to fix it.";
-      }
-    ];
-
-    programs.foo.enable = true;
-  };
-}
-```
-
-```nix
-{
-  options.hostPrefs.steam.enable = mkEnableOption "Enable Steam";
-
-  config = mkIf prefs.steam.enable {
-    programs.steam = {
-      enable = true;
-      package = pkgs.steam-millennium;
-      extraCompatPackages = [ pkgs.proton-ge-bin ];
-      extraPackages = [ pkgs.gamescope ];
-      protontricks.enable = true;
-      extest.enable = true;
-    };
-  };
-}
-```
-
 - When declaring an option, prefer the order:
 
 ```nix
@@ -130,36 +93,29 @@ mkOption {
 }
 ```
 
-- For `programs.<name>`, put the primary configuration first; then supporting attributes.
+- Keep any manually maintained `imports` list alphabetized so that modules are easy to locate at a glance.
 
-```nix
-{
-  programs = {
-    eza = {
-      enable = true;
-      extraOptions = [ "-l" "--icons" "--git" "-a" ];
-    };
-
-    fish.functions.ls.body = "eza $argv";
-
-    foo = {
-      baz = "bar";
-      hello = "world";
-    };
-  };
-}
-```
+- When calling `import ./<file>.nix { ... }`, sort the attrset arguments alphabetically. Inside each `inherit` statement list the inherited identifiers in alphabetical order as well.
 
 ## Module arguments (home/host)
 
-- Order module arguments as: `config, lib, pkgs, inputs, <extras...>, ...`.
-- Place extras (project-specific args like `trivnixLib`, `hostInfos`, `userInfos`, `hostPrefs`, etc.) alphabetically after the standard ones.
+- Sort them alphabetically. Keep them in one line if nixfmt allows.
 - Always keep `...` last.
 
 Example
 
 ```nix
-{ config, lib, pkgs, inputs, hostInfos, hostPrefs, trivnixLib, ... }:
+{
+  config,
+  inputs,
+  lib,
+  userInfos,
+  ...
+}:
+```
+
+```nix
+{ config, lib, ... }:
 ```
 
 Rationale: mirrors common NixOS/Home Manager conventions (`config, lib, pkgs, ...`) while keeping flake `inputs` nearby and extras predictable and easy to scan.

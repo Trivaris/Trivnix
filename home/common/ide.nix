@@ -1,16 +1,11 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 let
-  inherit (lib)
-    mkOption
-    pipe
-    types
-    ;
-
+  inherit (lib) mkOption pipe types;
   prefs = config.userPrefs;
 in
 {

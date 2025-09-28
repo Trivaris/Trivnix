@@ -7,25 +7,26 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
-  guiModules = prefs.gui or [ ];
   thunderbirdEnabled = builtins.elem "thunderbird" guiModules;
+  guiModules = prefs.gui or [ ];
 in
 {
   settings."custom/mail" = {
-    format = "{icon} {text}";
-    return-type = "json";
-    interval = 300;
-    tooltip = true;
     exec = "${./scripts/mail.py}";
+    interval = 300;
+    return-type = "json";
     signal = 4;
-    on-click-middle = "pkill -RTMIN+4 waybar";
-    on-click = mkIf thunderbirdEnabled "thunderbird";
+    tooltip = true;
 
+    on-click = mkIf thunderbirdEnabled "thunderbird";
+    on-click-middle = "pkill -RTMIN+4 waybar";
+
+    format = "{icon} {text}";
     format-icons = {
-      loading = "";
-      unread = "";
-      empty = "";
-      error = "";
+      empty = " ";
+      error = " ";
+      loading = " ";
+      unread = " ";
     };
   };
 

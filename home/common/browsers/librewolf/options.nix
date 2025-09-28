@@ -1,7 +1,8 @@
-lib:
-let
-  inherit (lib) mkEnableOption mkOption types;
-in
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   betterfox = mkEnableOption ''
     Merge the Betterfox hardening profile into LibreWolf's user.js.

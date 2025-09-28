@@ -1,10 +1,10 @@
 {
+  emailAccounts,
   mkEnableOption,
   mkOption,
   pipe,
-  emailAccounts,
-  userInfos,
   types,
+  userInfos,
 }:
 {
   enable = mkEnableOption ''

@@ -1,7 +1,7 @@
 {
-  prefs,
   activeServices,
   nameValuePair,
+  prefs,
 }:
 builtins.listToAttrs (
   map (

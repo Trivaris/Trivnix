@@ -1,9 +1,9 @@
 {
+  homeManagerModules,
+  homeModules,
+  lib,
   mkHomeManager,
   trivnixConfigs,
-  homeModules,
-  homeManagerModules,
-  lib,
 }:
 let
   inherit (lib) concatMapAttrs mapAttrs' nameValuePair;

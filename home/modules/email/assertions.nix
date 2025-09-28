@@ -1,7 +1,6 @@
 { inputs, prefs }:
 let
   hasPrivate = inputs ? trivnixPrivate;
-
   hasEmail =
     hasPrivate
     && (inputs.trivnixPrivate ? emailAccounts)

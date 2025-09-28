@@ -14,15 +14,14 @@ let
 
   stylixConfig = import (trivnixLib.mkStorePath "shared/stylix/config.nix") {
     inherit
-      prefs
-      pkgs
       config
+      pkgs
+      prefs
       trivnixLib
       ;
   };
 in
 {
   options.hostPrefs.stylix = stylixOptions;
-
   config.stylix = stylixConfig;
 }

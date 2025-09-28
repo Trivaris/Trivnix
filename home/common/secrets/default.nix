@@ -1,16 +1,16 @@
 {
-  lib,
-  inputs,
   config,
   hostInfos,
+  inputs,
+  lib,
   userInfos,
   ...
 }:
 let
   inherit (lib)
+    mkIf
     mkMerge
     nameValuePair
-    mkIf
     pipe
     ;
 

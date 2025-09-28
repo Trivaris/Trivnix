@@ -1,15 +1,13 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings.network = {
-    format-wifi = " ";
-    format-ethernet = "󰌗 ";
     tooltip-format = "{essid} ({signalStrength}%)";
-    format-linked = "{ifname} (No IP) 󰌗";
-    format-disconnected = "⚠ ";
+
     format-alt = "{ifname}: {ipaddr}/{cidr}";
+    format-disconnected = " ";
+    format-ethernet = "󰌗 ";
+    format-linked = "{ifname} (No IP) 󰌗 ";
+    format-wifi = " ";
   };
 
   style = ''

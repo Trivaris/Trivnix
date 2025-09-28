@@ -1,14 +1,14 @@
 { config, lib, ... }:
 let
   inherit (lib)
-    mkIf
-    pipe
-    nameValuePair
-    mkAfter
-    mkOption
-    types
-    mapAttrsToList
     filterAttrs
+    mapAttrsToList
+    mkAfter
+    mkIf
+    mkOption
+    nameValuePair
+    pipe
+    types
     ;
 
   prefs = config.hostPrefs;
@@ -33,17 +33,17 @@ in
     let
       ddclient = import ./ddclient.nix {
         inherit (config.vars) activeServices;
-        inherit prefs config;
+        inherit config prefs;
       };
 
       acme = import ./acme.nix {
         inherit (config.vars) activeServices;
-        inherit prefs config nameValuePair;
+        inherit config nameValuePair prefs;
       };
 
       virtualHosts = import ./virtualHosts.nix {
         inherit (config.vars) activeServices;
-        inherit prefs nameValuePair;
+        inherit nameValuePair prefs;
       };
     in
     mkIf prefs.reverseProxy.enable {

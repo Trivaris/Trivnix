@@ -1,15 +1,14 @@
 {
-  lib,
-  inputs,
-  hostInfos,
   allUserPrefs,
+  hostInfos,
+  inputs,
+  lib,
   ...
 }:
 let
   inherit (lib) mkIf pipe;
 in
 {
-
   config =
     mkIf
       (pipe allUserPrefs [

@@ -1,7 +1,7 @@
 {
   config,
-  lib,
   inputs,
+  lib,
   userInfos,
   ...
 }:
@@ -17,6 +17,7 @@ let
     ;
 
   prefs = config.userPrefs;
+
   getSecurity =
     tlsEnabled: useStartTls:
     if !tlsEnabled then

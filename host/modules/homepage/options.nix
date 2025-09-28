@@ -1,8 +1,8 @@
 {
   activeServices,
-  mkReverseProxyOption,
   mkEnableOption,
   mkOption,
+  mkReverseProxyOption,
   pkgs,
 }:
 {

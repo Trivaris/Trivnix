@@ -1,17 +1,17 @@
 {
   config,
-  lib,
   inputs,
-  userInfos,
+  lib,
   pkgs,
+  userInfos,
   ...
 }:
 let
   inherit (lib)
-    mkIf
-    nameValuePair
     flatten
     mapAttrsToList
+    mkIf
+    nameValuePair
     ;
 
   prefs = config.userPrefs;

@@ -20,6 +20,7 @@ let
 in
 {
   inherit imports;
+
   options = {
     userPrefs.shell = mkOption {
       type = types.enum modules;

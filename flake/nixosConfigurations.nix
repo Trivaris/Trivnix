@@ -1,9 +1,9 @@
 {
+  homeModules,
+  hostModules,
+  lib,
   mkNixOS,
   trivnixConfigs,
-  hostModules,
-  homeModules,
-  lib,
 }:
 let
   inherit (lib) mapAttrs' nameValuePair;
@@ -11,6 +11,6 @@ in
 mapAttrs' (
   configname: _:
   nameValuePair configname (mkNixOS {
-    inherit configname hostModules homeModules;
+    inherit configname homeModules hostModules;
   })
 ) trivnixConfigs.configs

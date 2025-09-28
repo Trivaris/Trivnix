@@ -1,8 +1,8 @@
 {
-  prefs,
-  config,
   activeServices,
+  config,
   nameValuePair,
+  prefs,
 }:
 {
   acceptTerms = true;

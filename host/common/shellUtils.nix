@@ -3,18 +3,18 @@
   environment.defaultPackages = builtins.attrValues {
     inherit (pkgs)
       coreutils
-      wget
-      zip
-      jq
       fd
+      file
       fzf
-      tldr
-      procs
       git
       httpie
+      jq
       openssh
       openssl
-      file
+      procs
+      tldr
+      wget
+      zip
       ;
   };
 

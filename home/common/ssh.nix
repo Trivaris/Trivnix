@@ -1,19 +1,14 @@
 {
-  config,
-  lib,
   allHostInfos,
   allHostPrefs,
+  config,
   hostInfos,
+  lib,
   userInfos,
   ...
 }:
 let
-  inherit (lib)
-    concatMap
-    nameValuePair
-    filterAttrs
-    ;
-
+  inherit (lib) concatMap nameValuePair filterAttrs;
   aliases = builtins.listToAttrs (
     concatMap (
       configname:
@@ -33,7 +28,6 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-
     matchBlocks = {
       "*" = {
         identitiesOnly = true;

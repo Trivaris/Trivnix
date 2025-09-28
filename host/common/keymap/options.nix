@@ -1,7 +1,4 @@
-{
-  types,
-  mkOption,
-}:
+{ mkOption, types }:
 {
   keyMap = mkOption {
     type = types.str;

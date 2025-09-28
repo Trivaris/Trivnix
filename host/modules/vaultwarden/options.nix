@@ -1,7 +1,4 @@
-{
-  mkReverseProxyOption,
-  mkEnableOption,
-}:
+{ mkEnableOption, mkReverseProxyOption }:
 {
   reverseProxy = mkReverseProxyOption { defaultPort = 8891; };
 

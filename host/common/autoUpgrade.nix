@@ -1,18 +1,18 @@
 {
   config,
+  hostInfos,
   lib,
   pkgs,
-  hostInfos,
   ...
 }:
 let
   inherit (lib)
-    mkIf
-    mkEnableOption
-    mkOption
-    types
     getExe
     getExe'
+    mkEnableOption
+    mkIf
+    mkOption
+    types
     ;
 
   prefs = config.hostPrefs;
@@ -111,11 +111,11 @@ in
 
         path = builtins.attrValues {
           inherit (pkgs)
-            git
-            nixos-rebuild
-            nix
-            coreutils
             bash
+            coreutils
+            git
+            nix
+            nixos-rebuild
             openssh
             ;
         };

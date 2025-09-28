@@ -1,7 +1,7 @@
 {
-  resolveDir,
   mapAttrs',
   nameValuePair,
+  resolveDir,
 }:
 let
   extraPkgs = resolveDir {

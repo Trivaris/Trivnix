@@ -1,9 +1,9 @@
 {
-  mkReverseProxyOption,
   mkEnableOption,
   mkOption,
-  types,
+  mkReverseProxyOption,
   pkgs,
+  types,
 }:
 {
   reverseProxy = mkReverseProxyOption { defaultPort = 25565; };

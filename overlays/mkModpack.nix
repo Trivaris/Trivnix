@@ -1,16 +1,17 @@
 {
-  modrinthUrl,
   hash,
+  modrinthUrl,
   pkgs,
 }:
 let
-  inherit (pkgs.lib) pathExists;
+  inherit (pkgs.lib)
+    nameValuePair
+    optionals
+    pathExists
+    pipe
+    ;
+
   index = builtins.fromJSON (builtins.readFile "${modpack}/modrinth.index.json");
-  minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
-  fabricVersion = index.dependencies.fabric-loader;
-  overrideEntries = builtins.attrNames (builtins.readDir "${modpack}/overrides");
-  overridesPath = "${modpack}/overrides";
-  files = overrides // mods;
 
   modpack = pkgs.runCommand "unpacked" { nativeBuildInputs = [ pkgs.unzip ]; } ''
     mkdir -p $out
@@ -41,25 +42,19 @@ let
     }) modFiles
   );
 
-  overrides =
-    if pathExists overridesPath then
-      builtins.listToAttrs (
-        map (name: {
-          inherit name;
-          value = "${overridesPath}/${name}";
-        }) overrideEntries
-      )
-    else
-      { };
+  overrides = pipe "${modpack}/overrides" [
+    builtins.readDir
+    builtins.attrNames
+    (map (name: nameValuePair name "${modpack}/overrides/${name}"))
+    builtins.listToAttrs
+    (optionals pathExists "${modpack}/overrides")
+  ];
 in
 {
   pname = index.name;
   version = index.versionId;
   src = modpack;
-
-  inherit
-    files
-    minecraftVersion
-    fabricVersion
-    ;
+  minecraftVersion = builtins.replaceStrings [ "." ] [ "_" ] index.dependencies.minecraft;
+  fabricVersion = index.dependencies.fabric-loader;
+  files = overrides // mods;
 }

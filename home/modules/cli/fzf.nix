@@ -13,7 +13,6 @@ in
       enableFishIntegration = isShell "fish";
       enableBashIntegration = isShell "bash";
       enableZshIntegration = isShell "zsh";
-
       defaultOptions = [
         "--preview='bat --color=always -n {}'"
         "--bind 'ctrl-/:toggle-preview'"

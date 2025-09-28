@@ -1,7 +1,7 @@
 {
-  prefs,
-  pkgs,
   config,
+  pkgs,
+  prefs,
   ...
 }:
 let
@@ -20,6 +20,8 @@ in
   };
 
   fonts = {
+    serif = config.stylix.fonts.sansSerif;
+
     monospace = {
       name = "JetBrainsMono Nerd Font";
       package = pkgs.nerd-fonts.jetbrains-mono;
@@ -29,7 +31,5 @@ in
       name = prefs.stylix.nerdfont;
       package = pkgs.nerd-fonts.${prefs.stylix.nerdfont};
     };
-
-    serif = config.stylix.fonts.sansSerif;
   };
 }

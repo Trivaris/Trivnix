@@ -1,15 +1,13 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings = {
     layer = "top";
-    margin-top = 0;
+    height = 42;
+
+    margin-bottom = 12;
     margin-left = 0;
     margin-right = 0;
-    margin-bottom = 12;
-    height = 42;
+    margin-top = 0;
 
     modules-left = [
       "custom/launcher"

@@ -1,4 +1,4 @@
-{ trivnixConfigs, lib }:
+{ lib, trivnixConfigs }:
 let
   inherit (lib) mapAttrsToList unique;
 in

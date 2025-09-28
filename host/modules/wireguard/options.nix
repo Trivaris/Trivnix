@@ -1,6 +1,4 @@
-{
-  mkEnableOption,
-}:
+{ mkEnableOption }:
 {
   enable = mkEnableOption ''
     Enable WireGuard client configuration sourced from trivnixPrivate.

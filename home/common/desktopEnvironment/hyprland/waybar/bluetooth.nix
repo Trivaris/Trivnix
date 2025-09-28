@@ -1,25 +1,21 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings.bluetooth = {
-    format = "{icon} {status}";
-    format-connected = "{icon} {num_connections}";
-    format-off = "{icon} off";
-    format-on = "{icon} on";
+    on-click = "${./scripts/bluetooth-menu.sh}";
 
     tooltip = true;
     tooltip-format = "{controller_alias} [{controller_address}]\n{device_enumerate}";
     tooltip-format-enumerate-connected = "{device_alias}";
     tooltip-format-enumerate-connected-battery = "{icon} {device_alias} ({device_battery_percentage}%)";
 
+    format = "{icon} {status}";
+    format-connected = "{icon} {num_connections}";
+    format-off = "{icon} off";
+    format-on = "{icon} on";
     format-icons = [
-      ""
-      ""
+      " "
+      " "
     ];
-
-    on-click = "${./scripts/bluetooth-menu.sh}";
   };
 
   style = ''

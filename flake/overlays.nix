@@ -1,19 +1,19 @@
 {
   inputs,
-  trivnixLib,
   lib,
+  trivnixLib,
 }:
 let
-  overlaysFromRepo = (import ../overlays) {
+  overlaysFromRepo = import ../overlays {
     inherit (trivnixLib) resolveDir;
     inherit (lib) mapAttrs' nameValuePair;
   };
 in
-{
-  nur = inputs.nur.overlays.default;
-  minecraft = inputs.nix-minecraft.overlay;
-  millennium = inputs.millennium.overlays.default;
+overlaysFromRepo
+// {
   adbAutoPlayer = inputs.adbAutoPlayer.overlays.default;
+  minecraft = inputs.nix-minecraft.overlay;
+  # millennium = inputs.millennium.overlays.default;
   nixowos = inputs.nixowos.overlays.fastfetch;
+  nur = inputs.nur.overlays.default;
 }
-// overlaysFromRepo

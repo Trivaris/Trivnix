@@ -1,8 +1,8 @@
 {
-  lib,
-  inputs,
-  hostInfos,
   allHostInfos,
+  hostInfos,
+  inputs,
+  lib,
   ...
 }:
 let

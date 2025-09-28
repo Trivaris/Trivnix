@@ -1,18 +1,52 @@
 {
   config,
+  hostInfos,
+  inputs,
   lib,
   pkgs,
-  inputs,
   trivnixLib,
   userInfos,
-  hostInfos,
+  osConfig ? { },
   ...
 }:
 let
-  inherit (lib) mkIf nameValuePair;
+  inherit (lib)
+    attrByPath
+    findFirst
+    mkIf
+    nameValuePair
+    ;
   prefs = config.userPrefs;
-  scheme = config.stylix.base16Scheme;
-  getColor = trivnixLib.getColor { inherit pkgs scheme; };
+  stylixScheme =
+    let
+      fromConfig = attrByPath [ "stylix" "base16Scheme" ] null config;
+      fromOsConfig = attrByPath [ "stylix" "base16Scheme" ] null osConfig;
+      stylixPrefs =
+        let
+          userStylix = attrByPath [ "userPrefs" "stylix" ] null config;
+          hostStylix = attrByPath [ "hostPrefs" "stylix" ] null osConfig;
+        in
+        if userStylix != null then userStylix else hostStylix;
+      fromPrefs =
+        if stylixPrefs != null && stylixPrefs ? colorscheme then
+          "${pkgs.base16-schemes}/share/themes/${stylixPrefs.colorscheme}.yaml"
+        else
+          null;
+    in
+    findFirst (value: value != null) null [
+      fromConfig
+      fromOsConfig
+      fromPrefs
+    ];
+  getColor =
+    let
+      scheme =
+        if stylixScheme != null then
+          stylixScheme
+        else
+          throw ''Stylix base16 scheme missing; set `userPrefs.stylix.colorscheme` or `hostPrefs.stylix.colorscheme`.'';
+    in
+    trivnixLib.getColor { inherit pkgs scheme; };
 
   overrides = ''
 
@@ -24,10 +58,29 @@ let
   '';
 in
 {
-  options.userPrefs.librewolf = import ./options.nix lib;
-
+  options.userPrefs.librewolf = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
   config = mkIf (builtins.elem "librewolf" prefs.browsers) {
-    assertions = import ./assertions.nix { inherit prefs inputs; };
+    assertions = import ./assertions.nix { inherit inputs prefs; };
+    stylix.targets.librewolf.enable = false;
+
+    home.file = {
+      ".librewolf/${userInfos.name}/user.js".text =
+        let
+          betterfoxJs =
+            if prefs.librewolf.betterfox then builtins.readFile "${inputs.betterfox}/user.js" else "";
+        in
+        betterfoxJs + overrides;
+
+      ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
+        :root {
+          --lwt-accent-color: ${getColor "base00"} !important;
+          --lwt-text-color: ${getColor "base05"} !important;
+          --toolbar-bgcolor: ${getColor "base00"} !important;
+          --toolbar-color: ${getColor "base05"} !important;
+          --tab-selected-bgcolor: ${getColor "base01"} !important;
+        }
+      '';
+    };
 
     programs.librewolf = {
       enable = true;
@@ -50,7 +103,11 @@ in
 
         search = {
           default = "brave";
-          order = [ "brave" ];
+          order = [
+            "brave"
+            "mynixos"
+            "nixos-search"
+          ];
 
           engines = {
             brave = {
@@ -109,27 +166,6 @@ in
           offlineApps = true;
         };
       };
-    };
-
-    stylix.targets.librewolf.enable = false;
-
-    home.file = {
-      ".librewolf/${userInfos.name}/user.js".text =
-        let
-          betterfoxJs =
-            if prefs.librewolf.betterfox then builtins.readFile "${inputs.betterfox}/user.js" else "";
-        in
-        betterfoxJs + overrides;
-
-      ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
-        :root {
-          --lwt-accent-color: ${getColor "base00"} !important;
-          --lwt-text-color: ${getColor "base05"} !important;
-          --toolbar-bgcolor: ${getColor "base00"} !important;
-          --toolbar-color: ${getColor "base05"} !important;
-          --tab-selected-bgcolor: ${getColor "base01"} !important;
-        }
-      '';
     };
   };
 }

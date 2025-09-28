@@ -1,19 +1,19 @@
 {
+  allUserInfos,
+  config,
+  inputs,
   lib,
   pkgs,
-  inputs,
-  config,
-  allUserInfos,
   ...
 }:
 let
   inherit (lib)
-    mkOption
-    types
-    mkDefault
-    mapAttrs
     filterAttrs
     isType
+    mapAttrs
+    mkDefault
+    mkOption
+    types
     ;
 
   prefs = config.hostPrefs;
@@ -47,6 +47,7 @@ in
       package = mkDefault pkgs.nix;
       optimise.automatic = true;
       nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+      registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
 
       gc = {
         automatic = true;
@@ -60,8 +61,6 @@ in
         auto-optimise-store = true;
         warn-dirty = false;
       };
-
-      registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
     };
   };
 }

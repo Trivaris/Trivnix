@@ -1,7 +1,7 @@
 {
   config,
-  lib,
   hostInfos,
+  lib,
   userInfos,
   ...
 }:
@@ -12,7 +12,6 @@ in
 {
   stylix.enable = true;
   nixowos.enable = true;
-
   home = {
     inherit (hostInfos) stateVersion;
     username = mkDefault userInfos.name;

@@ -1,7 +1,7 @@
 {
-  prefs,
-  config,
   activeServices,
+  config,
+  prefs,
 }:
 {
   inherit (prefs.reverseProxy) zone;

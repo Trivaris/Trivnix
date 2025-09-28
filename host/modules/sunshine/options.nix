@@ -1,7 +1,7 @@
 {
-  mkReverseProxyOption,
   mkEnableOption,
   mkOption,
+  mkReverseProxyOption,
   types,
 }:
 {

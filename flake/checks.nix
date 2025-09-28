@@ -1,19 +1,19 @@
 {
+  homeManagerModules,
+  homeModules,
+  hostModules,
+  mkHomeManager,
+  mkNixOS,
   self,
   trivnixConfigs,
-  mkNixOS,
-  mkHomeManager,
-  hostModules,
-  homeModules,
-  homeManagerModules,
 }:
-pkgs:
+{ pkgs }:
 let
   inherit (pkgs.lib)
+    concatMapAttrs
     filterAttrs
     mapAttrs'
     nameValuePair
-    concatMapAttrs
     ;
 
   hostsForSystem = filterAttrs (_: cfg: cfg.infos.architecture == pkgs.system) trivnixConfigs.configs;
@@ -21,7 +21,7 @@ let
   evalNixos = mapAttrs' (
     configname: _:
     let
-      nixos = mkNixOS { inherit configname hostModules homeModules; };
+      nixos = mkNixOS { inherit configname homeModules hostModules; };
     in
     nameValuePair "eval-nixos-${configname}" (
       builtins.seq nixos.config.system.build.toplevel.drvPath (
@@ -60,10 +60,10 @@ let
           inherit (pkgs)
             bash
             coreutils
+            deadnix
             findutils
             nixfmt
             statix
-            deadnix
             ;
         };
       }

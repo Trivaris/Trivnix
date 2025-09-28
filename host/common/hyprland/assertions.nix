@@ -1,4 +1,4 @@
-{ inputs, hostInfos }:
+{ hostInfos, inputs }:
 [
   {
     assertion = builtins.hasAttr hostInfos.architecture inputs.hyprland.packages;

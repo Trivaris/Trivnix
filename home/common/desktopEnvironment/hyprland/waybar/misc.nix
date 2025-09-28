@@ -1,13 +1,11 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings = {
     clock = {
+      interval = 60;
+
       format = " {:%H:%M}";
       format-alt = "󰃭 {:%A, %d %B %Y}";
-      interval = 60;
     };
 
     tray = {
@@ -16,14 +14,14 @@
     };
 
     cpu = {
-      interval = 15;
       format = " {}%";
+      interval = 15;
       max-length = 15;
     };
 
     memory = {
-      interval = 30;
       format = " {}%";
+      interval = 30;
       max-length = 10;
     };
   };

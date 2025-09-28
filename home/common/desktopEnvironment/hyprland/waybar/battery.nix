@@ -1,20 +1,16 @@
-{
-  getColor,
-  ...
-}:
+{ getColor, ... }:
 {
   settings.battery = {
-    format = "{icon}  {capacity}%";
+    format = "{icon} {capacity}%";
+    format-alt = "{time} {icon}";
     format-charging = " {capacity}%";
     format-plugged = " {capacity}%";
-    format-alt = "{time} {icon}";
-
     format-icons = [
-      ""
-      ""
-      ""
-      ""
-      ""
+      " "
+      " "
+      " "
+      " "
+      " "
     ];
 
     states = {

@@ -1,15 +1,15 @@
 {
-  lib,
-  pkgs,
-  inputs,
   allUserInfos,
   allUserPrefs,
   hostInfos,
+  inputs,
+  lib,
+  pkgs,
   trivnixLib,
   ...
 }:
 let
-  inherit (lib) mapAttrsToList mapAttrs' nameValuePair;
+  inherit (lib) mapAttrs' mapAttrsToList nameValuePair;
   sshKeys = trivnixLib.recursiveAttrValues (removeAttrs inputs.trivnixPrivate.pubKeys [ "common" ]);
   allShells = mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
 
