@@ -47,13 +47,14 @@ in
       };
     in
     mkIf prefs.reverseProxy.enable {
+      security = { inherit acme; };
+
       networking.firewall.allowedTCPPorts = [
         prefs.reverseProxy.port
       ]
       ++ (map (service: service.externalPort) (
         builtins.filter (service: service.externalPort != null) config.vars.activeServices
       ));
-      security = { inherit acme; };
 
       services = {
         ddclient = mkIf prefs.reverseProxy.enableDDClient ddclient;

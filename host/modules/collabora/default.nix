@@ -38,15 +38,8 @@ in
           };
 
           net = {
-            listen = if rPEnabled then "loopback" else "0.0.0.0";
-            post_allow.host =
-              if rPEnabled then
-                [ prefs.collabora.reverseProxy.ipAddress ]
-              else
-                [
-                  "::1"
-                  "127.0.0.1"
-                ];
+            listen = if rPEnabled then prefs.collabora.reverseProxy.ipAddress else "0.0.0.0";
+            post_allow.host = [ prefs.collabora.reverseProxy.ipAddress ];
           };
 
           storage.wopi = mkIf (prefs.collabora.nextcloudFQDNs != null) {
