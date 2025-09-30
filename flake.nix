@@ -28,7 +28,7 @@
     # Personal Forks
     # millennium.url = "github:Trivaris/Millennium";
     adbAutoPlayer = {
-      url = "github:Trivaris/AdbAutoPlayer/config-overhaul";
+      url = "github:Trivaris/AdbAutoPlayer";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -14,6 +14,7 @@
   ];
 
   homeModules = [
+    inputs.adbAutoPlayer.homeModules.default
     inputs.nixowos.homeModules.default
     inputs.nvf.homeManagerModules.default
     inputs.sops-nix.homeManagerModules.sops

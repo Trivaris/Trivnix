@@ -4,19 +4,19 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "pythonOverlays": "pythonOverlays"
       },
       "locked": {
-        "lastModified": 1758932248,
-        "narHash": "sha256-Z1csQvrCICznwbQxStmoSaQOWE2VrE30YuE1Zy+Q9As=",
+        "lastModified": 1759198468,
+        "narHash": "sha256-/aipOqQorFpzPBDao+cgluFM52HVdlRfvOUZ89axRbM=",
         "owner": "Trivaris",
         "repo": "AdbAutoPlayer",
-        "rev": "18210ac8c0ceb6730841ea0ae4479d1b53781519",
+        "rev": "30820c220d4cbe13f5a497056b01397e1fc47543",
         "type": "github"
       },
       "original": {
         "owner": "Trivaris",
-        "ref": "config-overhaul",
         "repo": "AdbAutoPlayer",
         "type": "github"
       }
@@ -983,16 +983,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1749213349,
-        "narHash": "sha256-UAaWOyQhdp7nXzsbmLVC67fo+QetzoTm9hsPf9X3yr4=",
+        "lastModified": 1759132680,
+        "narHash": "sha256-G06Dm5tdW/979QOBsk1RB7igVEUlrPEn2L1bXSATnvo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a4ff0e3c64846abea89662bfbacf037ef4b34207",
+        "rev": "2832ea42013e888a9b453b0390a40780c9b5b260",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable-small",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1030,6 +1030,38 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1755027561,
+        "narHash": "sha256-IVft239Bc8p8Dtvf7UAACMG5P3ZV+3/aO28gXpGtMXI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "005433b926e16227259a1843015b5b2b7f7d1fc3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1749213349,
+        "narHash": "sha256-UAaWOyQhdp7nXzsbmLVC67fo+QetzoTm9hsPf9X3yr4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a4ff0e3c64846abea89662bfbacf037ef4b34207",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1754340878,
         "narHash": "sha256-lgmUyVQL9tSnvvIvBp7x1euhkkCho7n3TMzgjdvgPoU=",
         "owner": "NixOS",
@@ -1044,7 +1076,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1758427187,
         "narHash": "sha256-pHpxZ/IyCwoTQPtFIAG2QaxuSm8jWzrzBGjwQZIttJc=",
@@ -1060,7 +1092,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1755027561,
         "narHash": "sha256-IVft239Bc8p8Dtvf7UAACMG5P3ZV+3/aO28gXpGtMXI=",
@@ -1173,7 +1205,7 @@
       "inputs": {
         "flake-compat": "flake-compat_4",
         "gitignore": "gitignore_3",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1746537231,
@@ -1193,7 +1225,7 @@
       "inputs": {
         "flake-compat": "flake-compat_6",
         "gitignore": "gitignore_4",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1754416808,
@@ -1209,6 +1241,25 @@
         "type": "github"
       }
     },
+    "pythonOverlays": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "trivnixLib": "trivnixLib"
+      },
+      "locked": {
+        "lastModified": 1759183393,
+        "narHash": "sha256-sACHLXZfi09ep/mnHfKkkM5i78ZemjZOVYHACYQDC/Q=",
+        "owner": "Trivaris",
+        "repo": "TrivnixOverlays",
+        "rev": "bbc9f133da6f2d5e3c75b10b42c0433e46f960cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Trivaris",
+        "repo": "TrivnixOverlays",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "adbAutoPlayer": "adbAutoPlayer",
@@ -1220,14 +1271,14 @@
         "mailserver": "mailserver",
         "nix-minecraft": "nix-minecraft",
         "nixowos": "nixowos",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_5",
         "nur": "nur",
         "nvf": "nvf",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
         "trivnixConfigs": "trivnixConfigs",
-        "trivnixLib": "trivnixLib",
+        "trivnixLib": "trivnixLib_2",
         "trivnixOverlays": "trivnixOverlays",
         "trivnixPrivate": "trivnixPrivate"
       }
@@ -1470,11 +1521,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759094251,
-        "narHash": "sha256-SN5zFfnmWZfp7Y8s1sTOZ3bm7CfhLXxFLgijUySwp9Q=",
+        "lastModified": 1759198118,
+        "narHash": "sha256-DcDEdmI+dF5bnyFuSscSEWoTQ+9pHzP0KC8d94lXk9E=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "3550df682e54e69d75f934a825af2a2151e20489",
+        "rev": "59d9fe5ad2ae3a786b3e2f7b88a7670d913d0e0d",
         "type": "github"
       },
       "original": {
@@ -1484,6 +1535,24 @@
       }
     },
     "trivnixLib": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1758782853,
+        "narHash": "sha256-fxVCXm57sS/tIbrQukNJNQLZRDuoOwJd8FlWrmq6zrs=",
+        "owner": "Trivaris",
+        "repo": "TrivnixLib",
+        "rev": "62e08f202142ce5ab869c7ee217a4bb7f8d550d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Trivaris",
+        "repo": "TrivnixLib",
+        "type": "github"
+      }
+    },
+    "trivnixLib_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -1503,9 +1572,9 @@
         "type": "github"
       }
     },
-    "trivnixLib_2": {
+    "trivnixLib_3": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1757561529,
@@ -1543,7 +1612,7 @@
     },
     "trivnixPrivate": {
       "inputs": {
-        "trivnixLib": "trivnixLib_2"
+        "trivnixLib": "trivnixLib_3"
       },
       "locked": {
         "lastModified": 1759099336,
