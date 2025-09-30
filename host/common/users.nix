@@ -9,9 +9,24 @@
   ...
 }:
 let
-  inherit (lib) mapAttrs' mapAttrsToList nameValuePair;
-  sshKeys = trivnixLib.recursiveAttrValues (removeAttrs inputs.trivnixPrivate.pubKeys [ "common" ]);
+  inherit (lib)
+    mapAttrs
+    mapAttrs'
+    mapAttrsToList
+    nameValuePair
+    pipe
+    ;
+
   allShells = mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
+
+  sshKeys =
+    pipe
+      [ "common" hostInfos.configname ]
+      [
+        (removeAttrs inputs.trivnixPrivate.pubKeys)
+        (mapAttrs (_: value: (removeAttrs value.users [ "root" ])))
+        trivnixLib.recursiveAttrValues
+      ];
 
   allUsers = {
     root = {
@@ -27,6 +42,9 @@ let
       createHome = true;
       home = "/home/${username}";
       description = username;
+      openssh.authorizedKeys.keys = sshKeys;
+      useDefaultShell = true;
+      shell = pkgs.${allUserPrefs.${username}.shell};
       extraGroups = [
         "wheel"
         "networkmanager"
@@ -42,8 +60,6 @@ let
         "qemu-libvirtd"
         "docker"
       ];
-      openssh.authorizedKeys.keys = sshKeys;
-      useDefaultShell = true;
     }
   ) allUserInfos);
 in
@@ -51,7 +67,6 @@ in
   programs = builtins.listToAttrs (map (shell: nameValuePair shell { enable = true; }) allShells);
   users = {
     mutableUsers = false;
-    defaultUserShell = pkgs.fish;
     users = allUsers;
   };
 }

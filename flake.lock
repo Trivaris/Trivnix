@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759225026,
-        "narHash": "sha256-xmNL+ejhwJNbVWA4uFkeXLyt9yFWGQAm4dXejts91OA=",
+        "lastModified": 1759227301,
+        "narHash": "sha256-NjaBWrQrjczmTmRfA7HbIkAGCGmobe1869BVCciOfTE=",
         "owner": "Trivaris",
         "repo": "AdbAutoPlayer",
-        "rev": "2fbba3b696741166ab9112afd6d7259c1d782c44",
+        "rev": "14b771e9575494b9f72011b51ef117d3b8abd56c",
         "type": "github"
       },
       "original": {
@@ -983,11 +983,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1759175099,
-        "narHash": "sha256-gMRiEdvZnn07ym+C6IqA5x4byCZ3EIsAI0/Le2o9r3M=",
+        "lastModified": 1759132680,
+        "narHash": "sha256-G06Dm5tdW/979QOBsk1RB7igVEUlrPEn2L1bXSATnvo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "870c04f7d111efa937e61a1d57e3a9194019e206",
+        "rev": "2832ea42013e888a9b453b0390a40780c9b5b260",
         "type": "github"
       },
       "original": {
@@ -1502,11 +1502,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759198981,
-        "narHash": "sha256-HS+7DUIFnEroF5PtHgjGnMeQ9bGkgcoYRGLYvDEhGfg=",
+        "lastModified": 1759234986,
+        "narHash": "sha256-98sUs9vNYHwyqYHPpDLWwCwS4Qqi0ERKMhsVOUjXaD0=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "fbcd091d17dff2821357af44308baa5a7652c84a",
+        "rev": "a32b7da19c99b8ac81071761c91edca38c658ef8",
         "type": "github"
       },
       "original": {

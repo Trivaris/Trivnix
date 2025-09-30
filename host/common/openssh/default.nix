@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  allUserInfos,
-  ...
-}:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
   prefs = config.hostPrefs;
@@ -23,10 +18,6 @@ in
         StreamLocalBindUnlink = "yes";
         GatewayPorts = "clientspecified";
       };
-
-      authorizedKeysFiles = map (user: "/etc/ssh/authorized_keys.d/${user}") (
-        builtins.attrNames allUserInfos
-      );
 
       hostKeys = [
         {
