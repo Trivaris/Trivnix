@@ -29,7 +29,7 @@
     # millennium.url = "github:Trivaris/Millennium";
     adbAutoPlayer = {
       url = "github:Trivaris/AdbAutoPlayer";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pythonOverlays.follows = "trivnixOverlays";
     };
 
     # Core/community modules
