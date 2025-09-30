@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759227301,
-        "narHash": "sha256-NjaBWrQrjczmTmRfA7HbIkAGCGmobe1869BVCciOfTE=",
+        "lastModified": 1759263089,
+        "narHash": "sha256-2I7Jg6b2Yw8n3SDv5dliMT3lDJEv3sVHRFYWpx67Z+4=",
         "owner": "Trivaris",
         "repo": "AdbAutoPlayer",
-        "rev": "14b771e9575494b9f72011b51ef117d3b8abd56c",
+        "rev": "5eaac6d81698d3a2c04d72ec0f0580cdd4c35c51",
         "type": "github"
       },
       "original": {
