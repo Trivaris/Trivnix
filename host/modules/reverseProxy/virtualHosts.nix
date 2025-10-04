@@ -22,10 +22,14 @@ builtins.listToAttrs (
 
         listen = [
           {
+            addr = "0.0.0.0";
+            port = listenPort;
+            ssl = true;
+          }
+          {
             addr = "[::]";
             port = listenPort;
             ssl = true;
-            extraParameters = [ "ipv6only=off" ];
           }
         ];
 
