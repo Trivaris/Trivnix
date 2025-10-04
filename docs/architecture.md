@@ -60,7 +60,6 @@ hostPrefs.desktopEnvironment = "kde";      # or "hyprland" (see host/common/desk
 User program sets:
 
 ```nix
-userPrefs.gui = [ "vscodium" "spotify" "bitwarden" ];
 userPrefs.cli.enabled = [ "bat" "fzf" "zoxide" "nvim" ];
 ```
 

@@ -62,12 +62,10 @@ in
       nameValuePair accountName (
         {
           passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
-          thunderbird =
-            mkIf (builtins.elem "thunderbird" prefs.gui && prefs.email.enableThunderbirdIntegration)
-              {
-                enable = true;
-                profiles = [ userInfos.name ];
-              };
+          thunderbird = mkIf (prefs.thunderbird.enable && prefs.email.enableThunderbirdIntegration) {
+            enable = true;
+            profiles = [ userInfos.name ];
+          };
         }
         // account
       )

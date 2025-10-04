@@ -7,8 +7,6 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
-  thunderbirdEnabled = builtins.elem "thunderbird" guiModules;
-  guiModules = prefs.gui or [ ];
 in
 {
   settings."custom/mail" = {
@@ -18,7 +16,7 @@ in
     signal = 4;
     tooltip = true;
 
-    on-click = mkIf thunderbirdEnabled "thunderbird";
+    on-click = mkIf prefs.thunderbird.enable "thunderbird";
     on-click-middle = "pkill -RTMIN+4 waybar";
 
     format = "{icon} {text}";

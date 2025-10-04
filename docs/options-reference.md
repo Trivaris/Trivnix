@@ -21,7 +21,6 @@ This page condenses every option exported by modules under `home/common`, `home/
 ### GUI Programs
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `userPrefs.gui` | list of GUI module names | `[]` | Desktop applications to install via `home/modules/gui`. Modules add packages and per-app tweaks. |
 | `userPrefs.lutris.enable` | bool | `false` | Installs Lutris into the user profile. Enable on machines that run game launchers outside Steam. |
 | `userPrefs.vscodium.enableLsp` | bool | `false` | Adds Nix language tooling (nixd, nixfmt) and configures VSCodium for LSP integration. Toggle when you want IDE support for `.nix` files. |
 | `userPrefs.vscodium.fixServer` | bool | `false` | Patches the VSCodium remote server to use the packaged Node.js binary. Useful when remote editing fails because node is missing. |

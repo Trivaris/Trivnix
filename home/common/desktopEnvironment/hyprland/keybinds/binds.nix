@@ -2,7 +2,9 @@
 let
   inherit (lib) mkIf;
   prefs = config.userPrefs;
-  isEnabled = module: builtins.elem module prefs.gui;
+  isEnabled =
+    module:
+    builtins.elem module (prefs.misc.otherPrograms ++ (builtins.attrValues prefs.misc.otherPackages));
 in
 {
   bind = {
@@ -55,10 +57,10 @@ in
       "$mod, W, exec, ${builtins.head prefs.browsers}"
     ]
     ++ [
-      (mkIf (isEnabled "spotify") "$mod, S, exec, spotify")
+      (mkIf (isEnabled "spotify" || isEnabled "spicetify") "$mod, S, exec, spotify")
       (mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
-      (mkIf (isEnabled "vscodium") "$mod, A, exec, codium")
-      (mkIf (isEnabled "thunderbird") "$mod, Z, exec, thunderbird")
+      (mkIf prefs.vscode.enable "$mod, A, exec, ${if prefs.vscode.useCodium then "codium" else "code"}")
+      (mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
     ];
 
     volume = [
