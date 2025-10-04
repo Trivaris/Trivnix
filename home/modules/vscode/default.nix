@@ -46,6 +46,8 @@ in
           "terminal.integrated.stickyScroll.enabled" = false;
           "security.workspace.trust.untrustedFiles" = "open";
           "github.copilot.nextEditSuggestions.enabled" = true;
+          "gitlens.ai.model" = "vscode";
+          "gitlens.ai.vscode.model" = "copilot:gpt-4.1";
         }
         // (optionalAttrs prefs.vscode.enableLsp {
           "nix.enableLanguageServer" = true;

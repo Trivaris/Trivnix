@@ -25,12 +25,7 @@ builtins.listToAttrs (
             addr = "[::]";
             port = listenPort;
             ssl = true;
-            extraParameters = [ "ipv6only=on" ];
-          }
-          {
-            addr = "0.0.0.0";
-            port = listenPort;
-            ssl = true;
+            extraParameters = [ "ipv6only=off" ];
           }
         ];
 
