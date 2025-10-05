@@ -95,10 +95,17 @@ in
         };
 
         windowrulev2 = [
-          "float, class:^(?i)(com\\.saivert\\.)?pwvucontrol$"
-          "center, class:^(?i)(com\\.saivert\\.)?pwvucontrol$"
-          "float, class:^(?i)nm-connection-(editor|manager)$"
-          "center, class:^(?i)nm-connection-(editor|manager)$"
+          "float, class:^com\\.network\\.manager$"
+          "center, class:^com\\.network\\.manager$"
+
+          "float, class:^\\.blueman-manager-wrapped$"
+          "center, class:^\\.blueman-manager-wrapped$"
+          
+          "float, class:^nm-connection-editor$"
+          "center, class:^nm-connection-editor$"
+
+          "float, class:^com\\.saivert\\.pwvucontrol$"
+          "center, class:^com\\.saivert\\.pwvucontrol$"
         ];
       };
     };

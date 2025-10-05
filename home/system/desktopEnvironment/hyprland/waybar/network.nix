@@ -1,7 +1,8 @@
 { getColor, ... }:
 {
   settings.network = {
-    on-click = "${./scripts/network-manager.sh}";
+    on-click = "nmgui";
+    on-click-middle = "nm-connection-editor";
     format-alt-click = "click-right";
 
     tooltip-format = "{essid} ({signalStrength}%)";

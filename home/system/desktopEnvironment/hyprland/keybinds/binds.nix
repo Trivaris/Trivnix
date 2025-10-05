@@ -72,7 +72,7 @@ in
 
     screenshot = [
       # Region screenshot with selection (hyprshot)
-      ", Print, exec, hyprshot -m region -o $HOME/Pictures/Screenshots"
+      ", Print, exec, hyprshot -m region"
     ];
   };
 

@@ -1,7 +1,7 @@
 { getColor, ... }:
 {
   settings.bluetooth = {
-    on-click = "${./scripts/bluetooth-menu.sh}";
+    on-click = "blueman-manager";
 
     tooltip = true;
     tooltip-format = "{controller_alias} [{controller_address}]\n{device_enumerate}";

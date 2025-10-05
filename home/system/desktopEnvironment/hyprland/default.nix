@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  osConfig,
   pkgs,
   hostInfos,
   trivnixLib,
@@ -26,6 +27,15 @@ in
         Provide absolute paths so the Hyprland module can copy them into place.
       '';
     };
+
+    weatherLocation = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = ''
+        Location query passed to the Waybar weather script (e.g. ``"berlin"`` or ``"48.85,2.35"``).
+        Leave ``null`` to let wttr.in detect the location automatically from the current IP address.
+      '';
+    };
   };
 
   config = mkIf (prefs.desktopEnvironment == "hyprland") {
@@ -45,12 +55,17 @@ in
         python313
         playerctl
         pwvucontrol
-        networkmanagerapplet
-        light
+        nmgui
         brightnessctl
-        bluez
-        hyprshot
+        networkmanagerapplet
         ;
+    };
+
+    programs = {
+      hyprshot = {
+        enable = true;
+        saveLocation = "$HOME/Pictures/Screenshots";
+      };
     };
 
     services = {
