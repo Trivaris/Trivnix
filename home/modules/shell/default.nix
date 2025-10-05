@@ -73,7 +73,8 @@ in
               sudo nixos-rebuild switch --flake ".#$host" \
                 --override-input trivnixConfigs ../TrivnixConfigs/ \
                 --override-input trivnixLib     ../TrivnixLib/ \
-                --override-input trivnixPrivate ../TrivnixPrivate/
+                --override-input trivnixPrivate ../TrivnixPrivate/ \
+                --override-input trivnixOverlays ../TrivnixOverlays/
             end
           '';
 
@@ -101,6 +102,7 @@ in
                 --override-input trivnixConfigs ../TrivnixConfigs/ \
                 --override-input trivnixLib     ../TrivnixLib/ \
                 --override-input trivnixPrivate ../TrivnixPrivate/
+                --override-input trivnixOverlays ../TrivnixOverlays/
             end
           '';
         };

@@ -17,8 +17,8 @@ in
 {
   inherit imports;
 
-  options.userPrefs.hyprland = {
-    wallpapers = mkOption {
+  options.userPrefs = {
+    hyprland.wallpapers = mkOption {
       type = types.listOf types.path;
       default = [ ];
       description = ''
@@ -27,7 +27,7 @@ in
       '';
     };
 
-    weatherLocation = mkOption {
+    waybar.weatherLocation = mkOption {
       type = types.nullOr types.str;
       default = null;
       description = ''

@@ -5,9 +5,9 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
   inherit (lib) escapeShellArg optionalString;
-  location = prefs.hyprland.weatherLocation;
+  prefs = config.userPrefs;
+  location = prefs.waybar.weatherLocation;
   locationArg = optionalString (location != null && location != "") " ${escapeShellArg location}";
 in
 {

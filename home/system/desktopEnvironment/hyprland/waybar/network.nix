@@ -2,8 +2,8 @@
 {
   settings.network = {
     on-click = "nmgui";
-    on-click-middle = "nm-connection-editor";
-    format-alt-click = "click-right";
+    on-click-right = "nm-connection-editor";
+    format-alt-click = "click-middle";
 
     tooltip-format = "{essid} ({signalStrength}%)";
 
