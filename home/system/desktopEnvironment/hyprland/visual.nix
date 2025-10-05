@@ -100,7 +100,7 @@ in
 
           "float, class:^\\.blueman-manager-wrapped$"
           "center, class:^\\.blueman-manager-wrapped$"
-          
+
           "float, class:^nm-connection-editor$"
           "center, class:^nm-connection-editor$"
 
