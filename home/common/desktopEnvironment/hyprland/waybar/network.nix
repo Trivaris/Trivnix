@@ -1,6 +1,9 @@
 { getColor, ... }:
 {
   settings.network = {
+    on-click = "${./scripts/network-manager.sh}";
+    format-alt-click = "click-right";
+
     tooltip-format = "{essid} ({signalStrength}%)";
 
     format-alt = "{ifname}: {ipaddr}/{cidr}";

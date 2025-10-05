@@ -44,6 +44,8 @@ in
       inherit (pkgs)
         python313
         playerctl
+        pwvucontrol
+        networkmanagerapplet
         light
         brightnessctl
         bluez

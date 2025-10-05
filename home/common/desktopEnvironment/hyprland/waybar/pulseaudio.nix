@@ -1,7 +1,8 @@
 { getColor, ... }:
 {
   settings.pulseaudio = {
-    on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+    on-click = "${./scripts/audio-output-menu.sh}";
+    on-click-middle = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
     scroll-step = 5;
     tooltip = false;
 

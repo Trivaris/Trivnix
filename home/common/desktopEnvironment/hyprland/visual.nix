@@ -95,9 +95,10 @@ in
         };
 
         windowrulev2 = [
-          # "opacity 0.95, class:^(?i)alacritty$"
-          # "rounding 6, class:^(?i)alacritty$"
-          # "bordercolor, ${toARGB (getColor "base0A")} ${toARGB (getColor "base0B")}, class:^(?i)alacritty$"
+          "float, class:^(?i)(com\\.saivert\\.)?pwvucontrol$"
+          "center, class:^(?i)(com\\.saivert\\.)?pwvucontrol$"
+          "float, class:^(?i)nm-connection-(editor|manager)$"
+          "center, class:^(?i)nm-connection-(editor|manager)$"
         ];
       };
     };
