@@ -1,13 +1,16 @@
 {
   config,
-  lib,
-  pkgs,
   hostInfos,
+  isNixos,
+  lib,
+  osConfig,
+  pkgs,
   trivnixLib,
   ...
 }:
 let
   inherit (lib) mkIf mkOption types;
+
   prefs = config.userPrefs;
   imports = trivnixLib.resolveDir {
     dirPath = ./.;
@@ -46,7 +49,10 @@ in
       package = null;
       portalPackage = null;
       systemd.variables = [ "--all" ];
-      settings.monitor = hostInfos.monitor;
+      settings = {
+        inherit (hostInfos) monitor;
+        input.kb_layout = mkIf isNixos osConfig.hostPrefs.language.keyMap;
+      };
     };
 
     home.packages = builtins.attrValues {

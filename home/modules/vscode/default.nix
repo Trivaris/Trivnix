@@ -48,6 +48,8 @@ in
           "github.copilot.nextEditSuggestions.enabled" = true;
           "gitlens.ai.model" = "vscode";
           "gitlens.ai.vscode.model" = "copilot:gpt-4.1";
+          "jdk.telemetry.enabled" = false;
+          "java.import.gradle.server.launchMode" = "STANDARD";
         }
         // (optionalAttrs prefs.vscode.enableLsp {
           "nix.enableLanguageServer" = true;
