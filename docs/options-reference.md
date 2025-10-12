@@ -80,6 +80,7 @@ This page condenses every option exported by modules under `home/common`, `home/
 | --- | --- | --- | --- |
 | `hostPrefs.services` | list of service module names | `[]` | Optional service modules from `host/common/services` to activate (e.g. `"bluetooth"`, `"printing"`). |
 | `hostPrefs.displayManager` | null or enum (`host/common/displayManager` modules) | `null` | Display manager module to enable (`"gdm"`, `"sddm"`, `"autologin"`). Leave `null` for a TTY setup. |
+| `hostPrefs.gdm.enableFingerprintLogin` | bool | `false` | Enables fprintd so the GDM greeter can offer fingerprint authentication. |
 | `hostPrefs.bluetooth.enable` | bool | `false` | Enables kernel Bluetooth support and the Blueman applet. Required for pairing controllers or audio devices. |
 | `hostPrefs.printing.enable` | bool | `false` | Activates CUPS with the Samsung unified driver. Toggle when printers should be managed locally. |
 | `hostPrefs.steam.enable` | bool | `false` | Installs Steam with Proton tooling. Enable on gaming-oriented hosts. |
