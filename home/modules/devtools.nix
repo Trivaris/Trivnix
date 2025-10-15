@@ -5,19 +5,23 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkEnableOption mkIf;
   prefs = config.userPrefs;
 in
 {
-  home.packages = builtins.attrValues {
-    inherit (pkgs)
-      zulu21
-      gradle_9
-      ;
-  };
+  options.userPrefs.enableDevStuffs = mkEnableOption "Enable Dev Stuffs lol";
+  config = mkIf prefs.enableDevStuffs {
+    home.packages = [ pkgs.gradle_9 ];
+    programs = {
+      java = {
+        enable = true;
+        package = pkgs.zulu21;
+      };
 
-  programs.vscode.profiles.default.extensions = mkIf prefs.vscode.enable [
-    pkgs.vscode-extensions.redhat.java
-    pkgs.vscode-extensions.vscjava.vscode-java-pack
-  ];
+      vscode.profiles.default.extensions = mkIf prefs.vscode.enable [
+        pkgs.vscode-extensions.redhat.java
+        pkgs.vscode-extensions.vscjava.vscode-java-pack
+      ];
+    };
+  };
 }

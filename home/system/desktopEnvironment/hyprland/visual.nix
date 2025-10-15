@@ -107,8 +107,8 @@ in
           "float, class:^com\\.saivert\\.pwvucontrol$"
           "center, class:^com\\.saivert\\.pwvucontrol$"
 
-          "float, title:^(Extension: \\(Bitwarden Password Manager\\) - Bitwarden — LibreWolf)$"
-          "center, title:^(Extension: \\(Bitwarden Password Manager\\) - Bitwarden — LibreWolf)$"
+          "float, title:^(?=.*Extension:)(?=.*Bitwarden).*"
+          "center, title:^(?=.*Extension:)(?=.*Bitwarden).*"
         ];
       };
     };
