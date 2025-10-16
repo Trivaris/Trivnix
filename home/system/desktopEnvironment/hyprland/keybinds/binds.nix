@@ -27,6 +27,16 @@ in
       "$alt_mod, Y, togglesplit"
     ];
 
+    workspaceChange = [
+      "$mod, TAB, workspace, e+1"
+      "$mod SHIFT, TAB, workspace, e-1"
+      "$fn_mod, 1, workspace, 1"
+      "$fn_mod, 2, workspace, 2"
+      "$fn_mod, 3, workspace, 3"
+      "$fn_mod, 4, workspace, 4"
+      "$fn_mod, 5, workspace, 5"
+    ];
+
     mouseFloat = [
       # Make active window floating for mouse drag/resize
       "$mod SHIFT, mouse:272, setfloating, active"
