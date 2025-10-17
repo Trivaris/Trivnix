@@ -9,7 +9,6 @@ in
       bind.drag_threshold = 10;
       "$mod" = "SUPER";
       "$alt_mod" = "ALT";
-      "$fn_mod" = "KEY_WAKEUP";
     }
     // (mapAttrs (_: value: flatten (builtins.attrValues value)) (
       import ./binds.nix { inherit config lib; }

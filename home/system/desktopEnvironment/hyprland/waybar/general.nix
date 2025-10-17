@@ -18,6 +18,10 @@
       "tray"
     ];
 
+    modules-center = [
+      "hyprland/workspaces"
+    ];
+
     modules-right = [
       "custom/spotify"
       "custom/mail"
@@ -82,7 +86,7 @@
       font-size: 4px;
     }
 
-    #workspaces button:hover {
+    #hyprland-workspaces button:hover {
       transition: none;
       box-shadow: inherit;
       text-shadow: inherit;
@@ -90,7 +94,7 @@
       border-color: ${getColor "base08"};
     }
 
-    #workspaces button.active:hover {
+    #hyprland-workspaces button.active:hover {
       color: ${getColor "base08"};
     }
 

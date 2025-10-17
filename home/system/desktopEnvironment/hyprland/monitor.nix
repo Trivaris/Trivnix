@@ -33,4 +33,8 @@ in
     type = types.str;
     default = optionalString (monitorCount != 0) (builtins.elemAt sortedMonitors middleIndex).name;
   };
+
+  config.wayland.windowManager.hyprland.settings = {
+    inherit (hostInfos) monitor;
+  };
 }

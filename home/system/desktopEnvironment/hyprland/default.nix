@@ -1,6 +1,5 @@
 {
   config,
-  hostInfos,
   isNixos,
   lib,
   osConfig,
@@ -49,10 +48,7 @@ in
       package = null;
       portalPackage = null;
       systemd.variables = [ "--all" ];
-      settings = {
-        inherit (hostInfos) monitor;
-        input.kb_layout = mkIf isNixos osConfig.hostPrefs.language.keyMap;
-      };
+      settings.input.kb_layout = mkIf isNixos osConfig.hostPrefs.language.keyMap;
     };
 
     home.packages = builtins.attrValues {
@@ -66,11 +62,9 @@ in
         ;
     };
 
-    programs = {
-      hyprshot = {
-        enable = true;
-        saveLocation = "$HOME/Pictures/Screenshots";
-      };
+    programs.hyprshot = {
+      enable = true;
+      saveLocation = "$HOME/Pictures/Screenshots";
     };
 
     services = {

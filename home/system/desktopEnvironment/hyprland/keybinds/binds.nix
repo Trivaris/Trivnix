@@ -1,6 +1,6 @@
 { config, lib }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf range;
   prefs = config.userPrefs;
   isEnabled =
     module:
@@ -15,27 +15,15 @@ in
       "$mod, UP,    movewindow, u"
       "$mod, down,  movewindow, d"
 
-      # Send window to monitor in direction
-      "$mod SHIFT, LEFT,  movewindow, mon:l"
-      "$mod SHIFT, RIGHT, movewindow, mon:r"
-      "$mod SHIFT, UP,    movewindow, mon:u"
-      "$mod SHIFT, DOWN,  movewindow, mon:d"
-
       # Split window horizontally/vertically
-      "$alt_mod, H, layoutmsg, preselect d"
-      "$alt_mod, V, layoutmsg, preselect r"
       "$alt_mod, Y, togglesplit"
     ];
 
     workspaceChange = [
       "$mod, TAB, workspace, e+1"
       "$mod SHIFT, TAB, workspace, e-1"
-      "$fn_mod, 1, workspace, 1"
-      "$fn_mod, 2, workspace, 2"
-      "$fn_mod, 3, workspace, 3"
-      "$fn_mod, 4, workspace, 4"
-      "$fn_mod, 5, workspace, 5"
-    ];
+    ]
+    ++ map (index: "$mod, ${toString index}, workspace, ${toString index}") (range 0 9);
 
     mouseFloat = [
       # Make active window floating for mouse drag/resize
