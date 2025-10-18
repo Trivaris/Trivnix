@@ -54,6 +54,7 @@ in
     };
 
     security.acme.certs.${prefs.ipsec.domain}.postRun = ''
+      mkdir -p /etc/ipsec.d/private /etc/ipsec.d/certs
       install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem
       install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem
     '';
