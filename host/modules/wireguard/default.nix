@@ -1,29 +1,30 @@
-{
-  config,
-  hostInfos,
-  inputs,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (lib) mkIf mapAttrs' nameValuePair;
+  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.wireguard = import ./options.nix { inherit (lib) mkEnableOption; };
+  options.hostPrefs.wireguard = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
   config = mkIf prefs.wireguard.enable {
-    networking.firewall.allowedUDPPorts = [ 51820 ];
-    services.resolved.enable = true;
-    services.resolved.dnssec = "allow-downgrade";
-    networking.wg-quick = {
-      interfaces = mapAttrs' (
-        interfaceName: interface:
-        nameValuePair interfaceName (interface {
-          privateKeyFile = config.sops.secrets.wireguard-client-key.path;
-          presharedKeyFile = config.sops.secrets."wireguard-preshared-keys/${interfaceName}".path;
-          ipAddr = hostInfos.ip;
-        })
-      ) inputs.trivnixPrivate.wireguardInterfaces;
+    boot.kernel.sysctl."net.ipv4.ip_forward" = true;
+    networking = {
+      firewall.checkReversePath = "loose";
+      wireguard = {
+        enable = true;
+        interfaces.wg0 = {
+          privateKeyFile = config.sops.secrets.wg-server-key.path;
+          listenPort = prefs.wireguard.port;
+          ips = [ "10.0.0.1/24" ];
+          peers = [
+            {
+              # FritzBox
+              inherit (prefs.wireguard) publicKey;
+              allowedIPs = [ "10.0.0.2/32" ];
+              persistentKeepalive = 25;
+            }
+          ];
+        };
+      };
     };
   };
 }

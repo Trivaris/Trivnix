@@ -29,18 +29,8 @@ let
       group = "users";
     }
   ) (filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
-
-  wireguardSecrets = mapAttrs' (
-    interface: _:
-    nameValuePair "wireguard-preshared-keys/${interface}" {
-      owner = "root";
-      group = "root";
-    }
-  ) inputs.trivnixPrivate.wireguardInterfaces;
 in
 {
-  assertions = import ./assertions.nix { inherit inputs prefs; };
-
   environment.systemPackages = builtins.attrValues { inherit (pkgs) sops age; };
   sops = {
     defaultSopsFile = commonSecrets;
@@ -51,7 +41,6 @@ in
 
     secrets = mkMerge [
       perUserSecrets
-      wireguardSecrets
 
       {
         ssh-root-key = {
@@ -62,6 +51,14 @@ in
         };
       }
 
+      (mkIf prefs.wireguard.enable {
+        wg-server-key = {
+          sopsFile = hostSecrets;
+          owner = "root";
+          group = "root";
+        };
+      })
+
       (mkIf prefs.openssh.enable {
         ssh-host-key = {
           sopsFile = hostSecrets;
@@ -70,14 +67,6 @@ in
           group = "root";
           restartUnits = [ "sshd.service" ];
           neededForUsers = true;
-        };
-      })
-
-      (mkIf prefs.wireguard.enable {
-        wireguard-client-key = {
-          sopsFile = hostSecrets;
-          owner = "root";
-          group = "root";
         };
       })
 

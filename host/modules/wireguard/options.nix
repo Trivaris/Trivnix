@@ -1,12 +1,21 @@
-{ mkEnableOption }:
+{
+  mkEnableOption,
+  mkOption,
+  types,
+}:
 {
   enable = mkEnableOption ''
-    Enable WireGuard client configuration sourced from trivnixPrivate.
-    Adds wg-quick interfaces and opens UDP ports for remote access.
+    Enable WireGuard server configuration.
   '';
 
-  enableServer = mkEnableOption ''
-    Reserve this host for running a WireGuard server in the future.
-    No server config is emitted yet; keep false unless server support lands.
-  '';
+  port = mkOption {
+    type = types.port;
+    default = 51820;
+    description = "Port where the server runs on.";
+  };
+
+  publicKey = mkOption {
+    type = types.str;
+    description = "Public Key of the client";
+  };
 }
