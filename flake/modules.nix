@@ -1,6 +1,7 @@
 { inputs }:
 {
   hostModules = [
+    inputs.cfddns.nixosModules.default
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.mailserver.nixosModules.default

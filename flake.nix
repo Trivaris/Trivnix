@@ -32,6 +32,11 @@
       inputs.pythonOverlays.follows = "trivnixOverlays";
     };
 
+    cfddns = {
+      url = "github:Trivaris/cloudflare-dyndns-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Core/community modules
     disko = {
       url = "github:nix-community/disko";

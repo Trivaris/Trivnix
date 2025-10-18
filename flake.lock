@@ -169,6 +169,26 @@
         "type": "gitlab"
       }
     },
+    "cfddns": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1760813605,
+        "narHash": "sha256-xZsB6seaojHgvfjIUBvAeWkQCuGWNaYDL1U4y4eraHA=",
+        "owner": "Trivaris",
+        "repo": "cloudflare-dyndns-nix",
+        "rev": "d4b3b0e4ba3f148f622e8e4271ea254e243dcac6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Trivaris",
+        "repo": "cloudflare-dyndns-nix",
+        "type": "github"
+      }
+    },
     "denix": {
       "inputs": {
         "home-manager": "home-manager_2",
@@ -1246,6 +1266,7 @@
         "adbAutoPlayer": "adbAutoPlayer",
         "appflowy": "appflowy",
         "betterfox": "betterfox",
+        "cfddns": "cfddns",
         "disko": "disko",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
@@ -1502,11 +1523,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760792727,
-        "narHash": "sha256-DpN+cvSIVbwtgn1UCzurqmVoB573LJWdpE1GtuisRf8=",
+        "lastModified": 1760810948,
+        "narHash": "sha256-dopdVCXsPgailviI+KyOT/C4YMjTx2J5PJbVBz9J0ZM=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "dbe32beabc50f7ed6436c74ab8e415af9d6a8b4f",
+        "rev": "419faa56ea762e2ad2d62ea55d934e76177bb352",
         "type": "github"
       },
       "original": {
@@ -1561,11 +1582,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759183393,
-        "narHash": "sha256-sACHLXZfi09ep/mnHfKkkM5i78ZemjZOVYHACYQDC/Q=",
+        "lastModified": 1760808803,
+        "narHash": "sha256-RjalnTWRw0Av016q+N8Bst4xiyJMlLv8nQ06IN/xTpY=",
         "owner": "Trivaris",
         "repo": "TrivnixOverlays",
-        "rev": "bbc9f133da6f2d5e3c75b10b42c0433e46f960cc",
+        "rev": "e1d30f65248cbd2ce3a453470715ca3e43421180",
         "type": "github"
       },
       "original": {

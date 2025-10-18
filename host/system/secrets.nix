@@ -70,7 +70,7 @@ in
         };
       })
 
-      (mkIf prefs.reverseProxy.enable {
+      (mkIf (prefs.reverseProxy.enable || prefs.cfddns.enable) {
         cloudflare-api-token = {
           owner = "root";
           group = "root";
