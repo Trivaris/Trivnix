@@ -1,5 +1,5 @@
 {
-  activeServices,
+  config,
   nameValuePair,
   prefs,
 }:
@@ -44,5 +44,5 @@ builtins.listToAttrs (
         };
       }
     )
-  ) activeServices
+  ) config.vars.activeServices
 )

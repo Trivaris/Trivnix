@@ -1,21 +1,12 @@
-{
-  config,
-  lib,
-  trivnixLib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (lib) mkForce mkIf;
+  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.ipsec = import ./options.nix {
-    inherit (lib) mkEnableOption mkOption types;
-    inherit (trivnixLib) mkReverseProxyOption;
-  };
-
+  options.hostPrefs.ipsec = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
   config = mkIf prefs.ipsec.enable {
-    hostPrefs.ipsec.reverseProxy.enable = mkForce false;
+    vars.extraCertDomains = [ prefs.ipsec.domain ];
 
     networking.firewall = {
       checkReversePath = "loose";
@@ -45,8 +36,8 @@ in
         "ikev2-eap" = {
           auto = "add";
           left = "%any";
-          leftcert = "/etc/ipsec.d/certs/${prefs.ipsec.reverseProxy.domain}.fullchain.pem";
-          leftid = prefs.ipsec.reverseProxy.domain;
+          leftcert = "/etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem";
+          leftid = prefs.ipsec.domain;
           leftsubnet = "0.0.0.0/0,::/0";
           right = "%any";
           rightsourceip = "10.10.10.0/24,fd00:10:10::/64";
@@ -62,9 +53,9 @@ in
       };
     };
 
-    security.acme.certs.${prefs.ipsec.reverseProxy.domain}.postRun = ''
-      install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.reverseProxy.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.reverseProxy.domain}.key.pem
-      install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.reverseProxy.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.reverseProxy.domain}.fullchain.pem
+    security.acme.certs.${prefs.ipsec.domain}.postRun = ''
+      install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem
+      install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem
     '';
   };
 }

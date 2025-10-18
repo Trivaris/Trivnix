@@ -29,13 +29,6 @@ in
           default = [ ];
         };
 
-        reverseProxyServices = mkOption {
-          type = types.listOf (types.attrsOf types.anything);
-          default = servicesToList (
-            filterAttrs (_: pref: builtins.isAttrs pref && builtins.hasAttr "reverseProxy" pref) prefs
-          );
-        };
-
         activeServices = mkOption {
           type = types.listOf (types.attrsOf types.anything);
           default = servicesToList (
@@ -47,20 +40,10 @@ in
 
   config =
     let
-      ddclient = import ./ddclient.nix {
-        inherit (config.vars) activeServices;
-        inherit config prefs;
-      };
-
-      acme = import ./acme.nix {
-        inherit (config.vars) reverseProxyServices;
-        inherit config nameValuePair prefs;
-      };
-
-      virtualHosts = import ./virtualHosts.nix {
-        inherit (config.vars) activeServices;
-        inherit nameValuePair prefs;
-      };
+      dependencies = { inherit config nameValuePair prefs; };
+      ddclient = import ./ddclient.nix dependencies;
+      acme = import ./acme.nix dependencies;
+      virtualHosts = import ./virtualHosts.nix dependencies;
     in
     mkIf prefs.reverseProxy.enable {
       security = { inherit acme; };

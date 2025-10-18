@@ -1,5 +1,4 @@
 {
-  reverseProxyServices,
   config,
   nameValuePair,
   prefs,
@@ -15,7 +14,9 @@ in
 {
   acceptTerms = true;
   certs = builtins.listToAttrs (
-    (map (service: nameValuePair service.domain body) reverseProxyServices)
-    ++ (map (extraCertDomain: nameValuePair extraCertDomain body) prefs.reverseProxy.extraCertDomains)
+    (map (service: nameValuePair service.domain body) config.vars.activeServices)
+    ++ (map (extraCertDomain: nameValuePair extraCertDomain body) (
+      prefs.reverseProxy.extraCertDomains ++ config.vars.extraCertDomains
+    ))
   );
 }
