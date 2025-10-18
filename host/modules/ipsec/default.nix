@@ -32,11 +32,7 @@ in
 
     services.strongswan = {
       enable = true;
-
-      secrets = [
-        "/var/lib/${prefs.ipsec.reverseProxy.domain}/key.pem"
-        config.sops.secrets.ipsec-user-config.path
-      ];
+      secrets = [ config.sops.secrets.ipsec-user-config.path ];
 
       connections = {
         "%default" = {
@@ -49,7 +45,7 @@ in
         "ikev2-eap" = {
           auto = "add";
           left = "%any";
-          leftcert = "/var/lib/acme/${prefs.ipsec.reverseProxy.domain}/fullchain.pem";
+          leftcert = "/etc/ipsec.d/certs/${prefs.ipsec.reverseProxy.domain}.fullchain.pem";
           leftid = prefs.ipsec.reverseProxy.domain;
           leftsubnet = "0.0.0.0/0,::/0";
           right = "%any";
@@ -65,5 +61,10 @@ in
         strictcrlpolicy = "yes";
       };
     };
+
+    security.acme.certs.${prefs.ipsec.reverseProxy.domain}.postRun = ''
+      install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.reverseProxy.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.reverseProxy.domain}.key.pem
+      install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.reverseProxy.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.reverseProxy.domain}.fullchain.pem
+    '';
   };
 }
