@@ -44,7 +44,22 @@
     '';
   };
 
-  extraDomains = mkOption {
+  extraCertDomains = mkOption {
+    type = types.listOf types.str;
+    default = [ ];
+
+    example = [
+      "vpn.example.com"
+      "blog.example.com"
+    ];
+
+    description = ''
+      Additional FQDNs to include in HTTPS Cert generation.
+      These do not need to be linked to services managed by this reverse proxy.
+    '';
+  };
+
+  extraDDNSDomains = mkOption {
     type = types.listOf types.str;
     default = [ ];
 

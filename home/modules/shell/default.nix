@@ -104,7 +104,7 @@ in
               nix flake check $path \
                 --override-input trivnixConfigs ../TrivnixConfigs/ \
                 --override-input trivnixLib     ../TrivnixLib/ \
-                --override-input trivnixPrivate ../TrivnixPrivate/
+                --override-input trivnixPrivate ../TrivnixPrivate/ \
                 --override-input trivnixOverlays ../TrivnixOverlays/
             end
           '';

@@ -51,8 +51,8 @@ in
         };
       }
 
-      (mkIf prefs.wireguard.enable {
-        wg-server-key = {
+      (mkIf prefs.ipsec.enable {
+        ipsec-user-config = {
           sopsFile = hostSecrets;
           owner = "root";
           group = "root";

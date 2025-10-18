@@ -7,7 +7,6 @@ let
     mkIf
     mkOption
     nameValuePair
-    pipe
     types
     ;
 
@@ -20,13 +19,30 @@ in
       inherit (lib) mkEnableOption mkOption types;
     };
 
-    vars.activeServices = mkOption {
-      type = types.listOf (types.attrsOf types.anything);
-      default = pipe prefs [
-        (filterAttrs (_: pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false))
-        (mapAttrsToList (name: service: service.reverseProxy // { inherit name; }))
-      ];
-    };
+    vars =
+      let
+        servicesToList = mapAttrsToList (name: service: service.reverseProxy // { inherit name; });
+      in
+      {
+        extraCertDomains = mkOption {
+          type = types.listOf types.str;
+          default = [ ];
+        };
+
+        reverseProxyServices = mkOption {
+          type = types.listOf (types.attrsOf types.anything);
+          default = servicesToList (
+            filterAttrs (_: pref: builtins.isAttrs pref && builtins.hasAttr "reverseProxy" pref) prefs
+          );
+        };
+
+        activeServices = mkOption {
+          type = types.listOf (types.attrsOf types.anything);
+          default = servicesToList (
+            (filterAttrs (_: pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false)) prefs
+          );
+        };
+      };
   };
 
   config =
@@ -37,7 +53,7 @@ in
       };
 
       acme = import ./acme.nix {
-        inherit (config.vars) activeServices;
+        inherit (config.vars) reverseProxyServices;
         inherit config nameValuePair prefs;
       };
 

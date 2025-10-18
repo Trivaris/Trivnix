@@ -59,6 +59,7 @@ in
         nmgui
         brightnessctl
         networkmanagerapplet
+        networkmanager_strongswan
         ;
     };
 
