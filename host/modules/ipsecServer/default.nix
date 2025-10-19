@@ -87,7 +87,7 @@ in
         leftcert = "/etc/ipsec.d/certs/${prefs.ipsecServer.domain}.fullchain.pem";
         leftauth = "pubkey";
         leftfirewall = "yes";
-        leftsubnet = "10.0.0.1/24";
+        leftsubnet = "0.0.0.0/0,::/0";
 
         right = "%any";
         rightid = "%any";
