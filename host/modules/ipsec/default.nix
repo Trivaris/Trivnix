@@ -73,16 +73,11 @@ in
     services.strongswan = {
       enable = true;
       secrets = [ "/etc/ipsec.d/ipsec.secrets" ];
-
-      setup = {
-        strictcrlpolicy = "yes";
-        uniqueids = "yes";
-      };
+      setup.uniqueids = "yes";
 
       ca.vpn-ca = {
         auto = "add";
         cacert = "/etc/ipsec.d/cacerts/vpn-ca-cert.pem";
-        crluri = mkIf (!prefs.ipsec.asClient) "https://${prefs.ipsec.domain}/vpn-ca.crl";
       };
 
       connections = {
