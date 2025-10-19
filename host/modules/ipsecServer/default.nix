@@ -52,11 +52,14 @@ in
       // {
         "ipsec.d/ipsec.secrets" = {
           mode = "0600";
-          user = "root";
-          group = "root";
           text = ''
             : ECDSA ${config.sops.secrets.ipsec-server-key.path}
           '';
+        };
+
+        "ipsec.d/certs/${prefs.ipsecServer.domain}.fullchain.pem" = {
+          mode = "0600";
+          source = prefs.ipsecServer.fullchain;
         };
       };
 

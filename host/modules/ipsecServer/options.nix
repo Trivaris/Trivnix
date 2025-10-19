@@ -26,4 +26,9 @@
     default = { };
     description = "Extra Certs you want allowed";
   };
+
+  fullchain = mkOption {
+    type = types.str;
+    description = "Path to your fullchain.pem";
+  };
 }
