@@ -12,6 +12,14 @@
     description = "FQDN of the vpn";
   };
 
+  extraClientCerts = mkOption {
+    type = types.attrsOf types.str;
+    default = { };
+    description = ''
+      Extra Certs you want allowed
+    '';
+  };
+
   clientCert = mkOption {
     type = types.nullOr types.str;
     default = null;

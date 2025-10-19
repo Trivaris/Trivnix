@@ -1,14 +1,42 @@
-{ config, lib, ... }:
+{
+  allHostPrefs,
+  config,
+  lib,
+  ...
+}:
 let
-  inherit (lib) mkIf;
+  inherit (lib)
+    filterAttrs
+    mapAttrs'
+    mkIf
+    nameValuePair
+    ;
+
   prefs = config.hostPrefs;
+  clients = filterAttrs (
+    _: hPrefs: (hPrefs.ipsec or { }).enable or false && (hPrefs.ipsec or { }).asClient or false
+  ) allHostPrefs;
+  clientCerts = mapAttrs' (
+    _: client:
+    nameValuePair "ipsec.d/certs/${client.ipsec.clientId}-cert.pem" {
+      source = client.ipsec.clientCert;
+    }
+  ) clients;
+
+  extraClientCerts = mapAttrs' (
+    id: path: nameValuePair "ipsec.d/certs/${id}-cert.pem" { source = path; }
+  ) prefs.ipsec.extraClientCerts;
 in
 {
   options.hostPrefs.ipsec = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
+  options.vars.test = lib.mkOption {
+    type = lib.types.anything;
+    default = clientCerts // extraClientCerts;
+  };
+
   config = mkIf prefs.ipsec.enable {
     assertions = import ./assertions.nix { inherit prefs; };
     vars.extraCertDomains = [ prefs.ipsec.domain ];
-
     networking.firewall = {
       checkReversePath = "loose";
       allowedUDPPorts = [
@@ -22,16 +50,25 @@ in
       "net.ipv6.conf.all.forwarding" = true;
     };
 
-    environment.etc."ipsec.d/ipsec.secrets" = {
-      mode = "0600";
-      user = "root";
-      group = "root";
-      text =
-        if prefs.ipsec.asClient then
-          "${prefs.ipsec.clientId} : ECDSA ${config.sops.secrets.ipsec-client-key.path}"
-        else
-          ": ECDSA /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem";
-    };
+    environment.etc =
+      extraClientCerts
+      // clientCerts
+      // {
+        "ipsec.d/ipsec.secrets" = {
+          mode = "0600";
+          user = "root";
+          group = "root";
+          text =
+            if prefs.ipsec.asClient then
+              ''
+                ${prefs.ipsec.clientId} : ECDSA ${config.sops.secrets.ipsec-client-key.path}
+              ''
+            else
+              ''
+                : ECDSA /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem
+              '';
+        };
+      };
 
     services.strongswan = {
       enable = true;
