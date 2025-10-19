@@ -23,18 +23,19 @@ in
     };
 
     environment.etc."ipsec.d/ipsec.secrets" = {
-      text = ": ECDSA /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem";
       mode = "0600";
       user = "root";
       group = "root";
+      text =
+        if prefs.ipsec.asClient then
+          "${prefs.ipsec.clientId} : ECDSA ${config.sops.secrets.ipsec-client-key.path}"
+        else
+          ": ECDSA /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem";
     };
 
     services.strongswan = {
       enable = true;
-      secrets = [
-        "/etc/ipsec.d/ipsec.secrets"
-        (mkIf prefs.ipsec.asClient config.sops.secrets.ipsec-client-key.path)
-      ];
+      secrets = [ "/etc/ipsec.d/ipsec.secrets" ];
 
       setup = {
         strictcrlpolicy = "yes";
