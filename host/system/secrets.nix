@@ -51,8 +51,16 @@ in
         };
       }
 
-      (mkIf (prefs.ipsec.enable && prefs.ipsec.asClient) {
+      (mkIf prefs.ipsecClient.enable {
         ipsec-client-key = {
+          sopsFile = hostSecrets;
+          owner = "root";
+          group = "root";
+        };
+      })
+
+      (mkIf prefs.ipsecServer.enable {
+        ipsec-server-key = {
           sopsFile = hostSecrets;
           owner = "root";
           group = "root";
