@@ -43,7 +43,7 @@ in
 
       ca.vpn-ca = {
         auto = "add";
-        cert = "/etc/ipsec.d/cacerts/vpn-ca-cert.pem";
+        cacert = "/etc/ipsec.d/cacerts/vpn-ca-cert.pem";
         crluri = mkIf (!prefs.ipsec.asClient) "https://${prefs.ipsec.domain}/vpn-ca.crl";
       };
 
@@ -54,7 +54,6 @@ in
           keyexchange = "ikev2";
           ike = "aes256-sha256-modp2048!";
           esp = "aes256-sha256!";
-          eap_identity = "%identity";
 
           left = "%any";
           leftcert = "/etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem";
@@ -74,10 +73,10 @@ in
         };
 
         vpn-client = mkIf prefs.ipsec.asClient {
-          keyexchange = "ikev2";
-          auto = "start";
+          auto = "add";
           type = "tunnel";
-          ike = "aes256-sha256-ecp384!";
+          keyexchange = "ikev2";
+          ike = "aes256-sha256-modp2048!";
           esp = "aes256-sha256!";
 
           left = "%any";
