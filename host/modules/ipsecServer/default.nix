@@ -81,6 +81,7 @@ in
         esp = "aes256-sha256!";
         dpdaction = "clear";
         dpddelay = "30s";
+        client2client = "yes";
 
         left = "%any";
         leftid = "@${prefs.ipsecServer.domain}";
