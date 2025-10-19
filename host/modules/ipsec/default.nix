@@ -6,6 +6,7 @@ in
 {
   options.hostPrefs.ipsec = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
   config = mkIf prefs.ipsec.enable {
+    assertions = import ./assertions.nix { inherit prefs; };
     vars.extraCertDomains = [ prefs.ipsec.domain ];
 
     networking.firewall = {
@@ -21,42 +22,83 @@ in
       "net.ipv6.conf.all.forwarding" = true;
     };
 
+    environment.etc."ipsec.d/ipsec.secrets" = {
+      text = ": ECDSA /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem";
+      mode = "0600";
+      user = "root";
+      group = "root";
+    };
+
     services.strongswan = {
       enable = true;
-      secrets = [ config.sops.secrets.ipsec-user-config.path ];
+      secrets = [
+        "/etc/ipsec.d/ipsec.secrets"
+        (mkIf prefs.ipsec.asClient config.sops.secrets.ipsec-client-key.path)
+      ];
+
+      setup = {
+        strictcrlpolicy = "yes";
+        uniqueids = "yes";
+      };
+
+      ca.vpn-ca = {
+        auto = "add";
+        cert = "/etc/ipsec.d/cacerts/vpn-ca-cert.pem";
+        crluri = mkIf (!prefs.ipsec.asClient) "https://${prefs.ipsec.domain}/vpn-ca.crl";
+      };
 
       connections = {
-        "%default" = {
-          keyexchange = "ikev2";
-          ike = "aes256-sha256-modp2048";
-          esp = "aes256-sha256";
-          leftfirewall = "yes";
-        };
-
-        "ikev2-eap" = {
+        vpn = mkIf (!prefs.ipsec.asClient) {
           auto = "add";
+          type = "tunnel";
+          keyexchange = "ikev2";
+          ike = "aes256-sha256-modp2048!";
+          esp = "aes256-sha256!";
+          eap_identity = "%identity";
+
           left = "%any";
           leftcert = "/etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem";
           leftid = prefs.ipsec.domain;
-          leftsubnet = "0.0.0.0/0,::/0";
-          right = "%any";
-          rightsourceip = "10.10.10.0/24,fd00:10:10::/64";
-          rightauth = "eap-mschapv2";
-          eap_identity = "%identity";
-        };
-      };
+          leftauth = "pubkey";
+          # leftfirewall = "yes";
+          # leftsendcert = "yes";
+          # leftsubnet = "0.0.0.0/0";
 
-      setup = {
-        charondebug = "ike 1, knl 1, cfg 0";
-        uniqueids = "replace";
-        strictcrlpolicy = "yes";
+          right = "%any";
+          rightauth = "pubkey";
+          rightsourceip = "10.0.0.0/24";
+
+          # dpdaction = "clear";
+          # dpddelay = "300s";
+          # dpdtimeout = "1h";
+        };
+
+        vpn-client = mkIf prefs.ipsec.asClient {
+          keyexchange = "ikev2";
+          auto = "start";
+          type = "tunnel";
+          ike = "aes256-sha256-ecp384!";
+          esp = "aes256-sha256!";
+
+          left = "%any";
+          leftid = config.hostPrefs.ipsec.clientId;
+          leftcert = config.hostPrefs.ipsec.clientCert;
+          leftauth = "pubkey";
+
+          right = config.hostPrefs.ipsec.domain;
+          rightid = config.hostPrefs.ipsec.domain;
+          rightauth = "pubkey";
+          rightsubnet = "0.0.0.0/0,::/0";
+        };
       };
     };
 
-    security.acme.certs.${prefs.ipsec.domain}.postRun = ''
-      mkdir -p /etc/ipsec.d/private /etc/ipsec.d/certs
-      install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem
-      install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem
-    '';
+    security = mkIf (!prefs.ipsec.asClient) {
+      acme.certs.${prefs.ipsec.domain}.postRun = ''
+        mkdir -p /etc/ipsec.d/private /etc/ipsec.d/certs
+        sudo install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem
+        sudo install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem
+      '';
+    };
   };
 }

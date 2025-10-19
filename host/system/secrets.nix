@@ -51,8 +51,8 @@ in
         };
       }
 
-      (mkIf prefs.ipsec.enable {
-        ipsec-user-config = {
+      (mkIf (prefs.ipsec.enable && prefs.ipsec.asClient) {
+        ipsec-client-key = {
           sopsFile = hostSecrets;
           owner = "root";
           group = "root";

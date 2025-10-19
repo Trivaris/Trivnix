@@ -46,6 +46,7 @@ in
   config = {
     time.timeZone = "Europe/Berlin";
     nixowos.enable = true;
+    networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
 
     services.logind.settings.Login = mkIf prefs.ignoreLidShut {
       HandleLidSwitch = "ignore";
