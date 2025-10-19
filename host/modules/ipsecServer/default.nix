@@ -88,6 +88,7 @@ in
         leftauth = "pubkey";
         leftfirewall = "yes";
         leftsubnet = "0.0.0.0/0,::/0";
+        leftsourceip = "10.0.0.1";
 
         right = "%any";
         rightid = "%any";
