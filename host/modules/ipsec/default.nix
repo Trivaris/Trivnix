@@ -97,6 +97,7 @@ in
           # leftsubnet = "0.0.0.0/0";
 
           right = "%any";
+          rightid = "%any";
           rightauth = "pubkey";
           rightsourceip = "10.0.0.0/24";
 
@@ -123,14 +124,6 @@ in
           rightsubnet = "0.0.0.0/0,::/0";
         };
       };
-    };
-
-    security = mkIf (!prefs.ipsec.asClient) {
-      acme.certs.${prefs.ipsec.domain}.postRun = ''
-        mkdir -p /etc/ipsec.d/private /etc/ipsec.d/certs
-        sudo install -o root -g root -m 0640 /var/lib/acme/${prefs.ipsec.domain}/key.pem /etc/ipsec.d/private/${prefs.ipsec.domain}.key.pem
-        sudo install -o root -g root -m 0644 /var/lib/acme/${prefs.ipsec.domain}/fullchain.pem /etc/ipsec.d/certs/${prefs.ipsec.domain}.fullchain.pem
-      '';
     };
   };
 }
