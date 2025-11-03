@@ -1517,17 +1517,12 @@
       }
     },
     "trivnixConfigs": {
-      "inputs": {
-        "trivnixLib": [
-          "trivnixLib"
-        ]
-      },
       "locked": {
-        "lastModified": 1761805339,
-        "narHash": "sha256-/35UZEhKdBbWTCLgIXF26hGMDlG9lAwx9uWZ1pkJQok=",
+        "lastModified": 1762107283,
+        "narHash": "sha256-3CkXkVwLh32Jza02wgxusIvNH5pG4cV4uMtbNvaW/YY=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "0e148e13d940d16a639cfeb35bcabaa86c4e4f74",
+        "rev": "ae4aa0a804ccc707528d3662b653a9a5691880f4",
         "type": "github"
       },
       "original": {

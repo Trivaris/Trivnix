@@ -9,16 +9,13 @@
 
     # Personal repos
     trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
+    trivnixConfigs.url = "github:Trivaris/TrivnixConfigs";
 
     trivnixLib = {
       url = "github:Trivaris/TrivnixLib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    trivnixConfigs = {
-      url = "github:Trivaris/TrivnixConfigs";
-      inputs.trivnixLib.follows = "trivnixLib";
-    };
 
     trivnixOverlays = {
       url = "github:Trivaris/TrivnixOverlays";
