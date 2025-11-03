@@ -2,6 +2,7 @@
   config,
   isNixos,
   lib,
+  pkgs,
   osConfig,
   trivnixLib,
   ...
@@ -11,7 +12,6 @@ let
     concatStringsSep
     mergeAttrsList
     mkIf
-    pipe
     ;
 in
 {
@@ -19,28 +19,21 @@ in
     let
       scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
       getColor = trivnixLib.getColor scheme;
-      waybar =
-        pipe
-          {
-            dirPath = ./.;
-            preset = "importList";
-          }
-          [
-            trivnixLib.resolveDir
-            (map (
-              path:
-              import path {
-                inherit (osConfig) hostPrefs;
-                inherit config getColor lib;
-              }
-            ))
-          ];
+      modules = builtins.attrValues(lib.packagesFromDirectoryRecursive {
+        directory = ./_modules;
+        callPackage =
+          path: _:
+          pkgs.callPackage path {
+            inherit (osConfig) hostPrefs;
+            inherit getColor config;
+          };
+      });
     in
     {
       programs.waybar = {
         enable = true;
-        style = concatStringsSep "\n" (map (module: module.style) waybar);
-        settings.mainBar = mergeAttrsList (map (module: module.settings) waybar);
+        style = concatStringsSep "\n" (map (module: module.style) modules);
+        settings.mainBar = mergeAttrsList (map (module: module.settings) modules);
 
         systemd = {
           enable = true;

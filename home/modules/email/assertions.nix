@@ -1,4 +1,4 @@
-{ inputs, prefs }:
+{ config, inputs, ... }:
 let
   hasPrivate = inputs ? trivnixPrivate;
   hasEmail =
@@ -6,13 +6,15 @@ let
     && (inputs.trivnixPrivate ? emailAccounts)
     && builtins.isAttrs inputs.trivnixPrivate.emailAccounts;
 in
-[
-  {
-    assertion = prefs.email.enable -> hasPrivate;
-    message = ''Email module enabled but input "trivnixPrivate" is missing. See docs/trivnix-private.md.'';
-  }
-  {
-    assertion = prefs.email.enable -> hasEmail;
-    message = ''Email module enabled but inputs.trivnixPrivate.emailAccounts is missing or not an attrset.'';
-  }
-]
+{
+  assertions = [
+    {
+      assertion = config.userPrefs.email.enable -> hasPrivate;
+      message = ''Email module enabled but input "trivnixPrivate" is missing. See docs/trivnix-private.md.'';
+    }
+    {
+      assertion = config.userPrefs.email.enable -> hasEmail;
+      message = ''Email module enabled but inputs.trivnixPrivate.emailAccounts is missing or not an attrset.'';
+    }
+  ];
+}

@@ -5,7 +5,7 @@ in
 {
   settings = {
     "custom/spotify" = {
-      exec = ./scripts/spotify.sh;
+      exec = ../scripts/spotify.sh;
       format = "{}";
       interval = 5;
       tooltip = false;

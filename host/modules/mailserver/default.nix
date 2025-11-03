@@ -5,32 +5,18 @@
   ...
 }:
 let
-  inherit (lib)
-    head
-    mkAliasOptionModule
-    mkForce
-    mkIf
-    pipe
-    splitString
-    toInt
-    ;
-
+  inherit (lib) mkForce;
   prefs = config.hostPrefs;
 in
 {
   imports = [
-    (mkAliasOptionModule [ "hostPrefs" "mailserver" "loginAccounts" ] [ "mailserver" "loginAccounts" ])
+    (lib.mkAliasOptionModule
+      [ "hostPrefs" "mailserver" "loginAccounts" ]
+      [ "mailserver" "loginAccounts" ]
+    )
   ];
 
-  options.hostPrefs.mailserver = import ./options.nix {
-    inherit (lib)
-      mkEnableOption
-      mkOption
-      types
-      ;
-  };
-
-  config = mkIf prefs.mailserver.enable {
+  config = lib.mkIf prefs.mailserver.enable {
     mailserver = {
       enable = true;
       fqdn = prefs.mailserver.baseDomain;
@@ -53,14 +39,14 @@ in
         "autodiscover"
       ]);
 
-      stateVersion = pipe hostInfos.stateVersion [
-        (splitString ".")
-        head
-        toInt
+      stateVersion = lib.pipe hostInfos.stateVersion [
+        (lib.splitString ".")
+        lib.head
+        lib.toInt
       ];
     };
 
-    networking = mkIf prefs.mailserver.enableIpV6 {
+    networking = lib.mkIf prefs.mailserver.enableIpV6 {
       interfaces.${prefs.mailserver.ipV6Interface} = {
         ipv6.addresses = [
           {

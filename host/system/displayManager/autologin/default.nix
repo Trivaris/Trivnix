@@ -5,7 +5,6 @@ let
 in
 {
   config = mkIf (prefs.displayManager == "autologin") {
-    assertions = import ./assertions.nix { inherit config prefs; };
     services.greetd =
       let
         settings = {

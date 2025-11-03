@@ -12,7 +12,7 @@ let
 in
 {
   settings."custom/weather" = {
-    exec = "${./scripts/weather.sh}${locationArg}";
+    exec = "${../scripts/weather.sh}${locationArg}";
     interval = 900;
     return-type = "json";
     tooltip = true;

@@ -19,7 +19,7 @@ in
       settings = {
         "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
         logo.source = "nixos_old_small";
-        modules = import ./modules.nix;
+        modules = import ./_modules.nix;
         display = {
           separator = " ";
           brightColor = true;

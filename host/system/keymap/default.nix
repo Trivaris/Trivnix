@@ -1,13 +1,8 @@
 { config, lib, ... }:
 let
-  inherit (lib) nameValuePair;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.language = import ./options.nix {
-    inherit (lib) mkOption types;
-  };
-
   config = {
     console.keyMap = prefs.language.keyMap;
 
@@ -29,7 +24,9 @@ in
       in
       {
         defaultLocale = language;
-        extraLocaleSettings = builtins.listToAttrs (map (unit: nameValuePair unit unitLanguage) unitTypes);
+        extraLocaleSettings = builtins.listToAttrs (
+          map (unit: lib.nameValuePair unit unitLanguage) unitTypes
+        );
       };
 
     services.xserver.xkb = {

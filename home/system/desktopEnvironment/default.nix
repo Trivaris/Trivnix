@@ -1,20 +1,9 @@
 { lib, trivnixLib, ... }:
 let
   inherit (lib) mkOption types;
-  inherit (trivnixLib) resolveDir;
-
-  modules = resolveDir {
-    dirPath = ./.;
-    preset = "moduleNames";
-  };
-
-  imports = resolveDir {
-    dirPath = ./.;
-    preset = "importList";
-  };
+  modules = trivnixLib.getModules ./.;
 in
 {
-  inherit imports;
   options = {
     userPrefs.desktopEnvironment = mkOption {
       type = types.nullOr (types.enum modules);

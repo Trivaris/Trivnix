@@ -5,34 +5,21 @@
   ...
 }:
 let
-  inherit (lib)
-    filterAttrs
-    mapAttrs'
-    mkIf
-    nameValuePair
-    ;
-
   prefs = config.hostPrefs;
 
-  clientCerts = mapAttrs' (
+  clientCerts = lib.mapAttrs' (
     _: client:
-    nameValuePair "ipsec.d/certs/${client.ipsecClient.id}-cert.pem" {
+    lib.nameValuePair "ipsec.d/certs/${client.ipsecClient.id}-cert.pem" {
       source = client.ipsecClient.cert;
     }
-  ) ((filterAttrs (_: hPrefs: hPrefs.ipsecClient.enable or false)) allHostPrefs);
+  ) ((lib.filterAttrs (_: hPrefs: hPrefs.ipsecClient.enable or false)) allHostPrefs);
 
-  extraClientCerts = mapAttrs' (
-    id: path: nameValuePair "ipsec.d/certs/${id}-cert.pem" { source = path; }
+  extraClientCerts = lib.mapAttrs' (
+    id: path: lib.nameValuePair "ipsec.d/certs/${id}-cert.pem" { source = path; }
   ) prefs.ipsecServer.extraClientCerts;
 in
 {
-  options.hostPrefs.ipsecServer = import ./options.nix {
-    inherit (lib) mkEnableOption mkOption types;
-  };
-
-  config = mkIf prefs.ipsecServer.enable {
-    assertions = import ./assertions.nix { inherit prefs; };
-
+  config = lib.mkIf prefs.ipsecServer.enable {
     networking.firewall = {
       checkReversePath = "loose";
       allowedUDPPorts = [

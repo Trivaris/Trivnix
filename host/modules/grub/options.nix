@@ -1,4 +1,4 @@
-{ mkEnableOption }:
+{ lib, ... }:
 {
-  enable = mkEnableOption "Enable GRUB Customization";
+  options.hostPrefs.grub.enable = lib.mkEnableOption "Enable GRUB Customization";
 }

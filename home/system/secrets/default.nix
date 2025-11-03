@@ -47,7 +47,6 @@ let
   ];
 in
 {
-  assertions = import ./assertions.nix { inherit inputs; };
   sops = {
     defaultSopsFile = commonSecrets;
     validateSopsFiles = true;

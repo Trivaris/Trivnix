@@ -1,12 +1,10 @@
+{ lib, ... }:
 {
-  mkEnableOption,
-  mkOption,
-  types,
-}:
-{
-  enable = mkEnableOption ''Enable the Glances API'';
-  port = mkOption {
-    type = types.port;
-    default = 61208;
+  options.hostPrefs.glances = {
+    enable = lib.mkEnableOption ''Enable the Glances API'';
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 61208;
+    };
   };
 }

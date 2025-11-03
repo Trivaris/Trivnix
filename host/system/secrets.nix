@@ -90,20 +90,6 @@ in
         };
       })
 
-      (mkIf prefs.nextcloud.enable {
-        nextcloud-admin-token = {
-          owner = "nextcloud";
-          group = "nextcloud";
-        };
-      })
-
-      (mkIf prefs.suwayomi.enable {
-        suwayomi-webui-password = {
-          inherit (config.suwayomi-server) group;
-          owner = config.suwayomi-server.user;
-        };
-      })
-
       (mkIf prefs.vaultwarden.enable {
         vaultwarden-admin-token = {
           owner = "vaultwarden";

@@ -1,34 +1,20 @@
-{
-  config,
-  lib,
-  pkgs,
-  trivnixLib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (lib) mkAliasOptionModule mkIf;
   prefs = config.hostPrefs;
 in
 {
   imports = [
-    (mkAliasOptionModule
+    (lib.mkAliasOptionModule
       [ "hostPrefs" "homepage" "settings" ]
       [ "services" "homepage-dashboard" "settings" ]
     )
-    (mkAliasOptionModule
+    (lib.mkAliasOptionModule
       [ "hostPrefs" "homepage" "widgets" ]
       [ "services" "homepage-dashboard" "widgets" ]
     )
   ];
 
-  options.hostPrefs.homepage = import ./options.nix {
-    inherit (config.vars) activeServices;
-    inherit (lib) mkEnableOption mkOption;
-    inherit (trivnixLib) mkReverseProxyOption;
-    inherit pkgs;
-  };
-
-  config = mkIf prefs.homepage.enable {
+  config = lib.mkIf prefs.homepage.enable {
     services.homepage-dashboard = {
       enable = true;
       openFirewall = !prefs.homepage.reverseProxy.enable;

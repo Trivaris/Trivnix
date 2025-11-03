@@ -11,7 +11,7 @@ in
       "$alt_mod" = "ALT";
     }
     // (mapAttrs (_: value: flatten (builtins.attrValues value)) (
-      import ./binds.nix { inherit config lib; }
+      import ./_binds.nix { inherit config lib; }
     ));
   };
 }

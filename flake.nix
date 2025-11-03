@@ -6,6 +6,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
+    importTree.url = "github:vic/import-tree";
 
     # Personal repos
     trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
@@ -15,7 +16,6 @@
       url = "github:Trivaris/TrivnixLib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
 
     trivnixOverlays = {
       url = "github:Trivaris/TrivnixOverlays";

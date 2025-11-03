@@ -1,18 +1,9 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.ipsecClient = import ./options.nix {
-    inherit (lib) mkEnableOption mkOption types;
-  };
-
-  config = mkIf prefs.ipsecClient.enable {
+  config = lib.mkIf prefs.ipsecClient.enable {
     environment.etc."ipsec.d/ipsec.secrets" = {
       mode = "0600";
       user = "root";

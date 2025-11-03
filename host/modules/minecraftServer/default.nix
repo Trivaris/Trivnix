@@ -2,21 +2,13 @@
   config,
   lib,
   pkgs,
-  trivnixLib,
   ...
 }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.minecraftServer = import ./options.nix {
-    inherit (lib) mkEnableOption mkOption types;
-    inherit (trivnixLib) mkReverseProxyOption;
-    inherit pkgs;
-  };
-
-  config = mkIf prefs.minecraftServer.enable {
+  config = lib.mkIf prefs.minecraftServer.enable {
     services.minecraft-servers = {
       enable = true;
       eula = true;

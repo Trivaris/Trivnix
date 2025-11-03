@@ -895,6 +895,21 @@
         "type": "github"
       }
     },
+    "importTree": {
+      "locked": {
+        "lastModified": 1761120675,
+        "narHash": "sha256-TEbh9zISiQcU82VwVoEbmXHnSGlUxTwvjJA9g9ErSDA=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "a037ed2a58fc0ebed9e93b9ef79b0646e648f719",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "mailserver": {
       "inputs": {
         "blobs": "blobs",
@@ -1270,6 +1285,7 @@
         "disko": "disko",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "importTree": "importTree",
         "mailserver": "mailserver",
         "nix-minecraft": "nix-minecraft",
         "nixowos": "nixowos",
@@ -1518,11 +1534,11 @@
     },
     "trivnixConfigs": {
       "locked": {
-        "lastModified": 1762107283,
-        "narHash": "sha256-3CkXkVwLh32Jza02wgxusIvNH5pG4cV4uMtbNvaW/YY=",
+        "lastModified": 1762166124,
+        "narHash": "sha256-BvduuzTAujH0ztSqMI1x5vErnLtZ88iNh5NbkzF02iQ=",
         "owner": "Trivaris",
         "repo": "TrivnixConfigs",
-        "rev": "ae4aa0a804ccc707528d3662b653a9a5691880f4",
+        "rev": "36c798954d4ad10a1e722718791a6e7750509beb",
         "type": "github"
       },
       "original": {
@@ -1538,11 +1554,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759092290,
-        "narHash": "sha256-/J3meZZjOj1uPH1tyaSIFFbKvrJn7s1wLl7vixqrRwU=",
+        "lastModified": 1762165101,
+        "narHash": "sha256-hs6LCiNCou48X3J/BNfo3ehRvSgZ09e5iBqrYjxad6k=",
         "owner": "Trivaris",
         "repo": "TrivnixLib",
-        "rev": "f2152a27c9f776e3c626ae6f69dd2123eaa94abe",
+        "rev": "43355f6e10c0b5d447b1b31b9740fb897d5f7422",
         "type": "github"
       },
       "original": {

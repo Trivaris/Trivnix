@@ -1,27 +1,9 @@
-{
-  config,
-  lib,
-  trivnixLib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.collabora = import ./options.nix {
-    inherit (lib)
-      mkEnableOption
-      mkOption
-      optionalString
-      types
-      ;
-
-    inherit (trivnixLib) mkReverseProxyOption;
-    inherit prefs;
-  };
-
-  config = mkIf prefs.collabora.enable {
+  config = lib.mkIf prefs.collabora.enable {
     services.collabora-online = {
       inherit (prefs.collabora.reverseProxy) port;
       enable = true;
@@ -42,7 +24,7 @@ in
             post_allow.host = [ prefs.collabora.reverseProxy.ipAddress ];
           };
 
-          storage.wopi = mkIf (prefs.collabora.nextcloudFQDNs != null) {
+          storage.wopi = lib.mkIf (prefs.collabora.nextcloudFQDNs != null) {
             "@allow" = true;
             host = prefs.collabora.nextcloudFQDNs;
           };

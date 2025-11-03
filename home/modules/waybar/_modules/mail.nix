@@ -10,7 +10,7 @@ let
 in
 {
   settings."custom/mail" = {
-    exec = "${./scripts/mail.py}";
+    exec = ../scripts/mail.py;
     interval = 300;
     return-type = "json";
     signal = 4;

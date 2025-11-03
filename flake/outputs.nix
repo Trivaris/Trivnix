@@ -1,7 +1,12 @@
-inputs@{ self, ... }:
+inputs@{
+  self,
+  trivnixConfigs,
+  nixpkgs,
+  importTree,
+  ...
+}:
 let
-  inherit (inputs.nixpkgs) lib;
-  inherit (inputs) trivnixConfigs;
+  inherit (nixpkgs) lib;
 
   systems = import ./systems.nix { inherit lib trivnixConfigs; };
   trivnixLib = inputs.trivnixLib.lib.for { selfArg = self; };
@@ -10,23 +15,34 @@ let
   modules = import ./modules.nix { inherit inputs; };
   overlays = import ./overlays.nix { inherit inputs; };
 
-  mkHomeManager = trivnixLib.mkHomeManager { inherit inputs overlays trivnixConfigs; };
-  mkNixOS = trivnixLib.mkNixOS { inherit inputs overlays trivnixConfigs; };
+  mkHomeManager = trivnixLib.mkHomeManager {
+    inherit
+      inputs
+      overlays
+      trivnixConfigs
+      importTree
+      ;
+  };
+
+  mkNixOS = trivnixLib.mkNixOS {
+    inherit
+      inputs
+      overlays
+      trivnixConfigs
+      importTree
+      ;
+  };
 in
 {
-  devShells = forAllSystems (import ./devShells.nix);
-
-  checks = forAllSystems (
-    import ./checks.nix {
-      inherit (modules) homeManagerModules homeModules hostModules;
-      inherit
-        mkHomeManager
-        mkNixOS
-        self
-        trivnixConfigs
-        ;
+  devShells = forAllSystems (
+    { pkgs }:
+    {
+      default = pkgs.callPackage ../shell.nix { };
     }
   );
+  
+  nixosModules.default = importTree ../host;
+  homeManagerModules.default = importTree ../home;
 
   nixosConfigurations = import ./nixosConfigurations.nix {
     inherit (modules) homeModules hostModules;
@@ -37,4 +53,5 @@ in
     inherit (modules) homeManagerModules homeModules;
     inherit lib mkHomeManager trivnixConfigs;
   };
+
 }

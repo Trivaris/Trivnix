@@ -4,21 +4,13 @@
   lib,
   osConfig,
   pkgs,
-  trivnixLib,
   ...
 }:
 let
   inherit (lib) mkIf mkOption types;
-
   prefs = config.userPrefs;
-  imports = trivnixLib.resolveDir {
-    dirPath = ./.;
-    preset = "importList";
-  };
 in
 {
-  inherit imports;
-
   options.userPrefs = {
     hyprland.wallpapers = mkOption {
       type = types.listOf types.path;

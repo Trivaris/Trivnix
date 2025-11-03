@@ -1,21 +1,11 @@
 {
   config,
-  inputs,
   lib,
   userInfos,
   ...
 }:
 let
-  inherit (inputs.trivnixPrivate) emailAccounts;
-  inherit (lib)
-    mkOption
-    mkIf
-    mapAttrs'
-    nameValuePair
-    types
-    filterAttrs
-    ;
-
+  inherit (lib) mkIf mapAttrs' nameValuePair;
   prefs = config.userPrefs;
 
   getSecurity =
@@ -28,35 +18,7 @@ let
       "ssl";
 in
 {
-  options = {
-    userPrefs.email = import ./options.nix {
-      inherit (lib)
-        mkEnableOption
-        mkOption
-        pipe
-        types
-        ;
-
-      inherit emailAccounts userInfos;
-    };
-
-    vars.filteredEmailAccounts = mkOption {
-      type = types.attrs;
-
-      default = filterAttrs (accountName: _: !(builtins.elem accountName prefs.email.exclude)) (
-        emailAccounts.${userInfos.name} or { }
-      );
-
-      description = ''
-        Derived set of email accounts after applying the `exclude` filter.
-        Downstream modules reuse this attrset for secrets and application configs.
-      '';
-    };
-  };
-
   config = mkIf prefs.email.enable {
-    assertions = import ./assertions.nix { inherit inputs prefs; };
-
     accounts.email.accounts = mapAttrs' (
       accountName: account:
       nameValuePair accountName (

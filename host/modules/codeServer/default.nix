@@ -1,20 +1,9 @@
-{
-  config,
-  lib,
-  trivnixLib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.codeServer = import ./options.nix {
-    inherit (lib) mkEnableOption;
-    inherit (trivnixLib) mkReverseProxyOption;
-  };
-
-  config = mkIf prefs.codeServer.enable {
+  config = lib.mkIf prefs.codeServer.enable {
     services.code-server = {
       enable = true;
       inherit (prefs.codeServer.reverseProxy) port;

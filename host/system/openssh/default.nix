@@ -1,12 +1,9 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.openssh = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
-
-  config = mkIf prefs.openssh.enable {
+  config = lib.mkIf prefs.openssh.enable {
     networking.firewall.allowedTCPPorts = prefs.openssh.ports;
     services = {
       openssh = {

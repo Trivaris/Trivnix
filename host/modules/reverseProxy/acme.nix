@@ -1,9 +1,7 @@
-{
-  config,
-  nameValuePair,
-  prefs,
-}:
+{ config, lib, ... }:
 let
+  prefs = config.hostPrefs;
+  acmeUnits = map (service: "acme-${service.domain}.service") config.vars.activeServices;
   body = {
     inherit (prefs.reverseProxy) email;
     dnsProvider = "cloudflare";
@@ -12,11 +10,20 @@ let
   };
 in
 {
-  acceptTerms = true;
-  certs = builtins.listToAttrs (
-    (map (service: nameValuePair service.domain body) config.vars.activeServices)
-    ++ (map (extraCertDomain: nameValuePair extraCertDomain body) (
-      prefs.reverseProxy.extraCertDomains ++ config.vars.extraCertDomains
-    ))
-  );
+  config = lib.mkIf prefs.reverseProxy.enable {
+    security.acme = {
+      acceptTerms = true;
+      certs = builtins.listToAttrs (
+        (map (service: lib.nameValuePair service.domain body) config.vars.activeServices)
+        ++ (map (extraCertDomain: lib.nameValuePair extraCertDomain body) (
+          prefs.reverseProxy.extraCertDomains ++ config.vars.extraCertDomains
+        ))
+      );
+    };
+
+    systemd.services.nginx = {
+      requires = acmeUnits;
+      after = acmeUnits;
+    };
+  };
 }

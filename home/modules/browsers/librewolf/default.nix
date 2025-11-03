@@ -27,9 +27,7 @@ let
   '';
 in
 {
-  options.userPrefs.librewolf = import ./options.nix { inherit (lib) mkEnableOption mkOption types; };
   config = mkIf (builtins.elem "librewolf" prefs.browsers) {
-    assertions = import ./assertions.nix { inherit inputs prefs; };
     stylix.targets.librewolf.enable = false;
 
     home.file = {

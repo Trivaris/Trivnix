@@ -17,14 +17,11 @@ in
         (builtins.elem "hyprland")
       ])
       {
-        assertions = import ./assertions.nix { inherit hostInfos inputs; };
-
+        security.pam.services.hyprlock = { };
         programs.hyprland = {
           enable = true;
           package = inputs.hyprland.packages.${hostInfos.architecture}.hyprland;
           portalPackage = inputs.hyprland.packages.${hostInfos.architecture}.xdg-desktop-portal-hyprland;
         };
-
-        security.pam.services.hyprlock = { };
       };
 }

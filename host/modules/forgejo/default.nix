@@ -1,21 +1,13 @@
 {
   config,
   lib,
-  trivnixLib,
   ...
 }:
 let
-  inherit (lib) mkIf optionalAttrs;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.forgejo = import ./options.nix {
-    inherit (lib) mkEnableOption;
-    inherit (trivnixLib) mkReverseProxyOption;
-  };
-
-  config = mkIf prefs.forgejo.enable {
-    assertions = import ./assertions.nix { inherit prefs; };
+  config = lib.mkIf prefs.forgejo.enable {
     services.forgejo = {
       enable = true;
       lfs.enable = true;
@@ -37,7 +29,7 @@ in
           HTTP_PORT = prefs.forgejo.reverseProxy.port;
         };
 
-        mailer = optionalAttrs prefs.forgejo.sendMails {
+        mailer = lib.optionalAttrs prefs.forgejo.sendMails {
           ENABLED = true;
           PROTOCOL = "smtp";
           SMTP_ADDR = "127.0.0.1";
