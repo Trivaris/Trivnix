@@ -27,16 +27,12 @@ let
   '';
 in
 {
-  config = mkIf (builtins.elem "librewolf" prefs.browsers) {
+  config = mkIf prefs.librewolf.enable {
     stylix.targets.librewolf.enable = false;
 
     home.file = {
       ".librewolf/${userInfos.name}/user.js".text =
-        let
-          betterfoxJs =
-            if prefs.librewolf.betterfox then builtins.readFile "${inputs.betterfox}/user.js" else "";
-        in
-        betterfoxJs + overrides;
+        (builtins.readFile "${inputs.betterfox}/user.js") + overrides;
 
       ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
         :root {
@@ -118,10 +114,10 @@ in
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        SanitizeOnShutdown = mkIf prefs.librewolf.clearOnShutdown true;
+        SanitizeOnShutdown = true;
         Cookies.Allow = prefs.librewolf.allowedCookies;
 
-        ClearOnShutdown = mkIf prefs.librewolf.clearOnShutdown {
+        ClearOnShutdown = {
           cache = true;
           cookies = true;
           downloads = true;

@@ -4,7 +4,9 @@ let
   prefs = config.userPrefs;
   isEnabled =
     module:
-    builtins.elem module (prefs.misc.otherPrograms ++ (builtins.attrValues prefs.misc.otherPackages));
+    builtins.elem module (
+      prefs.misc.otherPrograms ++ (lib.flatten (builtins.attrValues prefs.misc.otherPackages))
+    );
 in
 {
   bind = {
@@ -52,12 +54,13 @@ in
 
       "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
       "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
-      "$mod, W, exec, ${builtins.head prefs.browsers}"
     ]
     ++ [
+      (mkIf prefs.librewolf.enable "$mod, W, exec, librewolf")
+      (mkIf (isEnabled "vscode") "$mod, A, exec, code")
+      (mkIf (isEnabled "vscodium") "$mod, A, exec, codium")
       (mkIf (isEnabled "spotify" || isEnabled "spicetify") "$mod, S, exec, spotify")
       (mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
-      (mkIf prefs.vscode.enable "$mod, A, exec, ${if prefs.vscode.useCodium then "codium" else "code"}")
       (mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
     ];
 

@@ -34,6 +34,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mailserver = {
+      url = "gitlab:trivaris/nixos-mailserver";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Core/community modules
     disko = {
       url = "github:nix-community/disko";
@@ -42,11 +47,6 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -81,22 +81,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvf = {
-      url = "github:NotAShelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Non-flake sources
-    appflowy = {
-      url = "github:appflowy-io/AppFlowy-Cloud";
-      flake = false;
-    };
-
     betterfox = {
       url = "github:yokoffing/Betterfox";
       flake = false;

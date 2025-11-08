@@ -1,31 +1,41 @@
 {
-  homeManagerModules,
-  homeModules,
-  hostModules,
+  modules,
   mkHomeManager,
   mkNixOS,
-  self,
-  trivnixConfigs,
+  inputs,
+  lib,
+  stdenv,
+  runCommand,
+  bash,
+  coreutils,
+  deadnix,
+  findutils,
+  nixfmt,
+  statix,
 }:
-{ pkgs }:
 let
-  inherit (pkgs.lib)
+  inherit (lib)
     concatMapAttrs
     filterAttrs
     mapAttrs'
     nameValuePair
     ;
 
-  hostsForSystem = filterAttrs (_: cfg: cfg.infos.architecture == pkgs.system) trivnixConfigs.configs;
+  hostsForSystem = filterAttrs (
+    _: cfg: cfg.infos.architecture == stdenv.hostPlatform.system
+  ) inputs.trivnixConfigs.configs;
 
   evalNixos = mapAttrs' (
     configname: _:
     let
-      nixos = mkNixOS { inherit configname homeModules hostModules; };
+      nixos = mkNixOS {
+        inherit (modules) homeModules hostModules;
+        inherit configname;
+      };
     in
     nameValuePair "eval-nixos-${configname}" (
       builtins.seq nixos.config.system.build.toplevel.drvPath (
-        pkgs.runCommand "eval-nixos-${configname}" { } ''
+        runCommand "eval-nixos-${configname}" { } ''
           echo ok > $out
         ''
       )
@@ -39,12 +49,12 @@ let
       let
         hm = mkHomeManager {
           inherit configname username;
-          homeModules = homeModules ++ homeManagerModules;
+          homeModules = modules.homeModules ++ modules.homeManagerModules;
         };
       in
       nameValuePair "eval-home-${username}@${configname}" (
         builtins.seq (hm.activationPackage.drvPath or hm.activationPackage) (
-          pkgs.runCommand "eval-home-${username}@${configname}" { } ''
+          runCommand "eval-home-${username}@${configname}" { } ''
             echo ok > $out
           ''
         )
@@ -53,19 +63,17 @@ let
   ) hostsForSystem;
 
   lint =
-    pkgs.runCommand "lint"
+    runCommand "lint"
       {
-        src = self;
-        nativeBuildInputs = builtins.attrValues {
-          inherit (pkgs)
-            bash
-            coreutils
-            deadnix
-            findutils
-            nixfmt
-            statix
-            ;
-        };
+        src = inputs.self;
+        nativeBuildInputs = [
+          bash
+          coreutils
+          deadnix
+          findutils
+          nixfmt
+          statix
+        ];
       }
       ''
         cp -r "$src" repo

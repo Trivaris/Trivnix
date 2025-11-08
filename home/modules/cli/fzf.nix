@@ -5,7 +5,7 @@ let
   isShell = shell: prefs.shell == shell;
 in
 {
-  config = mkIf (builtins.elem "fzf" prefs.cli.enabled) {
+  config = mkIf prefs.cli.enable {
     programs.fzf = {
       enable = true;
       defaultCommand = "fd --type f --exclude .git --follow --hidden";
@@ -14,7 +14,7 @@ in
       enableBashIntegration = isShell "bash";
       enableZshIntegration = isShell "zsh";
       defaultOptions = [
-        "--preview='bat --color=always -n {}'"
+        "--preview='bat --color=always --style=numbers --line-range=:500 {}'"
         "--bind 'ctrl-/:toggle-preview'"
       ];
     };

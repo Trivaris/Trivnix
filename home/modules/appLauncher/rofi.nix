@@ -5,11 +5,10 @@
 }:
 let
   inherit (config.lib.formats.rasi) mkLiteral;
-  inherit (lib) mkIf;
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (prefs.appLauncher == "rofi") {
+  config = lib.mkIf (prefs.appLauncher == "rofi") {
     vars.appLauncherFlags = "-show drun";
     programs.rofi = {
       enable = true;

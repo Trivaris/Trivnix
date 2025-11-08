@@ -40,9 +40,22 @@ in
       default = pkgs.callPackage ../shell.nix { };
     }
   );
-  
+
+  formatter = forAllSystems ({ pkgs }: pkgs.nixfmt);
+
+  checks = forAllSystems (
+    { pkgs }:
+    {
+      lint = pkgs.callPackage ./lintCheck.nix {
+        inherit
+          inputs
+          ;
+      };
+    }
+  );
+
   nixosModules.default = importTree ../host;
-  homeManagerModules.default = importTree ../home;
+  homeModules.default = importTree ../home;
 
   nixosConfigurations = import ./nixosConfigurations.nix {
     inherit (modules) homeModules hostModules;
@@ -53,5 +66,4 @@ in
     inherit (modules) homeManagerModules homeModules;
     inherit lib mkHomeManager trivnixConfigs;
   };
-
 }

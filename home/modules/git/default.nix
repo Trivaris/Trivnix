@@ -11,46 +11,51 @@ let
   allowedSignersFile = ".config/git/allowed_signers";
 in
 {
-  programs.git = {
-    enable = true;
-    userName = prefs.git.name;
-    userEmail = prefs.git.email;
+  programs = {
+    git = {
+      enable = true;
 
-    signing = mkIf prefs.git.enableSigning {
-      format = "ssh";
-      signByDefault = true;
-      key = "${config.sops.secrets.git-signing-key.path}";
+      settings = {
+        user = {
+          inherit (prefs.git) name email;
+        };
+
+        credential.helper = "store";
+        init.defaultBranch = "main";
+        gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
+        url = mapAttrs' (name: value: nameValuePair name { insteadOf = value; }) prefs.git.urlAliases;
+
+        color.diff = {
+          meta = "black bold";
+          frag = "magenta";
+          context = "white";
+          whitespace = "yellow reverse";
+          old = "red";
+        };
+
+        status = {
+          branch = true;
+          showStash = true;
+          showUntrackedFiles = true;
+        };
+
+        core = {
+          autocrlf = "input";
+          hooksPath = ".githooks";
+        };
+      };
+
+      signing = mkIf prefs.git.enableSigning {
+        format = "ssh";
+        signByDefault = true;
+        key = "${config.sops.secrets.git-signing-key.path}";
+      };
     };
 
     diff-so-fancy = {
       enable = true;
-      markEmptyLines = false;
-    };
-
-    extraConfig = {
-      credential.helper = "store";
-      init.defaultBranch = "main";
-      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
-      url = mapAttrs' (name: value: nameValuePair name { insteadOf = value; }) prefs.git.urlAliases;
-
-      color.diff = {
-        meta = "black bold";
-        frag = "magenta";
-        context = "white";
-        whitespace = "yellow reverse";
-        old = "red";
-      };
-
-      status = {
-        branch = true;
-        showStash = true;
-        showUntrackedFiles = true;
-      };
-
-      core = {
-        autocrlf = "input";
-        hooksPath = ".githooks";
-      };
+      enableGitIntegration = true;
+      settings.markEmptyLines = false;
     };
   };
 

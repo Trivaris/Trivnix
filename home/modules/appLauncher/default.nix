@@ -1,11 +1,11 @@
 { lib, trivnixLib, ... }:
 let
-  inherit (lib) mkOption types;
+  inherit (lib) types;
   modules = trivnixLib.getModules ./.;
 in
 {
   options = {
-    userPrefs.appLauncher = mkOption {
+    userPrefs.appLauncher = lib.mkOption {
       type = types.nullOr (types.enum modules);
       default = null;
       example = "rofi";
@@ -15,7 +15,7 @@ in
       '';
     };
 
-    vars.appLauncherFlags = mkOption {
+    vars.appLauncherFlags = lib.mkOption {
       type = types.str;
       default = "";
       description = ''

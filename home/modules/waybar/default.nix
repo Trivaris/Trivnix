@@ -19,15 +19,17 @@ in
     let
       scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
       getColor = trivnixLib.getColor scheme;
-      modules = builtins.attrValues(lib.packagesFromDirectoryRecursive {
-        directory = ./_modules;
-        callPackage =
-          path: _:
-          pkgs.callPackage path {
-            inherit (osConfig) hostPrefs;
-            inherit getColor config;
-          };
-      });
+      modules = builtins.attrValues (
+        lib.packagesFromDirectoryRecursive {
+          directory = ./_modules;
+          callPackage =
+            path: _:
+            pkgs.callPackage path {
+              inherit (osConfig) hostPrefs;
+              inherit getColor config;
+            };
+        }
+      );
     in
     {
       programs.waybar = {

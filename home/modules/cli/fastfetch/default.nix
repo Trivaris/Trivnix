@@ -13,7 +13,7 @@ let
   getColor = trivnixLib.getColor scheme;
 in
 {
-  config = mkIf (builtins.elem "fastfetch" prefs.cli.enabled) {
+  config = mkIf prefs.cli.enable {
     programs.fastfetch = {
       enable = true;
       settings = {
