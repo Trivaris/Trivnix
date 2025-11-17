@@ -25,7 +25,8 @@ in
       "$mod, TAB, workspace, e+1"
       "$mod SHIFT, TAB, workspace, e-1"
     ]
-    ++ map (index: "$mod, ${toString index}, workspace, ${toString index}") (range 0 9);
+    ++ (map (index: "$mod, ${toString index}, workspace, ${toString index}") (range 0 9))
+    ++ (map (index: "$mod SHIFT, ${toString index}, movetoworkspace, ${toString index}") (range 0 9));
 
     mouseFloat = [
       # Make active window floating for mouse drag/resize
