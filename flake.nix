@@ -17,10 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    trivnixOverlays = {
-      url = "github:Trivaris/TrivnixOverlays";
-      inputs.trivnixLib.follows = "trivnixLib";
-    };
+    trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
 
     # Personal Forks
     # millennium.url = "github:Trivaris/Millennium";
