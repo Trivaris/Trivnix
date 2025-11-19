@@ -13,7 +13,7 @@ in
       openFirewall = !prefs.actual.reverseProxy.enable;
       settings = {
         inherit (prefs.actual.reverseProxy) port;
-        hostname = prefs.actual.reverseProxy.domain;
+        hostname = prefs.actual.reverseProxy.ipAddress;
       };
     };
   };
