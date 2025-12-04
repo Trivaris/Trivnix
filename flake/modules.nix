@@ -14,7 +14,6 @@
   ];
 
   homeModules = [
-    inputs.adbAutoPlayer.homeModules.default
     inputs.nixowos.homeModules.default
     inputs.sops-nix.homeManagerModules.sops
     inputs.spicetify-nix.homeManagerModules.spicetify

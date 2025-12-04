@@ -21,10 +21,10 @@
 
     # Personal Forks
     # millennium.url = "github:Trivaris/Millennium";
-    adbAutoPlayer = {
-      url = "github:Trivaris/AdbAutoPlayer";
-      inputs.pythonOverlays.follows = "trivnixOverlays";
-    };
+    # adbAutoPlayer = {
+    #   url = "github:Trivaris/AdbAutoPlayer";
+    #   inputs.pythonOverlays.follows = "trivnixOverlays";
+    # };
 
     cfddns = {
       url = "github:Trivaris/cloudflare-dyndns-nix";
