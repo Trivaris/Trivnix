@@ -74,8 +74,19 @@ in
 
     screenshot = [
       # Region screenshot with selection (hyprshot)
-      ", Print, exec, hyprshot -m region"
+      ", Print, exec, HYPRSHOT_DIR=~/Pictures/Screenshots/ hyprshot -m region"
     ];
+
+    specialChars = [
+      "$alt_mod, O, exec, wtype ö"
+      "$alt_mod SHIFT, O, exec, wtype Ö"
+      "$alt_mod, A, exec, wtype ä"
+      "$alt_mod SHIFT, A, exec, wtype Ä"
+      "$alt_mod, U, exec, wtype ü"
+      "$alt_mod SHIFT, U, exec, wtype Ü"
+      "$alt_mod, S, exec, wtype ß"
+    ];
+
   };
 
   bindm = {

@@ -90,6 +90,13 @@ in
         };
       })
 
+      (mkIf prefs.openconnectClient.enable {
+        openconnect-vpn-password = {
+          owner = "root";
+          group = "root";
+        };
+      })
+
       (mkIf prefs.vaultwarden.enable {
         vaultwarden-admin-token = {
           owner = "vaultwarden";

@@ -53,6 +53,7 @@ in
         networkmanagerapplet
         networkmanager-strongswan
         strongswan
+        wtype
         ;
     };
 

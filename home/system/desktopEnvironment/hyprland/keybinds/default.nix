@@ -9,6 +9,7 @@ in
       bind.drag_threshold = 10;
       "$mod" = "SUPER";
       "$alt_mod" = "ALT";
+      "$alt_gr_mod" = "ALT_R";
     }
     // (mapAttrs (_: value: flatten (builtins.attrValues value)) (
       import ./_binds.nix { inherit config lib; }
