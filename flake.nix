@@ -20,7 +20,9 @@
     trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
 
     # Personal Forks
-    # millennium.url = "github:Trivaris/Millennium";
+    millennium = {
+      url = "github:Trivaris/Millennium";
+    };
     # adbAutoPlayer = {
     #   url = "github:Trivaris/AdbAutoPlayer";
     #   inputs.pythonOverlays.follows = "trivnixOverlays";
