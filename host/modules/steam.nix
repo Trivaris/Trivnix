@@ -15,13 +15,8 @@ in
   '';
 
   config = mkIf prefs.steam.enable {
-    programs.steam = {
-      enable = true;
-      # package = pkgs.millennium;
-      extraCompatPackages = [ pkgs.proton-ge-bin ];
-      extraPackages = [ pkgs.gamescope ];
-      protontricks.enable = true;
-      extest.enable = true;
-    };
+    environment.systemPackages = [
+      pkgs.steam-millennium
+    ];
   };
 }
