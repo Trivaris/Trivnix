@@ -20,13 +20,7 @@
     trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
 
     # Personal Forks
-    millennium = {
-      url = "github:Trivaris/Millennium";
-    };
-    # adbAutoPlayer = {
-    #   url = "github:Trivaris/AdbAutoPlayer";
-    #   inputs.pythonOverlays.follows = "trivnixOverlays";
-    # };
+    millennium.url = "github:Trivaris/Millennium?dir=packages/nix";
 
     cfddns = {
       url = "github:Trivaris/cloudflare-dyndns-nix";

@@ -15,8 +15,10 @@ in
   '';
 
   config = mkIf prefs.steam.enable {
-    environment.systemPackages = [
-      pkgs.steam-millennium
-    ];
+    programs.steam = {
+      enable = true;
+      package = pkgs.millennium-steam;
+      extraCompatPackages = [ pkgs.proton-ge-bin ];
+    };
   };
 }
