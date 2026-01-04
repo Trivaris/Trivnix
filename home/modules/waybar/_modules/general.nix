@@ -45,8 +45,8 @@
     window#waybar {
       background: ${getColor "base00"};
       margin: 0;
-      padding: 8px 12px; /* add vertical room so background is taller */
-      border-radius: 0 0 20px 20px; /* round bottom only to frame wallpaper */
+      padding: 8px 12px;
+      border-radius: 0 0 20px 20px;
     }
 
     window#waybar.hidden {
@@ -54,7 +54,6 @@
     }
 
     #window {
-      /* reset inherited margins to let window padding control vertical spacing */
       margin-top: 0;
       padding: 0 10px;
       border-radius: 10px;

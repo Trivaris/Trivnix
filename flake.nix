@@ -5,7 +5,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
+    nixpkgs.url = "github:Trivaris/nixpkgs-millennium?shallow=1";
     importTree.url = "github:vic/import-tree";
 
     # Personal repos
@@ -20,7 +20,7 @@
     trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
 
     # Personal Forks
-    millennium.url = "github:Trivaris/Millennium?dir=packages/nix";
+    # millennium.url = "github:Trivaris/Millennium?dir=packages/nix";
 
     cfddns = {
       url = "github:Trivaris/cloudflare-dyndns-nix";
@@ -66,11 +66,6 @@
 
     nix-minecraft = {
       url = "github:Yeshey/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixowos = {
-      url = "github:yunfachi/nixowos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

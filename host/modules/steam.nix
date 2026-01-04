@@ -17,7 +17,7 @@ in
   config = mkIf prefs.steam.enable {
     programs.steam = {
       enable = true;
-      package = pkgs.millennium-steam;
+      enableMillennium = true;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
     };
   };

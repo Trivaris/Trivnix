@@ -45,14 +45,5 @@ in
       color: ${getColor "base0C"};
       background: transparent;
     }
-
-    #custom-wallpaper {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
-      color: ${getColor "base0D"};
-      background: transparent;
-    }
   '';
 }

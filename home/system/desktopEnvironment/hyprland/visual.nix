@@ -20,7 +20,6 @@ in
     in
     mkIf (prefs.desktopEnvironment == "hyprland") {
       wayland.windowManager.hyprland.settings = {
-        layerrule = [ "blur, logout_dialog" ];
         master.new_status = "master";
 
         general = {
@@ -44,7 +43,7 @@ in
           fullscreen_opacity = 1.0;
 
           blur = {
-            size = 8;
+            enabled = true;
             passes = 2;
           };
 

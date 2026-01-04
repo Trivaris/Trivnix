@@ -45,7 +45,6 @@ in
 
   config = {
     time.timeZone = "Europe/Berlin";
-    nixowos.enable = true;
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
 
