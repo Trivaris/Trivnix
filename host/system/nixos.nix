@@ -1,7 +1,6 @@
 {
   allUserInfos,
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -47,8 +46,6 @@ in
     nix = {
       package = mkDefault pkgs.nix;
       optimise.automatic = true;
-      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-      registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
 
       gc = {
         automatic = true;
