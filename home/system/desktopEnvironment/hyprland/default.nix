@@ -12,14 +12,6 @@ let
 in
 {
   options.userPrefs = {
-    hyprland.wallpaper = mkOption {
-      type = types.path;
-      description = ''
-        Image path Hyprland uses as wallpaper.
-        Provide an absolute path so the Hyprland module can copy it into place.
-      '';
-    };
-
     waybar.weatherLocation = mkOption {
       type = types.nullOr types.str;
       default = null;
@@ -31,14 +23,15 @@ in
   };
 
   config = mkIf (prefs.desktopEnvironment == "hyprland") {
-    vars.desktopEnvironmentBinary = "${pkgs.hyprland}/bin/Hyprland";
+    vars.desktopEnvironmentBinary = "start-hyprland";
     stylix.targets.hyprland.enable = false;
 
     wayland.windowManager.hyprland = {
       enable = true;
-      package = null;
-      portalPackage = null;
-      systemd.variables = [ "--all" ];
+      settings.exec-one = [
+        "hyprpaper"
+        "swaync"
+      ];
       settings.input.kb_layout = mkIf isNixos osConfig.hostPrefs.language.keyMap;
     };
 
@@ -72,15 +65,6 @@ in
           layer-shell = true;
           positionX = "right";
           positionY = "top";
-        };
-      };
-
-      hyprpaper = {
-        enable = true;
-        settings = {
-          preload = [ prefs.hyprland.wallpaper ];
-          wallpaper = ",${prefs.hyprland.wallpaper}";
-          splash = false;
         };
       };
     };

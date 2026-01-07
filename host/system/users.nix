@@ -19,10 +19,7 @@ let
 
   allShells = mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
 
-  sshKeys = pipe config.private.pubKeys.hosts [
-    (mapAttrs (_: value: (removeAttrs value.users [ "root" ])))
-    trivnixLib.recursiveAttrValues
-  ];
+  sshKeys = map builtins.readFile (lib.collect builtins.isPath config.private.pubKeys.hosts);
 
   allUsers = {
     root = {

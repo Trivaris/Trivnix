@@ -17,7 +17,6 @@ let
   getColor = trivnixLib.getColor pkgs scheme;
 
   overrides = ''
-
     /** OVERRIDES ***/
     user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
     user_pref("places.history.enabled", false);
@@ -27,7 +26,7 @@ let
 
   betterFox = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js";
-    sha256 = "";
+    sha256 = "sha256-ZpWvGPD/nzOrYln+cnm3j/T02zsNHEsI053rEuPhQxQ=";
   };
 in
 {
@@ -35,7 +34,7 @@ in
     stylix.targets.librewolf.enable = false;
 
     home.file = {
-      ".librewolf/${userInfos.name}/user.js".text = betterFox + " \n" + overrides;
+      ".librewolf/${userInfos.name}/user.js".text = builtins.readFile betterFox + " \n" + overrides;
 
       ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
         :root {
