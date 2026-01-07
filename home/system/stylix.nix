@@ -10,11 +10,11 @@
 let
   prefs = if isNixos then osConfig.hostPrefs else config.userPrefs;
 
-  stylixOptions = import (trivnixLib.mkStorePath "shared/stylix/options.nix") {
+  stylixOptions = import ../../shared/stylix/options.nix {
     inherit (lib) mkEnableOption mkOption types;
   };
 
-  stylixConfig = import (trivnixLib.mkStorePath "shared/stylix/config.nix") {
+  stylixConfig = import ../../shared/stylix/config.nix {
     inherit
       config
       pkgs

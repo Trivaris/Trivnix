@@ -1,10 +1,9 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (prefs.terminalEmulator == "alacritty") {
+  config = lib.mkIf (prefs.terminalEmulator == "alacritty") {
     programs.alacritty = {
       enable = true;
       settings = {

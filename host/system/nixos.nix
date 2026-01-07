@@ -12,8 +12,6 @@ let
     isType
     mapAttrs
     mkDefault
-    mkEnableOption
-    mkIf
     mkOption
     types
     ;
@@ -22,8 +20,6 @@ let
 in
 {
   options.hostPrefs = {
-    ignoreLidShut = mkEnableOption "Ignore the shutting of the lid on your laptop";
-
     oldProfileDeleteInterval = mkOption {
       type = types.str;
       default = "3d";
@@ -45,15 +41,8 @@ in
 
   config = {
     time.timeZone = "Europe/Berlin";
-    nixowos.enable = true;
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
-
-    services.logind.settings.Login = mkIf prefs.ignoreLidShut {
-      HandleLidSwitch = "ignore";
-      HandleLidSwitchDocked = "ignore";
-      HandleLidSwitchExternalPower = "ignore";
-    };
 
     nix = {
       package = mkDefault pkgs.nix;

@@ -6,78 +6,28 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
-    importTree.url = "github:vic/import-tree";
 
     # Personal repos
     trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
     trivnixConfigs.url = "github:Trivaris/TrivnixConfigs";
-
-    trivnixLib = {
-      url = "github:Trivaris/TrivnixLib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    trivnixLib.url = "github:Trivaris/TrivnixLib";
     trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
 
     # Personal Forks
     millennium.url = "github:Trivaris/Millennium?dir=packages/nix";
-
-    cfddns = {
-      url = "github:Trivaris/cloudflare-dyndns-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mailserver = {
-      url = "gitlab:trivaris/nixos-mailserver";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    cfddns.url = "github:Trivaris/cloudflare-dyndns-nix";
 
     # Core/community modules
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    disko.url = "github:nix-community/disko";
+    nur.url = "github:nix-community/NUR";
+    sops-nix.url = "github:Mic92/sops-nix";
 
     # Extras and ecosystem modules
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-minecraft = {
-      url = "github:Yeshey/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixowos = {
-      url = "github:yunfachi/nixowos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "github:hyprwm/Hyprland";
+    nix-minecraft.url = "github:Yeshey/nix-minecraft";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    nvf.url = "github:notashelf/nvf";
+    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 
     # Non-flake sources
     betterfox = {

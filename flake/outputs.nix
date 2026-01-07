@@ -1,69 +1,56 @@
 inputs@{
   self,
   trivnixConfigs,
+  trivnixLib,
   nixpkgs,
-  importTree,
   ...
 }:
 let
   inherit (nixpkgs) lib;
 
-  systems = import ./systems.nix { inherit lib trivnixConfigs; };
-  trivnixLib = inputs.trivnixLib.lib.for { selfArg = self; };
-
-  forAllSystems = import ./forAllSystems.nix { inherit inputs lib systems; };
   modules = import ./modules.nix { inherit inputs; };
   overlays = import ./overlays.nix { inherit inputs; };
+  getPkgs = system: import nixpkgs { inherit system; };
+  forAllSystems = func: lib.genAttrs systems func;
 
-  mkHomeManager = trivnixLib.mkHomeManager {
-    inherit
-      inputs
-      overlays
-      trivnixConfigs
-      importTree
-      ;
+  systems = lib.unique (
+    lib.mapAttrsToList (_: config: config.infos.architecture) trivnixConfigs.configs
+  );
+
+  mkHomeManager = trivnixLib.lib.mkHomeManager {
+    inherit (trivnixConfigs) configs;
+    inherit overlays modules;
+    selfArg = self;
   };
 
-  mkNixOS = trivnixLib.mkNixOS {
-    inherit
-      inputs
-      overlays
-      trivnixConfigs
-      importTree
-      ;
+  mkNixOS = trivnixLib.lib.mkNixOS {
+    inherit (trivnixConfigs) configs;
+    inherit overlays modules;
+    selfArg = self;
   };
 in
 {
-  devShells = forAllSystems (
-    { pkgs }:
-    {
-      default = pkgs.callPackage ../shell.nix { };
-    }
-  );
 
-  formatter = forAllSystems ({ pkgs }: pkgs.nixfmt);
+  # nixosModules.default = importTree ../host;
+  # homeModules.default = importTree ../home;
+  formatter = forAllSystems (system: (getPkgs system).nixfmt);
+  checks = forAllSystems (system: {
+    lint = (getPkgs system).callPackage ./lintCheck.nix { inherit self; };
+  });
+  devShells = forAllSystems (system: {
+    default = (getPkgs system).callPackage ../shell.nix { pkgs = getPkgs system; };
+  });
 
-  checks = forAllSystems (
-    { pkgs }:
-    {
-      lint = pkgs.callPackage ./lintCheck.nix {
-        inherit
-          inputs
-          ;
-      };
-    }
-  );
+  nixosConfigurations = lib.mapAttrs (_: mkNixOS) trivnixConfigs.configs;
 
-  nixosModules.default = importTree ../host;
-  homeModules.default = importTree ../home;
+  homeConfigurations = lib.concatMapAttrs (
+    configname: hostConfig:
+    lib.mapAttrs' (
+      username: userConfig:
+      lib.nameValuePair "${username}@${configname}" (mkHomeManager {
+        inherit hostConfig userConfig;
+      })
+    ) hostConfig.users
+  ) trivnixConfigs.configs;
 
-  nixosConfigurations = import ./nixosConfigurations.nix {
-    inherit (modules) homeModules hostModules;
-    inherit lib mkNixOS trivnixConfigs;
-  };
-
-  homeConfigurations = import ./homeConfigurations.nix {
-    inherit (modules) homeManagerModules homeModules;
-    inherit lib mkHomeManager trivnixConfigs;
-  };
 }

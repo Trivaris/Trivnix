@@ -1,7 +1,6 @@
 {
   config,
   hostInfos,
-  inputs,
   isNixos,
   lib,
   osConfig,
@@ -15,7 +14,7 @@ let
   prefs = config.userPrefs;
 
   scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
-  getColor = trivnixLib.getColor scheme;
+  getColor = trivnixLib.getColor pkgs scheme;
 
   overrides = ''
 
@@ -25,14 +24,18 @@ let
     user_pref("sidebar.revamp", true);
     user_pref("sidebar.verticalTabs", true);
   '';
+
+  betterFox = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js";
+    sha256 = "";
+  };
 in
 {
   config = mkIf prefs.librewolf.enable {
     stylix.targets.librewolf.enable = false;
 
     home.file = {
-      ".librewolf/${userInfos.name}/user.js".text =
-        (builtins.readFile "${inputs.betterfox}/user.js") + overrides;
+      ".librewolf/${userInfos.name}/user.js".text = betterFox + " \n" + overrides;
 
       ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
         :root {
@@ -47,22 +50,9 @@ in
 
     programs.librewolf = {
       enable = true;
-      package = pkgs.librewolf-bin;
 
       profiles.${userInfos.name} = {
         isDefault = true;
-
-        extensions = {
-          force = true;
-          packages = builtins.attrValues {
-            inherit (pkgs.nur.repos.rycee.firefox-addons)
-              adnauseam
-              tab-session-manager
-              bitwarden
-              youtube-shorts-block
-              ;
-          };
-        };
 
         search = {
           default = "brave";

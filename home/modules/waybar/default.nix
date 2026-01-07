@@ -18,7 +18,7 @@ in
   config = mkIf (config.userPrefs.desktopEnvironment == "hyprland") (
     let
       scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
-      getColor = trivnixLib.getColor scheme;
+      getColor = trivnixLib.getColor pkgs scheme;
       modules = builtins.attrValues (
         lib.packagesFromDirectoryRecursive {
           directory = ./_modules;

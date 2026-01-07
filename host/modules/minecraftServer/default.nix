@@ -15,11 +15,10 @@ in
 
       servers =
         let
-          inherit (prefs.minecraftServer) modpack;
-          modpackPkg = pkgs.modpacks.${modpack};
+          modpackPkg = pkgs.${prefs.minecraftServer.modpack};
         in
         {
-          ${modpack} = {
+          ${prefs.minecraftServer.modpack} = {
             enable = true;
             openFirewall = !prefs.minecraftServer.reverseProxy.enable;
             jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";

@@ -1,6 +1,6 @@
 {
+  self,
   runCommand,
-  inputs,
   bash,
   coreutils,
   deadnix,
@@ -10,7 +10,7 @@
 }:
 runCommand "lint"
   {
-    src = inputs.self;
+    src = self;
     nativeBuildInputs = [
       bash
       coreutils

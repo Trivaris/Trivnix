@@ -7,7 +7,9 @@ in
     services.tandoor-recipes = {
       inherit (prefs.tandoor.reverseProxy) port;
       enable = true;
-      address = prefs.tandoor.reverseProxy.domain;
+      address =
+        if prefs.tandoor.reverseProxy.enable then "localhost" else prefs.tandoor.reverseProxy.domain;
+      extraConfig.MEDIA_ROOT = "/var/lib/tandoor/media/";
     };
   };
 }

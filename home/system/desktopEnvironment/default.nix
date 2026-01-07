@@ -8,7 +8,7 @@ in
     userPrefs.desktopEnvironment = mkOption {
       type = types.nullOr (types.enum modules);
       default = null;
-      example = "kde";
+      example = "hyprland";
       description = ''
         Desktop environment module to configure for this user session.
         Map to entries in `home/common/desktopEnvironment` or leave null to skip.

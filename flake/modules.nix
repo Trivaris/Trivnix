@@ -1,25 +1,26 @@
 { inputs }:
 {
-  hostModules = [
+  host = [
     inputs.cfddns.nixosModules.default
     inputs.disko.nixosModules.disko
-    inputs.home-manager.nixosModules.home-manager
     inputs.mailserver.nixosModules.default
     inputs.nix-minecraft.nixosModules.minecraft-servers
-    inputs.nixowos.nixosModules.default
     inputs.nur.modules.nixos.default
     inputs.sops-nix.nixosModules.sops
     inputs.spicetify-nix.nixosModules.spicetify
-    inputs.stylix.nixosModules.stylix
+    inputs.nvf.nixosModules.default
+    inputs.trivnixPrivate.nixosModules.pubKeys
+    inputs.trivnixPrivate.nixosModules.emailAccounts
+    inputs.trivnixPrivate.nixosModules.calendarAccounts
+    inputs.trivnixPrivate.nixosModules.secrets
   ];
 
-  homeModules = [
-    inputs.nixowos.homeModules.default
+  home = [
     inputs.sops-nix.homeManagerModules.sops
     inputs.spicetify-nix.homeManagerModules.spicetify
-  ];
-
-  homeManagerModules = [
-    inputs.stylix.homeModules.stylix
+    inputs.trivnixPrivate.nixosModules.pubKeys
+    inputs.trivnixPrivate.nixosModules.emailAccounts
+    inputs.trivnixPrivate.nixosModules.calendarAccounts
+    inputs.trivnixPrivate.nixosModules.secrets
   ];
 }

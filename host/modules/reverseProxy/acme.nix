@@ -11,6 +11,8 @@ let
 in
 {
   config = lib.mkIf prefs.reverseProxy.enable {
+    users.users.nginx.extraGroups = [ "acme" ];
+
     security.acme = {
       acceptTerms = true;
       certs = builtins.listToAttrs (

@@ -1,12 +1,10 @@
 {
+  config,
   allHostInfos,
-  hostInfos,
-  inputs,
   lib,
   ...
 }:
 let
-  inherit (lib) mapAttrs' nameValuePair;
   knownHosts = {
     "github.com/ed25519" = {
       hostNames = [ "github.com" ];
@@ -23,21 +21,10 @@ let
       publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=";
     };
   }
-  // (mapAttrs'
-    (
-      hostname: pubKeys:
-      nameValuePair hostname {
-        hostNames = [ allHostInfos.${hostname}.ip ];
-        publicKey = pubKeys."host.pub";
-      }
-    )
-    (
-      removeAttrs inputs.trivnixPrivate.pubKeys [
-        "common"
-        hostInfos.configname
-      ]
-    )
-  );
+  // (lib.mapAttrs (hostname: pubKeys: {
+    hostNames = [ allHostInfos.${hostname}.ip ];
+    publicKey = builtins.readFile pubKeys."host.pub";
+  }) config.private.pubKeys.hosts);
 in
 {
   programs.ssh = {

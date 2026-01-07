@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   userInfos,
@@ -31,7 +30,7 @@ let
         (nameValuePair "${prefix}.color" account.color)
         (nameValuePair "${prefix}.disabled" false)
       ]
-    ) inputs.trivnixPrivate.calendarAccounts.${userInfos.name}
+    ) config.private.calendarAccounts.${userInfos.name}
   );
 in
 {

@@ -1,7 +1,5 @@
 {
   allUserPrefs,
-  hostInfos,
-  inputs,
   lib,
   ...
 }:
@@ -18,10 +16,6 @@ in
       ])
       {
         security.pam.services.hyprlock = { };
-        programs.hyprland = {
-          enable = true;
-          package = inputs.hyprland.packages.${hostInfos.architecture}.hyprland;
-          portalPackage = inputs.hyprland.packages.${hostInfos.architecture}.xdg-desktop-portal-hyprland;
-        };
+        programs.hyprland.enable = true;
       };
 }

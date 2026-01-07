@@ -5,15 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkOption pipe types;
   prefs = config.userPrefs;
 in
 {
-  options.userPrefs.jetbrainsIDEs = mkOption {
-    type = pipe pkgs.jetbrains [
+  options.userPrefs.jetbrainsIDEs = lib.mkOption {
+    type = lib.pipe pkgs.jetbrains [
       builtins.attrNames
-      types.enum
-      types.listOf
+      lib.types.enum
+      lib.types.listOf
     ];
 
     default = [ ];

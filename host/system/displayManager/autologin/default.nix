@@ -1,10 +1,9 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
-  config = mkIf (prefs.displayManager == "autologin") {
+  config = lib.mkIf (prefs.displayManager == "autologin") {
     services.greetd =
       let
         settings = {

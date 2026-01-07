@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   trivnixLib,
   ...
 }:
@@ -14,11 +13,10 @@
     '';
 
     modpack = lib.mkOption {
-      type = lib.types.enum (builtins.attrNames pkgs.modpacks);
+      type = lib.types.str;
       example = "elysium-days";
       description = ''
-        The modpack to deploy on the server. This must be one of the available
-        modpacks defined in `pkgs.modpacks`.
+        The modpack to deploy on the server. This must be a valid modpack pkg.
       '';
     };
 

@@ -1,5 +1,5 @@
 {
-  inputs,
+  config,
   userInfos,
   lib,
   ...
@@ -20,7 +20,7 @@ in
     '';
 
     exclude = mkOption {
-      type = pipe inputs.trivnixPrivate.emailAccounts.${userInfos.name} or { } [
+      type = pipe config.private.emailAccounts.${userInfos.name} or { } [
         builtins.attrNames
         types.enum
         types.listOf
@@ -29,7 +29,7 @@ in
       default = [ ];
       description = ''
         Email account identifiers to ignore when provisioning profiles.
-        Filter names listed under `inputs.trivnixPrivate.emailAccounts.<user>`.
+        Filter names listed under `config.private.emailAccounts.<user>`.
       '';
     };
 

@@ -1,8 +1,6 @@
 {
-  modules,
   mkHomeManager,
   mkNixOS,
-  inputs,
   lib,
   stdenv,
   runCommand,
@@ -14,27 +12,14 @@
   statix,
 }:
 let
-  inherit (lib)
-    concatMapAttrs
-    filterAttrs
-    mapAttrs'
-    nameValuePair
-    ;
-
-  hostsForSystem = filterAttrs (
+  hostsForSystem = lib.filterAttrs (
     _: cfg: cfg.infos.architecture == stdenv.hostPlatform.system
   ) inputs.trivnixConfigs.configs;
 
-  evalNixos = mapAttrs' (
-    configname: _:
-    let
-      nixos = mkNixOS {
-        inherit (modules) homeModules hostModules;
-        inherit configname;
-      };
-    in
-    nameValuePair "eval-nixos-${configname}" (
-      builtins.seq nixos.config.system.build.toplevel.drvPath (
+  evalNixos = lib.mapAttrs' (
+    configname: hostConfig:
+    lib.nameValuePair "eval-nixos-${configname}" (
+      builtins.seq (mkNixOS hostConfig).config.system.build.toplevel.drvPath (
         runCommand "eval-nixos-${configname}" { } ''
           echo ok > $out
         ''
@@ -44,15 +29,14 @@ let
 
   evalHM = concatMapAttrs (
     configname: hostConfig:
-    mapAttrs' (
-      username: _:
+    lib.mapAttrs' (
+      username: userConfig:
       let
         hm = mkHomeManager {
-          inherit configname username;
-          homeModules = modules.homeModules ++ modules.homeManagerModules;
+          inherit hostConfig userConfig;
         };
       in
-      nameValuePair "eval-home-${username}@${configname}" (
+      lib.nameValuePair "eval-home-${username}@${configname}" (
         builtins.seq (hm.activationPackage.drvPath or hm.activationPackage) (
           runCommand "eval-home-${username}@${configname}" { } ''
             echo ok > $out

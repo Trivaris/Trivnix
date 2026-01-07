@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   userInfos,
   ...
@@ -60,6 +59,6 @@ in
   };
 
   home.file.${allowedSignersFile}.text = mkIf prefs.git.enableSigning ''
-    ${prefs.git.email} ${inputs.trivnixPrivate.pubKeys.common.${userInfos.name}."id_git_signing.pub"}
+    ${prefs.git.email} ${config.private.pubKeys.common.${userInfos.name}."id_git_signing.pub"}
   '';
 }

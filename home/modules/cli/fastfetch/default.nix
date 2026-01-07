@@ -4,16 +4,16 @@
   lib,
   osConfig,
   trivnixLib,
+  pkgs,
   ...
 }:
 let
-  inherit (lib) mkIf;
   prefs = config.userPrefs;
   scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
-  getColor = trivnixLib.getColor scheme;
+  getColor = trivnixLib.getColor pkgs scheme;
 in
 {
-  config = mkIf prefs.cli.enable {
+  config = lib.mkIf prefs.cli.enable {
     programs.fastfetch = {
       enable = true;
       settings = {

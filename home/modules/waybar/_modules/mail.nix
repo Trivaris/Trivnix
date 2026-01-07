@@ -5,7 +5,6 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
   prefs = config.userPrefs;
 in
 {
@@ -16,7 +15,7 @@ in
     signal = 4;
     tooltip = true;
 
-    on-click = mkIf prefs.thunderbird.enable "thunderbird";
+    on-click = lib.mkIf prefs.thunderbird.enable "thunderbird";
     on-click-middle = "pkill -RTMIN+4 waybar";
 
     format = "{icon} {text}";

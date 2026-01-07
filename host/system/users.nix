@@ -1,8 +1,8 @@
 {
+  config,
   allUserInfos,
   allUserPrefs,
   hostInfos,
-  inputs,
   lib,
   pkgs,
   trivnixLib,
@@ -19,14 +19,10 @@ let
 
   allShells = mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
 
-  sshKeys =
-    pipe
-      [ "common" hostInfos.configname ]
-      [
-        (removeAttrs inputs.trivnixPrivate.pubKeys)
-        (mapAttrs (_: value: (removeAttrs value.users [ "root" ])))
-        trivnixLib.recursiveAttrValues
-      ];
+  sshKeys = pipe config.private.pubKeys.hosts [
+    (mapAttrs (_: value: (removeAttrs value.users [ "root" ])))
+    trivnixLib.recursiveAttrValues
+  ];
 
   allUsers = {
     root = {

@@ -12,12 +12,11 @@ let
 in
 {
   options.userPrefs = {
-    hyprland.wallpapers = mkOption {
-      type = types.listOf types.path;
-      default = [ ];
+    hyprland.wallpaper = mkOption {
+      type = types.path;
       description = ''
-        List of image paths Hyprland cycles through as wallpapers.
-        Provide absolute paths so the Hyprland module can copy them into place.
+        Image path Hyprland uses as wallpaper.
+        Provide an absolute path so the Hyprland module can copy it into place.
       '';
     };
 
@@ -79,8 +78,8 @@ in
       hyprpaper = {
         enable = true;
         settings = {
-          preload = prefs.hyprland.wallpapers;
-          wallpaper = map (path: ",${path}") prefs.hyprland.wallpapers;
+          preload = [ prefs.hyprland.wallpaper ];
+          wallpaper = ",${prefs.hyprland.wallpaper}";
           splash = false;
         };
       };

@@ -1,6 +1,5 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.hostPrefs;
 in
 {
@@ -9,7 +8,7 @@ in
     Useful for managing network connections on laptops and desktops.
   '';
 
-  config = mkIf prefs.nmApplet.enable {
+  config = lib.mkIf prefs.nmApplet.enable {
     programs.nm-applet.enable = true;
   };
 }

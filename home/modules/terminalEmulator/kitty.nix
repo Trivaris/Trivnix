@@ -1,10 +1,9 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf;
   prefs = config.userPrefs;
 in
 {
-  config = mkIf (prefs.terminalEmulator == "kitty") {
+  config = lib.mkIf (prefs.terminalEmulator == "kitty") {
     programs.kitty = {
       enable = true;
       enableGitIntegration = true;

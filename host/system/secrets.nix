@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   allUserInfos,
   hostInfos,
   ...
@@ -16,8 +15,8 @@ let
     nameValuePair
     ;
 
-  commonSecrets = "${inputs.trivnixPrivate.secrets}/host/common.yaml";
-  hostSecrets = "${inputs.trivnixPrivate.secrets}/host/${hostInfos.configname}.yaml";
+  commonSecrets = "${config.private.secrets}/host/common.yaml";
+  hostSecrets = "${config.private.secrets}/host/${hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
 
   perUserSecrets = mapAttrs' (

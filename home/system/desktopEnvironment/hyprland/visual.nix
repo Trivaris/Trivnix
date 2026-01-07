@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   isNixos,
   lib,
   osConfig,
@@ -14,13 +15,12 @@ in
   config =
     let
       scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
-      getColor = trivnixLib.getColor scheme;
+      getColor = trivnixLib.getColor pkgs scheme;
       toARGB = color: "0xff${removePrefix "#" color}";
       withAlpha = alpha: color: "0x${alpha}${removePrefix "#" color}";
     in
     mkIf (prefs.desktopEnvironment == "hyprland") {
       wayland.windowManager.hyprland.settings = {
-        layerrule = [ "blur, logout_dialog" ];
         master.new_status = "master";
 
         general = {

@@ -1,11 +1,10 @@
 { config, lib, ... }:
 let
   inherit (config.vars) mainMonitorName;
-  inherit (lib) mkIf;
   prefs = config.userPrefs;
 in
 {
-  programs.hyprlock = mkIf (prefs.desktopEnvironment == "hyprland") {
+  programs.hyprlock = lib.mkIf (prefs.desktopEnvironment == "hyprland") {
     enable = true;
     settings = {
       general.hide_cursor = true;

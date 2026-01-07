@@ -5,7 +5,6 @@
   ...
 }:
 let
-  inherit (lib) mkIf mapAttrs' nameValuePair;
   prefs = config.userPrefs;
 
   getSecurity =
@@ -18,13 +17,13 @@ let
       "ssl";
 in
 {
-  config = mkIf prefs.email.enable {
-    accounts.email.accounts = mapAttrs' (
+  config = lib.mkIf prefs.email.enable {
+    accounts.email.accounts = lib.mapAttrs (
       accountName: account:
-      nameValuePair accountName (
+      (
         {
           passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
-          thunderbird = mkIf (prefs.thunderbird.enable && prefs.email.enableThunderbirdIntegration) {
+          thunderbird = lib.mkIf (prefs.thunderbird.enable && prefs.email.enableThunderbirdIntegration) {
             enable = true;
             profiles = [ userInfos.name ];
           };
@@ -33,9 +32,9 @@ in
       )
     ) config.vars.filteredEmailAccounts;
 
-    home.file = mkIf prefs.email.generateAccountsFile {
+    home.file = lib.mkIf prefs.email.generateAccountsFile {
       ".config/mailaccounts.json".text = builtins.toJSON (
-        mapAttrs' (
+        lib.mapAttrs (
           accountName: account:
           let
             imap = account.imap or { };
@@ -45,7 +44,7 @@ in
             security = getSecurity tlsEnabled useStartTls;
             computedAddress = if (account.address or "") != "" then account.address else account.userName or "";
           in
-          nameValuePair accountName {
+          {
             inherit (imap) host port;
             inherit useStartTls security;
 

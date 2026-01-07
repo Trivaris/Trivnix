@@ -1,7 +1,6 @@
 {
   config,
   hostInfos,
-  inputs,
   lib,
   userInfos,
   ...
@@ -15,8 +14,8 @@ let
     ;
 
   prefs = config.userPrefs;
-  commonSecrets = "${inputs.trivnixPrivate.secrets}/home/${userInfos.name}/common.yaml";
-  hostSecrets = "${inputs.trivnixPrivate.secrets}/home/${userInfos.name}/${hostInfos.configname}.yaml";
+  commonSecrets = "${config.private.secrets}/home/${userInfos.name}/common.yaml";
+  hostSecrets = "${config.private.secrets}/home/${userInfos.name}/${hostInfos.configname}.yaml";
 
   mkKey = name: {
     ${name} = {
@@ -40,7 +39,7 @@ let
     builtins.listToAttrs
   ];
 
-  calendarSecrets = pipe (inputs.trivnixPrivate.calendarAccounts.${userInfos.name} or { }) [
+  calendarSecrets = pipe (config.private.calendarAccounts.${userInfos.name} or { }) [
     builtins.attrNames
     (map (account: nameValuePair "calendar-passwords/${account}" { }))
     builtins.listToAttrs

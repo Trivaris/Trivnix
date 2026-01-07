@@ -20,24 +20,14 @@ in
     mailserver = {
       enable = true;
       fqdn = prefs.mailserver.baseDomain;
-      certificateScheme = "acme-nginx";
       dkimSelector = "dkim";
       dkimKeyType = "ed25519";
+      x509.useACMEHost = prefs.mailserver.baseDomain;
 
       domains = [
         prefs.mailserver.baseDomain
         prefs.mailserver.domain
       ];
-
-      certificateDomains = [
-        prefs.mailserver.domain
-      ]
-      ++ (map (name: "${name}.${prefs.mailserver.baseDomain}") [
-        "imap"
-        "smtp"
-        "autoconfig"
-        "autodiscover"
-      ]);
 
       stateVersion = lib.pipe hostInfos.stateVersion [
         (lib.splitString ".")
@@ -65,6 +55,17 @@ in
     security.acme = {
       acceptTerms = true;
       defaults.email = prefs.reverseProxy.email;
+      certs.${prefs.mailserver.baseDomain} = {
+        dnsProvider = "cloudflare";
+        extraDomainNames = map (name: "${name}.${prefs.mailserver.baseDomain}") [
+          "imap"
+          "smtp"
+          "autoconfig"
+          "autodiscover"
+          "mail"
+        ];
+      };
+
     };
 
     services = {
