@@ -6,21 +6,12 @@
   ...
 }:
 let
-  inherit (lib)
-    filterAttrs
-    isType
-    mapAttrs
-    mkDefault
-    mkOption
-    types
-    ;
-
   prefs = config.hostPrefs;
 in
 {
   options.hostPrefs = {
-    oldProfileDeleteInterval = mkOption {
-      type = types.str;
+    oldProfileDeleteInterval = lib.mkOption {
+      type = lib.types.str;
       default = "3d";
       description = ''
         Maximum age for system profiles before garbage collection removes them.
@@ -28,8 +19,8 @@ in
       '';
     };
 
-    mainUser = mkOption {
-      type = types.str;
+    mainUser = lib.mkOption {
+      type = lib.types.str;
       default = builtins.head (builtins.attrNames allUserInfos);
       description = ''
         Primary user account considered owner of the host configuration.
@@ -44,7 +35,7 @@ in
     programs.nix-ld.enable = true;
 
     nix = {
-      package = mkDefault pkgs.nix;
+      package = lib.mkDefault pkgs.nix;
       optimise.automatic = true;
 
       gc = {
