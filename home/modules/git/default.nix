@@ -5,7 +5,6 @@
   ...
 }:
 let
-  inherit (lib) mapAttrs' mkIf nameValuePair;
   prefs = config.userPrefs;
   allowedSignersFile = ".config/git/allowed_signers";
 in
@@ -22,7 +21,7 @@ in
         credential.helper = "store";
         init.defaultBranch = "main";
         gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
-        url = mapAttrs' (name: value: nameValuePair name { insteadOf = value; }) prefs.git.urlAliases;
+        url = lib.mapAttrs (_: value: { insteadOf = value; }) prefs.git.urlAliases;
 
         color.diff = {
           meta = "black bold";
@@ -44,7 +43,7 @@ in
         };
       };
 
-      signing = mkIf prefs.git.enableSigning {
+      signing = lib.mkIf prefs.git.enableSigning {
         format = "ssh";
         signByDefault = true;
         key = "${config.sops.secrets.git-signing-key.path}";
@@ -58,7 +57,7 @@ in
     };
   };
 
-  home.file.${allowedSignersFile}.text = mkIf prefs.git.enableSigning ''
+  home.file.${allowedSignersFile}.text = lib.mkIf prefs.git.enableSigning ''
     ${prefs.git.email} ${config.private.pubKeys.common.${userInfos.name}."id_git_signing.pub"}
   '';
 }

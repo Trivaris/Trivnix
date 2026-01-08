@@ -1,6 +1,5 @@
 {
   config,
-  isNixos,
   lib,
   pkgs,
   osConfig,
@@ -8,16 +7,12 @@
   ...
 }:
 let
-  inherit (lib)
-    concatStringsSep
-    mergeAttrsList
-    mkIf
-    ;
+  prefs = config.userPrefs;
 in
 {
-  config = mkIf (config.userPrefs.desktopEnvironment == "hyprland") (
+  config = lib.mkIf (prefs.desktopEnvironment == "hyprland") (
     let
-      scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
+      scheme = config.stylixPrefs.theme;
       getColor = trivnixLib.getColor pkgs scheme;
       modules = builtins.attrValues (
         lib.packagesFromDirectoryRecursive {
@@ -34,8 +29,8 @@ in
     {
       programs.waybar = {
         enable = true;
-        style = concatStringsSep "\n" (map (module: module.style) modules);
-        settings.mainBar = mergeAttrsList (map (module: module.settings) modules);
+        style = lib.concatStringsSep "\n" (map (module: module.style) modules);
+        settings.mainBar = lib.mergeAttrsList (map (module: module.settings) modules);
 
         systemd = {
           enable = true;

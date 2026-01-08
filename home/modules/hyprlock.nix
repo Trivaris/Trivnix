@@ -1,10 +1,10 @@
 {
   config,
   lib,
-  hostInfos,
   ...
 }:
 let
+  inherit (config.hostInfos) primaryMonitor;
   prefs = config.userPrefs;
 in
 {
@@ -23,7 +23,7 @@ in
 
       label = [
         {
-          monitor = hostInfos.primaryMonitor;
+          monitor = primaryMonitor;
           text = "Wake up, $USER...";
           font_size = 25;
           position = "30, -30";
@@ -31,7 +31,7 @@ in
           valign = "top";
         }
         {
-          monitor = hostInfos.primaryMonitor;
+          monitor = primaryMonitor;
           text = "$TIME";
           font_size = 90;
           font_family = "$font";
@@ -40,7 +40,7 @@ in
           valign = "top";
         }
         {
-          monitor = hostInfos.primaryMonitor;
+          monitor = primaryMonitor;
           text = ''cmd[update:43200000] date +"%A, %d %B %Y"'';
           font_size = 25;
           font_family = "$font";
@@ -49,7 +49,7 @@ in
           valign = "top";
         }
         {
-          monitor = hostInfos.primaryMonitor;
+          monitor = primaryMonitor;
           text = "$FPRINTPROMPT";
           font_size = 14;
           font_family = "$font";
@@ -60,7 +60,7 @@ in
       ];
 
       image = {
-        monitor = hostInfos.primaryMonitor;
+        monitor = primaryMonitor;
         size = 100;
         position = "0, 75";
         halign = "center";
@@ -68,7 +68,7 @@ in
       };
 
       input-field = {
-        monitor = hostInfos.primaryMonitor;
+        monitor = primaryMonitor;
         size = "300, 60";
         outline_thickness = 4;
         dots_size = 0.2;

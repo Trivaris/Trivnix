@@ -5,21 +5,12 @@
   ...
 }:
 let
-  inherit (lib)
-    flatten
-    mapAttrsToList
-    mkOption
-    nameValuePair
-    pipe
-    types
-    ;
-
   prefs = config.userPrefs;
 in
 {
   options.userPrefs.misc = {
-    otherPrograms = mkOption {
-      type = types.listOf types.str;
+    otherPrograms = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [ ];
       example = [ "spicetify" ];
       description = ''
@@ -28,8 +19,8 @@ in
       '';
     };
 
-    otherPackages = mkOption {
-      type = types.attrsOf (types.listOf types.str);
+    otherPackages = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.listOf lib.types.str);
       default = { };
 
       example = {
@@ -46,19 +37,19 @@ in
 
   config = {
     programs = builtins.listToAttrs (
-      map (program: nameValuePair program { enable = true; }) prefs.misc.otherPrograms
+      map (program: lib.nameValuePair program { enable = true; }) prefs.misc.otherPrograms
     );
 
     home.packages =
       let
         generalPackages = map (package: pkgs.${package}) prefs.misc.otherPackages._general or [ ];
         nestedPackages =
-          pipe
+          lib.pipe
             [ "_general" ]
             [
               (removeAttrs prefs.misc.otherPackages)
-              (mapAttrsToList (name: value: (map (package: pkgs.${name}.${package})) value))
-              flatten
+              (lib.mapAttrsToList (name: value: (map (package: pkgs.${name}.${package})) value))
+              lib.flatten
             ];
       in
       generalPackages ++ nestedPackages;

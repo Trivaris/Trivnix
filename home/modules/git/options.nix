@@ -3,22 +3,15 @@
   userInfos,
   ...
 }:
-let
-  inherit (lib)
-    mkEnableOption
-    mkOption
-    types
-    ;
-in
 {
   options.userPrefs.git = {
-    enableSigning = mkEnableOption ''
+    enableSigning = lib.mkEnableOption ''
       Enables commit and tag signing in Git using a configured ssh key defined via sops-nix.
       Ensures authenticity of your commits, marking them as verified on platforms like GitHub/GitLab.
     '';
 
-    name = mkOption {
-      type = types.str;
+    name = lib.mkOption {
+      type = lib.types.str;
       default = userInfos.name;
       example = "trivaris";
       description = ''
@@ -27,8 +20,8 @@ in
       '';
     };
 
-    email = mkOption {
-      type = types.str;
+    email = lib.mkOption {
+      type = lib.types.str;
       example = "you@example.com";
       description = ''
         Email address written to the global Git config as `user.email`.
@@ -36,8 +29,8 @@ in
       '';
     };
 
-    urlAliases = mkOption {
-      type = types.attrsOf types.str;
+    urlAliases = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
       default = { };
       example = {
         "git@github.com:example/" = "example:";

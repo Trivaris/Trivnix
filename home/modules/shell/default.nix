@@ -1,17 +1,16 @@
 {
+  config,
   lib,
   trivnixLib,
-  hostInfos,
   ...
 }:
 let
-  inherit (lib) types mkOption;
   modules = trivnixLib.getModules ./.;
 in
 {
   options = {
-    userPrefs.shell = mkOption {
-      type = types.enum modules;
+    userPrefs.shell = lib.mkOption {
+      type = lib.types.enum modules;
       example = "fish";
       description = ''
         Primary login shell to configure for this user via Home Manager.
@@ -20,8 +19,8 @@ in
     };
 
     vars = {
-      shellAbbreviations = mkOption {
-        type = types.attrsOf types.anything;
+      shellAbbreviations = lib.mkOption {
+        type = lib.types.attrsOf lib.types.anything;
         default = {
           ".." = "cd ..";
           "..." = "cd ../../";
@@ -38,12 +37,12 @@ in
         };
       };
 
-      shellFunctions = mkOption {
-        type = types.attrsOf types.anything;
+      shellFunctions = lib.mkOption {
+        type = lib.types.attrsOf lib.types.anything;
         default = {
           rebuild = ''
             set prod 0
-            set host "${hostInfos.configname}"
+            set host "${config.hostInfos.configname}"
             set host_set 0
 
             for arg in $argv

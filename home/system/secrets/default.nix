@@ -1,6 +1,5 @@
 {
   config,
-  hostInfos,
   lib,
   userInfos,
   ...
@@ -15,23 +14,11 @@ let
 
   prefs = config.userPrefs;
   commonSecrets = "${config.private.secrets}/home/${userInfos.name}/common.yaml";
-  hostSecrets = "${config.private.secrets}/home/${userInfos.name}/${hostInfos.configname}.yaml";
+  hostSecrets = "${config.private.secrets}/home/${userInfos.name}/${config.hostInfos.configname}.yaml";
 
-  mkKey = name: {
-    ${name} = {
-      sopsFile = hostSecrets;
-    };
+  sshSecrets."ssh-private-key" = {
+    sopsFile = hostSecrets;
   };
-
-  sshSecrets = mkMerge (
-    if hostInfos.hardwareKey then
-      [
-        (mkKey "ssh-private-key-a")
-        (mkKey "ssh-private-key-c")
-      ]
-    else
-      [ (mkKey "ssh-private-key") ]
-  );
 
   emailSecrets = pipe config.vars.filteredEmailAccounts [
     builtins.attrNames

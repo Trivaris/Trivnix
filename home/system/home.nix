@@ -1,20 +1,17 @@
 {
   config,
-  hostInfos,
   lib,
   userInfos,
   ...
 }:
 let
-  inherit (lib) mkDefault;
   prefs = config.userPrefs;
 in
 {
-  stylix.enable = true;
   home = {
-    inherit (hostInfos) stateVersion;
-    username = mkDefault userInfos.name;
-    homeDirectory = mkDefault "/home/${userInfos.name}";
+    inherit (config.hostInfos) stateVersion;
+    username = lib.mkDefault userInfos.name;
+    homeDirectory = lib.mkDefault "/home/${userInfos.name}";
 
     sessionVariables = {
       TERMINAL = toString prefs.terminalEmulator;

@@ -1,11 +1,9 @@
 {
   config,
-  hostInfos,
   lib,
   ...
 }:
 let
-  inherit (lib) mkForce;
   prefs = config.hostPrefs;
 in
 {
@@ -29,7 +27,7 @@ in
         prefs.mailserver.domain
       ];
 
-      stateVersion = lib.pipe hostInfos.stateVersion [
+      stateVersion = lib.pipe config.hostInfos.stateVersion [
         (lib.splitString ".")
         lib.head
         lib.toInt
@@ -93,9 +91,9 @@ in
 
       nginx.virtualHosts."autoconfig.${prefs.mailserver.baseDomain}" = {
         forceSSL = true;
-        enableACME = mkForce false;
-        useACMEHost = mkForce prefs.mailserver.baseDomain;
-        locations."/".proxyPass = mkForce "http://127.0.0.1:${toString config.services.automx2.port}";
+        enableACME = lib.mkForce false;
+        useACMEHost = lib.mkForce prefs.mailserver.baseDomain;
+        locations."/".proxyPass = lib.mkForce "http://127.0.0.1:${toString config.services.automx2.port}";
       };
     };
   };

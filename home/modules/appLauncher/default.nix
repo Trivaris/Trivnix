@@ -1,12 +1,11 @@
 { lib, trivnixLib, ... }:
 let
-  inherit (lib) types;
   modules = trivnixLib.getModules ./.;
 in
 {
   options = {
     userPrefs.appLauncher = lib.mkOption {
-      type = types.nullOr (types.enum modules);
+      type = lib.types.nullOr (lib.types.enum modules);
       default = null;
       example = "rofi";
       description = ''
@@ -16,7 +15,7 @@ in
     };
 
     vars.appLauncherFlags = lib.mkOption {
-      type = types.str;
+      type = lib.types.str;
       default = "";
       description = ''
         Extra flags appended by modules when building keybindings for the launcher.

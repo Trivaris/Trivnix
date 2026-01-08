@@ -9,18 +9,12 @@
     inputs.sops-nix.nixosModules.sops
     inputs.spicetify-nix.nixosModules.spicetify
     inputs.nvf.nixosModules.default
-    inputs.trivnixPrivate.nixosModules.pubKeys
-    inputs.trivnixPrivate.nixosModules.emailAccounts
-    inputs.trivnixPrivate.nixosModules.calendarAccounts
-    inputs.trivnixPrivate.nixosModules.secrets
+    inputs.trivnixPrivate.nixosModules.default
   ];
 
   home = [
     inputs.sops-nix.homeManagerModules.sops
     inputs.spicetify-nix.homeManagerModules.spicetify
-    inputs.trivnixPrivate.nixosModules.pubKeys
-    inputs.trivnixPrivate.nixosModules.emailAccounts
-    inputs.trivnixPrivate.nixosModules.calendarAccounts
-    inputs.trivnixPrivate.nixosModules.secrets
+    inputs.trivnixPrivate.nixosModules.default
   ];
 }

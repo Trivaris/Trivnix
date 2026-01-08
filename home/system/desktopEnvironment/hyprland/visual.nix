@@ -1,9 +1,7 @@
 {
   config,
   pkgs,
-  isNixos,
   lib,
-  osConfig,
   trivnixLib,
   ...
 }:
@@ -14,7 +12,7 @@ in
 {
   config =
     let
-      scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
+      scheme = config.stylixPrefs.theme;
       getColor = trivnixLib.getColor pkgs scheme;
       toARGB = color: "0xff${removePrefix "#" color}";
       withAlpha = alpha: color: "0x${alpha}${removePrefix "#" color}";

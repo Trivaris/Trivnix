@@ -1,6 +1,5 @@
 {
   config,
-  isNixos,
   lib,
   osConfig,
   pkgs,
@@ -24,6 +23,7 @@ in
 
   config = mkIf (prefs.desktopEnvironment == "hyprland") {
     vars.desktopEnvironmentBinary = "start-hyprland";
+
     stylix.targets.hyprland.enable = false;
 
     wayland.windowManager.hyprland = {
@@ -32,7 +32,7 @@ in
         "hyprpaper"
         "swaync"
       ];
-      settings.input.kb_layout = mkIf isNixos osConfig.hostPrefs.language.keyMap;
+      settings.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
     };
 
     home.packages = builtins.attrValues {

@@ -2,7 +2,6 @@
   config,
   allUserInfos,
   allUserPrefs,
-  hostInfos,
   lib,
   pkgs,
   ...
@@ -20,7 +19,7 @@ let
 
   allUsers = {
     root = {
-      hashedPassword = hostInfos.hashedRootPassword;
+      hashedPassword = config.hostInfos.hashedRootPassword;
       openssh.authorizedKeys.keys = sshKeys;
     };
   }

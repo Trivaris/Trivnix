@@ -4,18 +4,11 @@
   userInfos,
   ...
 }:
-let
-  inherit (lib)
-    mkOption
-    filterAttrs
-    types
-    ;
-in
 {
-  options.vars.filteredEmailAccounts = mkOption {
-    type = types.attrs;
+  options.vars.filteredEmailAccounts = lib.mkOption {
+    type = lib.types.attrs;
 
-    default = filterAttrs (
+    default = lib.filterAttrs (
       accountName: _: !(builtins.elem accountName config.userPrefs.email.exclude)
     ) config.private.emailAccounts.${userInfos.name};
 

@@ -1,15 +1,13 @@
 {
   config,
-  isNixos,
   lib,
-  osConfig,
   trivnixLib,
   pkgs,
   ...
 }:
 let
   prefs = config.userPrefs;
-  scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
+  scheme = config.stylixPrefs.theme;
   getColor = trivnixLib.getColor pkgs scheme;
 in
 {

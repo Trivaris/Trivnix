@@ -1,11 +1,10 @@
 { lib, trivnixLib, ... }:
 let
-  inherit (lib) mkOption types;
   modules = trivnixLib.getModules ./.;
 in
 {
-  options.userPrefs.terminalEmulator = mkOption {
-    type = types.nullOr (types.enum modules);
+  options.userPrefs.terminalEmulator = lib.mkOption {
+    type = lib.types.nullOr (lib.types.enum modules);
     default = null;
     example = "alacritty";
     description = ''

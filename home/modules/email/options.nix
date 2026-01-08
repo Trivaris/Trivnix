@@ -4,27 +4,17 @@
   lib,
   ...
 }:
-let
-  inherit (lib)
-    mkEnableOption
-    mkOption
-    pipe
-    types
-    ;
-in
 {
   options.userPrefs.email = {
-    enable = mkEnableOption ''
+    enable = lib.mkEnableOption ''
       Turn on SOPS-backed email account provisioning for this user.
       When enabled, mail settings and secrets sync from trivnixPrivate.
     '';
 
-    exclude = mkOption {
-      type = pipe config.private.emailAccounts.${userInfos.name} or { } [
-        builtins.attrNames
-        types.enum
-        types.listOf
-      ];
+    exclude = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.enum (builtins.attrNames config.private.emailAccounts.${userInfos.name} or { })
+      );
 
       default = [ ];
       description = ''
@@ -33,8 +23,8 @@ in
       '';
     };
 
-    generateAccountsFile = mkOption {
-      type = types.bool;
+    generateAccountsFile = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = ''
         Control whether a JSON summary of filtered accounts is written.
@@ -42,8 +32,8 @@ in
       '';
     };
 
-    enableThunderbirdIntegration = mkOption {
-      type = types.bool;
+    enableThunderbirdIntegration = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = ''
         Allow this module to auto-configure Thunderbird profiles from secrets.

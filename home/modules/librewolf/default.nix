@@ -1,19 +1,14 @@
 {
   config,
-  hostInfos,
-  isNixos,
   lib,
-  osConfig,
   pkgs,
   trivnixLib,
   userInfos,
   ...
 }:
 let
-  inherit (lib) mkIf nameValuePair;
   prefs = config.userPrefs;
-
-  scheme = (if isNixos then osConfig else config).stylix.base16Scheme;
+  scheme = config.stylixPrefs.theme;
   getColor = trivnixLib.getColor pkgs scheme;
 
   overrides = ''
@@ -30,9 +25,7 @@ let
   };
 in
 {
-  config = mkIf prefs.librewolf.enable {
-    stylix.targets.librewolf.enable = false;
-
+  config = lib.mkIf prefs.librewolf.enable {
     home.file = {
       ".librewolf/${userInfos.name}/user.js".text = builtins.readFile betterFox + " \n" + overrides;
 
@@ -46,6 +39,8 @@ in
         }
       '';
     };
+
+    stylix.targets.librewolf.profileNames = [ userInfos.name ];
 
     programs.librewolf = {
       enable = true;
@@ -67,7 +62,7 @@ in
               urls = [
                 {
                   template = "https://search.brave.com/search";
-                  params = [ (nameValuePair "q" "{searchTerms}") ];
+                  params = [ (lib.nameValuePair "q" "{searchTerms}") ];
                 }
               ];
             };
@@ -78,7 +73,7 @@ in
                 {
                   template = "https://mynixos.com/search";
                   definedAliases = [ "@mn" ];
-                  params = [ (nameValuePair "q" "{searchTerms}") ];
+                  params = [ (lib.nameValuePair "q" "{searchTerms}") ];
                 }
               ];
             };
@@ -90,8 +85,8 @@ in
                   template = "https://search.nixos.org/packages";
                   definedAliases = [ "@np" ];
                   params = [
-                    (nameValuePair "channel" hostInfos.stateVersion)
-                    (nameValuePair "query" "{searchTerms}")
+                    (lib.nameValuePair "channel" config.hostInfos.stateVersion)
+                    (lib.nameValuePair "query" "{searchTerms}")
                   ];
                 }
               ];

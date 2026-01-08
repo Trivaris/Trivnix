@@ -3,7 +3,6 @@
   lib,
   pkgs,
   allUserInfos,
-  hostInfos,
   ...
 }:
 let
@@ -16,7 +15,7 @@ let
     ;
 
   commonSecrets = "${config.private.secrets}/host/common.yaml";
-  hostSecrets = "${config.private.secrets}/host/${hostInfos.configname}.yaml";
+  hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
 
   perUserSecrets = mapAttrs' (

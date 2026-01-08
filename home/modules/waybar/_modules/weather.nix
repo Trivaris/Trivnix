@@ -5,10 +5,11 @@
   ...
 }:
 let
-  inherit (lib) escapeShellArg optionalString;
   prefs = config.userPrefs;
   location = prefs.waybar.weatherLocation;
-  locationArg = optionalString (location != null && location != "") " ${escapeShellArg location}";
+  locationArg = lib.optionalString (
+    location != null && location != ""
+  ) " ${lib.escapeShellArg location}";
 in
 {
   settings."custom/weather" = {
