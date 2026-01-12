@@ -1,6 +1,5 @@
 {
   config,
-  userInfos,
   lib,
   ...
 }:
@@ -13,7 +12,7 @@
 
     exclude = lib.mkOption {
       type = lib.types.listOf (
-        lib.types.enum (builtins.attrNames config.private.emailAccounts.${userInfos.name} or { })
+        lib.types.enum (builtins.attrNames config.private.emailAccounts.${config.userInfos.name} or { })
       );
 
       default = [ ];

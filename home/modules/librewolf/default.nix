@@ -3,7 +3,6 @@
   lib,
   pkgs,
   trivnixLib,
-  userInfos,
   ...
 }:
 let
@@ -27,9 +26,10 @@ in
 {
   config = lib.mkIf prefs.librewolf.enable {
     home.file = {
-      ".librewolf/${userInfos.name}/user.js".text = builtins.readFile betterFox + " \n" + overrides;
+      ".librewolf/${config.userInfos.name}/user.js".text =
+        builtins.readFile betterFox + " \n" + overrides;
 
-      ".librewolf/${userInfos.name}/chrome/userChrome.css".text = ''
+      ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
         :root {
           --lwt-accent-color: ${getColor "base00"} !important;
           --lwt-text-color: ${getColor "base05"} !important;
@@ -40,12 +40,12 @@ in
       '';
     };
 
-    stylix.targets.librewolf.profileNames = [ userInfos.name ];
+    stylix.targets.librewolf.profileNames = [ config.userInfos.name ];
 
     programs.librewolf = {
       enable = true;
 
-      profiles.${userInfos.name} = {
+      profiles.${config.userInfos.name} = {
         isDefault = true;
 
         search = {

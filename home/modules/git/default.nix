@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userInfos,
   ...
 }:
 let
@@ -58,6 +57,6 @@ in
   };
 
   home.file.${allowedSignersFile}.text = lib.mkIf prefs.git.enableSigning ''
-    ${prefs.git.email} ${config.private.pubKeys.common.${userInfos.name}."id_git_signing.pub"}
+    ${prefs.git.email} ${config.private.pubKeys.common.${config.userInfos.name}."id_git_signing.pub"}
   '';
 }

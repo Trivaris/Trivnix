@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  userInfos,
   ...
 }:
 let
@@ -22,7 +21,7 @@ let
         (lib.nameValuePair "${prefix}.color" account.color)
         (lib.nameValuePair "${prefix}.disabled" false)
       ]
-    ) config.private.calendarAccounts.${userInfos.name}
+    ) config.private.calendarAccounts.${config.userInfos.name}
   );
 in
 {
@@ -31,7 +30,7 @@ in
     programs.thunderbird = {
       enable = true;
       package = pkgs.thunderbird-bin;
-      profiles.${userInfos.name} = {
+      profiles.${config.userInfos.name} = {
         isDefault = true;
         settings = builtins.listToAttrs calendarSettings;
       };

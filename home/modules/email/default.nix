@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userInfos,
   ...
 }:
 let
@@ -25,7 +24,7 @@ in
           passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
           thunderbird = lib.mkIf (prefs.thunderbird.enable && prefs.email.enableThunderbirdIntegration) {
             enable = true;
-            profiles = [ userInfos.name ];
+            profiles = [ config.userInfos.name ];
           };
         }
         // account

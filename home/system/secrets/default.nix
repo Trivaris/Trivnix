@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userInfos,
   ...
 }:
 let
@@ -13,8 +12,8 @@ let
     ;
 
   prefs = config.userPrefs;
-  commonSecrets = "${config.private.secrets}/home/${userInfos.name}/common.yaml";
-  hostSecrets = "${config.private.secrets}/home/${userInfos.name}/${config.hostInfos.configname}.yaml";
+  commonSecrets = "${config.private.secrets}/home/${config.userInfos.name}/common.yaml";
+  hostSecrets = "${config.private.secrets}/home/${config.userInfos.name}/${config.hostInfos.configname}.yaml";
 
   sshSecrets."ssh-private-key" = {
     sopsFile = hostSecrets;
@@ -26,7 +25,7 @@ let
     builtins.listToAttrs
   ];
 
-  calendarSecrets = pipe (config.private.calendarAccounts.${userInfos.name} or { }) [
+  calendarSecrets = pipe (config.private.calendarAccounts.${config.userInfos.name} or { }) [
     builtins.attrNames
     (map (account: nameValuePair "calendar-passwords/${account}" { }))
     builtins.listToAttrs
@@ -38,7 +37,7 @@ in
     validateSopsFiles = true;
 
     age = {
-      keyFile = "/home/${userInfos.name}/.config/sops/age/key.txt";
+      keyFile = "/home/${config.userInfos.name}/.config/sops/age/key.txt";
       generateKey = false;
     };
 

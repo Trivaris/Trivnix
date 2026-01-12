@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userInfos,
   ...
 }:
 {
@@ -10,7 +9,7 @@
 
     default = lib.filterAttrs (
       accountName: _: !(builtins.elem accountName config.userPrefs.email.exclude)
-    ) config.private.emailAccounts.${userInfos.name};
+    ) config.private.emailAccounts.${config.userInfos.name};
 
     description = ''
       Derived set of email accounts after applying the `exclude` filter.

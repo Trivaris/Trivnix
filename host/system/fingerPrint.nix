@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -14,10 +15,10 @@ in
   '';
 
   config = mkIf prefs.enableFingerPrintAuth {
-    services.fprintd.enable = true;
-    security.pam.services = {
-      login.fprintAuth = mkForce true;
-      sudo.fprintAuth = mkForce true;
+    services.fprintd = {
+      enable = true;
+      tod.enable = true;
+      tod.driver = pkgs.libfprint-2-tod1-goodix;
     };
   };
 }

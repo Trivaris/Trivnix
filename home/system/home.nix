@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userInfos,
   ...
 }:
 let
@@ -10,8 +9,8 @@ in
 {
   home = {
     inherit (config.hostInfos) stateVersion;
-    username = lib.mkDefault userInfos.name;
-    homeDirectory = lib.mkDefault "/home/${userInfos.name}";
+    username = lib.mkDefault config.userInfos.name;
+    homeDirectory = lib.mkDefault "/home/${config.userInfos.name}";
 
     sessionVariables = {
       TERMINAL = toString prefs.terminalEmulator;
