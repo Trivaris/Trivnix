@@ -1,11 +1,10 @@
 { lib, trivnixLib, ... }:
 let
-  inherit (lib) mkOption types;
   modules = trivnixLib.getModules ./.;
 in
 {
-  options.hostPrefs.displayManager = mkOption {
-    type = types.nullOr (types.enum modules);
+  options.hostPrefs.displayManager = lib.mkOption {
+    type = lib.types.nullOr (lib.types.enum modules);
     default = null;
     example = "sddm";
     description = ''

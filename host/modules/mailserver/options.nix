@@ -1,11 +1,10 @@
 { lib, ... }:
 let
-  inherit (lib) mkOption types;
   mkStrOption =
     description:
-    mkOption {
+    lib.mkOption {
       inherit description;
-      type = types.nullOr types.str;
+      type = lib.types.nullOr lib.types.str;
     };
 in
 {
@@ -45,8 +44,8 @@ in
       Appears in client autoconfiguration dialogs.
     '';
 
-    smtpPort = mkOption {
-      type = types.port;
+    smtpPort = lib.mkOption {
+      type = lib.types.port;
       default = 587;
       description = ''
         TCP port used by the SMTP service (submission).
@@ -54,8 +53,8 @@ in
       '';
     };
 
-    imapPort = mkOption {
-      type = types.port;
+    imapPort = lib.mkOption {
+      type = lib.types.port;
       default = 993;
       description = ''
         TCP port used by the IMAP service (message retrieval).

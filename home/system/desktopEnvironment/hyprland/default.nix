@@ -6,13 +6,12 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkOption types;
   prefs = config.userPrefs;
 in
 {
   options.userPrefs = {
-    waybar.weatherLocation = mkOption {
-      type = types.nullOr types.str;
+    waybar.weatherLocation = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
       description = ''
         Location query passed to the Waybar weather script (e.g. ``"berlin"`` or ``"48.85,2.35"``).
@@ -21,7 +20,7 @@ in
     };
   };
 
-  config = mkIf (prefs.desktopEnvironment == "hyprland") {
+  config = lib.mkIf (prefs.desktopEnvironment == "hyprland") {
     vars.desktopEnvironmentBinary = "start-hyprland";
 
     stylix.targets.hyprland.enable = false;

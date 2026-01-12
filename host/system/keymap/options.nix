@@ -1,11 +1,8 @@
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
 {
   options.hostPrefs.language = {
-    keyMap = mkOption {
-      type = types.str;
+    keyMap = lib.mkOption {
+      type = lib.types.str;
       default = "us";
       description = ''
         Console keyboard layout applied to virtual terminals and X11.
@@ -13,8 +10,8 @@ in
       '';
     };
 
-    locale = mkOption {
-      type = types.str;
+    locale = lib.mkOption {
+      type = lib.types.str;
       default = "en_US";
       description = ''
         Primary locale controlling interface language and formatting rules.
@@ -22,8 +19,8 @@ in
       '';
     };
 
-    charset = mkOption {
-      type = types.str;
+    charset = lib.mkOption {
+      type = lib.types.str;
       default = "UTF-8";
       description = ''
         Character set appended to locale definitions, typically `UTF-8`.
@@ -31,8 +28,8 @@ in
       '';
     };
 
-    units = mkOption {
-      type = types.str;
+    units = lib.mkOption {
+      type = lib.types.str;
       default = "de_DE";
       description = ''
         Locale responsible for measurement units and region-specific formats.

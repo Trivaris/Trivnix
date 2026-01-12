@@ -3,9 +3,6 @@
   trivnixLib,
   ...
 }:
-let
-  inherit (lib) types;
-in
 {
   options.hostPrefs.collabora = {
     reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 9980; };
@@ -16,7 +13,7 @@ in
     '';
 
     nextcloudFQDNs = lib.mkOption {
-      type = types.nullOr (types.listOf types.str);
+      type = lib.types.nullOr (lib.types.listOf lib.types.str);
       example = "nextcloud.example.com";
       description = ''
         The FQDN of your nextcloud server.

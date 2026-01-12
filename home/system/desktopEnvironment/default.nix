@@ -1,12 +1,11 @@
 { lib, trivnixLib, ... }:
 let
-  inherit (lib) mkOption types;
   modules = trivnixLib.getModules ./.;
 in
 {
   options = {
-    userPrefs.desktopEnvironment = mkOption {
-      type = types.nullOr (types.enum modules);
+    userPrefs.desktopEnvironment = lib.mkOption {
+      type = lib.types.nullOr (lib.types.enum modules);
       default = null;
       example = "hyprland";
       description = ''
@@ -15,8 +14,8 @@ in
       '';
     };
 
-    vars.desktopEnvironmentBinary = mkOption {
-      type = types.nullOr types.str;
+    vars.desktopEnvironmentBinary = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
       description = ''
         Launch command exported by the chosen module for display-manager autologin.

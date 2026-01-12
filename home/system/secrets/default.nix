@@ -4,13 +4,6 @@
   ...
 }:
 let
-  inherit (lib)
-    mkIf
-    mkMerge
-    nameValuePair
-    pipe
-    ;
-
   prefs = config.userPrefs;
   commonSecrets = "${config.private.secrets}/home/${config.userInfos.name}/common.yaml";
   hostSecrets = "${config.private.secrets}/home/${config.userInfos.name}/${config.hostInfos.configname}.yaml";
@@ -19,15 +12,15 @@ let
     sopsFile = hostSecrets;
   };
 
-  emailSecrets = pipe config.vars.filteredEmailAccounts [
+  emailSecrets = lib.pipe config.vars.filteredEmailAccounts [
     builtins.attrNames
-    (map (account: nameValuePair "email-passwords/${account}" { }))
+    (map (account: lib.nameValuePair "email-passwords/${account}" { }))
     builtins.listToAttrs
   ];
 
-  calendarSecrets = pipe (config.private.calendarAccounts.${config.userInfos.name} or { }) [
+  calendarSecrets = lib.pipe (config.private.calendarAccounts.${config.userInfos.name} or { }) [
     builtins.attrNames
-    (map (account: nameValuePair "calendar-passwords/${account}" { }))
+    (map (account: lib.nameValuePair "calendar-passwords/${account}" { }))
     builtins.listToAttrs
   ];
 in
@@ -41,11 +34,11 @@ in
       generateKey = false;
     };
 
-    secrets = mkMerge [
+    secrets = lib.mkMerge [
       sshSecrets
       emailSecrets
       calendarSecrets
-      (mkIf prefs.git.enableSigning {
+      (lib.mkIf prefs.git.enableSigning {
         git-signing-key = { };
       })
     ];

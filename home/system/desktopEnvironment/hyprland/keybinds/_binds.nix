@@ -1,6 +1,5 @@
 { config, lib }:
 let
-  inherit (lib) mkIf range;
   prefs = config.userPrefs;
   isEnabled =
     module:
@@ -25,8 +24,10 @@ in
       "$mod, TAB, workspace, e+1"
       "$mod SHIFT, TAB, workspace, e-1"
     ]
-    ++ (map (index: "$mod, ${toString index}, workspace, ${toString index}") (range 0 9))
-    ++ (map (index: "$mod SHIFT, ${toString index}, movetoworkspace, ${toString index}") (range 0 9));
+    ++ (map (index: "$mod, ${toString index}, workspace, ${toString index}") (lib.range 0 9))
+    ++ (map (index: "$mod SHIFT, ${toString index}, movetoworkspace, ${toString index}") (
+      lib.range 0 9
+    ));
 
     mouseFloat = [
       # Make active window floating for mouse drag/resize
@@ -57,12 +58,12 @@ in
       "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
     ]
     ++ [
-      (mkIf prefs.librewolf.enable "$mod, W, exec, librewolf")
-      (mkIf (isEnabled "vscode") "$mod, A, exec, code")
-      (mkIf (isEnabled "vscodium") "$mod, A, exec, codium")
-      (mkIf (isEnabled "spotify" || isEnabled "spicetify") "$mod, S, exec, spotify")
-      (mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
-      (mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
+      (lib.mkIf prefs.librewolf.enable "$mod, W, exec, librewolf")
+      (lib.mkIf (isEnabled "vscode") "$mod, A, exec, code")
+      (lib.mkIf (isEnabled "vscodium") "$mod, A, exec, codium")
+      (lib.mkIf (isEnabled "spotify" || isEnabled "spicetify") "$mod, S, exec, spotify")
+      (lib.mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
+      (lib.mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
     ];
 
     volume = [

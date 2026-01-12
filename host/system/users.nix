@@ -7,13 +7,7 @@
   ...
 }:
 let
-  inherit (lib)
-    mapAttrs
-    mapAttrsToList
-    nameValuePair
-    ;
-
-  allShells = mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
+  allShells = lib.mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
 
   sshKeys = map builtins.readFile (lib.collect builtins.isPath config.private.pubKeys.hosts);
 
@@ -23,7 +17,7 @@ let
       openssh.authorizedKeys.keys = sshKeys;
     };
   }
-  // (mapAttrs (username: userInfos: {
+  // (lib.mapAttrs (username: userInfos: {
     inherit (userInfos) hashedPassword;
     isNormalUser = true;
     createHome = true;
@@ -50,7 +44,7 @@ let
   }) allUserInfos);
 in
 {
-  programs = builtins.listToAttrs (map (shell: nameValuePair shell { enable = true; }) allShells);
+  programs = builtins.listToAttrs (map (shell: lib.nameValuePair shell { enable = true; }) allShells);
   users = {
     mutableUsers = false;
     users = allUsers;

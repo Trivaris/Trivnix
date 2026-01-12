@@ -1,28 +1,25 @@
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
 {
   options.hostPrefs.ipsecClient = {
     enable = lib.mkEnableOption "Enable Strongswan client configuration.";
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       description = "FQDN of the vpn";
     };
 
-    caCert = mkOption {
-      type = types.str;
+    caCert = lib.mkOption {
+      type = lib.types.str;
       description = "Path to the CA Certificate";
     };
 
-    cert = mkOption {
-      type = types.str;
+    cert = lib.mkOption {
+      type = lib.types.str;
       description = "Path of your client cert";
     };
 
-    id = mkOption {
-      type = types.nullOr types.str;
+    id = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       description = "Id of the client specified in the client cert and key";
     };
   };

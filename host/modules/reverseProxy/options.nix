@@ -1,7 +1,4 @@
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
 {
   options.hostPrefs.reverseProxy = {
     enable = lib.mkEnableOption ''
@@ -14,8 +11,8 @@ in
       Useful when public IPs change and Cloudflare or other providers must sync.
     '';
 
-    email = mkOption {
-      type = types.str;
+    email = lib.mkOption {
+      type = lib.types.str;
       example = "admin@example.com";
 
       description = ''
@@ -24,8 +21,8 @@ in
       '';
     };
 
-    zone = mkOption {
-      type = types.str;
+    zone = lib.mkOption {
+      type = lib.types.str;
       example = "example.com";
 
       description = ''
@@ -34,8 +31,8 @@ in
       '';
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 443;
 
       description = ''
@@ -44,8 +41,8 @@ in
       '';
     };
 
-    extraCertDomains = mkOption {
-      type = types.listOf types.str;
+    extraCertDomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [ ];
 
       example = [
@@ -59,8 +56,8 @@ in
       '';
     };
 
-    extraDDNSDomains = mkOption {
-      type = types.listOf types.str;
+    extraDDNSDomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [ ];
 
       example = [
@@ -74,8 +71,8 @@ in
       '';
     };
 
-    ddnsTime = mkOption {
-      type = types.nullOr types.str;
+    ddnsTime = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
       example = "04:00";
 

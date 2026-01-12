@@ -1,15 +1,14 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
   prefs = config.hostPrefs;
 in
 {
-  options.hostPrefs.bluetooth.enable = mkEnableOption ''
+  options.hostPrefs.bluetooth.enable = lib.mkEnableOption ''
     Enable Bluetooth hardware support and the Blueman applet.
     Activate when the host should pair controllers or audio devices.
   '';
 
-  config = mkIf prefs.bluetooth.enable {
+  config = lib.mkIf prefs.bluetooth.enable {
     services.blueman.enable = true;
     hardware.bluetooth = {
       enable = true;

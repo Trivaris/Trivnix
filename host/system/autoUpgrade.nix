@@ -5,26 +5,17 @@
   ...
 }:
 let
-  inherit (lib)
-    getExe
-    getExe'
-    mkEnableOption
-    mkIf
-    mkOption
-    types
-    ;
-
   prefs = config.hostPrefs;
 in
 {
   options.hostPrefs.autoUpgrade = {
-    enable = mkEnableOption ''
+    enable = lib.mkEnableOption ''
       Enable unattended upgrades driven by git pulls and nixos-rebuild.
       Turn this on for hosts that should track the configured flake branch.
     '';
 
-    repoUrl = mkOption {
-      type = types.str;
+    repoUrl = lib.mkOption {
+      type = lib.types.str;
       default = "git@github.com:Trivaris/trivnix.git";
       description = ''
         Git remote cloned by the auto-upgrade service before rebuilding.
@@ -32,8 +23,8 @@ in
       '';
     };
 
-    branch = mkOption {
-      type = types.str;
+    branch = lib.mkOption {
+      type = lib.types.str;
       default = "main";
       description = ''
         Branch name fetched on each upgrade cycle.
@@ -41,8 +32,8 @@ in
       '';
     };
 
-    workdir = mkOption {
-      type = types.str;
+    workdir = lib.mkOption {
+      type = lib.types.str;
       default = "/var/lib/trivnix";
       description = ''
         Directory where the flake is cloned and kept between runs.
@@ -50,8 +41,8 @@ in
       '';
     };
 
-    interval = mkOption {
-      type = types.str;
+    interval = lib.mkOption {
+      type = lib.types.str;
       default = "1min";
       description = ''
         Systemd time string controlling how frequently upgrades run.
@@ -60,7 +51,7 @@ in
     };
   };
 
-  config = mkIf prefs.autoUpgrade.enable {
+  config = lib.mkIf prefs.autoUpgrade.enable {
     systemd.services.trivnix-auto-upgrade =
       let
         upgradeScript = ''
@@ -75,20 +66,20 @@ in
 
           if [ ! -d "$WORKDIR/.git" ]; then
             echo "[trivnix] Cloning $REPO_URL ($BRANCH) into $WORKDIR"
-            ${getExe pkgs.git} clone --depth=1 -b "$BRANCH" "$REPO_URL" "$WORKDIR"
+            ${lib.getExe pkgs.git} clone --depth=1 -b "$BRANCH" "$REPO_URL" "$WORKDIR"
           else
             echo "[trivnix] Fetching updates for $WORKDIR"
-            ${getExe pkgs.git} -C "$WORKDIR" fetch --prune origin "$BRANCH"
+            ${lib.getExe pkgs.git} -C "$WORKDIR" fetch --prune origin "$BRANCH"
           fi
 
-          LOCAL="$(${getExe pkgs.git} -C "$WORKDIR" rev-parse HEAD || true)"
-          REMOTE="$(${getExe pkgs.git} -C "$WORKDIR" rev-parse "origin/$BRANCH" || true)"
+          LOCAL="$(${lib.getExe pkgs.git} -C "$WORKDIR" rev-parse HEAD || true)"
+          REMOTE="$(${lib.getExe pkgs.git} -C "$WORKDIR" rev-parse "origin/$BRANCH" || true)"
 
           if [ "$LOCAL" != "$REMOTE" ] && [ -n "$REMOTE" ]; then
             echo "[trivnix] Updating to origin/$BRANCH"
-            ${getExe pkgs.git} -C "$WORKDIR" reset --hard "origin/$BRANCH"
+            ${lib.getExe pkgs.git} -C "$WORKDIR" reset --hard "origin/$BRANCH"
             echo "[trivnix] Rebuilding NixOS for $HOST"
-            ${getExe' pkgs.nixos-rebuild "nixos-rebuild"} switch --flake "$WORKDIR#$HOST"
+            ${lib.getExe' pkgs.nixos-rebuild "nixos-rebuild"} switch --flake "$WORKDIR#$HOST"
           else
             echo "[trivnix] No changes; skipping rebuild"
           fi

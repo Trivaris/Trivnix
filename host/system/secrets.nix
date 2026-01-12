@@ -6,27 +6,19 @@
   ...
 }:
 let
-  inherit (lib)
-    filterAttrs
-    mapAttrs'
-    mkIf
-    mkMerge
-    nameValuePair
-    ;
-
   commonSecrets = "${config.private.secrets}/host/common.yaml";
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
   prefs = config.hostPrefs;
 
-  perUserSecrets = mapAttrs' (
+  perUserSecrets = lib.mapAttrs' (
     user: _:
-    nameValuePair "sops-keys/${user}" {
+    lib.nameValuePair "sops-keys/${user}" {
       sopsFile = hostSecrets;
       path = "/home/${user}/.config/sops/age/key.txt";
       owner = user;
       group = "users";
     }
-  ) (filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
+  ) (lib.filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
 in
 {
   environment.systemPackages = builtins.attrValues { inherit (pkgs) sops age; };
@@ -37,7 +29,7 @@ in
     age.keyFile = "/var/lib/sops-nix/key.txt";
     age.generateKey = false;
 
-    secrets = mkMerge [
+    secrets = lib.mkMerge [
       perUserSecrets
 
       {
@@ -49,7 +41,7 @@ in
         };
       }
 
-      (mkIf prefs.ipsecClient.enable {
+      (lib.mkIf prefs.ipsecClient.enable {
         ipsec-client-key = {
           sopsFile = hostSecrets;
           owner = "root";
@@ -57,7 +49,7 @@ in
         };
       })
 
-      (mkIf prefs.ipsecServer.enable {
+      (lib.mkIf prefs.ipsecServer.enable {
         ipsec-server-key = {
           sopsFile = hostSecrets;
           owner = "root";
@@ -65,7 +57,7 @@ in
         };
       })
 
-      (mkIf prefs.openssh.enable {
+      (lib.mkIf prefs.openssh.enable {
         ssh-host-key = {
           sopsFile = hostSecrets;
           path = "/etc/ssh/ssh_host_ed25519_key";
@@ -76,7 +68,7 @@ in
         };
       })
 
-      (mkIf (prefs.reverseProxy.enable || prefs.cfddns.enable) {
+      (lib.mkIf (prefs.reverseProxy.enable || prefs.cfddns.enable) {
         cloudflare-api-token = {
           owner = "root";
           group = "root";
@@ -88,14 +80,14 @@ in
         };
       })
 
-      (mkIf prefs.openconnectClient.enable {
+      (lib.mkIf prefs.openconnectClient.enable {
         openconnect-vpn-password = {
           owner = "root";
           group = "root";
         };
       })
 
-      (mkIf prefs.vaultwarden.enable {
+      (lib.mkIf prefs.vaultwarden.enable {
         vaultwarden-admin-token = {
           owner = "vaultwarden";
           group = "vaultwarden";

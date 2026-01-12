@@ -6,7 +6,6 @@
   ...
 }:
 let
-  inherit (lib) mkIf removePrefix;
   prefs = config.userPrefs;
 in
 {
@@ -14,10 +13,10 @@ in
     let
       scheme = config.stylixPrefs.theme;
       getColor = trivnixLib.getColor pkgs scheme;
-      toARGB = color: "0xff${removePrefix "#" color}";
-      withAlpha = alpha: color: "0x${alpha}${removePrefix "#" color}";
+      toARGB = color: "0xff${lib.removePrefix "#" color}";
+      withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
     in
-    mkIf (prefs.desktopEnvironment == "hyprland") {
+    lib.mkIf (prefs.desktopEnvironment == "hyprland") {
       wayland.windowManager.hyprland.settings = {
         master.new_status = "master";
 

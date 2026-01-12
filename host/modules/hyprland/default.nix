@@ -3,13 +3,10 @@
   lib,
   ...
 }:
-let
-  inherit (lib) mkIf pipe;
-in
 {
   config =
-    mkIf
-      (pipe allUserPrefs [
+    lib.mkIf
+      (lib.pipe allUserPrefs [
         builtins.attrValues
         (map (prefs: prefs.desktopEnvironment or ""))
         (builtins.elem "hyprland")
