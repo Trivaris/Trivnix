@@ -18,7 +18,7 @@ let
     };
   }
   // (lib.mapAttrs (username: userInfos: {
-    inherit (userInfos) hashedPassword;
+    inherit (userInfos) hashedPassword uid;
     isNormalUser = true;
     createHome = true;
     home = "/home/${username}";

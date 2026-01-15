@@ -10,6 +10,11 @@
 
       statusline.lualine.enable = true;
 
+      filetree.nvimTree = {
+        enable = true;
+        setupOpts.git.enable = true;
+      };
+
       autocomplete.nvim-cmp = {
         enable = true;
         sources = {
@@ -24,9 +29,16 @@
         inlayHints.enable = true;
       };
 
-      languages.clang = {
-        enable = true;
-        lsp.enable = true;
+      languages = {
+        clang = {
+          enable = true;
+          lsp.enable = true;
+        };
+
+        java = {
+          enable = true;
+          lsp.enable = true;
+        };
       };
     };
   };
