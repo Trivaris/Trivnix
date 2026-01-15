@@ -1,9 +1,14 @@
-{ config, pkgs, lib, ... }:
-let 
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
   prefs = config.hostPrefs;
   mainuser = config.users.users.${prefs.mainUser};
   mainuserGroup = config.users.groups.${mainuser.group};
-in 
+in
 {
 
   options.hostPrefs.mountSteamdeck = lib.mkEnableOption "Mount Steam Deck home directory via SSHFS";
@@ -17,12 +22,17 @@ in
       options = [
         "x-systemd.automount"
         "noauto"
-        
+
         "_netdev"
         "reconnect"
         "ServerAliveInterval=15"
-        
-        "IdentityFile=${if prefs.openssh.enable then config.sops.secrets.ssh-host-key.path else prefs.sops.secrets.ssh-root-key.path}"
+
+        "IdentityFile=${
+          if prefs.openssh.enable then
+            config.sops.secrets.ssh-host-key.path
+          else
+            prefs.sops.secrets.ssh-root-key.path
+        }"
         "allow_other"
         "umask=000"
 
