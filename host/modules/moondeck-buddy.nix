@@ -1,10 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   prefs = config.hostPrefs;
   jsonFormat = pkgs.formats.json { };
-  configFile = jsonFormat.generate "moondeckbuddy-config.json" (prefs.moondeck.settings // {
-    port = prefs.moondeck.port;
-  });
+  configFile = jsonFormat.generate "moondeckbuddy-config.json" (
+    prefs.moondeck.settings
+    // {
+      port = prefs.moondeck.port;
+    }
+  );
 in
 {
   options.hostPrefs.moondeck = {
@@ -22,7 +30,7 @@ in
       default = 47989;
       description = "The port MoonDeck Buddy uses to fetch Sunshine info.";
     };
-    
+
     settings = lib.mkOption {
       type = jsonFormat.type;
       default = { };
@@ -34,13 +42,19 @@ in
     environment.systemPackages = [ prefs.moondeck.package ];
 
     networking.firewall = lib.mkIf prefs.moondeck.openFirewall {
-      allowedTCPPorts = [ prefs.moondeck.port prefs.moondeck.infoPort ];
-      allowedUDPPorts = [ prefs.moondeck.port prefs.moondeck.infoPort ];
+      allowedTCPPorts = [
+        prefs.moondeck.port
+        prefs.moondeck.infoPort
+      ];
+      allowedUDPPorts = [
+        prefs.moondeck.port
+        prefs.moondeck.infoPort
+      ];
     };
 
     systemd.user.services.moondeck-buddy = {
       description = "MoonDeck Buddy Companion Service";
-      
+
       after = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
