@@ -40,5 +40,30 @@ in
         "gid=${toString mainuserGroup.gid}"
       ];
     };
+
+    fileSystems."/mnt/steamdeck-sdcard" = {
+      device = "deck@steamdeck.fritz.box:/run/media/deck/steamdeck";
+      fsType = "fuse.sshfs";
+      options = [
+        "x-systemd.automount"
+        "noauto"
+
+        "_netdev"
+        "reconnect"
+        "ServerAliveInterval=15"
+
+        "IdentityFile=${
+          if prefs.openssh.enable then
+            config.sops.secrets.ssh-host-key.path
+          else
+            prefs.sops.secrets.ssh-root-key.path
+        }"
+        "allow_other"
+        "umask=000"
+
+        "uid=${toString mainuser.uid}"
+        "gid=${toString mainuserGroup.gid}"
+      ];
+    };
   };
 }

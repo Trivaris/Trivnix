@@ -17,6 +17,7 @@ in
     programs.steam = {
       enable = true;
       package = pkgs.millennium-steam;
+      protontricks.enable = true;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
     };
   };
