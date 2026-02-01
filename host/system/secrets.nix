@@ -8,7 +8,7 @@
 let
   commonSecrets = "${config.private.secrets}/host/common.yaml";
   hostSecrets = "${config.private.secrets}/host/${osConfig.hostInfos.configname}.yaml";
-  allUserInfos = builtins.mapAttrs (cfg: cfg.userInfos) config.home-manager.users;
+  allUserInfos = builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users;
   prefs = config.hostPrefs;
 
   perUserSecrets = lib.mapAttrs' (

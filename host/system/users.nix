@@ -7,7 +7,7 @@
 }:
 let
   sshKeys = map builtins.readFile (lib.collect builtins.isPath config.private.pubKeys.hosts);
-  allUserInfos = builtins.mapAttrs (cfg: cfg.userInfos) config.home-manager.users;
+  allUserInfos = builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users;
 
   allUsers = {
     root = {

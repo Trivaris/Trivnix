@@ -7,7 +7,7 @@
 let
   prefs = config.hostPrefs;
   themePrefs = config.themingPrefs;
-  allUserInfos = builtins.attrNames (builtins.mapAttrs (cfg: cfg.userInfos) config.home-manager.users);
+  allUserInfos = builtins.attrNames (builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users);
 in
 {
   options.hostPrefs = {
