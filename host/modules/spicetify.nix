@@ -8,7 +8,7 @@ let
   themePrefs = config.themingPrefs;
 in
 {
-  options.spicetify.enable = lib.mkEnableOption "Enable Spotify";
+  options.hostPrefs.spicetify.enable = lib.mkEnableOption "Enable Spotify";
   config = lib.mkIf prefs.spicetify.enable {
     programs.spicetify = {
       enable = true;
