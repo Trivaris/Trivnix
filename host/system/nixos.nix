@@ -38,7 +38,7 @@ in
     time.timeZone = "Europe/Berlin";
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
-    fonts.packages = [ themePrefs.font ];
+    fonts.packages = [ themePrefs.font.package ];
 
     qt = {
       enable = true;

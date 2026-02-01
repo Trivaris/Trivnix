@@ -1,6 +1,7 @@
 { osConfig, ... }:
 let
   theme = osConfig.themingPrefs.scheme;
+  themePrefs = osConfig.themingPrefs;
 in
 {
   settings = {
@@ -40,7 +41,7 @@ in
     * {
       border: none;
       border-radius: 10px;
-      font-family: "JetbrainsMono Nerd Font" ;
+      font-family: "${themePrefs.font.name} Font" ;
       font-size: 17px;
       min-height: 10px;
     }

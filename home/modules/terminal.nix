@@ -19,9 +19,9 @@ in
     shellIntegration.enableZshIntegration = true;
     themeFile = themePrefs.schemes.kitty;
     font = {
-      package = themePrefs.font;
-      name = themePrefs.font.pname;
-      size = 12;
+      package = themePrefs.font.package;
+      name = themePrefs.font.name;
+      size = 24;
     };
 
     settings = {
