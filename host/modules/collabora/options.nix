@@ -1,11 +1,7 @@
-{
-  lib,
-  trivnixLib,
-  ...
-}:
+{ lib, ... }:
 {
   options.hostPrefs.collabora = {
-    reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 9980; };
+    reverseProxy = lib.mkReverseProxyOption { defaultPort = 9980; };
 
     enable = lib.mkEnableOption ''
       Run the Forgejo git hosting service locally.

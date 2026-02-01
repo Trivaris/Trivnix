@@ -1,7 +1,7 @@
-{ lib, trivnixLib, ... }:
+{ lib, ... }:
 {
   options.hostPrefs.vaultwarden = {
-    reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 8891; };
+    reverseProxy = lib.mkReverseProxyOption { defaultPort = 8891; };
 
     enable = lib.mkEnableOption ''
       Start the Vaultwarden password manager backend on this host.

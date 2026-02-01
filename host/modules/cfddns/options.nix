@@ -1,7 +1,7 @@
-{ lib, trivnixLib, ... }:
+{ lib, ... }:
 {
   options.hostPrefs.cfddns = {
     enable = lib.mkEnableOption "Enable the cloudflare ddns server";
-    reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 8892; };
+    reverseProxy = lib.mkReverseProxyOption { defaultPort = 8892; };
   };
 }

@@ -1,13 +1,12 @@
 {
   pkgs,
-  trivnixLib,
   lib,
   config,
   ...
 }:
 {
   options.hostPrefs.homepage = {
-    reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 8082; };
+    reverseProxy = lib.mkReverseProxyOption { defaultPort = 8082; };
 
     serviceGroups = lib.mkOption {
       inherit (pkgs.formats.yaml { }) type;

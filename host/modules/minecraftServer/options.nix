@@ -1,11 +1,7 @@
-{
-  lib,
-  trivnixLib,
-  ...
-}:
+{ lib, ... }:
 {
   options.hostPrefs.minecraftServer = {
-    reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 25565; };
+    reverseProxy = lib.mkReverseProxyOption { defaultPort = 25565; };
 
     enable = lib.mkEnableOption ''
       Provision the Minecraft server service backed by selected modpacks.

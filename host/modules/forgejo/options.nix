@@ -1,7 +1,7 @@
-{ lib, trivnixLib, ... }:
+{ lib, ... }:
 {
   options.hostPrefs.forgejo = {
-    reverseProxy = trivnixLib.mkReverseProxyOption { defaultPort = 3000; };
+    reverseProxy = lib.mkReverseProxyOption { defaultPort = 3000; };
 
     enable = lib.mkEnableOption ''
       Run the Forgejo git hosting service locally.
