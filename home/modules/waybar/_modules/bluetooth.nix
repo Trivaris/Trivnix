@@ -1,7 +1,11 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings.bluetooth = {
-    on-click = "blueman-manager";
+    on-click = "overskride";
+    on-click-right = "blueman-manager";
 
     tooltip = true;
     tooltip-format = "{controller_alias} [{controller_address}]\n{device_enumerate}";
@@ -24,7 +28,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0D"};
+      color: ${theme.base0D};
       background: transparent;
     }
   '';

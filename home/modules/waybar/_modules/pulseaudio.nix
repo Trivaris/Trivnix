@@ -1,4 +1,7 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings.pulseaudio = {
     on-click = "pwvucontrol";
@@ -21,7 +24,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0A"};
+      color: ${theme.base0A};
       background: transparent;
     }
   '';

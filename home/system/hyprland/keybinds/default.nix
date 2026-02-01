@@ -1,9 +1,6 @@
-{ config, lib, ... }:
-let
-  prefs = config.userPrefs;
-in
+{ osConfig, lib, config, ... }:
 {
-  config = lib.mkIf (prefs.desktopEnvironment == "hyprland") {
+  config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland.settings = {
       bind.drag_threshold = 10;
       "$mod" = "SUPER";

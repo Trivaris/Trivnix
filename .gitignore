@@ -2,3 +2,4 @@
 ssh_host_*_key
 .cache_ggshield
 *__pycache__/
+**/result

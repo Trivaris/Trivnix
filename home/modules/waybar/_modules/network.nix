@@ -1,4 +1,7 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings.network = {
     on-click = "nmgui";
@@ -20,7 +23,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0E"};
+      color: ${theme.base0E};
       background: transparent;
     }
   '';

@@ -7,6 +7,7 @@
 }:
 let
   prefs = config.hostPrefs;
+  font = config.themingPrefs.font pkgs;
 in
 {
   options.hostPrefs = {
@@ -27,12 +28,23 @@ in
         Used by modules such as autologin and service defaults needing a username.
       '';
     };
+
+    headless = lib.mkEnableOption {
+      description = "Disable GUI features";
+    };
   };
 
   config = {
     time.timeZone = "Europe/Berlin";
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
+    fonts.packages = [ font ];
+
+    qt = {
+      enable = true;
+      platformTheme = "gnome";
+      style = "adwaita-dark";
+    };
 
     nix = {
       package = lib.mkDefault pkgs.nix;

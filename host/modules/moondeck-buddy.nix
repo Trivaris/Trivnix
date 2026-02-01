@@ -47,6 +47,7 @@ in
         prefs.moondeck.infoPort
       ];
       allowedUDPPorts = [
+        47999
         prefs.moondeck.port
         prefs.moondeck.infoPort
       ];
@@ -64,8 +65,16 @@ in
         ln -sf ${configFile} %h/.config/moondeckbuddy/config.json
       '';
 
+      path = [
+        pkgs.steam
+        pkgs.steam-run
+        pkgs.which
+        pkgs.bash
+      ];
+
       serviceConfig = {
-        ExecStart = "${lib.getExe prefs.moondeck.package}";
+        ExecStart = "${lib.getExe pkgs.moondeck-buddy}";
+        Environment = "QT_STYLE_OVERRIDE=Fusion";
         Restart = "on-failure";
         RestartSec = "5s";
       };

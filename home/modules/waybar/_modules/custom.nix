@@ -1,6 +1,6 @@
-{ config, getColor, ... }:
+{ config, ... }:
 let
-  prefs = config.userPrefs;
+  theme = config.themingPrefs.theme;
 in
 {
   settings = {
@@ -14,8 +14,8 @@ in
     "custom/launcher" = {
       format = " ";
 
-      on-click = "${prefs.appLauncher} ${config.vars.appLauncherFlags}";
-      on-click-right = "killall ${prefs.appLauncher}";
+      on-click = "${config.vars.appLauncher} ${config.vars.appLauncherFlags}";
+      on-click-right = "killall ${config.vars.appLauncher}";
     };
 
     "hyprland/workspaces" = {
@@ -32,7 +32,7 @@ in
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base08"};
+      color: ${theme.base08};
       background: transparent;
     }
 
@@ -42,7 +42,7 @@ in
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0C"};
+      color: ${theme.base0C};
       background: transparent;
     }
 
@@ -51,7 +51,7 @@ in
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0D"};
+      color: ${theme.base0D};
       background: transparent;
     }
   '';

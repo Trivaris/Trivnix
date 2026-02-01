@@ -1,3 +1,20 @@
 {
-    "nixEnvSelector.nixFile": "${workspaceFolder}/shell.nix"
+    "nixEnvSelector.nixFile": "${workspaceFolder}/flake/shell.nix",
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nixd",
+    "nix.serverSettings": {
+        "nixd": {
+            "formatting": {
+                "command": ["nixfmt"],
+            },
+            "options" : {
+                "nixos": {
+                    "expr": "(builtins.getFlake \"${workspaceFolder}/\").nixosConfigurations.desktop.options",
+                },
+                "home-manager": {
+                    "expr": "(builtins.getFlake \"${workspaceFolder}/\").homeConfigurations.\"trivaris@desktop\".options",
+                },
+            }
+        }
+    }
 }

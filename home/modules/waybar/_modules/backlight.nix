@@ -1,4 +1,7 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings.backlight = {
     format = " {}%";
@@ -15,7 +18,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base09"};
+      color: ${theme.base09};
       background: transparent;
     }
   '';

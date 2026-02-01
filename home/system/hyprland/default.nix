@@ -1,30 +1,20 @@
 {
-  config,
   lib,
   osConfig,
   pkgs,
   ...
 }:
-let
-  prefs = config.userPrefs;
-in
 {
-  options.userPrefs = {
-    waybar.weatherLocation = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-      description = ''
-        Location query passed to the Waybar weather script (e.g. ``"berlin"`` or ``"48.85,2.35"``).
-        Leave ``null`` to let wttr.in detect the location automatically from the current IP address.
-      '';
-    };
+  options.userPrefs.weatherLocation = lib.mkOption {
+    type = lib.types.nullOr lib.types.str;
+    default = null;
+    description = ''
+      Location query passed to the Waybar weather script (e.g. ``"berlin"`` or ``"48.85,2.35"``).
+      Leave ``null`` to let wttr.in detect the location automatically from the current IP address.
+    '';
   };
 
-  config = lib.mkIf (prefs.desktopEnvironment == "hyprland") {
-    vars.desktopEnvironmentBinary = "start-hyprland";
-
-    stylix.targets.hyprland.enable = false;
-
+  config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland = {
       enable = true;
       settings.exec-one = [

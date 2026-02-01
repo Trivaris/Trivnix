@@ -54,8 +54,8 @@ in
       "$mod, E, exec, dolphin"
       "$mod, L, exec, hyprlock"
 
-      "$mod, RETURN, exec, ${toString prefs.terminalEmulator}"
-      "$mod, SPACE, exec, ${prefs.appLauncher} ${config.vars.appLauncherFlags}"
+      "$mod, RETURN, exec, ${config.vars.terminalEmulator}"
+      "$mod, SPACE, exec, ${config.vars.appLauncher} ${config.vars.appLauncherFlags}"
     ]
     ++ [
       (lib.mkIf prefs.librewolf.enable "$mod, W, exec, librewolf")

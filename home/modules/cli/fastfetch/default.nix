@@ -1,14 +1,11 @@
 {
   config,
   lib,
-  trivnixLib,
-  pkgs,
   ...
 }:
 let
   prefs = config.userPrefs;
-  scheme = config.stylixPrefs.theme;
-  getColor = trivnixLib.getColor pkgs scheme;
+  theme = config.themingPrefs.theme;
 in
 {
   config = lib.mkIf prefs.cli.enable {
@@ -25,9 +22,9 @@ in
           hideCursor = true;
 
           color = {
-            keys = getColor "base0D";
-            title = getColor "base0D";
-            separator = getColor "base03";
+            keys = theme.base0D;
+            title = theme.base0D;
+            separator = theme.base03;
           };
 
           key = {

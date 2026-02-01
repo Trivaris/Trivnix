@@ -1,18 +1,20 @@
 {
   config,
+  osConfig,
   lib,
+  pkgs,
   ...
 }:
 let
   inherit (config.hostInfos) primaryMonitor;
-  prefs = config.userPrefs;
+  font = config.themingPrefs.font pkgs;
 in
 {
-  programs.hyprlock = lib.mkIf (prefs.desktopEnvironment == "hyprland") {
+  programs.hyprlock = lib.mkIf (!osConfig.hostPrefs.headless) {
     enable = true;
     settings = {
       general.hide_cursor = true;
-      "$font" = "JetBrainsMono Nerd Font";
+      "$font" = font.pname;
 
       background = {
         monitor = "";

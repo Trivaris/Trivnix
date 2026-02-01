@@ -1,12 +1,12 @@
 {
   config,
-  getColor,
   lib,
   ...
 }:
 let
   prefs = config.userPrefs;
-  location = prefs.waybar.weatherLocation;
+  theme = config.themingPrefs.theme;
+  location = prefs.weatherLocation;
   locationArg = lib.optionalString (
     location != null && location != ""
   ) " ${lib.escapeShellArg location}";
@@ -26,7 +26,7 @@ in
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base09"};
+      color: ${theme.base09};
       background: transparent;
     }
   '';

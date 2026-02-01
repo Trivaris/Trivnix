@@ -1,26 +1,16 @@
-{ lib, trivnixLib, ... }:
-let
-  modules = trivnixLib.getModules ./.;
-in
+{ lib, ... }:
 {
-  options = {
-    userPrefs.appLauncher = lib.mkOption {
-      type = lib.types.nullOr (lib.types.enum modules);
-      default = null;
-      example = "rofi";
-      description = ''
-        Application launcher module to install from `home/common/appLauncher`.
-        Leave null to skip adding a dedicated launcher for this profile.
-      '';
+  options.vars = {
+    appLauncher = lib.mkOption {
+      type = lib.types.str;
+      default = "rofi";
+      readOnly = true;
     };
 
-    vars.appLauncherFlags = lib.mkOption {
+    appLauncherFlags = lib.mkOption {
       type = lib.types.str;
-      default = "";
-      description = ''
-        Extra flags appended by modules when building keybindings for the launcher.
-        This is populated automatically and consumed by Hyprland bindings.
-      '';
+      readOnly = true;
+      default = "-show drun";
     };
   };
 }

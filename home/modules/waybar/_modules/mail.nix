@@ -1,11 +1,11 @@
 {
   config,
-  getColor,
   lib,
   ...
 }:
 let
   prefs = config.userPrefs;
+  theme = config.themingPrefs.theme;
 in
 {
   settings."custom/mail" = {
@@ -33,16 +33,16 @@ in
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0C"};
+      color: ${theme.base0C};
       background: transparent;
     }
 
     #custom-mail.mail.unread {
-      color: ${getColor "base08"};
+      color: ${theme.base08};
     }
 
     #custom-mail.mail.error {
-      color: ${getColor "base09"};
+      color: ${theme.base09};
     }
   '';
 }

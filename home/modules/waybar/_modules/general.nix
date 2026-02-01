@@ -1,4 +1,7 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings = {
     layer = "top";
@@ -43,7 +46,7 @@
     }
 
     window#waybar {
-      background: ${getColor "base00"};
+      background: ${theme.base00};
       margin: 0;
       padding: 8px 12px; /* add vertical room so background is taller */
       border-radius: 0 0 20px 20px; /* round bottom only to frame wallpaper */
@@ -73,7 +76,7 @@
 
     #workspaces button {
       transition: none;
-      color: ${getColor "base0C"};
+      color: ${theme.base0C};
       background: transparent;
       font-size: 16px;
       border-radius: 2px;
@@ -81,7 +84,7 @@
 
     #workspaces button.occupied {
       transition: none;
-      color: ${getColor "base08"};
+      color: ${theme.base08};
       background: transparent;
       font-size: 4px;
     }
@@ -90,18 +93,18 @@
       transition: none;
       box-shadow: inherit;
       text-shadow: inherit;
-      color: ${getColor "base0A"};
-      border-color: ${getColor "base08"};
+      color: ${theme.base0A};
+      border-color: ${theme.base08};
     }
 
     #hyprland-workspaces button.active:hover {
-      color: ${getColor "base08"};
+      color: ${theme.base08};
     }
 
     @keyframes blink {
       to {
-        background-color: ${getColor "base08"};
-        color: ${getColor "base0C"};
+        background-color: ${theme.base08};
+        color: ${theme.base0C};
       }
     }
   '';

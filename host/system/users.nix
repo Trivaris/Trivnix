@@ -1,14 +1,11 @@
 {
   config,
   allUserInfos,
-  allUserPrefs,
   lib,
   pkgs,
   ...
 }:
 let
-  allShells = lib.mapAttrsToList (_: prefs: prefs.shell) allUserPrefs;
-
   sshKeys = map builtins.readFile (lib.collect builtins.isPath config.private.pubKeys.hosts);
 
   allUsers = {
@@ -25,7 +22,7 @@ let
     description = username;
     openssh.authorizedKeys.keys = sshKeys;
     useDefaultShell = true;
-    shell = pkgs.${allUserPrefs.${username}.shell};
+    shell = pkgs.zsh;
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -44,7 +41,7 @@ let
   }) allUserInfos);
 in
 {
-  programs = builtins.listToAttrs (map (shell: lib.nameValuePair shell { enable = true; }) allShells);
+  programs.zsh.enable = true;
   users = {
     mutableUsers = false;
     users = allUsers;

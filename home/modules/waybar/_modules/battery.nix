@@ -1,4 +1,7 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings.battery = {
     format = "{icon} {capacity}%";
@@ -26,18 +29,18 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0C"};
+      color: ${theme.base0C};
       background: transparent;
     }
 
     #battery.charging, #battery.plugged {
-      color: ${getColor "base0B"};
+      color: ${theme.base0B};
       background-color: transparent;
     }
 
     #battery.critical:not(.charging) {
       background-color: transparent;
-      color: ${getColor "base08"};
+      color: ${theme.base08};
     }
   '';
 }

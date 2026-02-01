@@ -1,15 +1,12 @@
 { config, lib, ... }:
 let
   prefs = config.userPrefs;
-  isShell = shell: prefs.shell == shell;
 in
 {
   config = lib.mkIf prefs.cli.enable {
     programs.eza = {
       enable = true;
-      enableFishIntegration = isShell "fish";
-      enableBashIntegration = isShell "bash";
-      enableZshIntegration = isShell "zsh";
+      enableZshIntegration = true;
       extraOptions = [
         "-l"
         "--icons"

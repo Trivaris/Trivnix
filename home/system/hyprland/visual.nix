@@ -1,22 +1,17 @@
 {
   config,
-  pkgs,
   lib,
-  trivnixLib,
+  osConfig,
   ...
 }:
-let
-  prefs = config.userPrefs;
-in
 {
   config =
     let
-      scheme = config.stylixPrefs.theme;
-      getColor = trivnixLib.getColor pkgs scheme;
+      theme = config.themingPrefs.theme;
       toARGB = color: "0xff${lib.removePrefix "#" color}";
       withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
     in
-    lib.mkIf (prefs.desktopEnvironment == "hyprland") {
+    lib.mkIf (!osConfig.hostPrefs.headless) {
       wayland.windowManager.hyprland.settings = {
         master.new_status = "master";
 
@@ -28,10 +23,10 @@ in
           resize_on_border = true;
           extend_border_grab_area = 15;
           hover_icon_on_border = true;
-          "col.active_border" = "${toARGB (getColor "base0D")} ${toARGB (getColor "base0E")} 45deg";
-          "col.inactive_border" = toARGB (getColor "base03");
-          "col.nogroup_border" = toARGB (getColor "base02");
-          "col.nogroup_border_active" = toARGB (getColor "base0A");
+          "col.active_border" = "${toARGB theme.base0D} ${toARGB theme.base0E} 45deg";
+          "col.inactive_border" = toARGB theme.base03;
+          "col.nogroup_border" = toARGB theme.base02;
+          "col.nogroup_border_active" = toARGB theme.base0A;
         };
 
         decoration = {
@@ -50,7 +45,7 @@ in
             range = 15;
             render_power = 3;
             offset = "0 0";
-            color = withAlpha "aa" (getColor "base00");
+            color = withAlpha "aa" (theme.base00);
           };
         };
 
@@ -80,32 +75,22 @@ in
         };
 
         group = {
-          "col.border_active" = toARGB (getColor "base0D");
-          "col.border_inactive" = toARGB (getColor "base03");
+          "col.border_active" = toARGB theme.base0D;
+          "col.border_inactive" = toARGB theme.base03;
 
           groupbar = {
             enabled = true;
-            text_color = toARGB (getColor "base05");
-            "col.active" = toARGB (getColor "base0D");
-            "col.inactive" = toARGB (getColor "base02");
+            text_color = toARGB theme.base05;
+            "col.active" = toARGB theme.base0D;
+            "col.inactive" = toARGB theme.base02;
           };
         };
 
-        windowrulev2 = [
-          "float, class:^com\\.network\\.manager$"
-          "center, class:^com\\.network\\.manager$"
-
-          "float, class:^\\.blueman-manager-wrapped$"
-          "center, class:^\\.blueman-manager-wrapped$"
-
-          "float, class:^nm-connection-editor$"
-          "center, class:^nm-connection-editor$"
-
-          "float, class:^com\\.saivert\\.pwvucontrol$"
-          "center, class:^com\\.saivert\\.pwvucontrol$"
-
-          "float, title:^(?=.*Extension:)(?=.*Bitwarden).*"
-          "center, title:^(?=.*Extension:)(?=.*Bitwarden).*"
+        windowrule = [
+          "match:class nm-connection-editor, float true, size window_w window_h, center true"
+          "match:class com.network.manager, float true, size window_w window_h, center true"
+          "match:class .blueman-manager-wrapped, float true, size window_w window_h, center true"
+          "match:class com.saivert.pwvucontrol, float true, size window_w window_h, center true"
         ];
       };
     };

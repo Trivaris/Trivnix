@@ -12,7 +12,7 @@ in
     Requires a Wayland session (e.g., Sway, Hyprland).
   '';
 
-  config = lib.mkIf (prefs.wayvnc.enable && prefs.desktopEnvironment == "hyprland") {
+  config = lib.mkIf prefs.wayvnc.enable {
     services.wayvnc = {
       enable = true;
       autoStart = true;

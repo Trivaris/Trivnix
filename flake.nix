@@ -4,17 +4,11 @@
   '';
 
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
-
     # Personal repos
     trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
-    trivnixConfigs.url = "github:Trivaris/TrivnixConfigs";
-    trivnixLib.url = "github:Trivaris/TrivnixLib";
     trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
 
     # Personal Forks
-    millennium.url = "github:Trivaris/Millennium?dir=packages/nix";
     cfddns.url = "github:Trivaris/cloudflare-dyndns-nix";
 
     # Core/community modules
@@ -23,11 +17,13 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     # Extras and ecosystem modules
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     hyprland.url = "github:hyprwm/Hyprland";
     nix-minecraft.url = "github:Yeshey/nix-minecraft";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nvf.url = "github:notashelf/nvf";
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    importTree.url = "github:vic/import-tree";
 
     # Non-flake sources
     betterfox = {

@@ -2,13 +2,11 @@
   config,
   lib,
   pkgs,
-  trivnixLib,
   ...
 }:
 let
   prefs = config.userPrefs;
-  scheme = config.stylixPrefs.theme;
-  getColor = trivnixLib.getColor pkgs scheme;
+  theme = config.themingPrefs.theme;
 
   overrides = ''
     /** OVERRIDES ***/
@@ -31,16 +29,14 @@ in
 
       ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
         :root {
-          --lwt-accent-color: ${getColor "base00"} !important;
-          --lwt-text-color: ${getColor "base05"} !important;
-          --toolbar-bgcolor: ${getColor "base00"} !important;
-          --toolbar-color: ${getColor "base05"} !important;
-          --tab-selected-bgcolor: ${getColor "base01"} !important;
+          --lwt-accent-color: ${theme.base00} !important;
+          --lwt-text-color: ${theme.base05} !important;
+          --toolbar-bgcolor: ${theme.base00} !important;
+          --toolbar-color: ${theme.base05} !important;
+          --tab-selected-bgcolor: ${theme.base01} !important;
         }
       '';
     };
-
-    stylix.targets.librewolf.profileNames = [ config.userInfos.name ];
 
     programs.librewolf = {
       enable = true;

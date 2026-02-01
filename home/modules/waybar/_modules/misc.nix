@@ -1,4 +1,7 @@
-{ getColor, ... }:
+{ config, ... }:
+let
+  theme = config.themingPrefs.theme;
+in
 {
   settings = {
     clock = {
@@ -32,7 +35,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0B"};
+      color: ${theme.base0B};
       background: transparent;
     }
 
@@ -41,7 +44,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0C"};
+      color: ${theme.base0C};
       background: transparent;
     }
 
@@ -50,7 +53,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0D"};
+      color: ${theme.base0D};
       background: transparent;
     }
 
@@ -59,7 +62,7 @@
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
-      color: ${getColor "base0E"};
+      color: ${theme.base0E};
       background: transparent;
     }
   '';

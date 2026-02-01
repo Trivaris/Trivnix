@@ -1,18 +1,15 @@
 {
-  allUserPrefs,
   lib,
+  config,
   ...
 }:
+let
+  prefs = config.hostPrefs;
+in
 {
   config =
-    lib.mkIf
-      (lib.pipe allUserPrefs [
-        builtins.attrValues
-        (map (prefs: prefs.desktopEnvironment or ""))
-        (builtins.elem "hyprland")
-      ])
-      {
-        security.pam.services.hyprlock = { };
-        programs.hyprland.enable = true;
-      };
+    lib.mkIf (!prefs.headless) {
+      security.pam.services.hyprlock = { };
+      programs.hyprland.enable = true;
+    };
 }
