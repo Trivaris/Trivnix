@@ -6,7 +6,7 @@
   inputs = {
     # Personal repos
     trivnixPrivate.url = "git+ssh://git@github.com/Trivaris/TrivnixPrivate";
-    trivnixOverlays.url = "github:Trivaris/TrivnixOverlays";
+    trivnixOverlays.url = "git+ssh://git@github.com/Trivaris/TrivnixOverlays";
 
     # Personal Forks
     cfddns.url = "github:Trivaris/cloudflare-dyndns-nix";
