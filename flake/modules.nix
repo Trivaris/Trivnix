@@ -10,7 +10,6 @@
       inputs.sops-nix.nixosModules.sops
       inputs.spicetify-nix.nixosModules.spicetify
       inputs.nvf.nixosModules.default
-      inputs.trivnixPrivate.nixosModules.default
     ];
   };
 
@@ -18,7 +17,6 @@
     imports = [
       inputs.sops-nix.homeManagerModules.sops
       inputs.spicetify-nix.homeManagerModules.spicetify
-      inputs.trivnixPrivate.homeModules.default
     ];
   };
 }
