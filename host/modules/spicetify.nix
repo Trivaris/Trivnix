@@ -13,7 +13,7 @@ in
     programs.spicetify = {
       enable = true;
       theme = themePrefs.themes.spicetify;
-      scheme = themePrefs.schemes.spicetify;
+      colorScheme = themePrefs.schemes.spicetify;
     };
   };
 
