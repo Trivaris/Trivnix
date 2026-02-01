@@ -1,20 +1,7 @@
 {
-  allHostInfos,
-  allHostPrefs,
   config,
-  lib,
   ...
 }:
-let
-  aliases = builtins.listToAttrs (
-    lib.concatMap (configname: [
-      (lib.nameValuePair allHostInfos.${configname}.name {
-        hostname = allHostInfos.${configname}.ip;
-        user = config.userInfos.name;
-      })
-    ]) (builtins.attrNames (lib.filterAttrs (_: prefs: prefs.openssh.enable or false) allHostPrefs))
-  );
-in
 {
   programs.ssh = {
     enable = true;
@@ -27,7 +14,6 @@ in
           config.sops.secrets.ssh-private-key.path
         ];
       };
-    }
-    // aliases;
+    };
   };
 }

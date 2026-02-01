@@ -1,5 +1,4 @@
 {
-  allUserInfos,
   config,
   lib,
   pkgs,
@@ -7,7 +6,8 @@
 }:
 let
   prefs = config.hostPrefs;
-  font = config.themingPrefs.font pkgs;
+  themePrefs = config.themingPrefs;
+  allUserInfos = builtins.attrNames (builtins.mapAttrs (cfg: cfg.userInfos) config.home-manager.users);
 in
 {
   options.hostPrefs = {
@@ -22,7 +22,7 @@ in
 
     mainUser = lib.mkOption {
       type = lib.types.str;
-      default = builtins.head (builtins.attrNames allUserInfos);
+      default = builtins.head allUserInfos;
       description = ''
         Primary user account considered owner of the host configuration.
         Used by modules such as autologin and service defaults needing a username.
@@ -38,7 +38,7 @@ in
     time.timeZone = "Europe/Berlin";
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
-    fonts.packages = [ font ];
+    fonts.packages = [ themePrefs.font ];
 
     qt = {
       enable = true;
@@ -58,7 +58,7 @@ in
 
       settings = {
         experimental-features = "nix-command flakes pipe-operators";
-        trusted-users = (builtins.attrNames allUserInfos) ++ [ "root" ];
+        trusted-users = allUserInfos ++ [ "root" ];
         auto-optimise-store = true;
         warn-dirty = false;
       };

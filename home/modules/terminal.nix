@@ -1,12 +1,10 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
 let 
-  font = config.themingPrefs.font pkgs;
-  kittyTheme = config.themingPrefs.kittyTheme;
+  themePrefs = config.themingPrefs;
 in 
 {
   options.vars.terminalEmulator = lib.mkOption {
@@ -19,10 +17,10 @@ in
     enable = true;
     enableGitIntegration = true;
     shellIntegration.enableZshIntegration = true;
-    themeFile = kittyTheme;
+    themeFile = themePrefs.schemes.kitty;
     font = {
-      package = font;
-      name = font.pname;
+      package = themePrefs.font;
+      name = themePrefs.font.pname;
       size = 12;
     };
 

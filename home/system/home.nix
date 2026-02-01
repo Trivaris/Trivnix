@@ -21,8 +21,8 @@ in
 
     pointerCursor = {
       enable = true;
-      name = themingPrefs.cursorName;
-      package = themingPrefs.cursorPackage pkgs;
+      name = themingPrefs.cursor.name;
+      package = themingPrefs.cursor.package;
     };
   };
 

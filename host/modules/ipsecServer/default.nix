@@ -1,5 +1,4 @@
 {
-  allHostPrefs,
   config,
   lib,
   ...
@@ -8,14 +7,7 @@ let
   prefs = config.hostPrefs;
 
   clientCerts = lib.mapAttrs' (
-    _: client:
-    lib.nameValuePair "ipsec.d/certs/${client.ipsecClient.id}-cert.pem" {
-      source = client.ipsecClient.cert;
-    }
-  ) ((lib.filterAttrs (_: hPrefs: hPrefs.ipsecClient.enable or false)) allHostPrefs);
-
-  extraClientCerts = lib.mapAttrs' (
-    id: path: lib.nameValuePair "ipsec.d/certs/${id}-cert.pem" { source = path; }
+    id: certPath: lib.nameValuePair "ipsec.d/certs/${id}-cert.pem" { source = certPath; }
   ) prefs.ipsecServer.extraClientCerts;
 in
 {
@@ -35,7 +27,6 @@ in
 
     environment.etc =
       clientCerts
-      // extraClientCerts
       // {
         "ipsec.d/ipsec.secrets" = {
           mode = "0600";

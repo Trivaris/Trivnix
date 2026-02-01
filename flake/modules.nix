@@ -1,20 +1,24 @@
 { inputs }:
 {
-  host = [
-    inputs.cfddns.nixosModules.default
-    inputs.disko.nixosModules.disko
-    inputs.mailserver.nixosModules.default
-    inputs.nix-minecraft.nixosModules.minecraft-servers
-    inputs.nur.modules.nixos.default
-    inputs.sops-nix.nixosModules.sops
-    inputs.spicetify-nix.nixosModules.spicetify
-    inputs.nvf.nixosModules.default
-    inputs.trivnixPrivate.nixosModules.default
-  ];
+  host = _: {
+    imports = [
+      inputs.cfddns.nixosModules.default
+      inputs.disko.nixosModules.disko
+      inputs.mailserver.nixosModules.default
+      inputs.nix-minecraft.nixosModules.minecraft-servers
+      inputs.nur.modules.nixos.default
+      inputs.sops-nix.nixosModules.sops
+      inputs.spicetify-nix.nixosModules.spicetify
+      inputs.nvf.nixosModules.default
+      inputs.trivnixPrivate.nixosModules.default
+    ];
+  };
 
-  home = [
-    inputs.sops-nix.homeManagerModules.sops
-    inputs.spicetify-nix.homeManagerModules.spicetify
-    inputs.trivnixPrivate.nixosModules.default
-  ];
+  home = _: {
+    imports = [
+      inputs.sops-nix.homeManagerModules.sops
+      inputs.spicetify-nix.homeManagerModules.spicetify
+      inputs.trivnixPrivate.nixosModules.default
+    ];
+  };
 }

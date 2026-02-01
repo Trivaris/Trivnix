@@ -1,6 +1,5 @@
 {
   config,
-  allHostInfos,
   lib,
   ...
 }:
@@ -22,7 +21,7 @@ let
     };
   }
   // (lib.mapAttrs (hostname: pubKeys: {
-    hostNames = [ allHostInfos.${hostname}.ip ];
+    hostNames = [ hostname ];
     publicKey = builtins.readFile pubKeys."host.pub";
   }) config.private.pubKeys.hosts);
 in

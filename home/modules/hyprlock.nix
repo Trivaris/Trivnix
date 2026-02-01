@@ -2,19 +2,18 @@
   config,
   osConfig,
   lib,
-  pkgs,
   ...
 }:
 let
   inherit (config.hostInfos) primaryMonitor;
-  font = config.themingPrefs.font pkgs;
+  themePrefs = config.themingPrefs;
 in
 {
   programs.hyprlock = lib.mkIf (!osConfig.hostPrefs.headless) {
     enable = true;
     settings = {
       general.hide_cursor = true;
-      "$font" = font.pname;
+      "$font" = themePrefs.font.pname;
 
       background = {
         monitor = "";

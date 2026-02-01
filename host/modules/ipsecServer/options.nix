@@ -18,7 +18,7 @@
       description = "Path to the Server Certificate";
     };
 
-    extraClientCerts = lib.mkOption {
+    clientCerts = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = { };
       description = "Extra Certs you want allowed";
