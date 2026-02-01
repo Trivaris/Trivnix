@@ -6,7 +6,7 @@
 }:
 let
   inherit (config.hostInfos) primaryMonitor;
-  themePrefs = config.themingPrefs;
+  themePrefs = osConfig.themingPrefs;
 in
 {
   programs.hyprlock = lib.mkIf (!osConfig.hostPrefs.headless) {

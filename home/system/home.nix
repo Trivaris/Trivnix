@@ -1,11 +1,12 @@
 {
   config,
+  osConfig,
   lib,
   pkgs,
   ...
 }:
 let 
-  themingPrefs = config.themingPrefs;
+  themingPrefs = osConfig.themingPrefs;
 in 
 {
   home = {

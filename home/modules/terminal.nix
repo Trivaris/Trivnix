@@ -1,10 +1,10 @@
 {
   lib,
-  config,
+  osConfig,
   ...
 }:
 let 
-  themePrefs = config.themingPrefs;
+  themePrefs = osConfig.themingPrefs;
 in 
 {
   options.vars.terminalEmulator = lib.mkOption {

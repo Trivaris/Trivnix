@@ -1,11 +1,12 @@
 {
   config,
+  osConfig,
   lib,
   ...
 }:
 let
   prefs = config.userPrefs;
-  theme = config.themingPrefs.theme;
+  theme = osConfig.themingPrefs.theme;
 in
 {
   config = lib.mkIf prefs.cli.enable {

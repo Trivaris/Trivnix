@@ -1,6 +1,6 @@
-{ config, ... }:
+{ osConfig, config, ... }:
 let
-  theme = config.themingPrefs.theme;
+  theme = osConfig.themingPrefs.theme;
 in
 {
   settings = {

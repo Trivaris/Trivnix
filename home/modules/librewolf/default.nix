@@ -1,12 +1,13 @@
 {
   config,
+  osConfig,
   lib,
   pkgs,
   ...
 }:
 let
   prefs = config.userPrefs;
-  theme = config.themingPrefs.theme;
+  theme = osConfig.themingPrefs.theme;
 
   overrides = ''
     /** OVERRIDES ***/

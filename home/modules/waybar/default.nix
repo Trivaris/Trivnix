@@ -1,20 +1,16 @@
 {
-  config,
   lib,
   pkgs,
   osConfig,
   ...
-}:
+}@inputs:
 let
   modules = builtins.attrValues (
     lib.packagesFromDirectoryRecursive {
       directory = ./_modules;
       callPackage =
         packagePath: _:
-        pkgs.callPackage packagePath {
-          inherit (osConfig) hostPrefs;
-          inherit config;
-        };
+        pkgs.callPackage packagePath inputs;
     }
   );
 in

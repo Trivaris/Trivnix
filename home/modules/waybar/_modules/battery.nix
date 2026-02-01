@@ -1,6 +1,6 @@
-{ config, ... }:
+{ osConfig, ... }:
 let
-  theme = config.themingPrefs.theme;
+  theme = osConfig.themingPrefs.theme;
 in
 {
   settings.battery = {
