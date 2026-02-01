@@ -1,6 +1,6 @@
 { osConfig, ... }:
 let
-  theme = osConfig.themingPrefs.theme;
+  theme = osConfig.themingPrefs.scheme;
 in
 {
   settings.backlight = {

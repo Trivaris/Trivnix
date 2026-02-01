@@ -6,7 +6,7 @@
 }:
 let
   prefs = config.userPrefs;
-  theme = osConfig.themingPrefs.theme;
+  theme = osConfig.themingPrefs.scheme;
   location = prefs.weatherLocation;
   locationArg = lib.optionalString (
     location != null && location != ""

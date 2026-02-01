@@ -6,7 +6,7 @@
 {
   config =
     let
-      theme = osConfig.themingPrefs.theme;
+      theme = osConfig.themingPrefs.scheme;
       toARGB = color: "0xff${lib.removePrefix "#" color}";
       withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
     in
