@@ -1360,15 +1360,15 @@
       "locked": {
         "lastModified": 1769341326,
         "narHash": "sha256-5RO2LsJUbg1nJwZFuwbER/CXQEY7K384cxZJfqP2KNc=",
-        "owner": "Trivaris",
-        "repo": "TrivnixOverlays",
+        "ref": "refs/heads/main",
         "rev": "d2506bc94a1af8ea2231070730a906054f5a04b2",
-        "type": "github"
+        "revCount": 33,
+        "type": "git",
+        "url": "ssh://git@github.com/Trivaris/TrivnixOverlays"
       },
       "original": {
-        "owner": "Trivaris",
-        "repo": "TrivnixOverlays",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/Trivaris/TrivnixOverlays"
       }
     },
     "trivnixPrivate": {
