@@ -21,7 +21,7 @@ in
     font = {
       package = themePrefs.font.package;
       name = themePrefs.font.name;
-      size = 24;
+      size = 12;
     };
 
     settings = {
@@ -30,7 +30,7 @@ in
       cursor_trail_start_threshold = 2;
       background_opacity = "0.7";
       dynamic_background_opacity = "yes";
-      text_composition_strategy = "platform";
+      text_composition_strategy = "1.0 30";
     };
   };
 }

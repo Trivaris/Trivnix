@@ -44,6 +44,7 @@ in
       font-family: "${themePrefs.font.name} Font" ;
       font-size: 17px;
       min-height: 10px;
+      font-weight: bold;
     }
 
     window#waybar {

@@ -19,14 +19,28 @@ in
     };
 
     "hyprland/workspaces" = {
-      "format" = "{icon}";
-      "on-scroll-up" = "hyprctl dispatch workspace e+1";
-      "on-scroll-down" = "hyprctl dispatch workspace e-1";
-      "on-click" = "activate";
+      format = "{icon}";
+      on-scroll-up = "hyprctl dispatch workspace e+1";
+      on-scroll-down = "hyprctl dispatch workspace e-1";
+      on-click = "activate";
     };
   };
 
   style = ''
+    #workspaces button {
+      padding: 0 10px;
+      background: transparent;
+      color: ${theme.base05};
+      transition: all 0.3s ease;
+    }
+
+    #workspaces button.active {
+      color: ${theme.base0D};
+      background: transparent;
+      border-bottom: 3px solid ${theme.base0D};
+      border-radius: 0;
+    }
+
     #custom-spotify {
       margin: 0 8px;
       padding: 0 10px;

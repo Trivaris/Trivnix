@@ -1,4 +1,4 @@
-{ config, lib }:
+{ config, lib, osConfig, ... }:
 let
   prefs = config.userPrefs;
   isEnabled =
@@ -56,14 +56,14 @@ in
 
       "$mod, RETURN, exec, ${config.vars.terminalEmulator}"
       "$mod, SPACE, exec, ${config.vars.appLauncher} ${config.vars.appLauncherFlags}"
-    ]
-    ++ [
+
       (lib.mkIf prefs.librewolf.enable "$mod, W, exec, librewolf")
+      (lib.mkIf osConfig.hostPrefs.spicetify.enable "$mod, S, exec, spotify")
+      (lib.mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
+
       (lib.mkIf (isEnabled "vscode") "$mod, A, exec, code")
       (lib.mkIf (isEnabled "vscodium") "$mod, A, exec, codium")
-      (lib.mkIf (isEnabled "spotify" || isEnabled "spicetify") "$mod, S, exec, spotify")
       (lib.mkIf (isEnabled "vesktop") "$mod, D, exec, vesktop")
-      (lib.mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
     ];
 
     volume = [

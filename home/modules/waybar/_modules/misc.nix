@@ -7,7 +7,7 @@ in
     clock = {
       interval = 60;
 
-      format = " {:%H:%M}";
+      format = "   {:%H:%M}";
       format-alt = "󰃭 {:%A, %d %B %Y}";
     };
 
@@ -17,13 +17,13 @@ in
     };
 
     cpu = {
-      format = " {}%";
+      format = "   {}%";
       interval = 15;
       max-length = 15;
     };
 
     memory = {
-      format = " {}%";
+      format = "   {}%";
       interval = 30;
       max-length = 10;
     };

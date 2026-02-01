@@ -9,7 +9,7 @@ if [ "$class" = "playing" ]; then
   if [ ${#info} -gt 40 ]; then
     info="$(printf "%s" "$info" | cut -c1-40)..."
   fi
-  text="$icon $info"
+  text="$icon   $info"
 elif [ "$class" = "paused" ]; then
   text="$icon "
 elif [ "$class" = "stopped" ] || [ -z "$class" ]; then

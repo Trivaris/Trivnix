@@ -6,6 +6,10 @@
 }:
 let
   prefs = config.userPrefs;
+  starshipTheme = fromTOML(builtins.readFile (builtins.fetchurl {
+    url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
+    sha256 = "sha256:0f0pykrldyr5cxva278ahjs0xnqbm9gig7w8g850rswmiscc65fg";
+  }));
 in
 {
   options.vars = {
@@ -23,18 +27,28 @@ in
   };
 
   config = {
-    programs.starship.enable = true;
-    programs.zsh = {
+    programs.starship = {
       enable = true;
-      autocd = true;
-      shellAliases = config.vars.shellAbbreviations;
-      siteFunctions = config.vars.shellFunctions;
-      autosuggestion.enable = true;
-      autosuggestion.strategy = [ "completion" ];
-      syntaxHighlighting.enable = true;
-      initContent = ''
-        ${lib.optionalString prefs.cli.enable "fastfetch"}
-      '';
+      settings = starshipTheme;
     };
+    
+    programs.zsh = {
+        enable = true;
+        autocd = true;
+        shellAliases = config.vars.shellAbbreviations;
+        syntaxHighlighting.enable = true;
+        
+        autosuggestion = {
+          enable = true;
+          strategy = [ "match_prev_cmd" "history" "completion" ];
+        };
+
+        initContent = ''
+          ${lib.optionalString prefs.cli.enable "fastfetch"}
+
+          bindkey "^[[1;5D" backward-word
+          bindkey "^[[1;5C" forward-word
+        '';
+      };
   };
 }

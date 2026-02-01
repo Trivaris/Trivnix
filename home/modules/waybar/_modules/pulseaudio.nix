@@ -9,7 +9,7 @@ in
     scroll-step = 5;
     tooltip = false;
 
-    format = "{icon} {volume}%";
+    format = "{icon}   {volume}%";
     format-muted = "  {volume}%";
     format-icons.default = [
       ""
