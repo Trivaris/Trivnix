@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   lib,
   ...
 }:
@@ -11,13 +12,13 @@ in
     shellAbbreviations = lib.mkOption {
       type = lib.types.attrsOf lib.types.anything;
       readOnly = true;
-      default = import ./_abbreviations.nix config;
+      default = import ./_abbreviations.nix;
     };
 
     shellFunctions = lib.mkOption {
       type = lib.types.attrsOf lib.types.anything;
       readOnly = true;
-      default = import ./_functions.nix config;
+      default = import ./_functions.nix osConfig.hostInfos.configname;
     };
   };
 

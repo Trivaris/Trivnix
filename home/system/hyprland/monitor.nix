@@ -1,10 +1,10 @@
-{ lib, config, osConfig, ... }:
+{ lib, osConfig, ... }:
 {
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland.settings.monitor = lib.mapAttrsToList (
       name: details:
       "${name},${details.resolution}@${details.refreshRate},${details.position},${details.scaling}"
-    ) config.hostInfos.monitors;
+    ) osConfig.hostInfos.monitors;
 
     services.hyprpaper = {
       enable = true;
@@ -12,7 +12,7 @@
         wallpaper = lib.mapAttrsToList (name: details: {
           monitor = name;
           path = details.wallpaper;
-        }) config.hostInfos.monitors;
+        }) osConfig.hostInfos.monitors;
       };
     };
   };

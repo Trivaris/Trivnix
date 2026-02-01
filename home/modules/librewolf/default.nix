@@ -82,7 +82,7 @@ in
                   template = "https://search.nixos.org/packages";
                   definedAliases = [ "@np" ];
                   params = [
-                    (lib.nameValuePair "channel" config.hostInfos.stateVersion)
+                    (lib.nameValuePair "channel" osConfig.hostInfos.stateVersion)
                     (lib.nameValuePair "query" "{searchTerms}")
                   ];
                 }

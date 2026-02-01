@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   lib,
   pkgs,
   ...
@@ -10,7 +11,7 @@ let
 
   allUsers = {
     root = {
-      hashedPassword = config.hostInfos.hashedRootPassword;
+      hashedPassword = osConfig.hostInfos.hashedRootPassword;
       openssh.authorizedKeys.keys = sshKeys;
     };
   }

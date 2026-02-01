@@ -1,11 +1,6 @@
-{
-  config,
-  osConfig,
-  lib,
-  ...
-}:
+{ osConfig, lib, ... }:
 let
-  inherit (config.hostInfos) primaryMonitor;
+  inherit (osConfig.hostInfos) primaryMonitor;
   themePrefs = osConfig.themingPrefs;
 in
 {

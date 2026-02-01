@@ -1,8 +1,8 @@
-config:
+configname:
 {
   rebuild = ''
     set prod 0
-    set host "${config.hostInfos.configname}"
+    set host "${configname}"
     set host_set 0
 
     for arg in $argv

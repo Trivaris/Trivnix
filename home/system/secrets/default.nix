@@ -1,12 +1,13 @@
 {
   config,
+  osConfig,
   lib,
   ...
 }:
 let
   prefs = config.userPrefs;
   commonSecrets = "${config.private.secrets}/home/${config.userInfos.name}/common.yaml";
-  hostSecrets = "${config.private.secrets}/home/${config.userInfos.name}/${config.hostInfos.configname}.yaml";
+  hostSecrets = "${config.private.secrets}/home/${config.userInfos.name}/${osConfig.hostInfos.configname}.yaml";
 
   sshSecrets."ssh-private-key" = {
     sopsFile = hostSecrets;

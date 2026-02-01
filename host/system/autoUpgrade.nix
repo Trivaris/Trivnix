@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   lib,
   pkgs,
   ...
@@ -60,7 +61,7 @@ in
           REPO_URL="${prefs.autoUpgrade.repoUrl}"
           BRANCH="${prefs.autoUpgrade.branch}"
           WORKDIR="${prefs.autoUpgrade.workdir}"
-          HOST="${config.hostInfos.configname}"
+          HOST="${osConfig.hostInfos.configname}"
 
           mkdir -p "${prefs.autoUpgrade.workdir}"
 

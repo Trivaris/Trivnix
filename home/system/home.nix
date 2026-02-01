@@ -10,7 +10,7 @@ let
 in 
 {
   home = {
-    inherit (config.hostInfos) stateVersion;
+    inherit (osConfig.hostInfos) stateVersion;
     username = lib.mkDefault config.userInfos.name;
     homeDirectory = lib.mkDefault "/home/${config.userInfos.name}";
 
