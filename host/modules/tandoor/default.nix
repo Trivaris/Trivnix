@@ -9,7 +9,7 @@ in
       enable = true;
       address =
         if prefs.tandoor.reverseProxy.enable then "localhost" else prefs.tandoor.reverseProxy.domain;
-      extraConfig.MEDIA_ROOT = "/var/lib/tandoor/media/";
+      extraConfig.MEDIA_ROOT = "/var/lib/tandoor-recipes/media/";
     };
   };
 }
