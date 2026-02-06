@@ -1,24 +1,13 @@
 { lib, config, ... }:
 let
   prefs = config.hostPrefs;
+  servicesToList = lib.mapAttrsToList (name: service: service.reverseProxy // { inherit name; });
+  isService = pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false;
 in
 {
-  options.vars =
-    let
-      servicesToList = lib.mapAttrsToList (name: service: service.reverseProxy // { inherit name; });
-    in
-    {
-      extraCertDomains = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-      };
-
-      activeServices = lib.mkOption {
-        type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
-        default = servicesToList (
-          (lib.filterAttrs (_: pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false))
-            prefs
-        );
-      };
-    };
+  options.vars.activeServices = lib.mkOption {
+    type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
+    readOnly = true;
+    default = servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs);
+  };
 }

@@ -2,12 +2,6 @@
 let
   prefs = config.hostPrefs;
   acmeUnits = map (service: "acme-${service.domain}.service") config.vars.activeServices;
-  body = {
-    inherit (prefs.reverseProxy) email;
-    dnsProvider = "cloudflare";
-    group = "nginx";
-    credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-api-token.path;
-  };
 in
 {
   config = lib.mkIf prefs.reverseProxy.enable {
@@ -15,11 +9,16 @@ in
 
     security.acme = {
       acceptTerms = true;
+      defaults = {
+        credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-dns-api-token.path;
+        credentialFiles."CLOUDFLARE_ZONE_API_TOKEN_FILE" = config.sops.secrets.cloudflare-zone-api-token.path;
+        dnsProvider = "cloudflare";
+        email = prefs.reverseProxy.email;
+      };
+
       certs = builtins.listToAttrs (
-        (map (service: lib.nameValuePair service.domain body) config.vars.activeServices)
-        ++ (map (extraCertDomain: lib.nameValuePair extraCertDomain body) (
-          prefs.reverseProxy.extraCertDomains ++ config.vars.extraCertDomains
-        ))
+        (map (service: lib.nameValuePair service.domain {}) config.vars.activeServices) ++
+        (map (extraCertDomain: lib.nameValuePair extraCertDomain {}) prefs.reverseProxy.extraCertDomains)
       );
     };
 

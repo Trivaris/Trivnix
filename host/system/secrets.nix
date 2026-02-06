@@ -69,12 +69,12 @@ in
       })
 
       (lib.mkIf (prefs.reverseProxy.enable || prefs.cfddns.enable) {
-        cloudflare-api-token = {
+        cloudflare-zone-api-token = {
           owner = "root";
           group = "root";
         };
 
-        cloudflare-api-account-token = {
+        cloudflare-dns-api-account-token = {
           owner = "root";
           group = "root";
         };
