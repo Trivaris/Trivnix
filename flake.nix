@@ -14,12 +14,19 @@
 
     # Extras and ecosystem modules
     # millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
-    hyprland.url = "github:hyprwm/Hyprland";
     nix-minecraft.url = "github:Yeshey/nix-minecraft";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nvf.url = "github:notashelf/nvf";
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     importTree.url = "github:vic/import-tree";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
+    hyprland-plugins.inputs.hyprland.follows = "hyprland";
+
+    split-monitor-workspaces.url = "github:Duckonaut/split-monitor-workspaces";
+    split-monitor-workspaces.inputs.hyprland.follows = "hyprland";
 
     # Non-flake sources
     betterfox = {

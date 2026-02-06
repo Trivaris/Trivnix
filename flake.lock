@@ -370,11 +370,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1769866762,
-        "narHash": "sha256-OFTMhMUnJCg3woctP+qrWNM0ALeiTnGlbsC7eHStdDY=",
+        "lastModified": 1770411740,
+        "narHash": "sha256-1LgzyuQXTfnbPJ56daOe4dLE2BbRyHmeG2YEoHDFY+c=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "db6114c6c53edc4a60695a12d7f857308b6cd6cd",
+        "rev": "63eb6b3bda71e7e5a1043f585ae39e878cb56b55",
         "type": "github"
       },
       "original": {
@@ -426,6 +426,36 @@
       "original": {
         "owner": "hyprwm",
         "repo": "hyprland-guiutils",
+        "type": "github"
+      }
+    },
+    "hyprland-plugins": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769285097,
+        "narHash": "sha256-eVD4U3Oqzz0VU9ylJ5wo76xDcYKv2CpiiRXq4Is4QdA=",
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "rev": "06c0749a0dac978d89b1a76ae6adc76a3c15dbfa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
         "type": "github"
       }
     },
@@ -687,6 +717,21 @@
         "type": "github"
       }
     },
+    "nix-filter": {
+      "locked": {
+        "lastModified": 1693833173,
+        "narHash": "sha256-hlMABKrGbEiJD5dwUSfnw1CQ3bG7KKwDV+Nx3bEZd7U=",
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "rev": "ac030bd9ba98e318e1f4c4328d60766ade8ebe8b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "type": "github"
+      }
+    },
     "nix-minecraft": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -922,13 +967,15 @@
         "cfddns": "cfddns",
         "disko": "disko",
         "hyprland": "hyprland",
+        "hyprland-plugins": "hyprland-plugins",
         "importTree": "importTree",
         "mailserver": "mailserver",
         "nix-minecraft": "nix-minecraft",
         "nur": "nur",
         "nvf": "nvf",
         "sops-nix": "sops-nix",
-        "spicetify-nix": "spicetify-nix"
+        "spicetify-nix": "spicetify-nix",
+        "split-monitor-workspaces": "split-monitor-workspaces"
       }
     },
     "sops-nix": {
@@ -965,6 +1012,27 @@
       "original": {
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
+        "type": "github"
+      }
+    },
+    "split-monitor-workspaces": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nix-filter": "nix-filter"
+      },
+      "locked": {
+        "lastModified": 1769335540,
+        "narHash": "sha256-6ByXkYgKvqS7fDpJZsnMA6e7QvfkfUwro/LbVlhhUk0=",
+        "owner": "Duckonaut",
+        "repo": "split-monitor-workspaces",
+        "rev": "da8b49a2d5af2557a4ddce354e6e57611e0813b4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Duckonaut",
+        "repo": "split-monitor-workspaces",
         "type": "github"
       }
     },
