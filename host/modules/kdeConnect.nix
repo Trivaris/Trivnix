@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let 
   prefs = config.hostPrefs;
 in
@@ -11,6 +11,7 @@ in
   config = lib.mkIf prefs.kdeConnect.enable {
     programs.kdeconnect = {
       enable = true;
+      package = pkgs.valent;
     };
   };
 }
