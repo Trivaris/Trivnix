@@ -1,6 +1,5 @@
 {
   config,
-  osConfig,
   lib,
   ...
 }:
@@ -28,7 +27,7 @@ in
         prefs.mailserver.domain
       ];
 
-      stateVersion = lib.pipe osConfig.hostInfos.stateVersion [
+      stateVersion = lib.pipe config.hostInfos.stateVersion [
         (lib.splitString ".")
         lib.head
         lib.toInt
