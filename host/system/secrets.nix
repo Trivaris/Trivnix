@@ -74,7 +74,7 @@ in
           group = "root";
         };
 
-        cloudflare-dns-api-account-token = {
+        cloudflare-dns-api-token = {
           owner = "root";
           group = "root";
         };
