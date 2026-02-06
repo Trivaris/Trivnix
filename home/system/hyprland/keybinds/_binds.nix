@@ -51,7 +51,7 @@ in
 
     programs = [
       "$mod, Q, killactive"
-      "$mod, E, exec, dolphin"
+      "$mod, E, exec, nautilus"
       "$mod, L, exec, hyprlock"
 
       "$mod, RETURN, exec, ${config.vars.terminalEmulator}"

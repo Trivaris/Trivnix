@@ -50,8 +50,8 @@ in
     window#waybar {
       background: ${theme.base00};
       margin: 0;
-      padding: 8px 12px; /* add vertical room so background is taller */
-      border-radius: 0 0 20px 20px; /* round bottom only to frame wallpaper */
+      padding: 8px 12px;
+      border-radius: 0 0 20px 20px;
     }
 
     window#waybar.hidden {
@@ -59,48 +59,12 @@ in
     }
 
     #window {
-      /* reset inherited margins to let window padding control vertical spacing */
       margin-top: 0;
       padding: 0 10px;
       border-radius: 10px;
       transition: none;
       color: transparent;
       background: transparent;
-    }
-
-    #workspaces {
-      margin: 0 12px;
-      font-size: 4px;
-      border-radius: 10px;
-      background: transparent;
-      transition: none;
-    }
-
-    #workspaces button {
-      transition: none;
-      color: ${theme.base0C};
-      background: transparent;
-      font-size: 16px;
-      border-radius: 2px;
-    }
-
-    #workspaces button.occupied {
-      transition: none;
-      color: ${theme.base08};
-      background: transparent;
-      font-size: 4px;
-    }
-
-    #hyprland-workspaces button:hover {
-      transition: none;
-      box-shadow: inherit;
-      text-shadow: inherit;
-      color: ${theme.base0A};
-      border-color: ${theme.base08};
-    }
-
-    #hyprland-workspaces button.active:hover {
-      color: ${theme.base08};
     }
 
     @keyframes blink {

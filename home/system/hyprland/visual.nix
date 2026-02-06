@@ -91,6 +91,7 @@
           "match:class .blueman-manager-wrapped, float true, size window_w window_h, center true"
           "match:class com.saivert.pwvucontrol, float true, size window_w window_h, center true"
           "match:class org.kde.dolphin, float true, size window_w window_h, center true"
+          "match:class org.gnome.Nautilus, float true, size window_w*1.5 window_h*1.5, center true"
           "match:class thunderbird, match:title ^Write:.*, float true, size window_w window_h, center true"
         ];
       };

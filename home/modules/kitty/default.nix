@@ -17,7 +17,7 @@ in
     enable = true;
     enableGitIntegration = true;
     shellIntegration.enableZshIntegration = true;
-    themeFile = themePrefs.schemes.kitty;
+    
     font = {
       package = themePrefs.font.package;
       name = themePrefs.font.name;
@@ -32,5 +32,9 @@ in
       dynamic_background_opacity = "yes";
       text_composition_strategy = "1.0 30";
     };
+
+    extraConfig = ''
+      ${if (themePrefs.themeOverrides.kitty != null) then "include ${themePrefs.themeOverrides.kitty}" else (import ./_theme.nix osConfig) }
+    '';
   };
 }

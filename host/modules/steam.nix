@@ -18,6 +18,9 @@ in
       enable = true;
       millennium.enable = true;
       protontricks.enable = true;
+      dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+      remotePlay.openFirewall = true;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
     };
   };

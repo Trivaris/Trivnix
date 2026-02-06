@@ -13,6 +13,9 @@ in
     inherit (osConfig.hostInfos) stateVersion;
     username = lib.mkDefault config.userInfos.name;
     homeDirectory = lib.mkDefault "/home/${config.userInfos.name}";
+    uid = config.userInfos.uid;
+
+    shell.enableZshIntegration = true;
 
     sessionVariables = {
       TERMINAL = config.vars.terminalEmulator;
@@ -22,18 +25,43 @@ in
 
     pointerCursor = {
       enable = true;
-      name = themingPrefs.cursor.name;
-      package = themingPrefs.cursor.package;
+      gtk.enable = true;
+      x11.enable = true;
+      hyprcursor.enable = true;
+      size = 24;
+      name = "BreezeX-RosePine-Linux";
+      package = pkgs.rose-pine-cursor;
+    };
+
+    packages = [
+      pkgs.gsettings-desktop-schemas
+      pkgs.adwaita-icon-theme
+      pkgs.gnome-themes-extra
+    ];
+  };
+
+  dconf.settings."org/gnome/desktop/interface".color-scheme = if themingPrefs.darkmode then "prefer-dark" else "prefer-light";
+
+  gtk = {
+    enable = true;
+    colorScheme = if themingPrefs.darkmode then "dark" else "light";
+    theme = {
+      name = "Adwaita";
+      package = pkgs.gnome-themes-extra;
+    };
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    font = {
+      name = themingPrefs.font.name;
+      package = themingPrefs.font.package;
     };
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = lib.mkIf themingPrefs.darkmode "prefer-dark";
-
-  gtk = lib.mkIf themingPrefs.darkmode {
+  xdg.portal = {
     enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 }

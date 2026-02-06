@@ -1,10 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
+{ lib, config, ... }:
+let 
   prefs = config.hostPrefs;
 in
 {
@@ -12,25 +7,10 @@ in
     Install KDE Connect and open the required firewall ranges.
     Enable when pairing the host with mobile devices over the LAN.
   '';
-
+  
   config = lib.mkIf prefs.kdeConnect.enable {
-    environment.systemPackages = [ pkgs.kdePackages.kdeconnect-kde ];
-    networking.firewall = {
+    programs.kdeconnect = {
       enable = true;
-
-      allowedTCPPortRanges = [
-        {
-          from = 1714;
-          to = 1764;
-        }
-      ];
-
-      allowedUDPPortRanges = [
-        {
-          from = 1714;
-          to = 1764;
-        }
-      ];
     };
   };
 }

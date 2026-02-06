@@ -17,11 +17,11 @@
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland = {
       enable = true;
+      settings.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
       settings.exec-one = [
         "hyprpaper"
         "swaync"
       ];
-      settings.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
     };
 
     home.packages = builtins.attrValues {
@@ -35,6 +35,9 @@
         networkmanager-strongswan
         strongswan
         wtype
+
+        nautilus
+        loupe
         ;
     };
 
