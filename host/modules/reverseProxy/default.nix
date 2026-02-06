@@ -11,6 +11,7 @@ in
       builtins.filter (service: service.externalPort != null) config.vars.activeServices
     ));
 
+    users.users.nginx.extraGroups = [ "acme" ];
     services.nginx = {
       enable = true;
       recommendedGzipSettings = true;
