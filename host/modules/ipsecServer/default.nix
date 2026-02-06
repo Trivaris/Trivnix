@@ -8,7 +8,7 @@ let
 
   clientCerts = lib.mapAttrs' (
     id: certPath: lib.nameValuePair "ipsec.d/certs/${id}-cert.pem" { source = certPath; }
-  ) prefs.ipsecServer.extraClientCerts;
+  ) prefs.ipsecServer.clientCerts;
 in
 {
   config = lib.mkIf prefs.ipsecServer.enable {
