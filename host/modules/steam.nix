@@ -16,11 +16,13 @@ in
   config = lib.mkIf prefs.steam.enable {
     programs.steam = {
       enable = true;
-      millennium.enable = true;
+      package = pkgs.steam-millennium;
+
       protontricks.enable = true;
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
       remotePlay.openFirewall = true;
+      
       extraCompatPackages = [ pkgs.proton-ge-bin ];
     };
   };

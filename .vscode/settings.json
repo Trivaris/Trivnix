@@ -9,10 +9,10 @@
             },
             "options" : {
                 "nixos": {
-                    "expr": "(builtins.getFlake \"${workspaceFolder}/\").nixosConfigurations.desktop.options",
+                    "expr": "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.desktop.options",
                 },
                 "home-manager": {
-                    "expr": "(builtins.getFlake \"${workspaceFolder}/\").homeConfigurations.\"trivaris@desktop\".options",
+                    "expr": "(builtins.getFlake github:trivaris/trivnixConfigs).homeConfigurations.\"trivaris@desktop\".options",
                 },
             }
         }

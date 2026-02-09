@@ -1,9 +1,8 @@
 {
-  pkgs,
   ...
 }:
 {
   wayland.windowManager.hyprland.plugins = [
-    pkgs.split-monitor-workspaces
+    # pkgs.split-monitor-workspaces
   ];
 }
