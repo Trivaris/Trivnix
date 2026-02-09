@@ -8,10 +8,10 @@ in
     layer = "top";
     height = 42;
 
-    margin-bottom = 12;
-    margin-left = 0;
-    margin-right = 0;
-    margin-top = 0;
+    margin-bottom = 0;
+    margin-left = 10;
+    margin-right = 10;
+    margin-top = 10;
 
     modules-left = [
       "custom/launcher"
@@ -48,10 +48,13 @@ in
     }
 
     window#waybar {
+      background: transparent;
+    }
+
+    .modules-left, .modules-center, .modules-right {
       background: ${theme.base00};
-      margin: 0;
-      padding: 8px 12px;
-      border-radius: 0 0 20px 20px;
+      border-radius: 24px;
+      padding: 5px 15px;
     }
 
     window#waybar.hidden {

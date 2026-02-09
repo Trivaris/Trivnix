@@ -13,8 +13,16 @@ in
   config = lib.mkIf prefs.spicetify.enable {
     programs.spicetify = {
       enable = true;
-      theme = if themePrefs.themeOverrides.spicetify != null then themePrefs.themeOverrides.spicetify.package else (import ./_theme.nix config pkgs);
-      colorScheme = if themePrefs.themeOverrides.spicetify != null then themePrefs.themeOverrides.spicetify.scheme else "Custom";
+      theme =
+        if themePrefs.themeOverrides.spicetify != null then
+          themePrefs.themeOverrides.spicetify.package
+        else
+          (import ./_theme.nix config pkgs);
+      colorScheme =
+        if themePrefs.themeOverrides.spicetify != null then
+          themePrefs.themeOverrides.spicetify.scheme
+        else
+          "Custom";
     };
   };
 

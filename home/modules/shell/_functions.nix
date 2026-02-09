@@ -1,5 +1,4 @@
-configname:
-{
+configname: {
   rebuild = ''
     set prod 0
     set host "${configname}"

@@ -1,4 +1,10 @@
-{ config, lib, osConfig, ... }:
+{
+  config,
+  lib,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
   prefs = config.userPrefs;
   isEnabled =
@@ -6,6 +12,34 @@ let
     builtins.elem module (
       prefs.misc.otherPrograms ++ (lib.flatten (builtins.attrValues prefs.misc.otherPackages))
     );
+
+  monitors = osConfig.hostInfos.monitors;
+
+  workspaceDispatch = pkgs.writeShellScriptBin "hypr-ws" ''
+    # Usage: hypr-ws <command> <base_workspace_id>
+    # command: "workspace" or "movetoworkspace"
+
+    cmd=$1
+    base=$2
+
+    # Get the name of the currently focused monitor
+    focused_mon=$(${pkgs.hyprland}/bin/hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[] | select(.focused) | .name')
+
+    offset=0
+
+    # Generate the case statement based on your Nix config
+    case "$focused_mon" in
+      ${lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (name: m: ''
+          "${name}") offset=$(( ${toString m.workspaceIndex} * 10 ));;
+        '') monitors
+      )}
+    esac
+
+    target=$((base + offset))
+
+    ${pkgs.hyprland}/bin/hyprctl dispatch "$cmd" "$target"
+  '';
 in
 {
   bind = {
@@ -24,10 +58,13 @@ in
       "$mod, TAB, workspace, e+1"
       "$mod SHIFT, TAB, workspace, e-1"
     ]
-    ++ (map (index: "$mod, ${toString index}, workspace, ${toString index}") (lib.range 0 9))
-    ++ (map (index: "$mod SHIFT, ${toString index}, movetoworkspace, ${toString index}") (
-      lib.range 0 9
-    ));
+    ++ (map (
+      index: "$mod, ${toString index}, exec, ${workspaceDispatch}/bin/hypr-ws workspace ${toString index}"
+    ) (lib.range 0 9))
+    ++ (map (
+      index:
+      "$mod SHIFT, ${toString index}, exec, ${workspaceDispatch}/bin/hypr-ws movetoworkspace ${toString index}"
+    ) (lib.range 0 9));
 
     mouseFloat = [
       # Make active window floating for mouse drag/resize

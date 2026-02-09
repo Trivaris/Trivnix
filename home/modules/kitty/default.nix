@@ -3,9 +3,9 @@
   osConfig,
   ...
 }:
-let 
+let
   themePrefs = osConfig.themingPrefs;
-in 
+in
 {
   options.vars.terminalEmulator = lib.mkOption {
     type = lib.types.str;
@@ -17,7 +17,7 @@ in
     enable = true;
     enableGitIntegration = true;
     shellIntegration.enableZshIntegration = true;
-    
+
     font = {
       package = themePrefs.font.package;
       name = themePrefs.font.name;
@@ -34,7 +34,12 @@ in
     };
 
     extraConfig = ''
-      ${if (themePrefs.themeOverrides.kitty != null) then "include ${themePrefs.themeOverrides.kitty}" else (import ./_theme.nix osConfig) }
+      ${
+        if (themePrefs.themeOverrides.kitty != null) then
+          "include ${themePrefs.themeOverrides.kitty}"
+        else
+          (import ./_theme.nix osConfig)
+      }
     '';
   };
 }

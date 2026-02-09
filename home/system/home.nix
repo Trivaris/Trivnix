@@ -5,9 +5,9 @@
   pkgs,
   ...
 }:
-let 
+let
   themingPrefs = osConfig.themingPrefs;
-in 
+in
 {
   home = {
     inherit (osConfig.hostInfos) stateVersion;
@@ -40,7 +40,8 @@ in
     ];
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = if themingPrefs.darkmode then "prefer-dark" else "prefer-light";
+  dconf.settings."org/gnome/desktop/interface".color-scheme =
+    if themingPrefs.darkmode then "prefer-dark" else "prefer-light";
 
   gtk = {
     enable = true;

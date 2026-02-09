@@ -11,15 +11,18 @@ in
       acceptTerms = true;
       defaults = {
         credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-dns-api-token.path;
-        credentialFiles."CLOUDFLARE_ZONE_API_TOKEN_FILE" = config.sops.secrets.cloudflare-zone-api-token.path;
+        credentialFiles."CLOUDFLARE_ZONE_API_TOKEN_FILE" =
+          config.sops.secrets.cloudflare-zone-api-token.path;
         dnsProvider = "cloudflare";
         email = prefs.reverseProxy.email;
       };
 
       certs = builtins.listToAttrs (
-        [ (lib.nameValuePair prefs.reverseProxy.zone {}) ] ++
-        (map (service: lib.nameValuePair service.domain {}) config.vars.activeServices) ++
-        (map (extraCertDomain: lib.nameValuePair extraCertDomain {}) prefs.reverseProxy.extraCertDomains)
+        [ (lib.nameValuePair prefs.reverseProxy.zone { }) ]
+        ++ (map (service: lib.nameValuePair service.domain { }) config.vars.activeServices)
+        ++ (map (
+          extraCertDomain: lib.nameValuePair extraCertDomain { }
+        ) prefs.reverseProxy.extraCertDomains)
       );
     };
 

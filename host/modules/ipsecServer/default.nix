@@ -25,21 +25,19 @@ in
       "net.ipv6.conf.all.forwarding" = true;
     };
 
-    environment.etc =
-      clientCerts
-      // {
-        "ipsec.d/ipsec.secrets" = {
-          mode = "0600";
-          text = ''
-            : ECDSA ${config.sops.secrets.ipsec-server-key.path}
-          '';
-        };
-
-        "ipsec.d/certs/${prefs.ipsecServer.domain}.fullchain.pem" = {
-          mode = "0600";
-          source = prefs.ipsecServer.fullchain;
-        };
+    environment.etc = clientCerts // {
+      "ipsec.d/ipsec.secrets" = {
+        mode = "0600";
+        text = ''
+          : ECDSA ${config.sops.secrets.ipsec-server-key.path}
+        '';
       };
+
+      "ipsec.d/certs/${prefs.ipsecServer.domain}.fullchain.pem" = {
+        mode = "0600";
+        source = prefs.ipsecServer.fullchain;
+      };
+    };
 
     services.strongswan = {
       enable = true;

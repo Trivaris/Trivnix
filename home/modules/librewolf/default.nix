@@ -26,7 +26,7 @@ in
   config = lib.mkIf prefs.librewolf.enable {
     home.file = {
       ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
-      
+
       ".librewolf/${config.userInfos.name}/user.js".text =
         builtins.readFile betterFox + " \n" + overrides;
 

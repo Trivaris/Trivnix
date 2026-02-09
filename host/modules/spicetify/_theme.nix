@@ -1,5 +1,4 @@
-config:
-pkgs:
+config: pkgs:
 let
   scheme = config.themingPrefs.scheme;
   getColor = str: pkgs.lib.removePrefix "#" str;

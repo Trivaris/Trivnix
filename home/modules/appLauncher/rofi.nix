@@ -89,7 +89,7 @@ in
         border = mkLiteral "1px";
         border-color = mkLiteral "${scheme.base0D}";
       };
-      
+
       element-icon = {
         size = mkLiteral "24px";
         cursor = mkLiteral "inherit";
