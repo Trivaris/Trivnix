@@ -19,7 +19,7 @@
       settings = {
         wallpaper = lib.mapAttrsToList (name: details: {
           monitor = name;
-          path = details.wallpaper;
+          path = toString details.wallpaper;
         }) osConfig.hostInfos.monitors;
       };
     };
