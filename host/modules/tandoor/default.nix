@@ -8,8 +8,11 @@ in
       inherit (prefs.tandoor.reverseProxy) port;
       enable = true;
       address =
-        if prefs.tandoor.reverseProxy.enable then prefs.tandoor.reverseProxy.domain else "localhost";
-      extraConfig.MEDIA_ROOT = "/var/lib/tandoor-recipes/media/";
+        if prefs.tandoor.reverseProxy.enable then "localhost" else prefs.tandoor.reverseProxy.domain;
+      extraConfig = {
+        MEDIA_ROOT = "/var/lib/tandoor-recipes/media/";
+        ALLOWED_HOSTS = lib.mkIf prefs.tandoor-recipes.reverseProxy.enable prefs.tandoor.reverseProxy.domain;
+      };
     };
   };
 }
