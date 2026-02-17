@@ -94,6 +94,7 @@
           "match:class org.gnome.Nautilus, float true, size window_w*1.5 window_h*1.5, center true"
           "match:class org-jdownloader-update-launcher-JDLauncher, float true, size window_w*1.5 window_h*1.5, center true"
           "match:class thunderbird, match:title ^Write:.*, float true, size window_w window_h, center true"
+          "match:class steam, match:title ^Steam Settings$, float true, size window_w window_h, center true"
         ];
       };
     };

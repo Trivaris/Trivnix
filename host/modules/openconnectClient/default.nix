@@ -15,7 +15,7 @@ in
         passwordFile = config.sops.secrets.openconnect-vpn-password.path;
         extraOptions = {
           authgroup = lib.mkIf (prefs.openconnectClient.authgroup != null) prefs.openconnectClient.authgroup;
-          cafile = lib.mkIf (prefs.openconnectClient.cafile != null) prefs.openconnectClient.cafile;
+          cafile = lib.mkIf (prefs.openconnectClient.cafile != null) (toString prefs.openconnectClient.cafile);
         };
       };
     };
