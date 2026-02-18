@@ -8,6 +8,7 @@ let
 in
 {
   config = lib.mkIf prefs.openconnectClient.enable {
+    systemd.services.openconnect-openconnect0.wantedBy = lib.mkForce [ ];
     networking.openconnect = {
       interfaces.openconnect0 = {
         inherit (prefs.openconnectClient) gateway user;

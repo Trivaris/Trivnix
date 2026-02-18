@@ -29,34 +29,50 @@ let
 
   peers = lib.mapAttrsToList (num: peerPubkey: {
     publicKey = builtins.readFile peerPubkey.value;
-    name = peerPubkey.name;
+    # name = peerPubkey.name;
     allowedIPs = [ "10.100.0.${num}/32" ];
   }) numberedPeers;
 in
 {
   config = lib.mkIf prefs.wireguard.server.enable {
-    networking.nat.enable = true;
-    networking.nat.externalInterface = prefs.wireguard.server.networkInterface;
-    networking.nat.internalInterfaces = [ "wg0" ];
-    networking.firewall.allowedUDPPorts = [ prefs.wireguard.server.port ];
-
-    networking.wireguard.interfaces = {
-      wg0 = {
-        ips = [ "10.100.0.1/24" ];
-        listenPort = prefs.wireguard.server.port;
-
-        postSetup = ''
-          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
-        '';
-
-        postShutdown = ''
-          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
-        '';
-
-        privateKeyFile = config.sops.secrets.wireguard-server-key.path;
-
-        peers = peers;
+    networking.nat = {
+      enable = true;
+      enableIPv6 = true;
+      externalInterface = "eth0";
+      internalInterfaces = [ "wg0" ];
+    };
+    networking.firewall = {
+      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 prefs.wireguard.server.port ];
+    };
+    networking.firewall.interfaces."wg0" = {
+      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 ];
+    };
+    services.kresd.listenPlain = [ "127.0.0.1:53" "[::1]:53" ];
+    services.dnsmasq = {
+      enable = true;
+      settings = {
+        bind-interfaces = true;
+        listen-address = [ "10.100.0.1" ];
+        interface = [ "wg0" ];
+        server = [ "127.0.0.1" ];
       };
+    };
+
+    networking.wg-quick.interfaces.wg0 = {
+      inherit peers;
+      address = [ "10.100.0.1/24" ];
+      listenPort = prefs.wireguard.server.port;
+      privateKeyFile = config.sops.secrets.wireguard-server-key.path;
+      postUp = ''
+        ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.1/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
+      '';
+      preDown = ''
+        ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.1/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
+      '';
     };
   };
 }

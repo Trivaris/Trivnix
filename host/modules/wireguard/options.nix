@@ -13,7 +13,7 @@
       };
       networkInterface = lib.mkOption {
         type = lib.types.str;
-        default = "eth0";
+        default = "enp1s0";
       };
     };
 
