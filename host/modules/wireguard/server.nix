@@ -67,11 +67,11 @@ in
       privateKeyFile = config.sops.secrets.wireguard-server-key.path;
       postUp = ''
         ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.1/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
       '';
       preDown = ''
         ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.1/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${prefs.wireguard.server.networkInterface} -j MASQUERADE
       '';
     };
   };
