@@ -8,13 +8,11 @@ let
 in
 {
   config = lib.mkIf prefs.wireguard.client.enable {
-    networking.firewall = {
-      allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 prefs.wireguard.client.port ];
-    };
+    systemd.services.wg-quick-wg0.wantedBy = lib.mkForce [ ];
+    networking.firewall.allowedUDPPorts = [ prefs.wireguard.client.port ];
     networking.wg-quick.interfaces.wg0 = {
       address = [ "${prefs.wireguard.client.ip}/24" ];
-      dns = [ "10.100.0.1" ];
+      dns = [ "1.1.1.1" ];
       privateKeyFile = config.sops.secrets.wireguard-client-key.path;
 
       peers = [

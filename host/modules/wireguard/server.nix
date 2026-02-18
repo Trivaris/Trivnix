@@ -38,31 +38,16 @@ in
     networking.nat = {
       enable = true;
       enableIPv6 = true;
-      externalInterface = "eth0";
+      externalInterface = prefs.wireguard.server.networkInterface;
       internalInterfaces = [ "wg0" ];
     };
-    networking.firewall = {
-      allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 prefs.wireguard.server.port ];
-    };
-    networking.firewall.interfaces."wg0" = {
-      allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 ];
-    };
-    services.kresd.listenPlain = [ "127.0.0.1:53" "[::1]:53" ];
-    services.dnsmasq = {
-      enable = true;
-      settings = {
-        bind-interfaces = true;
-        listen-address = [ "10.100.0.1" ];
-        interface = [ "wg0" ];
-        server = [ "127.0.0.1" ];
-      };
-    };
+
+    networking.firewall.allowedUDPPorts = [ prefs.wireguard.server.port ];
 
     networking.wg-quick.interfaces.wg0 = {
       inherit peers;
       address = [ "10.100.0.1/24" ];
+      dns = [ "1.1.1.1" ];
       listenPort = prefs.wireguard.server.port;
       privateKeyFile = config.sops.secrets.wireguard-server-key.path;
       postUp = ''
