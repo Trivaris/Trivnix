@@ -54,11 +54,13 @@ in
 
       (lib.mkIf (prefs.reverseProxy.enable || prefs.cfddns.enable) {
         cloudflare-zone-api-token = {
+          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };
 
         cloudflare-dns-api-token = {
+          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };
