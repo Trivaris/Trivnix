@@ -54,13 +54,11 @@ in
 
       (lib.mkIf (prefs.reverseProxy.enable || prefs.cfddns.enable) {
         cloudflare-zone-api-token = {
-          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };
 
         cloudflare-dns-api-token = {
-          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };
@@ -75,6 +73,7 @@ in
 
       (lib.mkIf prefs.wireguard.server.enable {
         wireguard-server-key = {
+          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };
@@ -82,6 +81,7 @@ in
 
       (lib.mkIf prefs.wireguard.client.enable {
         wireguard-client-key = {
+          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };
