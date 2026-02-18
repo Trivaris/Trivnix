@@ -17,9 +17,9 @@ in
 
         peers = [
           {
-            publicKey = builtins.readFile (
-              config.private.pubKeys.${prefs.wireguard.client.serverConfigname}."wireguard.pub"
-            );
+            publicKey =
+              builtins.readFile
+                config.private.pubKeys.hosts.${prefs.wireguard.client.serverConfigname}."wireguard.pub";
             allowedIPs = [ "0.0.0.0/0" ];
             endpoint = "${prefs.wireguard.client.serverIp}:${prefs.wireguard.client.port}";
             persistentKeepalive = 25;
