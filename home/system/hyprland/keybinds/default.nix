@@ -1,4 +1,9 @@
-{ osConfig, lib, pkgs, ... }@inputs:
+{
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}@inputs:
 {
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland.settings = {

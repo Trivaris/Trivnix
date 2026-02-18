@@ -4,10 +4,13 @@
   config,
   ...
 }:
-let 
+let
   prefs = config.hostPrefs;
-  users = map (user: { name = user; ensureClauses.superuser = true; }) (builtins.attrNames config.home-manager.users);
-in 
+  users = map (user: {
+    name = user;
+    ensureClauses.superuser = true;
+  }) (builtins.attrNames config.home-manager.users);
+in
 {
   options.hostPrefs.enableDevStuffs = lib.mkEnableOption "Enable Dev Stuffs lol";
   config = lib.mkIf prefs.enableDevStuffs {

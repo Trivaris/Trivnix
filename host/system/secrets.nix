@@ -41,22 +41,6 @@ in
         };
       }
 
-      (lib.mkIf prefs.ipsecClient.enable {
-        ipsec-client-key = {
-          sopsFile = hostSecrets;
-          owner = "root";
-          group = "root";
-        };
-      })
-
-      (lib.mkIf prefs.ipsecServer.enable {
-        ipsec-server-key = {
-          sopsFile = hostSecrets;
-          owner = "root";
-          group = "root";
-        };
-      })
-
       (lib.mkIf prefs.openssh.enable {
         ssh-host-key = {
           sopsFile = hostSecrets;
@@ -82,6 +66,20 @@ in
 
       (lib.mkIf prefs.openconnectClient.enable {
         openconnect-vpn-password = {
+          owner = "root";
+          group = "root";
+        };
+      })
+
+      (lib.mkIf prefs.wireguard.server.enable {
+        wireguard-server-key = {
+          owner = "root";
+          group = "root";
+        };
+      })
+
+      (lib.mkIf prefs.wireguard.client.enable {
+        wireguard-client-key = {
           owner = "root";
           group = "root";
         };

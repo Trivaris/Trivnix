@@ -11,6 +11,7 @@ in
         if prefs.tandoor.reverseProxy.enable then "localhost" else prefs.tandoor.reverseProxy.domain;
       extraConfig = {
         MEDIA_ROOT = "/var/lib/tandoor-recipes/media/";
+        DEBUG = "1";
         ALLOWED_HOSTS =
           if prefs.tandoor.reverseProxy.enable then prefs.tandoor.reverseProxy.domain else "localhost";
       };
