@@ -21,7 +21,7 @@ in
               builtins.readFile
                 config.private.pubKeys.hosts.${prefs.wireguard.client.serverConfigname}."wireguard.pub";
             allowedIPs = [ "0.0.0.0/0" ];
-            endpoint = "${prefs.wireguard.client.serverAddress}:${prefs.wireguard.client.port}";
+            endpoint = "${prefs.wireguard.client.serverAddress}:${toString prefs.wireguard.client.port}";
             persistentKeepalive = 25;
           }
         ];
