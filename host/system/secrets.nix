@@ -93,6 +93,14 @@ in
           group = "vaultwarden";
         };
       })
+
+      (lib.mkIf prefs.matrix.enable {
+        matrix-secrets = {
+          sopsFile = hostSecrets;
+          owner = "root";
+          group = "root";
+        };
+      })
     ];
   };
 }
