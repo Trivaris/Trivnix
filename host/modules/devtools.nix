@@ -14,6 +14,8 @@ in
 {
   options.hostPrefs.enableDevStuffs = lib.mkEnableOption "Enable Dev Stuffs lol";
   config = lib.mkIf prefs.enableDevStuffs {
+    virtualisation.podman.enable = true;
+
     environment.systemPackages = [
       pkgs.gradle_9
       pkgs.kotlin-native

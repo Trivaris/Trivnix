@@ -37,6 +37,7 @@ let
       "kvm"
       "qemu-libvirtd"
       "docker"
+      "podman"
     ];
   }) allUserInfos);
 in

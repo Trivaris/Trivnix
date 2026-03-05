@@ -19,7 +19,7 @@ let
 
   betterFox = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js";
-    sha256 = "sha256-ZpWvGPD/nzOrYln+cnm3j/T02zsNHEsI053rEuPhQxQ=";
+    sha256 = "sha256-2mRprNcFNiZICFsrWkyxFJdEA0Wr2ljSiQyMB9dy5rM=";
   };
 in
 {

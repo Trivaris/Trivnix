@@ -11,4 +11,5 @@
   "gpull" = "git pull";
   "gpush" = "git push";
   "gclone" = "git clone";
+  "ls" = "ls";
 }
