@@ -71,6 +71,13 @@
         misc = {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
+          mouse_move_enables_dpms = true;
+          vrr = 1;
+        };
+
+        render = {
+          direct_scanout = 2;
+          new_render_scheduling = true;
         };
 
         group = {
@@ -95,6 +102,11 @@
           "match:class org-jdownloader-update-launcher-JDLauncher, float true, size window_w*1.5 window_h*1.5, center true"
           "match:class thunderbird, match:title ^Write:.*, float true, size window_w window_h, center true"
           "match:class steam, match:title ^Steam Settings$, float true, size window_w window_h, center true"
+          "match:class librewolf, match:title ^Extension: \(Bitwarden Password Manager\) - Bitwarden — LibreWolf$, float true, size window_w window_h, center true"
+          "match:title ^LiveSplit$, float true, size 250 400, center true"
+
+          "match:class ^(steam_app_.*)$, opaque true"
+          "match:class ^(steam_app_.*)$, idle_inhibit always"
         ];
       };
     };

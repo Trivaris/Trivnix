@@ -14,6 +14,12 @@ in
   '';
 
   config = lib.mkIf prefs.steam.enable {
+    environment.systemPackages = [
+      pkgs.heroic
+      pkgs.r2modman
+      pkgs.steamtinkerlaunch
+    ];
+    
     programs.steam = {
       enable = true;
       package = pkgs.steam-millennium;
@@ -23,7 +29,13 @@ in
       localNetworkGameTransfers.openFirewall = true;
       remotePlay.openFirewall = true;
 
-      extraCompatPackages = [ pkgs.proton-ge-bin ];
+      extraCompatPackages = [ pkgs.proton-ge-bin pkgs.steamtinkerlaunch ];
+      extraPackages = [
+        pkgs.yad
+        pkgs.xorg.xrandr
+        pkgs.bash
+        pkgs.gawk
+      ];
     };
   };
 }

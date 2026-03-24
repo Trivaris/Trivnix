@@ -55,12 +55,7 @@ in
         bindkey "^[[1;5D" backward-word
         bindkey "^[[1;5C" forward-word
 
-        # If in distrobox env, use that distro's packages instead of the nix store
-        if [ -e /run/.toolboxenv ]; then
-          export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-        else
-          ${lib.optionalString prefs.cli.enable "fastfetch"}
-        fi
+        ${lib.optionalString prefs.cli.enable "fastfetch"}
       '';
     };
   };
