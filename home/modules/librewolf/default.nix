@@ -17,18 +17,18 @@ let
     user_pref("sidebar.verticalTabs", true);
   '';
 
-  betterFox = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js";
-    sha256 = "sha256-2mRprNcFNiZICFsrWkyxFJdEA0Wr2ljSiQyMB9dy5rM=";
-  };
+  # betterFox = pkgs.fetchurl {
+  #   url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js";
+  #   sha256 = "sha256-Xo3NJ8BL/Px0neuYagxZpdKc3qRA0M3q95fKMNu8ruE=";
+  # };
 in
 {
   config = lib.mkIf prefs.librewolf.enable {
     home.file = {
       ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
 
-      ".librewolf/${config.userInfos.name}/user.js".text =
-        builtins.readFile betterFox + " \n" + overrides;
+      # ".librewolf/${config.userInfos.name}/user.js".text =
+      #   builtins.readFile betterFox + " \n" + overrides;
 
       ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
         :root {
