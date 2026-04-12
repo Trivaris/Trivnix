@@ -8,7 +8,6 @@
         inputs.split-monitor-workspaces.packages.${prev.stdenv.system}.split-monitor-workspaces;
     }
   );
-  # millennium = inputs.millennium.overlays.default;
   spicetify = _: prev: {
     spicePkgs = inputs.spicetify-nix.legacyPackages.${prev.stdenv.system};
   };

@@ -14,7 +14,6 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     # Extras and ecosystem modules
-    # millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     nix-minecraft.url = "github:Yeshey/nix-minecraft";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nvf.url = "github:notashelf/nvf";

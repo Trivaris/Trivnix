@@ -22,7 +22,6 @@ in
     
     programs.steam = {
       enable = true;
-      package = pkgs.steam-millennium;
 
       protontricks.enable = true;
       dedicatedServer.openFirewall = true;
