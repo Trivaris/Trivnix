@@ -39,9 +39,7 @@ in
 
   style = ''
     * {
-      border: none;
-      border-radius: 10px;
-      font-family: "${themePrefs.font.name} Font" ;
+      font-family: "${themePrefs.font.name} Font";
       font-size: 17px;
       min-height: 10px;
       font-weight: bold;
@@ -52,9 +50,17 @@ in
     }
 
     .modules-left, .modules-center, .modules-right {
+      border: solid 2px ${theme.base02};
+      border-radius: 8px;
       background: ${theme.base00};
-      border-radius: 24px;
+      border-radius: 4px;
+      border: solid 2px transparent;
       padding: 5px 15px;
+      transition: border-color 0.2s ease;
+    }
+
+    #waybar .modules-center:hover {
+      border: 2px solid ${theme.base02};
     }
 
     window#waybar.hidden {
@@ -64,7 +70,7 @@ in
     #window {
       margin-top: 0;
       padding: 0 10px;
-      border-radius: 10px;
+      border-radius: 8px;
       transition: none;
       color: transparent;
       background: transparent;

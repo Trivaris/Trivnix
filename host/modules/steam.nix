@@ -31,7 +31,7 @@ in
       extraCompatPackages = [ pkgs.proton-ge-bin pkgs.steamtinkerlaunch ];
       extraPackages = [
         pkgs.yad
-        pkgs.xorg.xrandr
+        pkgs.xrandr
         pkgs.bash
         pkgs.gawk
       ];

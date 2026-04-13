@@ -5,7 +5,6 @@ in
 {
   settings.bluetooth = {
     on-click = "overskride";
-    on-click-right = "blueman-manager";
 
     tooltip = true;
     tooltip-format = "{controller_alias} [{controller_address}]\n{device_enumerate}";
