@@ -110,6 +110,11 @@ in
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
 
+    backlight = [
+      ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
+      ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+    ];
+
     screenshot = [
       # Region screenshot with selection (hyprshot)
       ", Print, exec, HYPRSHOT_DIR=~/Pictures/Screenshots/ hyprshot -m region"

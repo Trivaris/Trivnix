@@ -8,8 +8,8 @@ in
     interval = 1;
     tooltip = false;
 
-    on-scroll-down = "light -U 5";
-    on-scroll-up = "light -A 5";
+    on-scroll-down = "brightnessctl s +5%";
+    on-scroll-up = "brightnessctl s 5%-";
   };
 
   style = ''
