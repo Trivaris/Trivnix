@@ -17,18 +17,25 @@ let
     user_pref("sidebar.verticalTabs", true);
   '';
 
-  # betterFox = pkgs.fetchurl {
-  #   url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js";
-  #   sha256 = "sha256-Xo3NJ8BL/Px0neuYagxZpdKc3qRA0M3q95fKMNu8ruE=";
-  # };
+  betterFox = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/yokoffing/Betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/user.js";
+    sha256 = "sha256-Xo3NJ8BL/Px0neuYagxZpdKc3qRA0M3q95fKMNu8ruE=";
+  };
+
+  smoothFox = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/yokoffing/Betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/Smoothfox.js";
+    sha256 = "sha256-S1zDXctpV1jNlV9DCua4fYMHfR7T34V3gQi780ShFpk=";
+  };
 in
 {
   config = lib.mkIf prefs.librewolf.enable {
     home.file = {
       ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
 
-      # ".librewolf/${config.userInfos.name}/user.js".text =
-      #   builtins.readFile betterFox + " \n" + overrides;
+      ".librewolf/${config.userInfos.name}/user.js".text =
+        builtins.readFile betterFox + " \n" +
+        builtins.readFile smoothFox + " \n" +
+        overrides;
 
       ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
         :root {
@@ -68,10 +75,10 @@ in
 
             mynixos = {
               name = "MyNixOS";
+              definedAliases = [ "@mn" ];
               urls = [
                 {
                   template = "https://mynixos.com/search";
-                  definedAliases = [ "@mn" ];
                   params = [ (lib.nameValuePair "q" "{searchTerms}") ];
                 }
               ];
@@ -79,10 +86,10 @@ in
 
             nixos-search = {
               name = "Nix Packages";
+              definedAliases = [ "@np" ];
               urls = [
                 {
                   template = "https://search.nixos.org/packages";
-                  definedAliases = [ "@np" ];
                   params = [
                     (lib.nameValuePair "channel" osConfig.hostInfos.stateVersion)
                     (lib.nameValuePair "query" "{searchTerms}")
@@ -97,18 +104,17 @@ in
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        SanitizeOnShutdown = true;
         Cookies.Allow = prefs.librewolf.allowedCookies;
 
-        ClearOnShutdown = {
+        SanitizeOnShutdown = {
           cache = true;
           cookies = true;
           downloads = true;
           formdata = true;
           history = true;
-          passwords = false;
+          passwords = true;
           sessions = true;
-          siteSettings = false;
+          siteSettings = true;
           offlineApps = true;
         };
       };

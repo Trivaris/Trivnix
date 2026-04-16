@@ -41,7 +41,7 @@ in
     * {
       font-family: "${themePrefs.font.name} Font";
       font-size: 17px;
-      min-height: 10px;
+      min-height: 5px;
       font-weight: bold;
     }
 
@@ -55,7 +55,7 @@ in
       background: ${theme.base00};
       border-radius: 4px;
       border: solid 2px transparent;
-      padding: 5px 15px;
+      padding: 5px 5px;
       transition: border-color 0.2s ease;
     }
 
@@ -69,7 +69,7 @@ in
 
     #window {
       margin-top: 0;
-      padding: 0 10px;
+      padding: 0px;
       border-radius: 8px;
       transition: none;
       color: transparent;
