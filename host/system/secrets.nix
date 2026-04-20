@@ -103,11 +103,18 @@ in
       })
 
       (lib.mkIf prefs.affine.enable {
-        affine-db-password = {
+        affine-db-password-env = {
           sopsFile = hostSecrets;
           owner = "affine";
           group = "affine";
-          restartUnits = [ "docker-affine.service" ];
+        };
+      })
+      
+      (lib.mkIf prefs.affine.enable {
+        affine-postgres-password-env = {
+          sopsFile = hostSecrets;
+          owner = "affine";
+          group = "affine";
         };
       })
     ];

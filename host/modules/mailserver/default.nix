@@ -9,8 +9,8 @@ in
 {
   imports = [
     (lib.mkAliasOptionModule
-      [ "hostPrefs" "mailserver" "loginAccounts" ]
-      [ "mailserver" "loginAccounts" ]
+      [ "hostPrefs" "mailserver" "accounts" ]
+      [ "mailserver" "accounts" ]
     )
   ];
 
@@ -18,9 +18,12 @@ in
     mailserver = {
       enable = true;
       fqdn = prefs.mailserver.baseDomain;
-      dkimSelector = "dkim";
-      dkimKeyType = "ed25519";
       x509.useACMEHost = prefs.mailserver.baseDomain;
+      
+      dkim.defaults = {
+        selector = "dkim";
+        keyType = "ed25519";
+      };
 
       domains = [
         prefs.mailserver.baseDomain

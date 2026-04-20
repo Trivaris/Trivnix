@@ -10,7 +10,7 @@ let
     builtins.readFile (
       builtins.fetchurl {
         url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
-        sha256 = "sha256:0f0pykrldyr5cxva278ahjs0xnqbm9gig7w8g850rswmiscc65fg";
+        sha256 = "sha256:1v4cda5zf5a9wirgxc1in6c40wrsa7pbjphb9ihkrgkwgp8jhj5q";
       }
     )
   );
