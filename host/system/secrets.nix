@@ -101,6 +101,15 @@ in
           group = "root";
         };
       })
+
+      (lib.mkIf prefs.affine.enable {
+        affine-db-password = {
+          sopsFile = hostSecrets;
+          owner = "affine";
+          group = "affine";
+          restartUnits = [ "docker-affine.service" ];
+        };
+      })
     ];
   };
 }
