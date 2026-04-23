@@ -2,7 +2,6 @@
 {
   host = _: {
     imports = [
-      inputs.cfddns.nixosModules.default
       inputs.disko.nixosModules.disko
       inputs.mailserver.nixosModules.default
       inputs.nix-minecraft.nixosModules.minecraft-servers

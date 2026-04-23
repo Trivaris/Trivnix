@@ -4,9 +4,6 @@
   '';
 
   inputs = {
-    # Personal Forks
-    cfddns.url = "github:Trivaris/cloudflare-dyndns-nix";
-
     # Core/community modules
     disko.url = "github:nix-community/disko";
     lanzaboote.url = "github:nix-community/lanzaboote";
