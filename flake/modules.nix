@@ -9,7 +9,6 @@
       inputs.nur.modules.nixos.default
       inputs.sops-nix.nixosModules.sops
       inputs.spicetify-nix.nixosModules.spicetify
-      inputs.nvf.nixosModules.default
       inputs.lanzaboote.nixosModules.lanzaboote
     ];
   };

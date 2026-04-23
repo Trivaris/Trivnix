@@ -21,9 +21,14 @@ in
         SMTP_SSL = false;
         SMTP_HOST = "127.0.0.1";
         SMTP_PORT = 25;
-        SMTP_FROM = "vaultwarden@${prefs.mailserver.baseDomain}";
+        SMTP_FROM = "no-reply@vault.${prefs.mailserver.domain}";
         SMTP_FROM_NAME = "Vaultwarden";
       });
+    };
+
+    hostPrefs.mailserver = lib.mkIf prefs.vaultwarden.sendMails {
+      extraDomains =  [ "vault" ];
+      accounts."no-reply@vaultwarden.${prefs.mailserver.domain}".passwordFile = config.sops.secrets.mail-vaultwarden-password.path;
     };
   };
 }

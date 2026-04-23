@@ -15,7 +15,7 @@ in
               if builtins.match ipv4Regex service.ipAddress != null then
                 service.ipAddress
               else
-                builtins.throw "Reverse proxy service '${service.name}' must use an IPv4 address for hostPrefs.${service.name}.reverseProxy.ipAddress.";
+                throw "Reverse proxy service '${service.name}' must use an IPv4 address for hostPrefs.${service.name}.reverseProxy.ipAddress.";
           in
           {
             forceSSL = true;

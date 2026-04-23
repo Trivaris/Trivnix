@@ -65,6 +65,7 @@ in
         after = [ "create-affine-network.service" ];
         requires = [ "create-affine-network.service" ];
       };
+
       docker-affine-postgres.after = [ "create-affine-network.service" ];
       docker-affine-redis.after = [ "create-affine-network.service" ];
       create-affine-network = {
@@ -79,6 +80,11 @@ in
           ExecStartPre = "-${pkgs.docker}/bin/docker network rm affine-network"; 
         };
       };
+    };
+
+    hostPrefs.mailserver = lib.mkIf prefs.affine.sendMails {
+      extraDomains = [ "affine" ];
+      accounts."no-reply@affine.${prefs.mailserver.domain}".passwordFile = config.sops.secrets.mail-affine-password.path;
     };
   };
 }

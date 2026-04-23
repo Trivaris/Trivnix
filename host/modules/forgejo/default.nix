@@ -34,9 +34,14 @@ in
           PROTOCOL = "smtp";
           SMTP_ADDR = "127.0.0.1";
           SMTP_PORT = 25;
-          FROM = "forgejo@${prefs.mailserver.baseDomain}";
+          FROM = "no-reply@forgejo.${prefs.mailserver.domain}";
         };
       };
+    };
+
+    hostPrefs.mailserver = {
+      extraDomains = lib.mkIf prefs.forgejo.sendMails [ "forgejo" ];
+      accounts."no-reply@forgejo.${prefs.mailserver.domain}".passwordFile = config.sops.secrets.mail-forgejo-password.path;
     };
   };
 }

@@ -16,7 +16,6 @@
     # Extras and ecosystem modules
     nix-minecraft.url = "github:Yeshey/nix-minecraft";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    nvf.url = "github:notashelf/nvf";
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     importTree.url = "github:vic/import-tree";
 

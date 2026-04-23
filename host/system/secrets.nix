@@ -94,6 +94,22 @@ in
         };
       })
 
+      (lib.mkIf prefs.vaultwarden.sendMails {
+        mail-vaultwarden-password = {
+          sopsFile = hostSecrets;
+          owner = "vaultwarden";
+          group = "vaultwarden";
+        };
+      })
+
+      (lib.mkIf prefs.forgejo.sendMails {
+        mail-affine-password = {
+          sopsFile = hostSecrets;
+          owner = "forgejo";
+          group = "forgejo";
+        };
+      })
+
       (lib.mkIf prefs.matrix.enable {
         matrix-secrets = {
           sopsFile = hostSecrets;
@@ -112,6 +128,14 @@ in
       
       (lib.mkIf prefs.affine.enable {
         affine-postgres-password-env = {
+          sopsFile = hostSecrets;
+          owner = "affine";
+          group = "affine";
+        };
+      })
+
+      (lib.mkIf prefs.affine.sendMails {
+        mail-affine-password = {
           sopsFile = hostSecrets;
           owner = "affine";
           group = "affine";
