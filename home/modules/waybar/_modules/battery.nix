@@ -25,21 +25,14 @@ in
 
   style = ''
     #battery {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0C};
-      background: transparent;
     }
 
     #battery.charging, #battery.plugged {
       color: ${theme.base0B};
-      background-color: transparent;
     }
 
     #battery.critical:not(.charging) {
-      background-color: transparent;
       color: ${theme.base08};
     }
   '';

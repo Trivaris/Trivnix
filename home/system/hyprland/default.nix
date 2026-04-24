@@ -35,7 +35,6 @@
         networkmanager-strongswan
         strongswan
         wtype
-
         nautilus
         loupe
         ;

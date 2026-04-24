@@ -40,27 +40,30 @@ in
   style = ''
     * {
       font-family: "${themePrefs.font.name} Font";
-      font-size: 17px;
-      min-height: 5px;
+      font-size: 1.05rem;
+      min-height: 0;
       font-weight: bold;
     }
 
     window#waybar {
       background: transparent;
+      padding: 0;
+      margin: 0;
     }
 
     .modules-left, .modules-center, .modules-right {
-      border: solid 2px ${theme.base02};
-      border-radius: 8px;
       background: ${theme.base00};
-      border-radius: 4px;
-      border: solid 2px transparent;
-      padding: 5px 5px;
-      transition: border-color 0.2s ease;
+      border: 0.15rem solid ${theme.base03};
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.8rem;
     }
 
-    #waybar .modules-center:hover {
-      border: 2px solid ${theme.base02};
+    #backlight, #battery, #bluetooth, #custom-spotify, 
+    #custom-launcher, #custom-mail, #clock, #tray, 
+    #cpu, #memory, #network, #pulseaudio, #custom-weather {
+      margin: 0 0.5em;
+      padding: 0 0.6em;
+      background: transparent;
     }
 
     window#waybar.hidden {
@@ -70,7 +73,6 @@ in
     #window {
       margin-top: 0;
       padding: 0px;
-      border-radius: 8px;
       transition: none;
       color: transparent;
       background: transparent;

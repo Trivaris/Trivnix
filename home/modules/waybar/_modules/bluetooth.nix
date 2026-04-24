@@ -23,12 +23,7 @@ in
 
   style = ''
     #bluetooth {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0D};
-      background: transparent;
     }
   '';
 }

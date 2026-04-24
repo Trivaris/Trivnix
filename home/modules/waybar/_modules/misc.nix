@@ -31,39 +31,19 @@ in
 
   style = ''
     #clock {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0B};
-      background: transparent;
     }
 
     #tray {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0C};
-      background: transparent;
     }
 
     #cpu {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0D};
-      background: transparent;
     }
 
     #memory {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0E};
-      background: transparent;
     }
   '';
 }

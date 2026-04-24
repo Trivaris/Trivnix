@@ -27,46 +27,17 @@ in
   };
 
   style = ''
-    #workspaces button {
-      padding: 0 10px;
-      background: transparent;
-      color: ${theme.base05};
-      transition: all 0.3s ease;
-    }
-
-    #workspaces button.active {
-      color: ${theme.base0D};
-      background: transparent;
-      border-bottom: 3px solid ${theme.base0D};
-      border-radius: 0;
-    }
-
     #custom-spotify {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base08};
-      background: transparent;
     }
 
     #custom-launcher {
-      font-size: 24px;
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
+      font-size: 1.5rem;
       color: ${theme.base0C};
-      background: transparent;
     }
 
     #custom-wallpaper {
-      margin: 0 8px;
-      padding: 0 10px;
-      border-radius: 10px;
-      transition: none;
       color: ${theme.base0D};
-      background: transparent;
     }
   '';
 }

@@ -22,10 +22,10 @@
           resize_on_border = true;
           extend_border_grab_area = 15;
           hover_icon_on_border = true;
-          "col.active_border" = "${toARGB theme.base0D} ${toARGB theme.base0E} 45deg";
-          "col.inactive_border" = toARGB theme.base03;
-          "col.nogroup_border" = toARGB theme.base02;
-          "col.nogroup_border_active" = toARGB theme.base0A;
+          "col.active_border" = "${toARGB theme.base05} ${toARGB theme.base0D} 180deg";
+          "col.inactive_border" = "${toARGB theme.base03} ${toARGB theme.base01} 180deg";
+          "col.nogroup_border" = "${toARGB theme.base03} ${toARGB theme.base01} 180deg";
+          "col.nogroup_border_active" = "${toARGB theme.base05} ${toARGB theme.base0A} 180deg";
         };
 
         decoration = {
@@ -50,15 +50,19 @@
 
         animations = {
           enabled = true;
-          bezier = [ "myBezier, 0.05, 0.9, 0.1, 1.05" ];
+
+          bezier = [
+            "easeOutExpo, 0.16, 1, 0.3, 1"
+            "easeOutCirc, 0, 0.55, 0.45, 1"
+          ];
 
           animation = [
-            "windows, 1, 2, myBezier"
-            "windowsOut, 1, 2, default, popin 80%"
-            "border, 1, 3, default"
-            "fade, 1, 2, default"
-            "fadeSwitch, 1, 2, default"
-            "workspaces, 1, 1, default"
+            "windows, 1, 4, easeOutExpo, slide"
+            "windowsOut, 1, 4, easeOutExpo, slide"
+            "windowsMove, 1, 4, easeOutExpo" 
+            "border, 1, 5, easeOutCirc"
+            "fade, 1, 3, easeOutCirc"
+            "workspaces, 1, 4, easeOutExpo, slide"
           ];
         };
 
