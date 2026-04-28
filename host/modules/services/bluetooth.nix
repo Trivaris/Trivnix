@@ -5,7 +5,7 @@
   ...
 }:
 let
-  bluetoothPrefs = config.hostPrefs.enable;
+  bluetoothPrefs = config.hostPrefs.bluetooth;
 in
 {
   options.hostPrefs.bluetooth.enable = lib.mkEnableOption "Enable Bluetooth support";

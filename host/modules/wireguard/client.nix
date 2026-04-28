@@ -4,15 +4,15 @@
   ...
 }:
 let
-  wireguardPrefs = config.hostPrefs.wireguard;
+  wgClientPrefs = config.hostPrefs.wireguard.client;
   secrets = config.sops.secrets;
 in
 {
-  config = lib.mkIf wireguardPrefs.client.enable {
+  config = lib.mkIf wgClientPrefs.enable {
     systemd.services.wg-quick-wg0.wantedBy = lib.mkForce [ ];
-    networking.firewall.allowedUDPPorts = [ wireguardPrefs.client.port ];
+    networking.firewall.allowedUDPPorts = [ wgClientPrefs.port ];
     networking.wg-quick.interfaces.wg0 = {
-      address = [ "${wireguardPrefs.client.ip}/24" ];
+      address = [ "${wgClientPrefs.ip}/24" ];
       dns = [ "1.1.1.1" ];
       privateKeyFile = secrets.wireguard-client-key.path;
 
@@ -20,9 +20,9 @@ in
         {
           publicKey =
             builtins.readFile
-              config.private.pubKeys.hosts.${wireguardPrefs.client.serverConfigname}."wireguard.pub";
+              config.private.pubKeys.hosts.${wgClientPrefs.serverConfigname}."wireguard.pub";
           allowedIPs = [ "0.0.0.0/0" ];
-          endpoint = "${wireguardPrefs.client.serverAddress}:${toString wireguardPrefs.client.port}";
+          endpoint = "${wgClientPrefs.serverAddress}:${toString wgClientPrefs.port}";
           persistentKeepalive = 25;
         }
       ];

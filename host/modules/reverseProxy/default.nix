@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  reverseProxyPrefs = config.hostPrefs.reverseProxyPrefs;
+  reverseProxyPrefs = config.hostPrefs.reverseProxy;
 in
 {
   config = lib.mkIf reverseProxyPrefs.enable {

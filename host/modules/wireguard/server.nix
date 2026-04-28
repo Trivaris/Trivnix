@@ -5,8 +5,9 @@
   ...
 }:
 let
-  wireguardPrefs = config.hostPrefs;
+  wgServerPrefs = config.hostPrefs.wireguard.server;
   secrets = config.sops.secrets;
+
   commonPeerKeys = lib.mapAttrsToList (name: value: {
     inherit value;
     name = lib.removeSuffix ".pub" name;
@@ -35,29 +36,29 @@ let
   }) numberedPeers;
 in
 {
-  config = lib.mkIf wireguardPrefs.server.enable {
+  config = lib.mkIf wgServerPrefs.enable {
     networking.nat = {
       enable = true;
       enableIPv6 = true;
-      externalInterface = wireguardPrefs.server.networkInterface;
+      externalInterface = wgServerPrefs.networkInterface;
       internalInterfaces = [ "wg0" ];
     };
 
-    networking.firewall.allowedUDPPorts = [ wireguardPrefs.server.port ];
+    networking.firewall.allowedUDPPorts = [ wgServerPrefs.port ];
 
     networking.wg-quick.interfaces.wg0 = {
       inherit peers;
       address = [ "10.100.0.1/24" ];
       dns = [ "1.1.1.1" ];
-      listenPort = wireguardPrefs.server.port;
+      listenPort = wgServerPrefs.port;
       privateKeyFile = secrets.wireguard-server-key.path;
       postUp = ''
         ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${wireguardPrefs.server.networkInterface} -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${wgServerPrefs.networkInterface} -j MASQUERADE
       '';
       preDown = ''
         ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${wireguardPrefs.server.networkInterface} -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${wgServerPrefs.networkInterface} -j MASQUERADE
       '';
     };
   };

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  moondeckPrefs = config.hostPrefs;
+  moondeckPrefs = config.hostPrefs.moondeck;
   jsonFormat = pkgs.formats.json { };
   configFile = jsonFormat.generate "moondeckbuddy-config.json" (
     moondeckPrefs.settings
