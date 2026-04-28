@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  steamPrefs = config.hostPrefs.steam;
 in
 {
   options.hostPrefs.steam.enable = lib.mkEnableOption ''
@@ -13,7 +13,7 @@ in
     Toggle this when the machine should support gaming workloads.
   '';
 
-  config = lib.mkIf prefs.steam.enable {
+  config = lib.mkIf steamPrefs.enable {
     environment.systemPackages = [
       pkgs.heroic
       pkgs.r2modman

@@ -5,9 +5,8 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
   theme = osConfig.themingPrefs.scheme;
-  location = prefs.weatherLocation;
+  location = config.userPrefs.weatherLocation;
   locationArg = lib.optionalString (
     location != null && location != ""
   ) " ${lib.escapeShellArg location}";

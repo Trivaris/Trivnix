@@ -1,18 +1,18 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  collaboraPrefs = config.hostPrefs.collabora;
 in
 {
-  config = lib.mkIf prefs.collabora.enable {
+  config = lib.mkIf collaboraPrefs.enable {
     services.collabora-online = {
-      inherit (prefs.collabora.reverseProxy) port;
+      inherit (collaboraPrefs.reverseProxy) port;
       enable = true;
       settings =
         let
-          rPEnabled = prefs.collabora.reverseProxy.enable;
+          rPEnabled = collaboraPrefs.reverseProxy.enable;
         in
         {
-          server_name = prefs.collabora.reverseProxy.domain;
+          server_name = collaboraPrefs.reverseProxy.domain;
 
           ssl = {
             enable = !rPEnabled;
@@ -20,13 +20,13 @@ in
           };
 
           net = {
-            listen = prefs.collabora.reverseProxy.ipAddress;
-            post_allow.host = [ prefs.collabora.reverseProxy.ipAddress ];
+            listen = collaboraPrefs.reverseProxy.ipAddress;
+            post_allow.host = [ collaboraPrefs.reverseProxy.ipAddress ];
           };
 
-          storage.wopi = lib.mkIf (prefs.collabora.nextcloudFQDNs != null) {
+          storage.wopi = lib.mkIf (collaboraPrefs.nextcloudFQDNs != null) {
             "@allow" = true;
-            host = prefs.collabora.nextcloudFQDNs;
+            host = collaboraPrefs.nextcloudFQDNs;
           };
         };
     };

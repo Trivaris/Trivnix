@@ -4,7 +4,7 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  wayvncPrefs = config.userPrefs.wayvnc;
 in
 {
   options.userPrefs.wayvnc.enable = lib.mkEnableOption ''
@@ -12,7 +12,7 @@ in
     Requires a Wayland session (e.g., Sway, Hyprland).
   '';
 
-  config = lib.mkIf prefs.wayvnc.enable {
+  config = lib.mkIf wayvncPrefs.enable {
     services.wayvnc = {
       enable = true;
       autoStart = true;

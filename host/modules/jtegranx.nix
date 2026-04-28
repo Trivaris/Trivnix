@@ -5,11 +5,11 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  jtegranxPrefs = config.hostPrefs.jtegranx;
 in
 {
   options.hostPrefs.jtegranx.enable = lib.mkEnableOption "Enable jtegranx support";
-  config = lib.mkIf prefs.jtegranx.enable {
+  config = lib.mkIf jtegranxPrefs.enable {
     environment.systemPackages = [ pkgs.jtegranx ];
     services.udev = {
       enable = true;

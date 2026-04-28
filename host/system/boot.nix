@@ -3,11 +3,8 @@
   lib,
   ...
 }:
-let
-  prefs = config.hostPrefs;
-in
 {
-  boot = lib.mkIf (!prefs.headless) {
+  boot = lib.mkIf (!config.hostPrefs.headless) {
     plymouth.enable = true;
     consoleLogLevel = 0;
     initrd.verbose = false;

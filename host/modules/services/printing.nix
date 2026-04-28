@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  printingPrefs = config.hostPrefs.printing;
 in
 {
   options.hostPrefs.printing.enable = lib.mkEnableOption ''
@@ -13,7 +13,7 @@ in
     Enable when the system must manage printers via the local spooler.
   '';
 
-  config = lib.mkIf prefs.printing.enable {
+  config = lib.mkIf printingPrefs.enable {
     services.printing = {
       enable = true;
       drivers = [ pkgs.samsung-unified-linux-driver ];

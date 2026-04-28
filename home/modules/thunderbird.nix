@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  thunderbirdPrefs = config.userPrefs.thunderbird;
 
   calendarSettings = lib.flatten (
     lib.mapAttrsToList (
@@ -26,7 +26,7 @@ let
 in
 {
   options.userPrefs.thunderbird.enable = lib.mkEnableOption "Enable Thunderbird configuration.";
-  config = lib.mkIf prefs.thunderbird.enable {
+  config = lib.mkIf thunderbirdPrefs.enable {
     programs.thunderbird = {
       enable = true;
       package = pkgs.thunderbird-bin;

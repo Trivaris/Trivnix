@@ -1,9 +1,9 @@
 { config, lib, ... }:
 let
-  prefs = config.userPrefs;
+  cliPrefs = config.userPrefs.cli;
 in
 {
-  config = lib.mkIf prefs.cli.enable {
+  config = lib.mkIf cliPrefs.enable {
     programs.bat = {
       enable = true;
     };

@@ -4,20 +4,21 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  ocClientPrefs = config.hostPrefs.openconnectClient;
+  secrets = config.sops.secrets;
 in
 {
-  config = lib.mkIf prefs.openconnectClient.enable {
+  config = lib.mkIf ocClientPrefs.enable {
     systemd.services.openconnect-openconnect0.wantedBy = lib.mkForce [ ];
     networking.openconnect = {
       interfaces.openconnect0 = {
-        inherit (prefs.openconnectClient) gateway user;
+        inherit (ocClientPrefs) gateway user;
         protocol = "anyconnect";
-        passwordFile = config.sops.secrets.openconnect-vpn-password.path;
+        passwordFile = secrets.openconnect-vpn-password.path;
         extraOptions = {
-          authgroup = lib.mkIf (prefs.openconnectClient.authgroup != null) prefs.openconnectClient.authgroup;
-          cafile = lib.mkIf (prefs.openconnectClient.cafile != null) (
-            toString prefs.openconnectClient.cafile
+          authgroup = lib.mkIf (ocClientPrefs.authgroup != null) ocClientPrefs.authgroup;
+          cafile = lib.mkIf (ocClientPrefs.cafile != null) (
+            toString ocClientPrefs.cafile
           );
         };
       };

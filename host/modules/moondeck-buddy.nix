@@ -5,12 +5,12 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  moondeckPrefs = config.hostPrefs;
   jsonFormat = pkgs.formats.json { };
   configFile = jsonFormat.generate "moondeckbuddy-config.json" (
-    prefs.moondeck.settings
+    moondeckPrefs.settings
     // {
-      port = prefs.moondeck.port;
+      port = moondeckPrefs.port;
     }
   );
 in
@@ -38,18 +38,18 @@ in
     };
   };
 
-  config = lib.mkIf prefs.moondeck.enable {
-    environment.systemPackages = [ prefs.moondeck.package ];
+  config = lib.mkIf moondeckPrefs.enable {
+    environment.systemPackages = [ moondeckPrefs.package ];
 
-    networking.firewall = lib.mkIf prefs.moondeck.openFirewall {
+    networking.firewall = lib.mkIf moondeckPrefs.openFirewall {
       allowedTCPPorts = [
-        prefs.moondeck.port
-        prefs.moondeck.infoPort
+        moondeckPrefs.port
+        moondeckPrefs.infoPort
       ];
       allowedUDPPorts = [
         47999
-        prefs.moondeck.port
-        prefs.moondeck.infoPort
+        moondeckPrefs.port
+        moondeckPrefs.infoPort
       ];
     };
 

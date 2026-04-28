@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.hostPrefs.udev;
+  udevPrefs = config.hostPrefs.udev;
 in
 {
   options.hostPrefs.udev = {
@@ -17,10 +17,10 @@ in
     };
   };
 
-  config = lib.mkIf prefs.enable {
+  config = lib.mkIf udevPrefs.enable {
     services.udev = {
       enable = true;
-      extraRules = prefs.rules pkgs;
+      extraRules = udevPrefs.rules pkgs;
     };
   };
 }

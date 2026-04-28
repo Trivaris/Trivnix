@@ -5,22 +5,22 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  minecraftServerPrefs = config.hostPrefs.minecraftServer;
 in
 {
-  config = lib.mkIf prefs.minecraftServer.enable {
+  config = lib.mkIf minecraftServerPrefs.enable {
     services.minecraft-servers = {
       enable = true;
       eula = true;
 
       servers =
         let
-          modpackPkg = pkgs.${prefs.minecraftServer.modpack};
+          modpackPkg = pkgs.${minecraftServerPrefs.modpack};
         in
         {
-          ${prefs.minecraftServer.modpack} = {
+          ${minecraftServerPrefs.modpack} = {
             enable = true;
-            openFirewall = !prefs.minecraftServer.reverseProxy.enable;
+            openFirewall = !minecraftServerPrefs.reverseProxy.enable;
             jvmOpts = "-Xms8192M -Xmx8192M -XX:+UseG1GC";
 
             package = pkgs.fabricServers."fabric-${modpackPkg.minecraftVersion}".override {
@@ -28,18 +28,18 @@ in
             };
 
             files = modpackPkg.files // {
-              server-icon = prefs.minecraftServer.serverIcon;
+              server-icon = minecraftServerPrefs.serverIcon;
             };
 
             serverProperties = {
               gamemode = "survival";
               difficulty = "hard";
               simulation-distance = 8;
-              server-port = prefs.minecraftServer.reverseProxy.port;
+              server-port = minecraftServerPrefs.reverseProxy.port;
               whitelist = true;
               max-tick-time = -1;
               enable-rcon = true;
-              "rcon.port" = prefs.minecraftServer.reverseProxy.port - 2;
+              "rcon.port" = minecraftServerPrefs.reverseProxy.port - 2;
               motd = "Awake and Ready!";
             };
 
@@ -64,8 +64,8 @@ in
                 join.hold.timeout = 60;
                 advanced.rewrite_server_properties = true;
 
-                public.address = "${prefs.minecraftServer.reverseProxy.domain}:${
-                  toString (prefs.minecraftServer.reverseProxy.port + 1)
+                public.address = "${minecraftServerPrefs.reverseProxy.domain}:${
+                  toString (minecraftServerPrefs.reverseProxy.port + 1)
                 }";
 
                 time = {
@@ -87,7 +87,7 @@ in
 
                 rcon = {
                   enabled = true;
-                  port = prefs.minecraftServer.reverseProxy.port - 2;
+                  port = minecraftServerPrefs.reverseProxy.port - 2;
                   password = "secure-password";
                   randomize_password = true;
                 };

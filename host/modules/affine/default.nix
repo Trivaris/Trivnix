@@ -5,23 +5,25 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  affinePrefs = config.hostPrefs.affine;
+  mailserverPrefs = config.hostPrefs.mailserver;
+  secrets = config.sops.secrets;
 in
 {
-  config = lib.mkIf prefs.affine.enable {
+  config = lib.mkIf affinePrefs.enable {
     virtualisation.docker.enable = true;
     virtualisation.oci-containers = {
       backend = "docker";
       containers.affine = {
         image = "ghcr.io/toeverything/affine:stable";
         dependsOn = [ "affine-postgres" "affine-redis" ];
-        ports = [ "${toString prefs.affine.reverseProxy.port}:${toString prefs.affine.reverseProxy.port}" ];
+        ports = [ "${toString affinePrefs.reverseProxy.port}:${toString affinePrefs.reverseProxy.port}" ];
         environment = {
           AFFINE_REVISION = "stable";
-          AFFINE_SERVER_HOST = prefs.affine.reverseProxy.domain;
+          AFFINE_SERVER_HOST = affinePrefs.reverseProxy.domain;
           AFFINE_SERVER_HTTPS = "true";
           REDIS_SERVER_HOST = "affine-redis";
-          PORT = toString prefs.affine.reverseProxy.port;
+          PORT = toString affinePrefs.reverseProxy.port;
           DB_DATA_LOCATION = "/var/lib/affine/postgres";
           UPLOAD_LOCATION = "/var/lib/affine/storage";
           CONFIG_LOCATION = "/var/lib/affine/config";
@@ -29,7 +31,7 @@ in
           DB_DATABASE = "affine";
         };
         extraOptions = [ "--network=affine-network" ];
-        environmentFiles = [ config.sops.secrets.affine-db-password-env.path ];
+        environmentFiles = [ secrets.affine-db-password-env.path ];
       };
 
       containers.affine-migration = {
@@ -45,7 +47,7 @@ in
           POSTGRES_DB = "affine";
         };
         extraOptions = [ "--network=affine-network" ];
-        environmentFiles = [ config.sops.secrets.affine-postgres-password-env.path ];
+        environmentFiles = [ secrets.affine-postgres-password-env.path ];
       };
 
       containers.affine-redis = {
@@ -82,9 +84,9 @@ in
       };
     };
 
-    hostPrefs.mailserver = lib.mkIf prefs.affine.sendMails {
+    hostPrefs.mailserver = lib.mkIf affinePrefs.sendMails {
       extraDomains = [ "affine" ];
-      accounts."no-reply@affine.${prefs.mailserver.domain}".passwordFile = config.sops.secrets.mail-affine-password.path;
+      accounts."no-reply@affine.${mailserverPrefs.domain}".passwordFile = secrets.mail-affine-password.path;
     };
   };
 }

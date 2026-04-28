@@ -4,11 +4,8 @@
   pkgs,
   ...
 }:
-let
-  prefs = config.hostPrefs;
-in
 {
-  config = lib.mkIf (!prefs.headless) {
+  config = lib.mkIf (!config.hostPrefs.headless) {
     environment.systemPackages = [ pkgs.sbctl ];
     security.pam.services.hyprlock = { };
     

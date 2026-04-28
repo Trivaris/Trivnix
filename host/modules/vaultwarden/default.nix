@@ -4,31 +4,33 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  vaultwardenPrefs = config.hostPrefs.vaultwarden;
+  mailserverPrefs = config.hostPrefs.mailserver;
+  secrets = config.sops.secrets;
 in
 {
-  config = lib.mkIf prefs.vaultwarden.enable {
+  config = lib.mkIf vaultwardenPrefs.enable {
     services.vaultwarden = {
       enable = true;
-      environmentFile = config.sops.secrets.vaultwarden-admin-token.path;
+      environmentFile = secrets.vaultwarden-admin-token.path;
       config = {
-        DOMAIN = "https://${prefs.vaultwarden.reverseProxy.domain}:${toString prefs.reverseProxy.port}";
-        ROCKET_ADDRESS = prefs.vaultwarden.reverseProxy.ipAddress;
-        ROCKET_PORT = prefs.vaultwarden.reverseProxy.port;
+        DOMAIN = "https://${vaultwardenPrefs.reverseProxy.domain}:${toString vaultwardenPrefs.port}";
+        ROCKET_ADDRESS = vaultwardenPrefs.reverseProxy.ipAddress;
+        ROCKET_PORT = vaultwardenPrefs.reverseProxy.port;
         SIGNUPS_ALLOWED = false;
       }
-      // (lib.optionalAttrs prefs.vaultwarden.sendMails {
+      // (lib.optionalAttrs vaultwardenPrefs.sendMails {
         SMTP_SSL = false;
         SMTP_HOST = "127.0.0.1";
         SMTP_PORT = 25;
-        SMTP_FROM = "no-reply@vault.${prefs.mailserver.domain}";
+        SMTP_FROM = "no-reply@vault.${mailserverPrefs.domain}";
         SMTP_FROM_NAME = "Vaultwarden";
       });
     };
 
-    hostPrefs.mailserver = lib.mkIf prefs.vaultwarden.sendMails {
+    hostPrefs.mailserver = lib.mkIf vaultwardenPrefs.sendMails {
       extraDomains =  [ "vault" ];
-      accounts."no-reply@vaultwarden.${prefs.mailserver.domain}".passwordFile = config.sops.secrets.mail-vaultwarden-password.path;
+      accounts."no-reply@vaultwarden.${mailserverPrefs.domain}".passwordFile = secrets.mail-vaultwarden-password.path;
     };
   };
 }

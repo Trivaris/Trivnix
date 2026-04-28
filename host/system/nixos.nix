@@ -5,7 +5,6 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
   themePrefs = config.themingPrefs;
   allUserInfos = builtins.attrNames (
     builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users
@@ -68,7 +67,7 @@ in
       gc = {
         automatic = true;
         dates = "daily";
-        options = "--delete-older-than ${prefs.oldProfileDeleteInterval}";
+        options = "--delete-older-than ${config.hostPrefs.oldProfileDeleteInterval}";
       };
 
       settings = {

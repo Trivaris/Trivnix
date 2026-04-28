@@ -4,9 +4,6 @@
   pkgs,
   ...
 }:
-let
-  prefs = config.userPrefs;
-in
 {
   options.userPrefs.jetbrainsIDEs = lib.mkOption {
     type = lib.pipe pkgs.jetbrains [
@@ -27,5 +24,5 @@ in
     '';
   };
 
-  config.home.packages = map (ide: pkgs.jetbrains.${ide}) prefs.jetbrainsIDEs;
+  config.home.packages = map (ide: pkgs.jetbrains.${ide}) config.userPrefs.jetbrainsIDEs;
 }

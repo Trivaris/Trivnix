@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  cliPrefs = config.userPrefs.cli;
   starshipTheme = lib.pipe
   {
     url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
@@ -58,7 +58,7 @@ in
         bindkey "^[[1;5D" backward-word
         bindkey "^[[1;5C" forward-word
 
-        ${lib.optionalString prefs.cli.enable "fastfetch"}
+        ${lib.optionalString cliPrefs.enable "fastfetch"}
       '';
     };
   };

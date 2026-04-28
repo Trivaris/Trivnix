@@ -5,12 +5,12 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  spicetifyPrefs = config.hostPrefs.spicetify;
   themePrefs = config.themingPrefs;
 in
 {
   options.hostPrefs.spicetify.enable = lib.mkEnableOption "Enable Spotify";
-  config = lib.mkIf prefs.spicetify.enable {
+  config = lib.mkIf spicetifyPrefs.enable {
     programs.spicetify = {
       enable = true;
       theme =

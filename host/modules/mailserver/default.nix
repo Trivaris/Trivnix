@@ -4,7 +4,8 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  mailserverPrefs = config.hostPrefs.mailserver;
+  reverseProxyPrefs = config.hostPrefs.reverseProxy;
 in
 {
   imports = [
@@ -14,12 +15,12 @@ in
     )
   ];
 
-  config = lib.mkIf prefs.mailserver.enable {
+  config = lib.mkIf mailserverPrefs.enable {
     mailserver = {
       enable = true;
-      fqdn = prefs.mailserver.domain;
-      x509.useACMEHost = prefs.mailserver.domain;
-      domains = [ prefs.mailserver.domain ] ++ map (domain: "${domain}.${prefs.mailserver.domain}") prefs.mailserver.extraDomains;
+      fqdn = mailserverPrefs.domain;
+      x509.useACMEHost = mailserverPrefs.domain;
+      domains = [ mailserverPrefs.domain ] ++ map (domain: "${domain}.${mailserverPrefs.domain}") mailserverPrefs.extraDomains;
       dkim = {
         enable = true;
         
@@ -29,8 +30,8 @@ in
         };
 
         domains = {
-          "${prefs.mailserver.domain}".selectors.rsa-2026-04 = { };
-        } // lib.listToAttrs (map (domain: lib.nameValuePair "${domain}.${prefs.mailserver.domain}" { selectors.rsa-2026-04 = { }; }) prefs.mailserver.extraDomains);
+          "${mailserverPrefs.domain}".selectors.rsa-2026-04 = { };
+        } // lib.listToAttrs (map (domain: lib.nameValuePair "${domain}.${mailserverPrefs.domain}" { selectors.rsa-2026-04 = { }; }) mailserverPrefs.extraDomains);
       };
 
       stateVersion = lib.pipe config.hostInfos.stateVersion [
@@ -42,45 +43,45 @@ in
 
     security.acme = {
       acceptTerms = true;
-      defaults.email = prefs.reverseProxy.email;
-      certs.${prefs.mailserver.domain} = {
+      defaults.email = reverseProxyPrefs.email;
+      certs.${mailserverPrefs.domain} = {
         dnsProvider = "cloudflare";
-        extraDomainNames = map (name: "${name}.${prefs.mailserver.domain}") ([
+        extraDomainNames = map (name: "${name}.${mailserverPrefs.domain}") ([
           "imap"
           "smtp"
           "autoconfig"
           "autodiscover"
-        ] ++ prefs.mailserver.extraDomains);
+        ] ++ mailserverPrefs.extraDomains);
       };
     };
 
     services = {
       automx2 = {
         enable = true;
-        domain = prefs.mailserver.domain;
+        domain = mailserverPrefs.domain;
         settings = {
-          provider = prefs.mailserver.providerName;
-          domains = [ prefs.mailserver.domain ];
+          provider = mailserverPrefs.providerName;
+          domains = [ mailserverPrefs.domain ];
 
           servers = [
             {
               type = "imap";
-              name = "imap.${prefs.mailserver.domain}";
-              port = prefs.mailserver.imapPort;
+              name = "imap.${mailserverPrefs.domain}";
+              port = mailserverPrefs.imapPort;
             }
             {
               type = "smtp";
-              name = "smtp.${prefs.mailserver.domain}";
-              port = prefs.mailserver.smtpPort;
+              name = "smtp.${mailserverPrefs.domain}";
+              port = mailserverPrefs.smtpPort;
             }
           ];
         };
       };
 
-      nginx.virtualHosts."autoconfig.${prefs.mailserver.domain}" = {
+      nginx.virtualHosts."autoconfig.${mailserverPrefs.domain}" = {
         forceSSL = true;
         enableACME = lib.mkForce false;
-        useACMEHost = lib.mkForce prefs.mailserver.domain;
+        useACMEHost = lib.mkForce mailserverPrefs.domain;
         locations."/".proxyPass = lib.mkForce "http://127.0.0.1:${toString config.services.automx2.port}";
       };
     };

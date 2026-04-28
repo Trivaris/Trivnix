@@ -1,11 +1,11 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  reverseProxyPrefs = config.hostPrefs.reverseProxyPrefs;
 in
 {
-  config = lib.mkIf prefs.reverseProxy.enable {
+  config = lib.mkIf reverseProxyPrefs.enable {
     networking.firewall.allowedTCPPorts = [
-      prefs.reverseProxy.port
+      reverseProxyPrefs.port
     ]
     ++ (map (service: service.externalPort) (
       builtins.filter (service: service.externalPort != null) config.vars.activeServices

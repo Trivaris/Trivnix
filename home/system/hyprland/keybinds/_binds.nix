@@ -6,7 +6,6 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
   monitors = osConfig.hostInfos.monitors;
 
   workspaceDispatch = pkgs.writeShellScriptBin "hypr-ws" ''
@@ -92,9 +91,9 @@ in
       "$mod, RETURN, exec, ${config.vars.terminalEmulator}"
       "$mod, SPACE, exec, ${config.vars.appLauncher} ${config.vars.appLauncherFlags}"
 
-      (lib.mkIf prefs.librewolf.enable "$mod, W, exec, librewolf")
-      (lib.mkIf osConfig.hostPrefs.spicetify.enable "$mod, S, exec, spotify")
-      (lib.mkIf prefs.thunderbird.enable "$mod, Z, exec, thunderbird")
+      "$mod, W, exec, librewolf"
+      "$mod, S, exec, spotify"
+      "$mod, Z, exec, thunderbird"
     ];
 
     volume = [

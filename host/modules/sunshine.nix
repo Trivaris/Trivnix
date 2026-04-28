@@ -5,12 +5,13 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  sunshinePrefs = config.hostPrefs.sunshine;
+  moondeckPrefs = config.hostPrefs.moondeck;
 in
 {
   options.hostPrefs.sunshine.enable = lib.mkEnableOption "Enable Sunshine game streaming server";
 
-  config = lib.mkIf prefs.sunshine.enable {
+  config = lib.mkIf sunshinePrefs.enable {
     services.sunshine = {
       enable = true;
       package = pkgs.sunshine.override {
@@ -20,10 +21,10 @@ in
       capSysAdmin = true;
       openFirewall = true;
       applications.apps = [
-        (lib.mkIf prefs.moondeck.enable {
+        (lib.mkIf moondeckPrefs.enable {
           "name" = "MoonDeckStream";
           "auto-detach" = false;
-          "cmd" = "${lib.getExe prefs.moondeck.package} --exec MoonDeckStream";
+          "cmd" = "${lib.getExe moondeckPrefs.package} --exec MoonDeckStream";
           "elevated" = false;
           "exclude-global-prep-cmd" = false;
           "exit-timeout" = 5;

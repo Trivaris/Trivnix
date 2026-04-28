@@ -1,9 +1,9 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  grubPrefs = config.hostPrefs.grub;
 in
 {
-  config = lib.mkIf prefs.grub.enable {
+  config = lib.mkIf grubPrefs.enable {
     boot = {
       loader.grub.timeout = 0;
       kernelParams = [

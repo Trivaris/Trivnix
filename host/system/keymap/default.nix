@@ -1,15 +1,15 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  languagePrefs = config.hostPrefs.language;
 in
 {
   config = {
-    console.keyMap = prefs.language.keyMap;
+    console.keyMap = languagePrefs.keyMap;
 
     i18n =
       let
-        language = "${prefs.language.locale}.${prefs.language.charset}";
-        unitLanguage = "${prefs.language.units}.${prefs.language.charset}";
+        language = "${languagePrefs.locale}.${languagePrefs.charset}";
+        unitLanguage = "${languagePrefs.units}.${languagePrefs.charset}";
         unitTypes = [
           "LC_ADDRESS"
           "LC_IDENTIFICATION"
@@ -30,7 +30,7 @@ in
       };
 
     services.xserver.xkb = {
-      layout = prefs.language.keyMap;
+      layout = languagePrefs.keyMap;
       variant = "";
     };
   };

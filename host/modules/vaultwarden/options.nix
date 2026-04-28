@@ -10,7 +10,7 @@
 
     sendMails = lib.mkEnableOption ''
       Send mails via the integrated mailserver.
-      Also enable and configure prefs.mailserver.
+      Also enable and configure hostPrefs.mailserver.
     '';
   };
 }

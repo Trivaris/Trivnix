@@ -1,13 +1,13 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  opensshPrefs = config.hostPrefs.openssh;
 in
 {
-  config = lib.mkIf prefs.openssh.enable {
-    networking.firewall.allowedTCPPorts = prefs.openssh.ports;
+  config = lib.mkIf opensshPrefs.enable {
+    networking.firewall.allowedTCPPorts = opensshPrefs.ports;
     services = {
       openssh = {
-        inherit (prefs.openssh) ports;
+        inherit (opensshPrefs) ports;
         enable = true;
         openFirewall = true;
 

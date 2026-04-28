@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  kdeConnectPrefs = config.hostPrefs.kdeConnect;
 in
 {
   options.hostPrefs.kdeConnect.enable = lib.mkEnableOption ''
@@ -13,7 +13,7 @@ in
     Enable when pairing the host with mobile devices over the LAN.
   '';
 
-  config = lib.mkIf prefs.kdeConnect.enable {
+  config = lib.mkIf kdeConnectPrefs.enable {
     programs.kdeconnect = {
       enable = true;
       package = pkgs.valent;

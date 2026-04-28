@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  homepagePrefs = config.hostPrefs.homepage;
 in
 {
   imports = [
@@ -14,13 +14,13 @@ in
     )
   ];
 
-  config = lib.mkIf prefs.homepage.enable {
+  config = lib.mkIf homepagePrefs.enable {
     services.homepage-dashboard = {
       enable = true;
-      openFirewall = !prefs.homepage.reverseProxy.enable;
-      allowedHosts = prefs.homepage.reverseProxy.domain;
-      listenPort = prefs.homepage.reverseProxy.port;
-      services = prefs.homepage.serviceGroups;
+      openFirewall = !homepagePrefs.reverseProxy.enable;
+      allowedHosts = homepagePrefs.reverseProxy.domain;
+      listenPort = homepagePrefs.reverseProxy.port;
+      services = homepagePrefs.serviceGroups;
     };
   };
 }

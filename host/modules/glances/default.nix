@@ -1,11 +1,11 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  glancesPrefs = config.hostPrefs.glances;
 in
 {
-  config = lib.mkIf prefs.glances.enable {
+  config = lib.mkIf glancesPrefs.enable {
     services.glances = {
-      inherit (prefs.glances) port;
+      inherit (glancesPrefs) port;
       enable = true;
       extraArgs = [
         "--webserver"

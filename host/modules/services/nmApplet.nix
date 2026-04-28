@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  nmAppletPrefs = config.hostPrefs.nmApplet;
 in
 {
   options.hostPrefs.nmApplet.enable = lib.mkEnableOption ''
@@ -8,7 +8,7 @@ in
     Useful for managing network connections on laptops and desktops.
   '';
 
-  config = lib.mkIf prefs.nmApplet.enable {
+  config = lib.mkIf nmAppletPrefs.enable {
     programs.nm-applet.enable = true;
   };
 }

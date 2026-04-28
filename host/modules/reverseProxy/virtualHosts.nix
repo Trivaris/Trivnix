@@ -1,15 +1,15 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  reverseProxyPrefs = config.hostPrefs.reverseProxy;
 in
 {
-  config = lib.mkIf prefs.reverseProxy.enable {
+  config = lib.mkIf reverseProxyPrefs.enable {
     services.nginx.virtualHosts = builtins.listToAttrs (
       map (
         service:
         lib.nameValuePair service.domain (
           let
-            listenPort = if service.externalPort != null then service.externalPort else prefs.reverseProxy.port;
+            listenPort = if service.externalPort != null then service.externalPort else reverseProxyPrefs.port;
             ipv4Regex = ''^[0-9]{1,3}(\.[0-9]{1,3}){3}$'';
             upstreamIp =
               if builtins.match ipv4Regex service.ipAddress != null then

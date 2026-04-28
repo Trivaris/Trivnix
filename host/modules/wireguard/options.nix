@@ -3,8 +3,8 @@
   ...
 }:
 {
-  options = {
-    hostPrefs.wireguard.server = {
+  options.hostPrefs.wireguard = {
+    server = {
       enable = lib.mkEnableOption "Enable the Wireguard Server";
       domain = lib.mkOption { type = lib.types.str; };
       port = lib.mkOption {
@@ -17,7 +17,7 @@
       };
     };
 
-    hostPrefs.wireguard.client = {
+    client = {
       enable = lib.mkEnableOption "Enable the Wireguard Client";
       ip = lib.mkOption { type = lib.types.str; };
       serverConfigname = lib.mkOption {

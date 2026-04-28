@@ -6,7 +6,7 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  librewolfPrefs = config.userPrefs.librewolf;
   theme = osConfig.themingPrefs.scheme;
 
   overrides = ''
@@ -28,7 +28,7 @@ let
   };
 in
 {
-  config = lib.mkIf prefs.librewolf.enable {
+  config = lib.mkIf librewolfPrefs.enable {
     home.file = {
       ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
 
@@ -104,7 +104,7 @@ in
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
-        Cookies.Allow = prefs.librewolf.allowedCookies;
+        Cookies.Allow = librewolfPrefs.allowedCookies;
 
         SanitizeOnShutdown = {
           cache = true;

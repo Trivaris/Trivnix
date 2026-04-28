@@ -4,17 +4,18 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  matrixPrefs = config.hostPrefs.matrix;
+  secrets = config.sops.secrets;
 in
 {
-  config = lib.mkIf prefs.matrix.enable {
+  config = lib.mkIf matrixPrefs.enable {
     services.matrix-conduit = {
       enable = true;
-      secretFile = config.sops.secrets.matrix-secrets.path;
+      secretFile = secrets.matrix-secrets.path;
       settings.global = {
-        address = if prefs.matrix.reverseProxy.enable then "0.0.0.0" else prefs.matrix.reverseProxy.domain;
-        port = prefs.matrix.reverseProxy.port;
-        server_name = prefs.matrix.name;
+        address = if matrixPrefs.reverseProxy.enable then "0.0.0.0" else matrixPrefs.reverseProxy.domain;
+        port = matrixPrefs.reverseProxy.port;
+        server_name = matrixPrefs.name;
         allow_registration = true;
         database_backend = "rocksdb";
         extraConfig = ''

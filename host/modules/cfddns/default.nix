@@ -4,12 +4,12 @@
   ...
 }:
 let
-  prefs = config.hostPrefs;
+  cfddnsPrefs = config.hostPrefs.cfddns;
 in
 {
-  config = lib.mkIf prefs.cfddns.enable {
+  config = lib.mkIf cfddnsPrefs.enable {
     services.cfddns = {
-      inherit (prefs.cfddns.reverseProxy) port;
+      inherit (cfddnsPrefs.reverseProxy) port;
       enable = true;
     };
   };

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  thunderbirdPrefs = config.userPrefs.thunderbird;
   theme = osConfig.themingPrefs.scheme;
 in
 {
@@ -16,7 +16,7 @@ in
     signal = 4;
     tooltip = true;
 
-    on-click = lib.mkIf prefs.thunderbird.enable "thunderbird";
+    on-click = lib.mkIf thunderbirdPrefs.enable "thunderbird";
     on-click-middle = "pkill -RTMIN+4 waybar";
 
     format = "{icon} {text}";

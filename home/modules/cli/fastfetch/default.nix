@@ -5,11 +5,11 @@
   ...
 }:
 let
-  prefs = config.userPrefs;
+  cliPrefs = config.userPrefs.cli;
   theme = osConfig.themingPrefs.scheme;
 in
 {
-  config = lib.mkIf prefs.cli.enable {
+  config = lib.mkIf cliPrefs.enable {
     programs.fastfetch = {
       enable = true;
       settings = {

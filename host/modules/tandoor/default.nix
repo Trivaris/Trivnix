@@ -1,19 +1,19 @@
 { config, lib, ... }:
 let
-  prefs = config.hostPrefs;
+  tandoorPrefs = config.hostPrefs.tandoor;
 in
 {
-  config = lib.mkIf prefs.tandoor.enable {
+  config = lib.mkIf tandoorPrefs.enable {
     services.tandoor-recipes = {
-      inherit (prefs.tandoor.reverseProxy) port;
+      inherit (tandoorPrefs.reverseProxy) port;
       enable = true;
       address =
-        if prefs.tandoor.reverseProxy.enable then "localhost" else prefs.tandoor.reverseProxy.domain;
+        if tandoorPrefs.reverseProxy.enable then "localhost" else tandoorPrefs.reverseProxy.domain;
       extraConfig = {
         MEDIA_ROOT = "/var/lib/tandoor-recipes/media/";
         DEBUG = "1";
         ALLOWED_HOSTS =
-          if prefs.tandoor.reverseProxy.enable then prefs.tandoor.reverseProxy.domain else "localhost";
+          if tandoorPrefs.reverseProxy.enable then tandoorPrefs.reverseProxy.domain else "localhost";
       };
     };
   };

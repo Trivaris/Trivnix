@@ -1,12 +1,9 @@
 { config, ... }:
-let
-  prefs = config.hostPrefs;
-in
 {
   services.greetd =
     let
       session = {
-        user = prefs.mainUser;
+        user = config.hostPrefs.mainUser;
         command = "start-hyprland";
       };
     in
