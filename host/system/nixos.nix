@@ -40,7 +40,20 @@ in
     time.timeZone = "Europe/Berlin";
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
-    fonts.packages = [ themePrefs.font.package ];
+
+    fonts = {
+      enableDefaultPackages = true;
+      packages = [ themePrefs.font.package ];
+      fontconfig = {
+        enable = true;
+        defaultFonts = {
+          emoji     = [ "Noto Color Emoji" ];
+          monospace = [ themePrefs.font.package.monoName ];
+          sansSerif = [ themePrefs.font.package.propoName ];
+          serif     = [ themePrefs.font.package.propoName ];
+        };
+      };
+    };
 
     qt = {
       enable = true;

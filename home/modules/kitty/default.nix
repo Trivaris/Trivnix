@@ -18,12 +18,6 @@ in
     enableGitIntegration = true;
     shellIntegration.enableZshIntegration = true;
 
-    font = {
-      package = themePrefs.font.package;
-      name = themePrefs.font.name;
-      size = 12;
-    };
-
     settings = {
       cursor_trail = 1;
       cursor_trail_decay = "0.1 0.4";

@@ -54,9 +54,5 @@ in
       name = "Adwaita";
       package = pkgs.adwaita-icon-theme;
     };
-    font = {
-      name = themingPrefs.font.name;
-      package = themingPrefs.font.package;
-    };
   };
 }

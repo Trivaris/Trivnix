@@ -55,22 +55,22 @@ in
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraPackages = [
-      pkgs.gcc
-      pkgs.gnumake
-      pkgs.ripgrep
-      pkgs.lazygit
-      pkgs.ghostscript
-      pkgs.tectonic
-      pkgs.mermaid-cli
-      pkgs.sqlite
-      tree-sitter-26
-    ];
+    # extraPackages =[
+    #   pkgs.gcc
+    #   pkgs.gnumake
+    #   pkgs.ripgrep
+    #   pkgs.lazygit
+    #   pkgs.ghostscript
+    #   pkgs.tectonic
+    #   pkgs.mermaid-cli
+    #   pkgs.sqlite
+    #   tree-sitter-26
+    # ];
   };
 
-  home.file.".config/nvim" = {
-    source = lazyvim;
-    recursive = true;
-  };
+  # home.file.".config/nvim" = {
+  #   source = lazyvim;
+  #   recursive = true;
+  # };
 
 }
