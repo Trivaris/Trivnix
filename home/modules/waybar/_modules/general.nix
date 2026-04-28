@@ -39,7 +39,7 @@ in
 
   style = ''
     * {
-      font-family: "${themePrefs.font.name} Font";
+      font-family: "${themePrefs.font.propoName}";
       font-size: 1.05rem;
       min-height: 0;
       font-weight: bold;
