@@ -48,9 +48,9 @@ in
         enable = true;
         defaultFonts = {
           emoji     = [ "Noto Color Emoji" ];
-          monospace = [ themePrefs.font.package.monoName ];
-          sansSerif = [ themePrefs.font.package.propoName ];
-          serif     = [ themePrefs.font.package.propoName ];
+          monospace = [ themePrefs.font.monoName ];
+          sansSerif = [ themePrefs.font.propoName ];
+          serif     = [ themePrefs.font.propoName ];
         };
       };
     };
