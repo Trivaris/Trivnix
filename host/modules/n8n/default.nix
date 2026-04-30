@@ -25,9 +25,11 @@ in
         environment.N8N_RUNNERS_AUTH_TOKEN_FILE = secrets.n8n-runner-auth-token.path;
         runners.python = {
           command = lib.getExe pkgs.python315;
-          healthCheckPort = 5679;
+          healthCheckPort = n8nPrefs.reverseProxy.port - 1;
         };
       };
     };
+
+    systemd.services.n8n.path = [ pkgs.nodejs pkgs.gnutar pkgs.gzip ];
   };
 }

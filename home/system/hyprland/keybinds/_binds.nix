@@ -88,8 +88,8 @@ in
       "$mod, A, exec, codium"
       "$mod, D, exec, vesktop"
       
-      "$mod, RETURN, exec, ${config.vars.terminalEmulator}"
-      "$mod, SPACE, exec, ${config.vars.appLauncher} ${config.vars.appLauncherFlags}"
+      "$mod, SPACE, exec, ${config.vars.terminalEmulator}"
+      "$mod, RETURN, exec, ${config.vars.appLauncher} ${config.vars.appLauncherFlags}"
 
       "$mod, W, exec, librewolf"
       "$mod, S, exec, spotify"

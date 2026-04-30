@@ -20,8 +20,8 @@ in
           };
 
           net = {
-            listen = collaboraPrefs.reverseProxy.ipAddress;
-            post_allow.host = [ collaboraPrefs.reverseProxy.ipAddress ];
+            listen = "127.0.0.1";
+            post_allow.host = [ "127.0.0.1" ];
           };
 
           storage.wopi = lib.mkIf (collaboraPrefs.nextcloudFQDNs != null) {

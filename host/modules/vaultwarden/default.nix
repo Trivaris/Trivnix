@@ -15,7 +15,7 @@ in
       environmentFile = secrets.vaultwarden-admin-token.path;
       config = {
         DOMAIN = "https://${vaultwardenPrefs.reverseProxy.domain}:${toString vaultwardenPrefs.reverseProxy.port}";
-        ROCKET_ADDRESS = vaultwardenPrefs.reverseProxy.ipAddress;
+        ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = vaultwardenPrefs.reverseProxy.port;
         SIGNUPS_ALLOWED = false;
       }

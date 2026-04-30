@@ -27,7 +27,7 @@ in
         server = {
           DOMAIN = forgejoPrefs.reverseProxy.domain;
           ROOT_URL = "https://${forgejoPrefs.reverseProxy.domain}/";
-          HTTP_ADDR = forgejoPrefs.reverseProxy.ipAddress;
+          HTTP_ADDR = "127.0.0.1";
           HTTP_PORT = forgejoPrefs.reverseProxy.port;
         };
 

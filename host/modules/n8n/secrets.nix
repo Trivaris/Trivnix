@@ -11,8 +11,8 @@ in
   config.sops.secrets = lib.mkIf n8nPrefs.enable {
     n8n-runner-auth-token = {
       sopsFile = hostSecrets;
-      owner = "n8n";
-      group = "n8n";
+      owner = "root";
+      group = "root";
     };
   };
 }

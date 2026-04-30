@@ -14,7 +14,6 @@ let
         prefix = "calendar.registry.${account.uuid}";
       in
       [
-        (lib.nameValuePair "${prefix}.type" account.type)
         (lib.nameValuePair "${prefix}.uri" account.uri)
         (lib.nameValuePair "${prefix}.username" account.username)
         (lib.nameValuePair "${prefix}.name" name)
@@ -32,7 +31,10 @@ in
       package = pkgs.thunderbird-bin;
       profiles.${config.userInfos.name} = {
         isDefault = true;
-        settings = builtins.listToAttrs calendarSettings;
+        # settings = (builtins.listToAttrs calendarSettings) // {
+        #   "calendar.registry.defaultprovider" = "caldav";
+        #   "signon.rememberSignons" = true;
+        # };
       };
     };
   };

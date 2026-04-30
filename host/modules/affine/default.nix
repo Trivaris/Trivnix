@@ -33,11 +33,6 @@ in
         extraOptions = [ "--network=affine-network" ];
         environmentFiles = [ secrets.affine-db-password-env.path ];
       };
-
-      containers.affine-migration = {
-        image = "ghcr.io/toeverything/affine:stable";
-        inherit (config.virtualisation.oci-containers.containers.affine) environment environmentFiles extraOptions;
-      };
     
       containers.affine-postgres = {
         image = "pgvector/pgvector:pg16";
