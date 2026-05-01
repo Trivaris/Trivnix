@@ -14,6 +14,8 @@ in
       guiAddress = "127.0.0.1:${toString syncthingPrefs.reverseProxy.port}";
       guiPasswordFile = secrets.syncthing-gui-password.path;
       openDefaultPorts = true;
+      overrideDevices = false;
+      overrideFolders = false;
       settings.gui = {
         user = config.hostPrefs.mainUser;
         authMode = "static";

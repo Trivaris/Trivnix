@@ -14,6 +14,8 @@ in
       enable = true;
       guiAddress = "127.0.0.1:8384";
       tray.enable = true;
+      overrideDevices = false;
+      overrideFolders = false;
       settings.gui = {
         user = osConfig.hostPrefs.mainUser;
         authMode = "static";
