@@ -12,5 +12,9 @@ in
       owner = "root";
       group = "root";
     };
+    openconnect-vpn-otp-secret = {
+      owner = "root";
+      group = "root";
+    };
   };
 }
