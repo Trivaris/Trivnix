@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   evolutionPrefs = config.hostPrefs.evolution;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
 in

@@ -6,17 +6,19 @@
 }:
 let
   cliPrefs = config.userPrefs.cli;
-  starshipTheme = lib.pipe
-  {
-    url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
-    sha256 = "sha256:1v4cda5zf5a9wirgxc1in6c40wrsa7pbjphb9ihkrgkwgp8jhj5q";
-  }
-  [
-    builtins.fetchurl
-    builtins.readFile
-    fromTOML
-    removeAttrs 
-  ] [ "maven" ];
+  starshipTheme =
+    lib.pipe
+      {
+        url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
+        sha256 = "sha256:1v4cda5zf5a9wirgxc1in6c40wrsa7pbjphb9ihkrgkwgp8jhj5q";
+      }
+      [
+        builtins.fetchurl
+        builtins.readFile
+        fromTOML
+        removeAttrs
+      ]
+      [ "maven" ];
 in
 {
   options.vars = {

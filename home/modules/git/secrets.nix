@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   gitPrefs = config.userPrefs.git;
 in
 {

@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
   allUserInfos = builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users;
 in

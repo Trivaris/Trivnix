@@ -1,7 +1,7 @@
 { config, ... }:
-let 
+let
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
-in 
+in
 {
   config.sops.secrets.ssh-root-key = {
     sopsFile = hostSecrets;

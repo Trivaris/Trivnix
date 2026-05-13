@@ -10,6 +10,8 @@
     nur.url = "github:nix-community/NUR";
     sops-nix.url = "github:Mic92/sops-nix";
 
+    trivnixNvim.url = "github:Trivaris/TrivnixNvim";
+
     # Extras and ecosystem modules
     nix-minecraft.url = "github:Yeshey/nix-minecraft";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";

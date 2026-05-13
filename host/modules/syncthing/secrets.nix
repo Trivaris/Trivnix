@@ -6,7 +6,7 @@
 let
   syncthingPrefs = config.hostPrefs.syncthing;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
-in 
+in
 {
   config.sops.secrets = lib.mkIf syncthingPrefs.enable {
     syncthing-gui-password = {

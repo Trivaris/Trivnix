@@ -33,9 +33,7 @@ in
       ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
 
       ".librewolf/${config.userInfos.name}/user.js".text =
-        builtins.readFile betterFox + " \n" +
-        builtins.readFile smoothFox + " \n" +
-        overrides;
+        builtins.readFile betterFox + " \n" + builtins.readFile smoothFox + " \n" + overrides;
 
       ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
         :root {

@@ -3,9 +3,9 @@
   osConfig,
   ...
 }:
-let 
+let
   hostSecrets = "${config.private.secrets}/home/${config.userInfos.name}/${osConfig.hostInfos.configname}.yaml";
-in 
+in
 {
   config.sops.secrets.ssh-private-key = {
     sopsFile = hostSecrets;

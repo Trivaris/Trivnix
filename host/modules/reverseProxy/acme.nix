@@ -20,9 +20,7 @@ in
       certs = builtins.listToAttrs (
         [ (lib.nameValuePair reverseProxyPrefs.zone { }) ]
         ++ (map (service: lib.nameValuePair service.domain { }) config.vars.activeServices)
-        ++ (map (
-          extraCertDomain: lib.nameValuePair extraCertDomain { }
-        ) reverseProxyPrefs.extraCertDomains)
+        ++ (map (extraCertDomain: lib.nameValuePair extraCertDomain { }) reverseProxyPrefs.extraCertDomains)
       );
     };
 

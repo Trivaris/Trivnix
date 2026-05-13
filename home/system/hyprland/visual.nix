@@ -59,7 +59,7 @@
           animation = [
             "windows, 1, 4, easeOutExpo, slide"
             "windowsOut, 1, 4, easeOutExpo, slide"
-            "windowsMove, 1, 4, easeOutExpo" 
+            "windowsMove, 1, 4, easeOutExpo"
             "border, 1, 5, easeOutCirc"
             "fade, 1, 3, easeOutCirc"
             "workspaces, 1, 4, easeOutExpo, slide"

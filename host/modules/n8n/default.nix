@@ -4,7 +4,7 @@
   config,
   ...
 }:
-let 
+let
   n8nPrefs = config.hostPrefs.n8n;
   secrets = config.sops.secrets;
 in
@@ -30,6 +30,10 @@ in
       };
     };
 
-    systemd.services.n8n.path = [ pkgs.nodejs pkgs.gnutar pkgs.gzip ];
+    systemd.services.n8n.path = [
+      pkgs.nodejs
+      pkgs.gnutar
+      pkgs.gzip
+    ];
   };
 }

@@ -16,7 +16,10 @@ in
       backend = "docker";
       containers.affine = {
         image = "ghcr.io/toeverything/affine:stable";
-        dependsOn = [ "affine-postgres" "affine-redis" ];
+        dependsOn = [
+          "affine-postgres"
+          "affine-redis"
+        ];
         ports = [ "${toString affinePrefs.reverseProxy.port}:${toString affinePrefs.reverseProxy.port}" ];
         environment = {
           AFFINE_REVISION = "stable";
@@ -33,7 +36,7 @@ in
         extraOptions = [ "--network=affine-network" ];
         environmentFiles = [ secrets.affine-db-password-env.path ];
       };
-    
+
       containers.affine-postgres = {
         image = "pgvector/pgvector:pg16";
         volumes = [ "/var/lib/affine/postgres:/var/lib/postgresql/data" ];
@@ -51,7 +54,7 @@ in
       };
     };
 
-    users.groups.affine = {};
+    users.groups.affine = { };
     users.users.affine = {
       isSystemUser = true;
       group = "affine";
@@ -67,21 +70,25 @@ in
       docker-affine-redis.after = [ "create-affine-network.service" ];
       create-affine-network = {
         description = "Create the Docker network for affine";
-        after = [ "network.target" "docker.service" ];
+        after = [
+          "network.target"
+          "docker.service"
+        ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
           ExecStart = "${pkgs.docker}/bin/docker network create affine-network";
           ExecStop = "${pkgs.docker}/bin/docker network rm affine-network";
-          ExecStartPre = "-${pkgs.docker}/bin/docker network rm affine-network"; 
+          ExecStartPre = "-${pkgs.docker}/bin/docker network rm affine-network";
         };
       };
     };
 
     hostPrefs.mailserver = lib.mkIf affinePrefs.sendMails {
       extraDomains = [ "affine" ];
-      accounts."no-reply@affine.${mailserverPrefs.domain}".passwordFile = secrets.mail-affine-password.path;
+      accounts."no-reply@affine.${mailserverPrefs.domain}".passwordFile =
+        secrets.mail-affine-password.path;
     };
   };
 }

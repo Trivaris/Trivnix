@@ -15,7 +15,9 @@ in
       backend = "docker";
       containers.evolution-api = {
         image = "atendai/evolution-api:latest";
-        ports = [ "${toString evolutionPrefs.reverseProxy.port}:${toString evolutionPrefs.reverseProxy.port}" ];
+        ports = [
+          "${toString evolutionPrefs.reverseProxy.port}:${toString evolutionPrefs.reverseProxy.port}"
+        ];
         environmentFiles = [ secrets.evolution-api-env.path ];
         extraOptions = [ "--network=evolution-api-network" ];
         volumes = [
@@ -26,19 +28,19 @@ in
           SERVER_URL = "https://${evolutionPrefs.reverseProxy.domain}";
           SERVER_PORT = toString evolutionPrefs.reverseProxy.port;
           SERVER_TYPE = "http";
-          
+
           AUTHENTICATION_TYPE = "apikey";
-          
+
           DATABASE_ENABLED = "true";
           DATABASE_PROVIDER = "postgresql";
-          
+
           LOG_LEVEL = "ERROR,WARN,INFO";
           DEL_INSTANCE = "false";
-          
+
           CACHE_REDIS_ENABLED = "true";
           CACHE_REDIS_HOST = "evolution-api-redis";
           CACHE_REDIS_PORT = "6379";
-          
+
           REDIS_ENABLED = "true";
           CACHE_REDIS_URI = "redis://evolution-api-redis:6379/6";
           CACHE_REDIS_TTL = "604800";
@@ -51,7 +53,7 @@ in
           USER_FACADE = "true";
         };
       };
-      
+
       containers.evolution-api-postgres = {
         image = "pgvector/pgvector:pg16";
         volumes = [ "/var/lib/evolution-api/postgres:/var/lib/postgresql/data" ];
@@ -79,8 +81,8 @@ in
       docker-evolution-api = {
         after = [
           "create-evolution-api-network.service"
-          "docker-evolution-api-postgres.service" 
-          "docker-evolution-api-redis.service"  
+          "docker-evolution-api-postgres.service"
+          "docker-evolution-api-redis.service"
         ];
         requires = [ "create-evolution-api-network.service" ];
       };
@@ -90,14 +92,17 @@ in
 
       create-evolution-api-network = {
         description = "Create the Docker network for evolution API";
-        after = [ "network.target" "docker.service" ];
+        after = [
+          "network.target"
+          "docker.service"
+        ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
           ExecStart = "${lib.getExe pkgs.docker} network create evolution-api-network";
           ExecStop = "${lib.getExe pkgs.docker} network rm evolution-api-network";
-          ExecStartPre = "-${lib.getExe pkgs.docker} network rm evolution-api-network"; 
+          ExecStartPre = "-${lib.getExe pkgs.docker} network rm evolution-api-network";
         };
       };
     };

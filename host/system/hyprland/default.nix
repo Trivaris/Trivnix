@@ -8,7 +8,7 @@
   config = lib.mkIf (!config.hostPrefs.headless) {
     environment.systemPackages = [ pkgs.sbctl ];
     security.pam.services.hyprlock = { };
-    
+
     programs.hyprland = {
       enable = true;
       portalPackage = pkgs.xdg-desktop-portal-hyprland;

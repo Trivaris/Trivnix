@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   opensshPrefs = config.hostPrefs.openssh;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
 in

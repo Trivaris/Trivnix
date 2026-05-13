@@ -3,7 +3,7 @@
   lib,
   ...
 }:
-let 
+let
   vaultwardenPrefs = config.hostPrefs.vaultwarden;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
 in

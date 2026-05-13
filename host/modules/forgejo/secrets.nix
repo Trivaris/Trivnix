@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   forgejoPrefs = config.hostPrefs.forgejo;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
 in

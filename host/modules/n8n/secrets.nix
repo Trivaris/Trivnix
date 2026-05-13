@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   n8nPrefs = config.hostPrefs.n8n;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
 in

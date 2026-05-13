@@ -43,7 +43,8 @@ in
 
     hostPrefs.mailserver = {
       extraDomains = lib.mkIf forgejoPrefs.sendMails [ "forgejo" ];
-      accounts."no-reply@forgejo.${mailserverPrefs.domain}".passwordFile = secrets.mail-forgejo-password.path;
+      accounts."no-reply@forgejo.${mailserverPrefs.domain}".passwordFile =
+        secrets.mail-forgejo-password.path;
     };
   };
 }

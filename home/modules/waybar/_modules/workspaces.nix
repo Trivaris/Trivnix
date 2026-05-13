@@ -43,7 +43,7 @@ in
       border-bottom-left-radius: 0.25rem;
       border-bottom-right-radius: 0.25rem;
     }
-    
+
     #workspaces button.active {
       color: ${theme.base0D};
       background: transparent;

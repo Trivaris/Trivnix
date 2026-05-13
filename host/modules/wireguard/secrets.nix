@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   wgServerPrefs = config.hostPrefs.wireguard.server;
   wgClientPrefs = config.hostPrefs.wireguard.client;
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";

@@ -87,7 +87,7 @@ in
       "$mod, A, exec, code"
       "$mod, A, exec, codium"
       "$mod, D, exec, vesktop"
-      
+
       "$mod, SPACE, exec, ${config.vars.terminalEmulator}"
       "$mod, RETURN, exec, ${config.vars.appLauncher} ${config.vars.appLauncherFlags}"
 

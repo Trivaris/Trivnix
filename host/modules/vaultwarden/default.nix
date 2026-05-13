@@ -29,8 +29,9 @@ in
     };
 
     hostPrefs.mailserver = lib.mkIf vaultwardenPrefs.sendMails {
-      extraDomains =  [ "vault" ];
-      accounts."no-reply@vaultwarden.${mailserverPrefs.domain}".passwordFile = secrets.mail-vaultwarden-password.path;
+      extraDomains = [ "vault" ];
+      accounts."no-reply@vaultwarden.${mailserverPrefs.domain}".passwordFile =
+        secrets.mail-vaultwarden-password.path;
     };
   };
 }

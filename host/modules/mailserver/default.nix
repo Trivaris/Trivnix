@@ -9,10 +9,7 @@ let
 in
 {
   imports = [
-    (lib.mkAliasOptionModule
-      [ "hostPrefs" "mailserver" "accounts" ]
-      [ "mailserver" "accounts" ]
-    )
+    (lib.mkAliasOptionModule [ "hostPrefs" "mailserver" "accounts" ] [ "mailserver" "accounts" ])
   ];
 
   config = lib.mkIf mailserverPrefs.enable {
@@ -20,10 +17,13 @@ in
       enable = true;
       fqdn = mailserverPrefs.domain;
       x509.useACMEHost = mailserverPrefs.domain;
-      domains = [ mailserverPrefs.domain ] ++ map (domain: "${domain}.${mailserverPrefs.domain}") mailserverPrefs.extraDomains;
+      domains = [
+        mailserverPrefs.domain
+      ]
+      ++ map (domain: "${domain}.${mailserverPrefs.domain}") mailserverPrefs.extraDomains;
       dkim = {
         enable = true;
-        
+
         defaults = {
           keyType = "rsa";
           keyLength = 2048;
@@ -31,7 +31,12 @@ in
 
         domains = {
           "${mailserverPrefs.domain}".selectors.rsa-2026-04 = { };
-        } // lib.listToAttrs (map (domain: lib.nameValuePair "${domain}.${mailserverPrefs.domain}" { selectors.rsa-2026-04 = { }; }) mailserverPrefs.extraDomains);
+        }
+        // lib.listToAttrs (
+          map (
+            domain: lib.nameValuePair "${domain}.${mailserverPrefs.domain}" { selectors.rsa-2026-04 = { }; }
+          ) mailserverPrefs.extraDomains
+        );
       };
 
       stateVersion = lib.pipe config.hostInfos.stateVersion [
@@ -46,12 +51,15 @@ in
       defaults.email = reverseProxyPrefs.email;
       certs.${mailserverPrefs.domain} = {
         dnsProvider = "cloudflare";
-        extraDomainNames = map (name: "${name}.${mailserverPrefs.domain}") ([
-          "imap"
-          "smtp"
-          "autoconfig"
-          "autodiscover"
-        ] ++ mailserverPrefs.extraDomains);
+        extraDomainNames = map (name: "${name}.${mailserverPrefs.domain}") (
+          [
+            "imap"
+            "smtp"
+            "autoconfig"
+            "autodiscover"
+          ]
+          ++ mailserverPrefs.extraDomains
+        );
       };
     };
 

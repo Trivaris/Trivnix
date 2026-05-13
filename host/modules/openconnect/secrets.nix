@@ -3,7 +3,7 @@
   config,
   ...
 }:
-let 
+let
   ocClientPrefs = config.hostPrefs.openconnectClient;
 in
 {

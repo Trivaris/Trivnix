@@ -19,7 +19,7 @@ in
       pkgs.r2modman
       pkgs.steamtinkerlaunch
     ];
-    
+
     programs.steam = {
       enable = true;
 
@@ -28,7 +28,10 @@ in
       localNetworkGameTransfers.openFirewall = true;
       remotePlay.openFirewall = true;
 
-      extraCompatPackages = [ pkgs.proton-ge-bin pkgs.steamtinkerlaunch ];
+      extraCompatPackages = [
+        pkgs.proton-ge-bin
+        pkgs.steamtinkerlaunch
+      ];
       extraPackages = [
         pkgs.yad
         pkgs.xrandr
