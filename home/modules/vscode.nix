@@ -23,6 +23,10 @@ let
       "terminal.integrated.stickyScroll.enabled" = false;
       "terminal.integrated.initialHint" = false;
       "editor.stickyScroll.enabled" = false;
+      "java.import.gradle.arguments" = [
+          "--project-cache-dir"
+          "/home/${osConfig.hostPrefs.mainUser}/.gradle-cache"
+      ];
     }
   );
 in
