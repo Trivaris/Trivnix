@@ -5,13 +5,18 @@
   ...
 }:
 let
-  spicetifyPrefs = config.hostPrefs.spicetify;
+  spotifyPrefs = config.hostPrefs.spotify;
   themePrefs = config.themingPrefs;
 in
 {
-  options.hostPrefs.spicetify.enable = lib.mkEnableOption "Enable Spotify";
-  config = lib.mkIf spicetifyPrefs.enable {
-    programs.spicetify = {
+  options.hostPrefs.spotify = {
+    enable = lib.mkEnableOption "Spotify";
+    spicetify.enable = lib.mkEnableOption "Spicetify Theming";
+  };
+  config = lib.mkIf spotifyPrefs.enable {
+    environment.systemPackages = if !spotifyPrefs.spicetify.enable then [ pkgs.spotify ] else [ ];
+    
+    programs.spicetify = lib.mkIf spotifyPrefs.spicetify.enable {
       enable = true;
       theme =
         if themePrefs.themeOverrides.spicetify != null then
