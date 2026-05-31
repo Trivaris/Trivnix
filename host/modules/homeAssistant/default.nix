@@ -10,17 +10,21 @@ in
   config = lib.mkIf homeAssistantPrefs.enable {
     services.home-assistant = {
       enable = true;
-      openFirewall = true;
+      openFirewall = !homeAssistantPrefs.reverseProxy.enable;
       configWritable = true;
-      config = lib.mkIf homeAssistantPrefs.reverseProxy.enable {
+      extraComponents = [
+        "default_config"
+        "google_translate"
+        "mobile_app" 
+      ];
+      config = {
         http = {
           use_x_forwarded_for = true;
           trusted_proxies = [ "127.0.0.1" ];
           server_port = homeAssistantPrefs.reverseProxy.port;
           server_host =
             [ "127.0.0.1" ]
-            ++ (lib.optionals (!homeAssistantPrefs.reverseProxy.enable) [ homeAssistantPrefs.reverseProxy.domain ])
-            ++ (lib.optionals (!homeAssistantPrefs.wireguard.enable) [ "10.0.0.1" ]);
+            ++ (lib.optionals homeAssistantPrefs.wireguard.enable [ "10.0.0.1" ]);
         };
       };
     };
