@@ -10,7 +10,7 @@ in
   config = lib.mkIf homeAssistantPrefs.enable {
     services.home-assistant = {
       enable = true;
-      openFirewall = !homeAssistantPrefs.reverseProxy.enable;
+      openFirewall = true;
       config = lib.mkIf homeAssistantPrefs.reverseProxy.enable {
         http = {
           use_x_forwarded_for = true;
