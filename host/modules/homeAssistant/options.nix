@@ -20,7 +20,7 @@
           };
           allowedSubnet = lib.mkOption {
             type = lib.types.str;
-            default = "192.168.178.0/24";
+            default = "192.168.10.0/24";
           };
           publicKeyFile = lib.mkOption {
             type = lib.types.path;
