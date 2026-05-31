@@ -12,12 +12,7 @@ in
       enable = true;
       openFirewall = !homeAssistantPrefs.reverseProxy.enable;
       configWritable = true;
-      extraComponents = [
-        "default_config"
-        "google_translate"
-        "mobile_app" 
-        "met"
-      ];
+      extraComponents = homeAssistantPrefs.extraComponents;
       config = {
         http = {
           use_x_forwarded_for = true;
