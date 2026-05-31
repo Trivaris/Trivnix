@@ -21,7 +21,7 @@ in
 
     networking.firewall.allowedUDPPorts = lib.mkIf homeAssistantPrefs.wireguard.enable [ homeAssistantPrefs.wireguard.port ];
 
-    networking.wireguard.interfaces."wg-home-assistant-01" = lib.mkIf homeAssistantPrefs.wireguard.enable {
+    networking.wireguard.interfaces."wg-ha" = lib.mkIf homeAssistantPrefs.wireguard.enable {
       ips = [ "10.0.0.1/24" ];
       listenPort = homeAssistantPrefs.wireguard.port;
       
