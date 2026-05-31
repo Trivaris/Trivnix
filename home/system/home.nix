@@ -45,7 +45,6 @@ in
 
   gtk = {
     enable = true;
-    colorScheme = if themingPrefs.darkmode then "dark" else "light";
     theme = {
       name = "Adwaita";
       package = pkgs.gnome-themes-extra;
@@ -54,5 +53,7 @@ in
       name = "Adwaita";
       package = pkgs.adwaita-icon-theme;
     };
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = if themingPrefs.darkmode then 1 else 0;
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = if themingPrefs.darkmode then 1 else 0;
   };
 }

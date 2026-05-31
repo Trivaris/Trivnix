@@ -27,7 +27,7 @@ let
 in
 {
   programs.ssh = {
-    inherit knownHosts;
+    knownHosts = knownHosts;
     startAgent = true;
   };
 }
