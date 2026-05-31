@@ -16,6 +16,7 @@ in
         "default_config"
         "google_translate"
         "mobile_app" 
+        "met"
       ];
       config = {
         http = {
