@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   options.hostPrefs.minecraftServer = {
-    reverseProxy = lib.mkReverseProxyOption { defaultPort = 25565; };
+    reverseProxy = lib.mkReverseProxyOption;
 
     enable = lib.mkEnableOption ''
       Provision the Minecraft server service backed by selected modpacks.

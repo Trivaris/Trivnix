@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   options.hostPrefs.vaultwarden = {
-    reverseProxy = lib.mkReverseProxyOption { defaultPort = 8891; };
+    reverseProxy = lib.mkReverseProxyOption;
 
     enable = lib.mkEnableOption ''
       Start the Vaultwarden password manager backend on this host.

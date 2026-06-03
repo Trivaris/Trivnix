@@ -5,7 +5,7 @@
 {
   options.hostPrefs.homeAssistant = {
     enable = lib.mkEnableOption "Home Assitant, a smart home server";
-    reverseProxy = lib.mkReverseProxyOption { defaultPort = 8123; };
+    reverseProxy = lib.mkReverseProxyOption;
     extraComponents = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [

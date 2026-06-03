@@ -10,9 +10,9 @@ in
 {
   config.sops.secrets = lib.mkIf syncthingPrefs.enable {
     syncthing-gui-password = {
+      sopsFile = hostSecrets;
       owner = "syncthing";
       group = "syncthing";
-      sopsFile = hostSecrets;
     };
   };
 }

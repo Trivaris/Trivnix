@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   options.hostPrefs.collabora = {
-    reverseProxy = lib.mkReverseProxyOption { defaultPort = 9980; };
+    reverseProxy = lib.mkReverseProxyOption;
 
     enable = lib.mkEnableOption ''
       Run the Forgejo git hosting service locally.

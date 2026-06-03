@@ -6,7 +6,7 @@
 }:
 {
   options.hostPrefs.homepage = {
-    reverseProxy = lib.mkReverseProxyOption { defaultPort = 8082; };
+    reverseProxy = lib.mkReverseProxyOption;
 
     serviceGroups = lib.mkOption {
       inherit (pkgs.formats.yaml { }) type;

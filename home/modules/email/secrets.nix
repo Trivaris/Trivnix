@@ -3,10 +3,17 @@
   config,
   ...
 }:
+let 
+  commonSecrets = "${config.private.secrets}/home/${config.userInfos.name}/common.yaml";
+in 
 {
   config.sops.secrets = lib.pipe config.vars.filteredEmailAccounts [
     builtins.attrNames
-    (map (account: lib.nameValuePair "email-passwords/${account}" { }))
+    (map (account: lib.nameValuePair "email-passwords/${account}" {
+      sopsFile = commonSecrets;
+      owner = config.userInfos.name;
+      group = "users";
+    }))
     builtins.listToAttrs
   ];
 }

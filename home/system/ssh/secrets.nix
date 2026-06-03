@@ -9,5 +9,7 @@ in
 {
   config.sops.secrets.ssh-private-key = {
     sopsFile = hostSecrets;
+    owner = config.userInfos.name;
+    group = "users";
   };
 }

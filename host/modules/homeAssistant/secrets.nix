@@ -8,8 +8,8 @@ let
   hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
 in
 {
-  config.sops.secrets = {
-    home-assistant-wireguard-key = lib.mkIf homeAssistantPrefs.wireguard.enable {
+  config.sops.secrets = lib.mkIf homeAssistantPrefs.wireguard.enable {
+    home-assistant-wireguard-key = {
       sopsFile = hostSecrets;
       owner = "root";
       group = "root";

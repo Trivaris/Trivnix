@@ -10,14 +10,14 @@ in
 {
   config.sops.secrets = lib.mkIf evolutionPrefs.enable {
     evolution-api-env = {
+      sopsFile = hostSecrets;
       owner = "evolution-api";
       group = "evolution-api";
-      sopsFile = hostSecrets;
     };
     evolution-api-postgres-env = {
+      sopsFile = hostSecrets;
       owner = "evolution-api";
       group = "evolution-api";
-      sopsFile = hostSecrets;
     };
   };
 }

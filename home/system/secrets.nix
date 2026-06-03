@@ -1,10 +1,6 @@
 { config, ... }:
-let
-  commonSecrets = "${config.private.secrets}/home/${config.userInfos.name}/common.yaml";
-in
 {
   sops = {
-    defaultSopsFile = commonSecrets;
     validateSopsFiles = true;
 
     age = {
