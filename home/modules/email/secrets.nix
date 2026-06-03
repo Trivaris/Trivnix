@@ -11,8 +11,6 @@ in
     builtins.attrNames
     (map (account: lib.nameValuePair "email-passwords/${account}" {
       sopsFile = commonSecrets;
-      owner = config.userInfos.name;
-      group = "users";
     }))
     builtins.listToAttrs
   ];

@@ -11,8 +11,6 @@ in
   config.sops.secrets = lib.mkIf gitPrefs.enableSigning {
     git-signing-key = {
       sopsFile = commonSecrets;
-      owner = config.userInfos.name;
-      group = "users";
     };
   };
 }

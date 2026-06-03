@@ -14,7 +14,6 @@ in
       sopsFile = hostSecrets;
       path = "/home/${user}/.config/sops/age/key.txt";
       owner = user;
-      group = "users";
     }
   ) (lib.filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
 }
