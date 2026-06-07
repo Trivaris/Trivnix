@@ -16,14 +16,14 @@ in
         useDnsmasqConfig = true;
         settings = {
           dns.bind_host = wgIp;
-          dns.listeningMode = "single";
+          dns.listeningMode = "all";
           dns.upstreams = [
             "9.9.9.9"
             "149.112.112.112"
           ];
           misc.dnsmasq_lines = [
-            "bind-interfaces"
-            "listen-address=${wgIp}"
+            # "bind-interfaces"
+            # "listen-address=${wgIp}"
           ];
         };
       };
