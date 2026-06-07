@@ -6,6 +6,7 @@
 let
   piHolePrefs = config.hostPrefs.piHole;
   wireguardPrefs = config.hostPrefs.wireguard;
+  wgIp = lib.head (lib.splitString "/" wireguardPrefs.vpnSubnet);
 in
 {
   config = lib.mkIf piHolePrefs.enable {
@@ -13,8 +14,8 @@ in
       pihole-ftl = {
         enable = true;
         settings = {
+          dns.bind_host = wgIp;
           dns.listeningMode = "all";
-          dns.interface = wireguardPrefs.interfaceName;
           dns.upstreams = [
             "9.9.9.9"
             "149.112.112.112"
