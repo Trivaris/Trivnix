@@ -15,15 +15,16 @@ in
         enable = true;
         useDnsmasqConfig = true;
         settings = {
-          dns.listeningMode = "all";
+          dns.listeningMode = "bind";
           dns.upstreams = [
             "9.9.9.9"
             "149.112.112.112"
           ];
           
           misc.dnsmasq_lines = [
-            # "bind-interfaces"
-            # "listen-address=${wgIp}"
+            "interface=${wireguardPrefs.interfaceName}"
+            "except-interface=lo"
+            "bind-interfaces"
           ];
         };
       };
