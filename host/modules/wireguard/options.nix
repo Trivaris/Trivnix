@@ -4,31 +4,30 @@
 }:
 {
   options.hostPrefs.wireguard = {
-    server = {
-      enable = lib.mkEnableOption "Enable the Wireguard Server";
-      domain = lib.mkOption { type = lib.types.str; };
-      port = lib.mkOption {
-        type = lib.types.port;
-        default = 51820;
-      };
-      networkInterface = lib.mkOption {
-        type = lib.types.str;
-        default = "enp1s0";
-      };
+    enable = lib.mkEnableOption "Wireguard client connection";
+
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 51820;
     };
 
-    client = {
-      enable = lib.mkEnableOption "Enable the Wireguard Client";
-      ip = lib.mkOption { type = lib.types.str; };
-      serverConfigname = lib.mkOption {
-        type = lib.types.str;
-        default = "server";
-      };
-      serverAddress = lib.mkOption { type = lib.types.str; };
-      port = lib.mkOption {
-        type = lib.types.port;
-        default = 51820;
-      };
+    vpnSubnet = lib.mkOption {
+      type = lib.types.str;
+      default = "10.0.0.1/24";
+    };
+
+    allowedSubnets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "10.0.0.2/32" "192.168.10.0/24" ];
+    };
+
+    publicKeyFile = lib.mkOption {
+      type = lib.types.path;
+    };
+
+    interfaceName = lib.mkOption {
+      type = lib.types.str;
+      default = "wg0";
     };
   };
 }

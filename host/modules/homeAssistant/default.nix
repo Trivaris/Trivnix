@@ -24,21 +24,5 @@ in
       #   };
       # };
     };
-
-    networking.firewall.allowedUDPPorts = lib.mkIf homeAssistantPrefs.wireguard.enable [ homeAssistantPrefs.wireguard.port ];
-
-    networking.wireguard.interfaces."wg-ha" = lib.mkIf homeAssistantPrefs.wireguard.enable {
-      ips = [ "10.0.0.1/24" ];
-      listenPort = homeAssistantPrefs.wireguard.port;
-      
-      privateKeyFile = config.sops.secrets.home-assistant-wireguard-key.path;
-
-      peers = [
-        {
-          publicKey = lib.removeSuffix "\n" (builtins.readFile homeAssistantPrefs.wireguard.publicKeyFile);
-          allowedIPs = [ homeAssistantPrefs.wireguard.serverIp homeAssistantPrefs.wireguard.allowedSubnet ]; 
-        }
-      ];
-    };
   };
 }
