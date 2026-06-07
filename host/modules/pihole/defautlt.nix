@@ -13,12 +13,16 @@ in
     services = {
       pihole-ftl = {
         enable = true;
+        useDnsmasqConfig = true;
         settings = {
           dns.bind_host = wgIp;
-          dns.listeningMode = "all";
+          dns.listeningMode = "single";
           dns.upstreams = [
             "9.9.9.9"
             "149.112.112.112"
+          ];
+          misc.dnsmasq_lines = [
+            "bind-interfaces"
           ];
         };
       };
