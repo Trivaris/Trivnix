@@ -13,6 +13,8 @@ in
       pihole-ftl = {
         enable = true;
         settings = {
+          dns.listeningMode = "all";
+          dns.interface = wireguardPrefs.interfaceName;
           dns.upstreams = [
             "9.9.9.9"
             "149.112.112.112"
@@ -22,7 +24,7 @@ in
 
       pihole-web = {
         enable = true;
-        hostName = piHolePrefs.reverseProxy.domain;
+        hostName =  piHolePrefs.reverseProxy.domain;
         ports = [ (if piHolePrefs.reverseProxy.enable then piHolePrefs.reverseProxy.port else 80) ];
       };
     };
