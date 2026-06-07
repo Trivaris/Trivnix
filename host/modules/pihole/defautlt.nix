@@ -23,6 +23,7 @@ in
           ];
           misc.dnsmasq_lines = [
             "bind-interfaces"
+            "listen-address=${wgIp}"
           ];
         };
       };
