@@ -35,12 +35,12 @@ in
         ports = [ (if piHolePrefs.reverseProxy.enable then piHolePrefs.reverseProxy.port else 80) ];
       };
 
-      nginx.stream = lib.mkIf piHolePrefs.reverseProxy.enable {
+      nginx = lib.mkIf piHolePrefs.reverseProxy.enable {
         upstreams."pihole_backend".servers = {
           "${wgIp}:53" = {};
         };
 
-        servers."pihole_dot" = {
+        virtualHosts."pihole_dot" = {
           listen = [ "853 ssl" ];
           proxyPass = "pihole_backend";
 
