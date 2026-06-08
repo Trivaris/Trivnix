@@ -18,9 +18,9 @@ in
       };
 
       certs = builtins.listToAttrs (
-        [ (lib.nameValuePair reverseProxyPrefs.zone { }) ]
-        ++ (map (service: lib.nameValuePair service.domain { }) config.vars.activeServices)
-        ++ (map (extraCertDomain: lib.nameValuePair extraCertDomain { }) reverseProxyPrefs.extraCertDomains)
+        [ (lib.nameValuePair reverseProxyPrefs.zone { group = "nginx"; }) ]
+        ++ (map (service: lib.nameValuePair service.domain { group = "nginx"; }) config.vars.activeServices)
+        ++ (map (extraCertDomain: lib.nameValuePair extraCertDomain { group = "nginx"; }) reverseProxyPrefs.extraCertDomains)
       );
     };
 
