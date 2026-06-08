@@ -35,7 +35,7 @@ in
         ports = [ (if piHolePrefs.reverseProxy.enable then piHolePrefs.reverseProxy.port else 80) ];
       };
 
-      services.nginx.stream = lib.mkIf piHolePrefs.reverseProxy.enable {
+      nginx.stream = lib.mkIf piHolePrefs.reverseProxy.enable {
         upstreams."pihole_backend".servers = {
           "${wgIp}:53" = {};
         };
