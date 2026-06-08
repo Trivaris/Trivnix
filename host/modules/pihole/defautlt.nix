@@ -40,21 +40,21 @@ in
           "${wgIp}:53" = {};
         };
 
-        virtualHosts."pihole_dot" = {
-          listen = [ "853 ssl" ];
-          proxyPass = "pihole_backend";
+        streamConfig = ''
+          server {
+              listen 853 ssl;
+              proxy_pass pihole_backend;
 
-          sslCertificate = "/var/lib/acme/${piHolePrefs.reverseProxy.domain}/fullchain.pem";
-          sslCertificateKey = "/var/lib/acme/${piHolePrefs.reverseProxy.domain}/key.pem";
+              ssl_certificate /var/lib/acme/${piHolePrefs.reverseProxy.domain}/fullchain.pem;
+              ssl_certificate_key /var/lib/acme/${piHolePrefs.reverseProxy.domain}/key.pem;
 
-          extraConfig = ''
-            ssl_protocols TLSv1.2 TLSv1.3;
-            ssl_ciphers HIGH:!aNULL:!MD5;
-            ssl_handshake_timeout 10s;
-            ssl_session_cache shared:SSL:10m;
-            ssl_session_timeout 3h;
-          '';
-        };
+              ssl_protocols TLSv1.2 TLSv1.3;
+              ssl_ciphers HIGH:!aNULL:!MD5;
+              ssl_handshake_timeout 10s;
+              ssl_session_cache shared:SSL:10m;
+              ssl_session_timeout 3h;
+          }
+        '';
       };
     };
     
