@@ -6,13 +6,13 @@
 let
   piHolePrefs = config.hostPrefs.piHole;
   wireguardPrefs = config.hostPrefs.wireguard;
-  wgIp = lib.head (lib.splitString "/" wireguardPrefs.vpnSubnet);
 in
 {
   config = lib.mkIf piHolePrefs.enable {
     services = {
       pihole-ftl = {
         enable = true;
+        lists = piHolePrefs.lists;
         useDnsmasqConfig = true;
         settings = {
           dns.listeningMode = "bind";
