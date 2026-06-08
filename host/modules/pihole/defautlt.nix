@@ -52,6 +52,7 @@ in
       };
     };
     
+    networking.firewall.allowedTCPPorts = [ 853 ];
     networking.firewall.interfaces."${wireguardPrefs.interfaceName}" = {
       allowedUDPPorts = [ 53 ];
       allowedTCPPorts = [ 53 ];
