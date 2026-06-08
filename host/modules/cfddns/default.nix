@@ -9,6 +9,7 @@ let
 in
 {
   config = lib.mkIf cfddnsPrefs.enable {
+    environment.systemPackages = [ pkgs.cfddns-middleware ];
     systemd.services.cfddns = {
       description = "Cloudflare Dyn DNS Middleware Server";
       wantedBy = [ "multi-user.target" ];
