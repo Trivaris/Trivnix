@@ -13,7 +13,6 @@ in
     services = {
       pihole-ftl = {
         enable = true;
-        lists = piHolePrefs.lists;
         useDnsmasqConfig = true;
         settings = {
           dns.listeningMode = "bind";
