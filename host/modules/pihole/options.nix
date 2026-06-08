@@ -7,7 +7,7 @@
     enable = lib.mkEnableOption "Pi Hole, a DNS Sink";
     reverseProxy = lib.mkReverseProxyOption;
     lists = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.submodule {
+      type = lib.types.listOf (lib.types.submodule {
         options = {
           enabled = lib.mkEnableOption "The Adlist";
           description = lib.mkOption { type = lib.types.str; };
