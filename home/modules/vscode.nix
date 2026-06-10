@@ -24,8 +24,8 @@ let
       "terminal.integrated.initialHint" = false;
       "editor.stickyScroll.enabled" = false;
       "java.import.gradle.arguments" = [
-          "--project-cache-dir"
-          "/home/${osConfig.hostPrefs.mainUser}/.gradle-cache"
+        "--project-cache-dir"
+        "/home/${osConfig.hostPrefs.mainUser}/.gradle-cache"
       ];
     }
   );

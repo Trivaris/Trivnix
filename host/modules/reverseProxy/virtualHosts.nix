@@ -7,38 +7,32 @@ in
     services.nginx.virtualHosts = builtins.listToAttrs (
       map (
         service:
-        lib.nameValuePair service.domain (
-          let
-            listenPort = if service.externalPort != null then service.externalPort else reverseProxyPrefs.port;
-          in
-          {
-            locations = {
-              "/" = {
-                proxyPass = "http://127.0.0.1:${toString service.port}";
-                proxyWebsockets = true;
-                extraConfig = ''
-                  proxy_set_header Accept-Encoding gzip;
-                '';
-              };
+        lib.nameValuePair service.domain {
+          locations = {
+            "/" = {
+              proxyPass = "http://${service.address}:${toString service.port}";
+              proxyWebsockets = true;
+              extraConfig = ''
+                proxy_set_header Accept-Encoding gzip;
+              '';
             };
-            forceSSL = true;
-            useACMEHost = service.domain;
+          };
+          forceSSL = true;
+          useACMEHost = service.domain;
 
-            listen = [
-              {
-                addr = "0.0.0.0";
-                port = listenPort;
-                ssl = true;
-              }
-              {
-                addr = "[::]";
-                port = listenPort;
-                ssl = true;
-              }
-            ];
-
-          }
-        )
+          listen = [
+            {
+              addr = "0.0.0.0";
+              port = service.externalPort;
+              ssl = true;
+            }
+            {
+              addr = "[::]";
+              port = service.externalPort;
+              ssl = true;
+            }
+          ];
+        }
       ) config.vars.activeServices
     );
   };

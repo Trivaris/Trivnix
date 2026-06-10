@@ -3,11 +3,11 @@
   lib,
   ...
 }:
-let 
+let
   paperlessPrefs = config.hostPrefs.paperless;
   secrets = config.sops.secrets;
 in
-{ 
+{
   config = lib.mkIf paperlessPrefs.enable {
     services.paperless = {
       enable = true;

@@ -4,12 +4,9 @@ let
 in
 {
   config = lib.mkIf reverseProxyPrefs.enable {
-    networking.firewall.allowedTCPPorts = [
-      reverseProxyPrefs.port
-    ]
-    ++ (map (service: service.externalPort) (
-      builtins.filter (service: service.externalPort != null) config.vars.activeServices
-    ));
+    networking.firewall.allowedTCPPorts = map (
+      service: service.externalPort
+    ) config.vars.activeServices;
 
     users.users.nginx.extraGroups = [ "acme" ];
     services.nginx = {

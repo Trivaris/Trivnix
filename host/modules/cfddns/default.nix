@@ -12,7 +12,7 @@ in
 
     virtualisation.oci-containers.containers."cfddns" = {
       image = "ghcr.io/l480/cloudflare-dyndns:latest";
-      
+
       ports = [
         "${toString cfddnsPrefs.reverseProxy.port}:80"
       ];

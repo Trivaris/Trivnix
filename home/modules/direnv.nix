@@ -5,7 +5,7 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
-      stdlib = ''
+    stdlib = ''
       : "''${XDG_CACHE_HOME:=$HOME/.cache}"
       declare -A direnv_layout_dirs
       direnv_layout_dir() {

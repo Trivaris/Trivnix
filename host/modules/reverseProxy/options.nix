@@ -31,16 +31,6 @@
       '';
     };
 
-    port = lib.mkOption {
-      type = lib.types.port;
-      default = 443;
-
-      description = ''
-        External port on which Nginx will listen for HTTPS traffic.
-        Commonly 443. Make sure this port is forwarded.
-      '';
-    };
-
     extraCertDomains = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -80,6 +70,18 @@
         Systemd OnCalendar expression controlling when ddclient runs.
         Leave null to disable the timer or provide values like "daily" or "04:00".
       '';
+    };
+
+    extraServices = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.submodule (
+          lib.recursiveUpdate lib.reverseProxyOptions {
+            options = {
+              name = lib.mkOption { type = lib.types.str; };
+            };
+          }
+        )
+      );
     };
   };
 }

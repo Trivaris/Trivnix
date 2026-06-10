@@ -20,7 +20,7 @@ in
             "9.9.9.9"
             "149.112.112.112"
           ];
-          
+
           misc.dnsmasq_lines = [
             "interface=${wireguardPrefs.interfaceName}"
             "except-interface=lo"
@@ -31,7 +31,7 @@ in
 
       pihole-web = {
         enable = true;
-        hostName =  piHolePrefs.reverseProxy.domain;
+        hostName = piHolePrefs.reverseProxy.domain;
         ports = [ (if piHolePrefs.reverseProxy.enable then piHolePrefs.reverseProxy.port else 80) ];
       };
 
@@ -51,7 +51,7 @@ in
         '';
       };
     };
-    
+
     networking.firewall.allowedTCPPorts = [ 853 ];
     networking.firewall.interfaces."${wireguardPrefs.interfaceName}" = {
       allowedUDPPorts = [ 53 ];

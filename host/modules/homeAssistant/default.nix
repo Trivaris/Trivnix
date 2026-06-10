@@ -3,10 +3,10 @@
   lib,
   ...
 }:
-let 
+let
   homeAssistantPrefs = config.hostPrefs.homeAssistant;
   wireguardPrefs = config.hostPrefs.wireguard;
-in 
+in
 {
   config = lib.mkIf homeAssistantPrefs.enable {
     services.home-assistant = {
@@ -17,7 +17,10 @@ in
       config = {
         http = {
           use_x_forwarded_for = true;
-          trusted_proxies = [ "127.0.0.1" "::1" ]; 
+          trusted_proxies = [
+            "127.0.0.1"
+            "::1"
+          ];
         };
       };
     };
@@ -28,7 +31,7 @@ in
         {
           address = "0.0.0.0";
           settings = {
-            allow_anonymous = true; 
+            allow_anonymous = true;
           };
         }
       ];

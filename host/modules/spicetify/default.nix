@@ -15,7 +15,7 @@ in
   };
   config = lib.mkIf spotifyPrefs.enable {
     environment.systemPackages = if !spotifyPrefs.spicetify.enable then [ pkgs.spotify ] else [ ];
-    
+
     programs.spicetify = lib.mkIf spotifyPrefs.spicetify.enable {
       enable = true;
       theme =

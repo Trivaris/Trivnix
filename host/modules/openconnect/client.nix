@@ -13,22 +13,24 @@ in
     systemd.services.openconnect-openconnect0 = {
       path = [ pkgs.oath-toolkit ];
       wantedBy = lib.mkForce [ ];
-      serviceConfig.ExecStart = lib.mkForce (pkgs.writeScript "openconnect-start" ''
-        #!${lib.getExe pkgs.bash}
+      serviceConfig.ExecStart = lib.mkForce (
+        pkgs.writeScript "openconnect-start" ''
+          #!${lib.getExe pkgs.bash}
 
-        PASS=$(cat ${secrets.openconnect-vpn-password.path})
-        OTP_SECRET=$(cat ${secrets.openconnect-vpn-otp-secret.path})
-        
-        OTP_CODE=$(oathtool --totp -b "$OTP_SECRET")
+          PASS=$(cat ${secrets.openconnect-vpn-password.path})
+          OTP_SECRET=$(cat ${secrets.openconnect-vpn-otp-secret.path})
 
-        printf "%s\n%s\n" "$PASS" "$OTP_CODE" | \
-          ${lib.getExe pkgs.openconnect} \
-          --protocol=anyconnect \
-          --user="${ocClientPrefs.user}" \
-          --authgroup="${ocClientPrefs.authgroup}" \
-          --passwd-on-stdin \
-          ${ocClientPrefs.gateway}
-      '');
+          OTP_CODE=$(oathtool --totp -b "$OTP_SECRET")
+
+          printf "%s\n%s\n" "$PASS" "$OTP_CODE" | \
+            ${lib.getExe pkgs.openconnect} \
+            --protocol=anyconnect \
+            --user="${ocClientPrefs.user}" \
+            --authgroup="${ocClientPrefs.authgroup}" \
+            --passwd-on-stdin \
+            ${ocClientPrefs.gateway}
+        ''
+      );
     };
 
     networking.openconnect = {

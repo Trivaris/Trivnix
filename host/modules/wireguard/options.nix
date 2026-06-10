@@ -18,7 +18,10 @@
 
     allowedSubnets = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ "10.0.0.2/32" "192.168.10.0/24" ];
+      default = [
+        "10.0.0.2/32"
+        "192.168.10.0/24"
+      ];
     };
 
     publicKeyFile = lib.mkOption {

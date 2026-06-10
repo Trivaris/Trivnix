@@ -6,8 +6,16 @@ let
 in
 {
   options.vars.activeServices = lib.mkOption {
-    type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
+    type = lib.types.listOf (lib.types.submodule (
+          lib.recursiveUpdate lib.reverseProxyOptions {
+            options = {
+              name = lib.mkOption { type = lib.types.str; };
+            };
+          }
+        ));
     readOnly = true;
-    default = servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs);
+    default =
+      prefs.reverseProxy.extraServices
+      ++ (servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs));
   };
 }

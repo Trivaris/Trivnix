@@ -11,7 +11,7 @@
       default = [
         "default_config"
         "google_translate"
-        "mobile_app" 
+        "mobile_app"
         "met"
       ];
     };
