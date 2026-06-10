@@ -5,6 +5,7 @@
 }:
 let 
   homeAssistantPrefs = config.hostPrefs.homeAssistant;
+  wireguardPrefs = config.hostPrefs.wireguard;
 in 
 {
   config = lib.mkIf homeAssistantPrefs.enable {
@@ -19,6 +20,22 @@ in
           trusted_proxies = [ "127.0.0.1" "::1" ]; 
         };
       };
+    };
+
+    services.mosquitto = {
+      enable = true;
+      listeners = [
+        {
+          address = "0.0.0.0";
+          settings = {
+            allow_anonymous = true; 
+          };
+        }
+      ];
+    };
+
+    networking.firewall.interfaces = lib.mkIf wireguardPrefs.enable {
+      "${wireguardPrefs.interfaceName}".allowedTCPPorts = [ 1883 ];
     };
   };
 }
