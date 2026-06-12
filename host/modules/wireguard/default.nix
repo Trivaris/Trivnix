@@ -14,15 +14,8 @@ in
     networking.wireguard.interfaces."${wireguardPrefs.interfaceName}" = lib.mkIf wireguardPrefs.enable {
       ips = [ wireguardPrefs.vpnSubnet ];
       listenPort = wireguardPrefs.port;
-
       privateKeyFile = secrets.wireguard-key.path;
-
-      peers = [
-        {
-          publicKey = lib.removeSuffix "\n" (builtins.readFile wireguardPrefs.publicKeyFile);
-          allowedIPs = wireguardPrefs.allowedSubnets;
-        }
-      ];
+      peers = wireguardPrefs.peers;
     };
   };
 }

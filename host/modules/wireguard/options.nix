@@ -16,21 +16,18 @@
       default = "10.0.0.1/24";
     };
 
-    allowedSubnets = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "10.0.0.2/32"
-        "192.168.10.0/24"
-      ];
-    };
-
-    publicKeyFile = lib.mkOption {
-      type = lib.types.path;
-    };
-
     interfaceName = lib.mkOption {
       type = lib.types.str;
       default = "wg0";
+    };
+
+    peers = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule {
+        options = {
+          publicKey = lib.mkOption { type = lib.types.str; };
+          allowedIPs = lib.mkOption { type = lib.types.listOf lib.types.str; };
+        };
+      });
     };
   };
 }
