@@ -20,6 +20,7 @@ in
       pkgs.steamtinkerlaunch
     ];
 
+    programs.gamescope.enable = true;
     programs.steam = {
       enable = true;
 
