@@ -19,12 +19,6 @@
     importTree.url = "github:vic/import-tree";
 
     hyprland.url = "github:hyprwm/Hyprland";
-
-    # Non-flake sources
-    betterfox = {
-      url = "github:yokoffing/Betterfox";
-      flake = false;
-    };
   };
 
   outputs = inputs: import ./flake/outputs.nix inputs;
