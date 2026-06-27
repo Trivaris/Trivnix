@@ -24,7 +24,7 @@
     peers = lib.mkOption {
       type = lib.types.listOf (lib.types.submodule {
         options = {
-          publicKeyFile = lib.mkOption { type = lib.types.str; };
+          publicKey = lib.mkOption { type = lib.types.str; };
           allowedIPs = lib.mkOption { type = lib.types.listOf lib.types.str; };
         };
       });
