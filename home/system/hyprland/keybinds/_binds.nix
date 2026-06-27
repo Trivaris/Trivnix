@@ -44,7 +44,7 @@ in
       "$mod, down,  movewindow, d"
 
       # Split window horizontally/vertically
-      "$alt_mod, Y, togglesplit"
+      "$alt_mod, Y, layoutmsg, togglesplit"
     ];
 
     workspaceChange = [

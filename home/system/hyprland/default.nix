@@ -18,6 +18,7 @@
     wayland.windowManager.hyprland = {
       enable = true;
       settings.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
+      configType = "hyprlang";
       settings.exec-one = [
         "hyprpaper"
         "swaync"
