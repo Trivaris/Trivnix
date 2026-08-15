@@ -22,12 +22,14 @@
     };
 
     peers = lib.mkOption {
-      type = lib.types.listOf (lib.types.submodule {
-        options = {
-          publicKey = lib.mkOption { type = lib.types.str; };
-          allowedIPs = lib.mkOption { type = lib.types.listOf lib.types.str; };
-        };
-      });
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            publicKey = lib.mkOption { type = lib.types.str; };
+            allowedIPs = lib.mkOption { type = lib.types.listOf lib.types.str; };
+          };
+        }
+      );
     };
   };
 }

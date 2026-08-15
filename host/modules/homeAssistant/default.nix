@@ -56,7 +56,7 @@ in
           "/dev/serial:/dev/serial:ro"
         ];
         networks = [ "host" ];
-        extraOptions = [ 
+        extraOptions = [
           "--privileged"
         ];
       };

@@ -17,12 +17,8 @@
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland = {
       enable = true;
-      settings.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
-      configType = "hyprlang";
-      settings.exec-one = [
-        "hyprpaper"
-        "swaync"
-      ];
+      settings.config.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
+      configType = "lua";
     };
 
     home.packages = builtins.attrValues {
@@ -38,6 +34,7 @@
         wtype
         nautilus
         loupe
+        hyprpaper
         ;
     };
 

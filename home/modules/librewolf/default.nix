@@ -48,6 +48,7 @@ in
 
     programs.librewolf = {
       enable = true;
+      package = pkgs.librewolf-bin;
 
       profiles.${config.userInfos.name} = {
         isDefault = true;
