@@ -34,7 +34,6 @@
         wtype
         nautilus
         loupe
-        hyprpaper
         ;
     };
 
