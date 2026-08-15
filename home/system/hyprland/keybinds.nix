@@ -9,9 +9,7 @@ let
   main_mod = "SUPER";
   alt_mod = "ALT";
 
-  monitors = osConfig.hostInfos.monitors;
-
-workspaceDispatch = pkgs.writeShellScriptBin "hypr-ws" ''
+  workspaceDispatch = pkgs.writeShellScriptBin "hypr-ws" ''
     cmd=$1
     base=$2
 
@@ -107,13 +105,13 @@ in
       { _args = [ "${main_mod} + SHIFT + mouse:273" (lib.generators.mkLuaInline "hl.dsp.window.resize()") ]; }
       { _args = [ "${main_mod} + SHIFT + mouse:272" (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "unset" })'') ]; }
     ]
-    # More Workspace Change
-    ++ (map (
-      index: { _args = [ "${main_mod} + ${toString index}" (lib.generators.mkLuaInline ''hl.dsp.exec_raw("${workspaceDispatch}/bin/hypr-ws workspace ${toString index}")'') ]; }
-    ) (lib.range 0 9))
-    ++ (map (
-      index: { _args = [ "${main_mod} + SHIFT + ${toString index}" (lib.generators.mkLuaInline ''hl.dsp.exec_raw("${workspaceDispatch}/bin/hypr-ws movetoworkspace ${toString index}")'') ]; }
-    ) (lib.range 0 9));
+      # More Workspace Change
+      ++ (map (
+        index: { _args = [ "${main_mod} + ${toString index}" (lib.generators.mkLuaInline ''hl.dsp.exec_raw("${workspaceDispatch}/bin/hypr-ws workspace ${toString index}")'') ]; }
+      ) (lib.range 0 9))
+      ++ (map (
+        index: { _args = [ "${main_mod} + SHIFT + ${toString index}" (lib.generators.mkLuaInline ''hl.dsp.exec_raw("${workspaceDispatch}/bin/hypr-ws movetoworkspace ${toString index}")'') ]; }
+      ) (lib.range 0 9));
     };
   };
 }

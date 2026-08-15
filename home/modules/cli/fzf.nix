@@ -7,7 +7,7 @@ in
     programs.fzf = {
       enable = true;
       defaultCommand = "fd --type f --exclude .git --follow --hidden";
-      changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";
+      changeDirWidget.command = "fd --type d --exclude .git --follow --hidden";
       enableZshIntegration = true;
       defaultOptions = [
         "--preview='bat --color=always --style=numbers --line-range=:500 {}'"
