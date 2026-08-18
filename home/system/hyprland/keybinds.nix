@@ -51,10 +51,6 @@ in
       { _args = [ "${main_mod} + TAB"         (lib.generators.mkLuaInline ''hl.dsp.focus({ workspace = "e+1" })'') ]; }
       { _args = [ "${main_mod} + SHIFT + TAB" (lib.generators.mkLuaInline ''hl.dsp.focus({ workspace = "e-1" })'') ]; }
     
-      # mouseFloat
-      { _args = [ "${main_mod} + SHIFT + mouse:272" (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "set" })'') ]; }
-      { _args = [ "${main_mod} + SHIFT + mouse:273" (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "set" })'') ]; }
-    
       # windowFocus
       { _args = [ "${alt_mod} + SHIFT + LEFT"  (lib.generators.mkLuaInline ''hl.dsp.focus({ monitor = "l" })'') ]; }
       { _args = [ "${alt_mod} + SHIFT + RIGHT" (lib.generators.mkLuaInline ''hl.dsp.focus({ monitor = "r" })'') ]; }
@@ -100,10 +96,12 @@ in
     
       # mouseAction
       { _args = [ "${main_mod} + mouse:272"         (lib.generators.mkLuaInline "hl.dsp.window.drag()") ]; }
-      { _args = [ "${main_mod} + SHIFT + mouse:272" (lib.generators.mkLuaInline "hl.dsp.window.drag()") ]; }
       { _args = [ "${main_mod} + mouse:273"         (lib.generators.mkLuaInline "hl.dsp.window.resize()") ]; }
       { _args = [ "${main_mod} + SHIFT + mouse:273" (lib.generators.mkLuaInline "hl.dsp.window.resize()") ]; }
-      { _args = [ "${main_mod} + SHIFT + mouse:272" (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "unset" })'') ]; }
+      
+      { _args = [ "${main_mod} + SHIFT + mouse:272" (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "set" })'') ]; }
+      { _args = [ "${main_mod} + SHIFT + mouse:273" (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "set" })'') ]; }
+
     ]
       # More Workspace Change
       ++ (map (

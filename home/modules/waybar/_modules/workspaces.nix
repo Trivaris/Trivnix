@@ -1,4 +1,4 @@
-{ lib, osConfig, ... }:
+{ pkgs, lib, osConfig, ... }:
 let
   theme = osConfig.themingPrefs.scheme;
   monitors = osConfig.hostInfos.monitors;
@@ -21,11 +21,9 @@ in
     "hyprland/workspaces" = {
       "all-outputs" = false;
       "active-only" = false;
-
       "format" = "{icon}";
-
       "format-icons" = workspacesMap;
-
+      "on-click" = "${pkgs.hyprland}/bin/hyprctl dispatch 'hl.dsp.focus({{ workspace = {name} }})'";
     };
   };
 
