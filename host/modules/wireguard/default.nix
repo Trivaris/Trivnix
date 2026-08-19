@@ -9,7 +9,10 @@ let
 in
 {
   config = lib.mkIf wireguardPrefs.enable {
-    networking.firewall.allowedUDPPorts = lib.mkIf wireguardPrefs.enable [ wireguardPrefs.port ];
+    networking.firewall = {
+      allowedUDPPorts = lib.mkIf wireguardPrefs.enable [ wireguardPrefs.port ];
+      trustedInterfaces = lib.mkIf wireguardPrefs.enable [ "wg0" ];
+    };
 
     networking.wireguard.interfaces."${wireguardPrefs.interfaceName}" = lib.mkIf wireguardPrefs.enable {
       ips = [ wireguardPrefs.vpnSubnet ];
