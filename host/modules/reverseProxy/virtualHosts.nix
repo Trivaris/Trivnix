@@ -10,7 +10,7 @@ in
         lib.nameValuePair service.domain {
           locations = {
             "/" = {
-              proxyPass = "http://${service.address}:${toString service.port}";
+              proxyPass = "${if service.https then "https" else "http"}://${service.address}:${toString service.port}";
               proxyWebsockets = true;
               extraConfig = ''
                 proxy_set_header Accept-Encoding gzip;
