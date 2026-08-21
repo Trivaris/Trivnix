@@ -1,27 +1,27 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   options.hostPrefs.minecraftServer = {
-    reverseProxy = lib.mkReverseProxyOption;
-
     enable = lib.mkEnableOption ''
       Provision the Minecraft server service backed by selected modpacks.
       Enable when this host should run the configured multiplayer world.
     '';
 
-    modpack = lib.mkOption {
-      type = lib.types.str;
-      example = "elysium-days";
-      description = ''
-        The modpack to deploy on the server. This must be a valid modpack pkg.
-      '';
+    package = lib.mkPackageOption pkgs "Minecraft Server" {
+      default = [ "minecraftServers" "vanilla" ];
+      example = "minecraft-server-fabric";
     };
 
-    serverIcon = lib.mkOption {
-      type = lib.types.path;
-      description = ''
-        Path to the 64x64 PNG used as the Minecraft server icon.
-        The file is copied into the modpack directory during deployment.
-      '';
+    workDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/lib/minecraft-server";
+      description = "The directory where the Minecraft server data will be stored.";
     };
+
+    extraFlags = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Extra Flags passed to the Minecraft server executable";
+    };
+
   };
 }

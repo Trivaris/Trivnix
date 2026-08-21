@@ -4,7 +4,6 @@
     imports = [
       inputs.disko.nixosModules.disko
       inputs.mailserver.nixosModules.default
-      inputs.nix-minecraft.nixosModules.minecraft-servers
       inputs.nur.modules.nixos.default
       inputs.sops-nix.nixosModules.sops
       inputs.spicetify-nix.nixosModules.spicetify
