@@ -27,6 +27,9 @@ let
         "--project-cache-dir"
         "/home/${osConfig.hostPrefs.mainUser}/.gradle-cache"
       ];
+      "github.copilot.enable" = {
+        "*" = false;
+      };
     }
   );
 in
