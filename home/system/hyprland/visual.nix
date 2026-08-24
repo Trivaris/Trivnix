@@ -47,11 +47,7 @@
 
         config = {
           master.new_status = "master";
-          
-          animations = {
-            enabled = true;
-            workspace_wraparound = true;
-          };
+          animations.enabled = true;
 
           general = {
             gaps_in = 5;
