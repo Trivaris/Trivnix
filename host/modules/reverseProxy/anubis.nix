@@ -9,7 +9,7 @@ in
       map (service: lib.nameValuePair service.name {
         enable = true;
         settings = {
-          BIND_NETWORK = "tcp";
+          BIND_NETWORK = "unix";
           BIND = "/run/anubis/anubis-${service.name}/anubis.sock";
           TARGET = "${if service.https then "https" else "http"}://${service.address}:${toString service.port}";
           COOKIE_DOMAIN = reverseProxyPrefs.zone;
