@@ -10,7 +10,7 @@ in
         enable = true;
         settings = {
           BIND_NETWORK = "tcp";
-          BIND = "127.0.0.1:${toString reverseProxyPrefs.anubisPort}";
+          BIND = "/run/anubis/anubis-${service.name}/anubis.sock";
           TARGET = "${if service.https then "https" else "http"}://${service.address}:${toString service.port}";
           COOKIE_DOMAIN = reverseProxyPrefs.zone;
           PUBLIC_URL = "https://${service.domain}";
