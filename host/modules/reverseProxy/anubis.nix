@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   reverseProxyPrefs = config.hostPrefs.reverseProxy;
-  anubisServices = builtins.filter (s: s.enableAnubis or false) config.vars.activeServices;
+  anubisServices = builtins.filter (service: service.enableAnubis or false) config.vars.activeServices;
 in
 {
   config = lib.mkIf reverseProxyPrefs.enable {
