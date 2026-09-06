@@ -31,16 +31,6 @@
       '';
     };
 
-    anubisAuthDomain = lib.mkOption {
-      type = lib.types.str;
-      example = "auth.example.com";
-    };
-
-    anubisPort = lib.mkOption {
-      type = lib.types.port;
-      default = 8923;
-    };
-  
     extraCertDomains = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
