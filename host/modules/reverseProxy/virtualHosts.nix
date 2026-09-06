@@ -10,13 +10,16 @@ in
         lib.nameValuePair service.domain {
           locations = {
             "/" = {
-              proxyPass = "${if service.https then "https" else "http"}://${service.address}:${toString service.port}";
+              proxyPass = if service.enableAnubis then
+                "http://127.0.0.1:${toString service.anubisPort}" else
+                "${if service.https then "https" else "http"}://${service.address}:${toString service.port}";
               proxyWebsockets = true;
               extraConfig = ''
                 proxy_set_header Accept-Encoding gzip;
               '';
             };
           };
+
           forceSSL = true;
           useACMEHost = service.domain;
 
