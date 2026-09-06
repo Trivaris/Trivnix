@@ -11,7 +11,7 @@ in
           locations = {
             "/" = {
               proxyPass = if service.enableAnubis then
-                "http://127.0.0.1:${toString service.anubisPort}" else
+                "http://127.0.0.1:${toString reverseProxyPrefs.anubisPort}" else
                 "${if service.https then "https" else "http"}://${service.address}:${toString service.port}";
               proxyWebsockets = true;
               extraConfig = ''
