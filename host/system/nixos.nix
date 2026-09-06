@@ -71,7 +71,7 @@ in
       };
 
       settings = {
-        experimental-features = "nix-command flakes pipe-operators";
+        experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
         trusted-users = allUserInfos ++ [ "root" ];
         auto-optimise-store = true;
         warn-dirty = false;
