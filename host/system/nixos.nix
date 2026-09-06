@@ -42,7 +42,7 @@ in
 
     fonts = {
       enableDefaultPackages = true;
-      packages = [ themePrefs.font.package ];
+      packages = [ themePrefs.font.package ] ++ themePrefs.font.extraFonts;
       fontconfig = {
         enable = true;
         defaultFonts = {
