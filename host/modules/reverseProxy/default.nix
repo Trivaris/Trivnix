@@ -1,12 +1,13 @@
 { config, lib, ... }:
 let
   reverseProxyPrefs = config.hostPrefs.reverseProxy;
+  allowedTCPPorts = (map (
+    service: service.externalPort
+  ) config.vars.activeServices) ++ lib.optionals reverseProxyPrefs.dumbPipes.enable (map (tcpForward: tcpForward.listenPort) reverseProxyPrefs.dumbPipes.tcpForwards);
 in
 {
   config = lib.mkIf reverseProxyPrefs.enable {
-    networking.firewall.allowedTCPPorts = map (
-      service: service.externalPort
-    ) config.vars.activeServices;
+    networking.firewall.allowedTCPPorts = allowedTCPPorts;
 
     users.users.nginx.extraGroups = [ "acme" ];
     services.nginx = {
