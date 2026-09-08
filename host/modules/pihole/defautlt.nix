@@ -6,7 +6,7 @@
 let
   piHolePrefs = config.hostPrefs.piHole;
   wireguardPrefs = config.hostPrefs.wireguard;
-  wgIp = builtins.head (lib.splitString "/" wireguardPrefs.vpnSubnet);
+  wgIp = builtins.head (lib.splitString "/" wireguardPrefs.address);
 in
 {
   config = lib.mkIf piHolePrefs.enable {

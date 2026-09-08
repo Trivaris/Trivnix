@@ -10,12 +10,12 @@ in
 {
   config = lib.mkIf wireguardPrefs.enable {
     networking.firewall = {
-      allowedUDPPorts = lib.mkIf wireguardPrefs.enable [ wireguardPrefs.port ];
-      trustedInterfaces = lib.mkIf wireguardPrefs.enable [ "wg0" ];
+      allowedUDPPorts = [ wireguardPrefs.port ];
+      trustedInterfaces = [ "wg0" ];
     };
 
-    networking.wireguard.interfaces."${wireguardPrefs.interfaceName}" = lib.mkIf wireguardPrefs.enable {
-      ips = [ wireguardPrefs.vpnSubnet ];
+    networking.wireguard.interfaces."${wireguardPrefs.interfaceName}" = {
+      ips = [ wireguardPrefs.address ];
       listenPort = wireguardPrefs.port;
       privateKeyFile = secrets.wireguard-key.path;
       peers = wireguardPrefs.peers;

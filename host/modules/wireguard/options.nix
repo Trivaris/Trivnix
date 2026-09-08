@@ -11,7 +11,7 @@
       default = 51820;
     };
 
-    vpnSubnet = lib.mkOption {
+    address = lib.mkOption {
       type = lib.types.str;
       default = "10.0.0.1/24";
     };
