@@ -105,7 +105,21 @@
       };
 
       pipes = lib.mkOption {
+        description = "TCP Forwarding with SNI";
         type = lib.types.attrsOf lib.types.str;
+        default = { };
+      };
+
+      tcpForwards = lib.mkOption {
+        description = "Raw TCP port forwarding for protocols without SNI (like SSH).";
+        type = lib.types.attrsOf (
+          lib.types.submodule {
+            options = {
+              listenPort = lib.mkOption { type = lib.types.port; };
+              upstream = lib.mkOption { type = lib.types.str; };
+            };
+          }
+        );
         default = { };
       };
     };

@@ -30,6 +30,16 @@ in
         ssl_preread on;
         proxy_pass $backend;
       }
+
+      ${lib.concatStringsSep "\n      " (
+        lib.mapAttrsToList (name: fwd: ''
+          server {
+            listen ${toString fwd.listenPort};
+            listen [::]:${toString fwd.listenPort};
+            proxy_pass ${fwd.upstream};
+          }
+        '') reverseProxyPrefs.dumbPipes.tcpForwards
+      )}
     '';
   };
 }
