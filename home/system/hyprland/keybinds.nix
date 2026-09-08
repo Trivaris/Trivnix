@@ -67,7 +67,7 @@ in
       { _args = [ "${main_mod} + A"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("code")'') ]; }
       { _args = [ "${main_mod} + D"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("vesktop")'') ]; }
       { _args = [ "${main_mod} + W"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("librewolf")'') ]; }
-      { _args = [ "${main_mod} + S"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("spotify")'') ]; }
+      { _args = [ "${main_mod} + S"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("feishin")'') ]; }
       { _args = [ "${main_mod} + Z"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("thunderbird")'') ]; }
       { _args = [ "${main_mod} + Q"      (lib.generators.mkLuaInline ''hl.dsp.window.close()'') ]; }
       { _args = [ "${main_mod} + SPACE"  (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${config.vars.terminalEmulator}")'') ]; }
