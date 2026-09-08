@@ -848,15 +848,15 @@
       "locked": {
         "lastModified": 1777661779,
         "narHash": "sha256-N0LZBmeEBA68gkLaxFdmYPcakRBLMpScAxRd++WVfog=",
-        "owner": "Trivaris",
-        "repo": "TrivnixNvim",
+        "ref": "refs/heads/main",
         "rev": "90f20f15d942d4a57b777212dd22fb7bf3088810",
-        "type": "github"
+        "revCount": 8,
+        "type": "git",
+        "url": "ssh://git@git.trivaris.org/Trivaris/TrivnixNvim"
       },
       "original": {
-        "owner": "Trivaris",
-        "repo": "TrivnixNvim",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@git.trivaris.org/Trivaris/TrivnixNvim"
       }
     },
     "xdph": {
