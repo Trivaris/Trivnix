@@ -20,7 +20,7 @@ in
             };
           };
 
-          forceSSL = true;
+          forceSSL = !reverseProxyPrefs.dumbPipes.enable;
           useACMEHost = service.domain;
 
           listen = [
@@ -36,6 +36,16 @@ in
           };
         }
       ) config.vars.activeServices
-    );
+    ) // lib.optionalAttrs reverseProxyPrefs.dumbPipes.enable {
+      "default-http-redirect" = {
+        serverName = "_";
+        default = true;
+        listen = [
+          { addr = "0.0.0.0"; port = 80; ssl = false; }
+          { addr = "[::]"; port = 80; ssl = false; }
+        ];
+        locations."/".return = "301 https://$host$request_uri";
+      };
+    };
   };
 }
