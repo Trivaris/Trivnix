@@ -25,16 +25,15 @@ in
 
           listen = [
             {
-              addr = "0.0.0.0";
-              port = service.externalPort;
+              addr = if reverseProxyPrefs.dumbPipes.enable then "127.0.0.1" else "0.0.0.0";
+              port = if reverseProxyPrefs.dumbPipes.enable then reverseProxyPrefs.dumbPipes.fallbackPort else service.externalPort;
               ssl = true;
             }
-            {
-              addr = "[::]";
-              port = service.externalPort;
-              ssl = true;
-            }
-          ];
+          ] ++ lib.optional (!reverseProxyPrefs.dumbPipes.enable) {
+            addr = "[::]";
+            port = service.externalPort;
+            ssl = true;
+          };
         }
       ) config.vars.activeServices
     );

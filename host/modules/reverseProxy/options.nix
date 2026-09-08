@@ -83,5 +83,31 @@
         )
       );
     };
+
+    dumbPipes = {
+      enable = lib.mkEnableOption "Dumb forwarding";
+
+      upstreams = lib.mkOption {
+        type = lib.types.attrsOf (
+          lib.types.submodule {
+            options = {
+              address = lib.mkOption { type = lib.types.str; };
+              port = lib.mkOption { type = lib.types.port; default = 443; };
+            };
+          }
+        );
+        default = { };
+      };
+
+      fallbackPort = lib.mkOption {
+        type = lib.types.port;
+        default = 8443;
+      };
+
+      pipes = lib.mkOption {
+        type = lib.types.attrsOf lib.types.str;
+        default = { };
+      };
+    };
   };
 }
