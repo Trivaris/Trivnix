@@ -36,9 +36,11 @@ in
           server {
             listen ${toString fwd.listenPort};
             listen [::]:${toString fwd.listenPort};
+            listen ${toString fwd.listenPort} udp;
+            listen [::]:${toString fwd.listenPort} udp;
             proxy_pass ${fwd.upstream};
           }
-        '') reverseProxyPrefs.dumbPipes.tcpForwards
+        '') reverseProxyPrefs.dumbPipes.portForwards
       )}
     '';
   };
