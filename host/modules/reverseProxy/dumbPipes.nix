@@ -34,10 +34,10 @@ in
       ${lib.concatStringsSep "\n      " (
         lib.mapAttrsToList (name: fwd: ''
           server {
-            listen ${toString fwd.listenPort};
-            listen [::]:${toString fwd.listenPort};
-            listen ${toString fwd.listenPort} udp;
-            listen [::]:${toString fwd.listenPort} udp;
+            ${lib.optionalString fwd.enableTCP "listen ${toString fwd.listenPort};"}
+            ${lib.optionalString fwd.enableTCP "listen [::]:${toString fwd.listenPort};"}
+            ${lib.optionalString fwd.enableUDP "listen ${toString fwd.listenPort} udp;"}
+            ${lib.optionalString fwd.enableUDP "listen [::]:${toString fwd.listenPort} udp;"}
             proxy_pass ${fwd.upstream};
           }
         '') reverseProxyPrefs.dumbPipes.portForwards
