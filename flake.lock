@@ -852,11 +852,11 @@
         "rev": "90f20f15d942d4a57b777212dd22fb7bf3088810",
         "revCount": 8,
         "type": "git",
-        "url": "ssh://git@git.trivaris.org/Trivaris/TrivnixNvim"
+        "url": "ssh://git@github.com/Trivaris/TrivnixNvim"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@git.trivaris.org/Trivaris/TrivnixNvim"
+        "url": "ssh://git@github.com/Trivaris/TrivnixNvim"
       }
     },
     "xdph": {
