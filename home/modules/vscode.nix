@@ -11,11 +11,15 @@ let
     builtins.toJSON {
       "files.autoSave" = "afterDelay";
       "explorer.confirmDelete" = false;
+
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${lib.getExe pkgs.nixd}";
       "nix.serverSettings".nixd = {
         formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
-        options.nixos.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.hostInfos.configname}.options";
+        options = {
+          nixos.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.hostInfos.configname}.options";
+          home-manager.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.hostInfos.configname}.options.home-manager.users.type.getSubOptions []";
+        };
       };
       "explorer.confirmDragAndDrop" = false;
       "workbench.secondarySideBar.defaultVisibility" = "hidden";
@@ -39,9 +43,10 @@ in
 
   config = lib.mkIf vscodePrefs.enable {
     home.packages = [ pkgs.vscode ];
-    home.file.".config/Code/User/settings.json".source = pkgs.runCommand "settings.json" {
-      nativeBuildInputs = [ pkgs.jq ];
-    } "jq . ${rawSettings} > $out";
+    home.activation.setupVSCodeSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      mkdir -p "$HOME/.config/Code/User"
+      ${lib.getExe pkgs.jq} . ${rawSettings} > "$HOME/.config/Code/User/settings.json"
+    '';
   };
 
 }
