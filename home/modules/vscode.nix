@@ -42,10 +42,10 @@ in
   options.userPrefs.vscode.enable = lib.mkEnableOption "VSCode, a lightweight code editor";
 
   config = lib.mkIf vscodePrefs.enable {
-    home.packages = [ pkgs.vscode ];
+    home.packages = [ pkgs.vscode-fhs ];
     home.activation.setupVSCodeSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
       mkdir -p "$HOME/.config/Code/User"
-      ${lib.getExe pkgs.jq} . ${rawSettings} > "$HOME/.config/Code/User/settings.json"
+      ${lib.getExe pkgs.jq} . ${rawSettings} > "/home/${config.userInfos.name}/.config/Code/User/settings.json"
     '';
   };
 

@@ -5,7 +5,7 @@
 
   home.file.".config/nvim" = {
     source = pkgs.nvim-dotfiles.override {
-      colorscheme = "tokyonight";
+      colorscheme = "catpuccin";
     };
     recursive = true;
   };
