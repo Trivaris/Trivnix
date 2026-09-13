@@ -3,7 +3,7 @@ let
   reverseProxyPrefs = config.hostPrefs.reverseProxy;
   allowedTCPPorts = (map (
     service: service.externalPort
-  ) config.vars.activeServices) ++ lib.optionals reverseProxyPrefs.dumbPipes.enable (map (tcpForward: tcpForward.listenPort) (builtins.attrValues reverseProxyPrefs.dumbPipes.tcpForwards));
+  ) config.vars.activeServices) ++ lib.optionals reverseProxyPrefs.dumbPipes.enable (map (tcpForward: tcpForward.listenPort) (builtins.attrValues reverseProxyPrefs.dumbPipes.portForwards));
 in
 {
   config = lib.mkIf reverseProxyPrefs.enable {
