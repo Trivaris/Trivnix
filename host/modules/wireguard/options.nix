@@ -27,7 +27,8 @@
           options = {
             publicKey = lib.mkOption { type = lib.types.str; };
             allowedIPs = lib.mkOption { type = lib.types.listOf lib.types.str; };
-            endpoint = lib.mkOption { type = lib.types.nullOr lib.types.str; };
+            endpoint = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; };
+            persistentKeepalive = lib.mkOption { type = lib.types.nullOr lib.types.int; default = null; };
           };
         }
       );

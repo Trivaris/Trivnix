@@ -846,11 +846,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1789323653,
-        "narHash": "sha256-/9wGMU1AFJTLoCY+Ot7HhCa7ivEAB3jEg9d3LKaSAcw=",
+        "lastModified": 1789392890,
+        "narHash": "sha256-T7TVf1Pw/mCP0bB7zAhXhtvJmTcfCWE1HVUE+mu5idI=",
         "ref": "refs/heads/main",
-        "rev": "a7c7d21a240a85679965a751f3d7fdff2a1b2147",
-        "revCount": 11,
+        "rev": "f5351d7f89dbdbdaa13d817f5bd8a97c0f3811ec",
+        "revCount": 12,
         "type": "git",
         "url": "ssh://git@github.com/Trivaris/TrivnixNvim"
       },
