@@ -29,6 +29,7 @@
         window_rule = map lib.generators.mkLuaInline [
           ''{ match = { title = "Open Folder" }, float = true, size = "window_w window_h", center = true }''
           ''{ match = { title = "Open File" }, float = true, size = "window_w window_h", center = true }''
+          ''{ match = { class = "waypaper" }, float = true, size = "window_w window_h", center = true }''
           ''{ match = { class = "io.github.kaii_lb.Overskride" }, float = true, size = "window_w window_h", center = true }''
           ''{ match = { class = "nm-connection-editor" }, float = true, size = "window_w window_h", center = true }''
           ''{ match = { class = "com.network.manager" }, float = true, size = "window_w window_h", center = true }''

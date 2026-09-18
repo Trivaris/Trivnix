@@ -54,8 +54,10 @@ in
     .modules-left, .modules-center, .modules-right {
       background: ${theme.base00};
       border: 0.15rem solid ${theme.base03};
+      box-shadow: 0 0 5px 1px ${theme.base04};
       border-radius: 0.5rem;
       padding: 0.4rem 0.8rem;
+      margin: 0.4rem 0.4rem 0.5rem 0.4rem;
     }
 
     #backlight, #battery, #bluetooth, #custom-spotify, 

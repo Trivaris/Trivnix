@@ -70,8 +70,9 @@ in
       { _args = [ "${main_mod} + S"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("feishin")'') ]; }
       { _args = [ "${main_mod} + Z"      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("thunderbird")'') ]; }
       { _args = [ "${main_mod} + Q"      (lib.generators.mkLuaInline ''hl.dsp.window.close()'') ]; }
+      { _args = [ "${main_mod} + F" (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${lib.getExe pkgs.rofi-rbw-wayland}")'') ]; }
+      { _args = [ "${main_mod} + RETURN" (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${lib.getExe pkgs.rofi} -show drun")'') ]; }
       { _args = [ "${main_mod} + SPACE"  (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${config.vars.terminalEmulator}")'') ]; }
-      { _args = [ "${main_mod} + RETURN" (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${config.vars.appLauncher} ${config.vars.appLauncherFlags}")'') ]; }
     
       # volume
       { _args = [ "XF86AudioRaiseVolume" (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 5%+")'') ]; }

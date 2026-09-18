@@ -1,14 +1,15 @@
-{ config, osConfig, ... }:
+{ pkgs, lib, config, osConfig, ... }:
 let
   inherit (config.lib.formats.rasi) mkLiteral;
   scheme = osConfig.themingPrefs.scheme;
 in
 {
+  home.packages = [ pkgs.rbw pkgs.pinentry-curses ];
+
   programs.rofi = {
     enable = true;
 
     extraConfig = {
-      modi = "drun,run,window";
       show-icons = true;
       terminal = config.vars.terminalEmulator;
       display-drun = "Apps";
@@ -16,6 +17,14 @@ in
       display-window = "Windows";
       drun-display-format = "{name}";
     };
+
+    modes = [
+      "drun"
+      {
+        name = "emoji";
+        path = lib.getExe pkgs.rofimoji;
+      }
+    ];
 
     theme = {
       "*" = {

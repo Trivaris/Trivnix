@@ -1,12 +1,13 @@
 { lib, osConfig, pkgs, ... }:
 {
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
+    home.packages = [ pkgs.waypaper pkgs.awww ];
     wayland.windowManager.hyprland = {
-      extraConfig = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: details: ''
-        hl.on("hyprland.start", function()
-          hl.exec_cmd("${lib.getExe pkgs.mpvpaper} -o 'no-audio loop' ${name} ${details.wallpaper}")
-        end)
-      '') osConfig.hostInfos.monitors);
+      # extraConfig = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: details: ''
+      #   hl.on("hyprland.start", function()
+      #     hl.exec_cmd("${lib.getExe pkgs.mpvpaper} -o 'no-audio loop' ${name} ${details.wallpaper}")
+      #   end)
+      # '') osConfig.hostInfos.monitors);
       
       settings = {
         monitor = lib.mapAttrsToList (name: details: { _args = [ {

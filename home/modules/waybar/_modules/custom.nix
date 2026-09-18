@@ -1,4 +1,4 @@
-{ osConfig, config, ... }:
+{ pkgs, lib, osConfig, ... }:
 let
   theme = osConfig.themingPrefs.scheme;
 in
@@ -14,8 +14,8 @@ in
     "custom/launcher" = {
       format = " ";
 
-      on-click = "${config.vars.appLauncher} ${config.vars.appLauncherFlags}";
-      on-click-right = "killall ${config.vars.appLauncher}";
+      on-click = "${lib.getExe pkgs.rofi} -show drun";
+      on-click-right = "killall ${pkgs.rofi}";
     };
 
     "hyprland/workspaces" = {
