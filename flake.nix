@@ -10,10 +10,7 @@
     nur.url = "github:nix-community/NUR";
     sops-nix.url = "github:Mic92/sops-nix";
 
-    trivnixNvim.url = "git+ssh://git@github.com/Trivaris/TrivnixNvim";
-
     # Extras and ecosystem modules
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     importTree.url = "github:vic/import-tree";
 

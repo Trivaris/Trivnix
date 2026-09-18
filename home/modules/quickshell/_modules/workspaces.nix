@@ -10,11 +10,17 @@ let
         digit:
         map (monitorIndex: {
           name = toString (digit + (monitorIndex * 10));
-          value = toString digit;
+          value = "<span color='${theme.base03}'></span>";
         }) indecies
-      ) (lib.range 1 10)
+      ) (lib.range 1 5)
     )
-  );
+  ) // {
+    "1" = "<span color='${theme.base08}'>󰈹</span>";
+    "2" = "<span color='${theme.base0C}'>󰅩</span>";
+    "3" = "<span color='${theme.base0B}'></span>";
+    "11" = "<span color='${theme.base0E}'></span>";
+    "12" = "<span color='${theme.base0D}'></span>";
+  };
 in
 {
   settings = {
@@ -22,6 +28,7 @@ in
       "all-outputs" = false;
       "active-only" = false;
       "format" = "{icon}";
+      "persistent-workspaces" = lib.mapAttrs (_: mon: map (i: toString (i + (mon.workspaceIndex * 10))) (lib.range 1 5)) osConfig.hostInfos.monitors;
       "format-icons" = workspacesMap;
       "on-click" = "${pkgs.hyprland}/bin/hyprctl dispatch 'hl.dsp.focus({{ workspace = {name} }})'";
     };

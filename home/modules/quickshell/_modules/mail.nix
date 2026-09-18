@@ -22,7 +22,7 @@ in
     format = "{icon} {text}";
     format-icons = {
       empty = " ";
-      error = " ";
+      error = " ";
       loading = " ";
       unread = " ";
     };

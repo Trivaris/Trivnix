@@ -4,7 +4,7 @@
     let
       session = {
         user = config.hostPrefs.mainUser;
-        command = "start-hyprland";
+        command = "sh -c 'start-hyprland > /dev/null 2>&1'";
       };
     in
     {

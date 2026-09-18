@@ -6,7 +6,6 @@
       inputs.mailserver.nixosModules.default
       inputs.nur.modules.nixos.default
       inputs.sops-nix.nixosModules.sops
-      inputs.spicetify-nix.nixosModules.spicetify
       inputs.lanzaboote.nixosModules.lanzaboote
     ];
   };
@@ -14,7 +13,6 @@
   home = _: {
     imports = [
       inputs.sops-nix.homeManagerModules.sops
-      inputs.spicetify-nix.homeManagerModules.spicetify
     ];
   };
 }
