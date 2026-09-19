@@ -7,11 +7,12 @@
         _args = [ "hyprland.start" (lib.generators.mkLuaInline ''
           function()
             hl.exec_cmd("${lib.getExe pkgs.waypaper} --restore")
-            hl.exec_cmd("librewolf")
-            hl.exec_cmd("code")
-            hl.exec_cmd("kitty")
-            hl.exec_cmd("feishin")
-            hl.exec_cmd("vesktop")
+            hl.exec_cmd("librewolf",   { workspace =  "1 silent" })
+            hl.exec_cmd("code",        { workspace =  "2 silent" })
+            hl.exec_cmd("kitty",       { workspace =  "3 silent" })
+            hl.exec_cmd("thunderbird", { workspace =  "4 silent" })
+            hl.exec_cmd("feishin",     { workspace = "11 silent" })
+            hl.exec_cmd("vesktop",     { workspace = "12 silent" })
           end
         '') ];
       } ];
@@ -23,13 +24,15 @@
         scale = toString details.scaling;
       } ]; } ) osConfig.hostInfos.monitors;
 
-      workspace_rule = lib.flatten (
+      workspace_rule = (lib.flatten (
         lib.mapAttrsToList ( name: m:
           map (i: {
             _args = [ { workspace = toString (i + (m.workspaceIndex * 10)); monitor = name; } ];
           }) (lib.range 1 5)
         ) osConfig.hostInfos.monitors
-      );
+      )) ++ [ {
+        _args = [ { workspace = 1; default = true; } ];
+      }];
     };
   };
 }

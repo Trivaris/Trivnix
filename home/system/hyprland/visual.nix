@@ -44,12 +44,6 @@
           ''{ match = { title = "^LiveSplit$" }, float = true, size = "250 400", center = true }''
           ''{ match = { class = "^(steam_app_.*)$" }, opaque = true }''
           ''{ match = { class = "^(steam_app_.*)$" }, idle_inhibit = "always" }''
-
-          ''{ match = { class = "librewolf" }, workspace = "1 silent" }''
-          ''{ match = { class = "code" },      workspace = "2 silent" }''
-          ''{ match = { class = "kitty" },     workspace = "3 silent" }''
-          ''{ match = { class = "feishin" },   workspace = "11 silent" }''
-          ''{ match = { class = "vesktop" },   workspace = "12 silent" }''
         ];
 
         config = {
