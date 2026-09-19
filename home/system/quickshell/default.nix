@@ -1,4 +1,4 @@
-{ osConfig, pkgs, lib, ... }:
+{ osConfig, config, pkgs, lib, ... }:
 let 
   scheme = osConfig.themingPrefs.scheme;
 
@@ -41,6 +41,17 @@ let
   ];
 in 
 {
+  options.userPrefs.quickshell.wsIconOverrides = lib.mkOption  {
+    default = wsIconOverrides;
+    type = lib.types.listOf (lib.types.submodule {
+      options = {
+        regex = { type = lib.types.str; };
+        text = { type = lib.types.str; };
+        color = { type = lib.types.str; };
+      };
+    });
+  };
+
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
     systemd.user.services.quickshell.Service.Environment = "QSG_RHI_BACKEND=vulkan QML_XHR_ALLOW_FILE_READ=1";
     programs.quickshell = {
@@ -50,7 +61,7 @@ in
     home = {
       packages = [ pkgs.quickshell ];
       file = {
-        ".config/quickshell/wsIconOverrides.json".text = builtins.toJSON wsIconOverrides;
+        ".config/quickshell/wsIconOverrides.json".text = builtins.toJSON config.userPrefs.wsIconOverrides;
         ".config/quickshell/scheme.json".text = builtins.toJSON scheme;
         ".config/quickshell/monitors.json".text = builtins.toJSON osConfig.hostInfos.monitors;
         ".config/quickshell/weather.sh" = {
