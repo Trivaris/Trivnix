@@ -7,7 +7,7 @@
 }:
 let
   librewolfPrefs = config.userPrefs.librewolf;
-  theme = osConfig.themingPrefs.scheme;
+  # theme = osConfig.themingPrefs.scheme;
 
   overrides = ''
     /** OVERRIDES ***/
@@ -29,21 +29,28 @@ let
 in
 {
   config = lib.mkIf librewolfPrefs.enable {
+    home.sessionVariables.MOZ_ENABLE_WAYLAND = 1;
+
     home.file = {
       ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
 
       ".librewolf/${config.userInfos.name}/user.js".text =
         builtins.readFile betterFox + " \n" + builtins.readFile smoothFox + " \n" + overrides;
 
-      ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
-        :root {
-          --lwt-accent-color: ${theme.base00} !important;
-          --lwt-text-color: ${theme.base05} !important;
-          --toolbar-bgcolor: ${theme.base00} !important;
-          --toolbar-color: ${theme.base05} !important;
-          --tab-selected-bgcolor: ${theme.base01} !important;
-        }
-      '';
+      # ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
+      #   :root {
+      #     --lwt-accent-color: ${theme.base00} !important;
+      #     --lwt-text-color: ${theme.base05} !important;
+      #     --toolbar-bgcolor: ${theme.base00} !important;
+      #     --toolbar-color: ${theme.base05} !important;
+      #     --tab-selected-bgcolor: ${theme.base01} !important;
+      #   }
+      # '';
+      # ".librewolf/${config.userInfos.name}/chrome/userContent.css".text = ''
+      #   body {
+      #     background: transparent !important;
+      #   }
+      # '';
     };
 
     programs.librewolf = {
@@ -99,6 +106,8 @@ in
           };
         };
       };
+
+      # settings."toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
       policies = {
         DisableTelemetry = true;

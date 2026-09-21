@@ -9,6 +9,14 @@
     environment.systemPackages = [ pkgs.sbctl ];
     security.pam.services.hyprlock = { };
 
+    services.keyd = {
+      enable = true;
+      keyboards.default = {
+        ids = [ "*" ];
+        settings.main.space = "overloadt(meta, space, 200)"; 
+      };
+    };
+
     programs.hyprland = {
       enable = true;
       portalPackage = pkgs.xdg-desktop-portal-hyprland;
