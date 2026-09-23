@@ -9,22 +9,18 @@ in
   programs.rofi = {
     enable = true;
 
-    extraConfig = {
+    settings = {
       show-icons = true;
       terminal = config.vars.terminalEmulator;
       display-drun = "Apps";
       display-run = "Run";
       display-window = "Windows";
       drun-display-format = "{name}";
+      modes = [
+        "drun"
+        "emoji:${lib.getExe pkgs.rofimoji}"
+      ];
     };
-
-    modes = [
-      "drun"
-      {
-        name = "emoji";
-        path = lib.getExe pkgs.rofimoji;
-      }
-    ];
 
     theme = {
       "*" = {

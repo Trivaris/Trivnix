@@ -21,21 +21,20 @@
       configType = "lua";
     };
 
-    home.packages = builtins.attrValues {
-      inherit (pkgs)
-        python313
-        playerctl
-        pwvucontrol
-        nmgui
-        brightnessctl
-        networkmanagerapplet
-        networkmanager-strongswan
-        strongswan
-        wtype
-        nautilus
-        loupe
-        ;
-    };
+    home.packages = [
+      pkgs.python313
+      pkgs.playerctl
+      pkgs.pwvucontrol
+      pkgs.nmgui
+      pkgs.brightnessctl
+      pkgs.networkmanagerapplet
+      pkgs.networkmanager-strongswan
+      pkgs.strongswan
+      pkgs.wtype
+      pkgs.nautilus
+      pkgs.loupe
+      pkgs.hyprqt6engine
+    ];
 
     programs.hyprshot = {
       enable = true;

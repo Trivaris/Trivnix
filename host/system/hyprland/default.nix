@@ -13,7 +13,7 @@
       enable = true;
       keyboards.default = {
         ids = [ "*" ];
-        settings.main.space = "overloadt(meta, space, 200)"; 
+        settings.main.space = "overload(meta, space)"; 
       };
     };
 

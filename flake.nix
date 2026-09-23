@@ -14,6 +14,7 @@
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     importTree.url = "github:vic/import-tree";
 
+    hyprqt6engine.url = "github:hyprwm/hyprqt6engine";
     hyprland.url = "github:hyprwm/Hyprland";
   };
 

@@ -72,7 +72,7 @@ in
 
       settings = {
         experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
-        trusted-users = allUserInfos ++ [ "root" ];
+        trusted-users = [ "root" "@wheel" ];
         auto-optimise-store = true;
         warn-dirty = false;
         substituters = [ "https://hyprland.cachix.org" ];

@@ -1,22 +1,20 @@
 { pkgs, ... }:
 {
-  environment.defaultPackages = builtins.attrValues {
-    inherit (pkgs)
-      coreutils
-      fd
-      file
-      fzf
-      git
-      httpie
-      jq
-      openssh
-      openssl
-      procs
-      tldr
-      wget
-      zip
-      ;
-  };
+  environment.defaultPackages = [
+    pkgs.coreutils
+    pkgs.fd
+    pkgs.file
+    pkgs.fzf
+    pkgs.git
+    pkgs.httpie
+    pkgs.jq
+    pkgs.openssh
+    pkgs.openssl
+    pkgs.procs
+    pkgs.tldr
+    pkgs.wget
+    pkgs.zip
+  ];
 
   programs.starship = {
     enable = true;

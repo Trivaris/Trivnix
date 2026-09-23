@@ -1,29 +1,23 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }:
 {
   boot = lib.mkIf (!config.hostPrefs.headless) {
-    plymouth.enable = true;
-    consoleLogLevel = 0;
-    initrd.verbose = false;
-    loader = {
-      timeout = 0;
-      systemd-boot = {
-        consoleMode = "keep";
-        editor = false;
-      };
+    plymouth = {
+      enable = true;
+      theme = "spin";
+      themePackages = [ (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "spin" ]; }) ];
     };
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    loader.timeout = 0;
     kernelParams = [
       "quiet"
-      "splash"
-      "loglevel=0"
-      "systemd.show_status=false"
-      "rd.systemd.show_status=false"
-      "udev.log_level=0"
-      "rd.udev.log_level=0"
-      "vt.global_cursor_default=0"
+      "rd.udev.log_level=3"
+      "rd.systemd.show_status=auto"
     ];
   };
 }
