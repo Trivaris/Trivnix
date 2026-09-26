@@ -17,6 +17,7 @@
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
     wayland.windowManager.hyprland.enable = true;
 
+    home.sessionVariables.QT_QPA_PLATFORMTHEME = "hyprqt6engine";
     home.packages = [
       pkgs.python313
       pkgs.playerctl

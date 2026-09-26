@@ -1,13 +1,14 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  home.file = {
-    ".config/nvim/preferences.lua".text = ''
+  home.packages = [ pkgs.neovim pkgs.neovim-qt ];
+  xdg.configFile = {
+    "nvim/lua/preferences.lua".text = ''
       return {
         colorscheme = "catputtin",
         use_lsp = true
       }
     '';
-    ".config/nvim" = {
+    "nvim" = {
       recursive = true;
       source = ./_config;
     };

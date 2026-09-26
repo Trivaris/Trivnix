@@ -32,8 +32,8 @@ in
       )
     ) config.vars.filteredEmailAccounts;
 
-    home.file = lib.mkIf emailPrefs.generateAccountsFile {
-      ".config/mailaccounts.json".text = builtins.toJSON (
+    xdg.configFile = lib.mkIf emailPrefs.generateAccountsFile {
+      "mailaccounts.json".text = builtins.toJSON (
         lib.mapAttrs (
           accountName: account:
           let
