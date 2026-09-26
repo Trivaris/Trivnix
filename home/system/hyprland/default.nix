@@ -15,11 +15,7 @@
   };
 
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      settings.config.input.kb_layout = osConfig.hostPrefs.language.keyMap or "us";
-      configType = "lua";
-    };
+    wayland.windowManager.hyprland.enable = true;
 
     home.packages = [
       pkgs.python313

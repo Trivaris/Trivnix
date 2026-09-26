@@ -9,13 +9,13 @@
     environment.systemPackages = [ pkgs.sbctl ];
     security.pam.services.hyprlock = { };
 
-    services.keyd = {
-      enable = true;
-      keyboards.default = {
-        ids = [ "*" ];
-        settings.main.space = "overload(meta, space)"; 
-      };
-    };
+    # services.keyd = {
+    #   enable = true;
+    #   keyboards.default = {
+    #     ids = [ "*" ];
+    #     settings.main.space = "overload(meta, space)"; 
+    #   };
+    # };
 
     programs.hyprland = {
       enable = true;
