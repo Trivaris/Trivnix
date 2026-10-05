@@ -45,6 +45,7 @@ in
       packages = [ themePrefs.font.package ] ++ themePrefs.font.extraFonts;
       fontconfig = {
         enable = true;
+        useEmbeddedBitmaps = true;
         defaultFonts = {
           emoji = [ "Noto Color Emoji" ];
           monospace = [ themePrefs.font.monoName ];

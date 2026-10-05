@@ -15,7 +15,18 @@
   };
 
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
-    wayland.windowManager.hyprland.enable = true;
+    wayland.windowManager.hyprland = {
+      enable = true;
+      extraConfig = ''
+        _G.reminderTimer = hl.timer(function()
+          hl.notification.create({
+            text = "1 hour has passed",
+            timeout = 5000,
+            type = "hint"
+          })
+        end, { timeout = 60 * 60 * 1000, type = "repeat" })
+      '';
+    };
 
     home.sessionVariables.QT_QPA_PLATFORMTHEME = "hyprqt6engine";
     home.packages = [
