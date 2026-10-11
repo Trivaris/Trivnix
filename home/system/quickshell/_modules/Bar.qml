@@ -27,8 +27,9 @@ PanelWindow {
 
     // Base background styling
     Rectangle {
-        anchors { fill: parent; leftMargin: 10; rightMargin: 10; bottomMargin: -2*border.width }
+        anchors { fill: parent; leftMargin: 10; rightMargin: 10; bottomMargin: 10 }
         border { width: 2; color: scheme.base03 }
+        bottomPadding: 10;
         color: scheme.base01
         radius: 8
 
