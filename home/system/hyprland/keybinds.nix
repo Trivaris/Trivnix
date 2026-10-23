@@ -74,14 +74,14 @@ in
         { _args = [ "${main_mod} + ${alt_mod} + C"      (mkLua ''hl.dsp.exec_cmd("hyprlock")'') ]; }
         { _args = [ "${main_mod} + ${alt_mod} + A"      (mkLua ''hl.dsp.exec_cmd("code")'') ]; }
         { _args = [ "${main_mod} + ${alt_mod} + D"      (mkLua ''hl.dsp.exec_cmd("vesktop")'') ]; }
-        { _args = [ "${main_mod} + ${alt_mod} + S"      (mkLua ''hl.dsp.exec_cmd("feishin")'') ]; }
+        { _args = [ "${main_mod} + ${alt_mod} + S"      (mkLua ''hl.dsp.exec_cmd("spotify")'') ]; }
         { _args = [ "${main_mod} + ${alt_mod} + Z"      (mkLua ''hl.dsp.exec_cmd("thunderbird")'') ]; }
         { _args = [ "${main_mod} + ${alt_mod} + W"      (mkLua ''hl.dsp.exec_cmd("librewolf")'') ]; }
         
         { _args = [ "${main_mod} + ${alt_mod} + RETURN" (mkLua ''hl.dsp.focus({ window = "class:${term}"     })'') ]; }
         { _args = [ "${main_mod} + A"                   (mkLua ''hl.dsp.focus({ window = "class:code"        })'') ]; }
         { _args = [ "${main_mod} + D"                   (mkLua ''hl.dsp.focus({ window = "class:vesktop"     })'') ]; }
-        { _args = [ "${main_mod} + S"                   (mkLua ''hl.dsp.focus({ window = "class:feishin"     })'') ]; }
+        { _args = [ "${main_mod} + S"                   (mkLua ''hl.dsp.focus({ window = "class:spotify"     })'') ]; }
         { _args = [ "${main_mod} + Z"                   (mkLua ''hl.dsp.focus({ window = "class:thunderbird" })'') ]; }
         { _args = [ "${main_mod} + W"                   (mkLua ''hl.dsp.focus({ window = "class:librewolf"   })'') ]; }
       

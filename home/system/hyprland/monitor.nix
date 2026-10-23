@@ -11,7 +11,7 @@
             -- hl.exec_cmd("code",        { workspace =  "2 silent" })
             hl.exec_cmd("kitty",       { workspace =  "2 silent" })
             hl.exec_cmd("thunderbird", { workspace =  "3 silent" })
-            hl.exec_cmd("feishin",     { workspace = "11 silent" })
+            hl.exec_cmd("spotify",     { workspace = "11 silent" })
             -- hl.exec_cmd("vesktop",     { workspace = "12 silent" })
           end
         '') ];
