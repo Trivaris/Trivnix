@@ -10,7 +10,7 @@ let
     lib.pipe
       {
         url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
-        sha256 = "sha256:1v4cda5zf5a9wirgxc1in6c40wrsa7pbjphb9ihkrgkwgp8jhj5q";
+        sha256 = "sha256:1rwcdcffwr7iry1anqfj69phx81ghscaivysl56gpd0gv9s16a9n";
       }
       [
         builtins.fetchurl
