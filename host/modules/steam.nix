@@ -8,10 +8,7 @@ let
   steamPrefs = config.hostPrefs.steam;
 in
 {
-  options.hostPrefs.steam.enable = lib.mkEnableOption ''
-    Steam with bundled compatibility tooling on this host.
-    Use it when the machine should support gaming workloads.
-  '';
+  options.hostPrefs.steam.enable = lib.mkEnableOption "Steam with bundled compatibility tooling on this host";
 
   config = lib.mkIf steamPrefs.enable {
     environment.systemPackages = [

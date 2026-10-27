@@ -70,7 +70,7 @@ EOF
 
 nix_expr="${nix_expr//FLAKE_URI_PLACEHOLDER/$flake_uri}"
 
-store_path=$(nix build --impure --no-link --print-out-paths --expr "$nix_expr")
+store_path=$(nix build --impure --no-link --print-out-paths --expr "$nix_expr" --refresh)
 
 cp "$store_path/README.md" "$output"
 chmod +w "$output"

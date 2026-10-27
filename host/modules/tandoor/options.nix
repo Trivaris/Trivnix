@@ -2,9 +2,6 @@
 {
   options.hostPrefs.tandoor = {
     reverseProxy = lib.mkReverseProxyOption;
-    enable = lib.mkEnableOption ''
-      Tandoor Recipes locally.
-      It provides a self-hosted recipe manager behind the reverse proxy.
-    '';
+    enable = lib.mkEnableOption "Tandoor Recipes, a self-hosted recipe manager";
   };
 }

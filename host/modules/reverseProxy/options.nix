@@ -1,15 +1,9 @@
 { lib, ... }:
 {
   options.hostPrefs.reverseProxy = {
-    enable = lib.mkEnableOption ''
-      the shared Nginx reverse proxy for web services.
-      Services defining `reverseProxy` register with it automatically.
-    '';
+    enable = lib.mkEnableOption "Nginx reverse proxy, shared for web services";
 
-    enableDDClient = lib.mkEnableOption ''
-      ddclient for dynamic DNS updates for the configured zone.
-      Useful when public IPs change and Cloudflare or other providers must sync.
-    '';
+    enableDDClient = lib.mkEnableOption "ddclient for dynamic DNS updates for the configured zone";
 
     email = lib.mkOption {
       type = lib.types.str;
@@ -79,7 +73,7 @@
             options = {
               name = lib.mkOption {
                 type = lib.types.str;
-                description = "Name used to identify the additional reverse-proxy service.";
+                description = "Name used to identify the additional reverse-proxy service";
               };
             };
           }
@@ -93,9 +87,7 @@
     };
 
     dumbPipes = {
-      enable = lib.mkEnableOption ''
-        non-HTTP forwarding rules handled by the shared reverse proxy.
-      '';
+      enable = lib.mkEnableOption "non-HTTP forwarding rules handled by the shared reverse proxy";
 
       upstreams = lib.mkOption {
         type = lib.types.attrsOf (
@@ -103,12 +95,12 @@
             options = {
               address = lib.mkOption {
                 type = lib.types.str;
-                description = "Address of the upstream service.";
+                description = "Address of the upstream service";
               };
               port = lib.mkOption {
                 type = lib.types.port;
                 default = 443;
-                description = "Port of the upstream service.";
+                description = "Port of the upstream service";
               };
             };
           }
@@ -144,11 +136,11 @@
             options = {
               listenPort = lib.mkOption {
                 type = lib.types.port;
-                description = "Local port that accepts forwarded connections.";
+                description = "Local port that accepts forwarded connections";
               };
               upstream = lib.mkOption {
                 type = lib.types.str;
-                description = "Address and port of the forwarding destination.";
+                description = "Address and port of the forwarding destination";
               };
               enableTCP = lib.mkEnableOption "TCP port forwarding";
               enableUDP = lib.mkEnableOption "UDP port forwarding";

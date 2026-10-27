@@ -3,14 +3,8 @@
   options.hostPrefs.vaultwarden = {
     reverseProxy = lib.mkReverseProxyOption;
 
-    enable = lib.mkEnableOption ''
-      the Vaultwarden password manager backend on this host.
-      Use it when hosting a self-managed Bitwarden-compatible server.
-    '';
+    enable = lib.mkEnableOption "Vaultwarden, a password manager backend";
 
-    sendMails = lib.mkEnableOption ''
-      mail delivery through the integrated mailserver.
-      Configure `hostPrefs.mailserver` separately.
-    '';
+    sendMails = lib.mkEnableOption "Mail delivery through the integrated mailserver";
   };
 }

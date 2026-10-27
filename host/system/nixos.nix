@@ -30,9 +30,7 @@ in
       '';
     };
 
-    headless = lib.mkEnableOption {
-      description = "a headless host without GUI features";
-    };
+    headless = lib.mkEnableOption "This host as a headless host without GUI features";
   };
 
   config = {

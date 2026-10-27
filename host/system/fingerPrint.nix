@@ -5,10 +5,7 @@
   ...
 }:
 {
-  options.hostPrefs.enableFingerPrintAuth = lib.mkEnableOption ''
-    fingerprint authentication on the GDM login screen through fprintd.
-    Use it when the host should offer fingerprint login in GNOME.
-  '';
+  options.hostPrefs.enableFingerPrintAuth = lib.mkEnableOption "Fingerprint authentication for sudo";
 
   config = lib.mkIf config.hostPrefs.enableFingerPrintAuth {
     services.fprintd = {

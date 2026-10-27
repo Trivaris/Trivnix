@@ -7,10 +7,7 @@ let
   wayvncPrefs = config.userPrefs.wayvnc;
 in
 {
-  options.userPrefs.wayvnc.enable = lib.mkEnableOption ''
-    remote desktop access via WayVNC.
-    Requires a Wayland session (e.g., Sway, Hyprland).
-  '';
+  options.userPrefs.wayvnc.enable = lib.mkEnableOption "Remote desktop access via WayVNC";
 
   config = lib.mkIf wayvncPrefs.enable {
     services.wayvnc = {

@@ -5,10 +5,7 @@
 }:
 {
   options.userPrefs.email = {
-    enable = lib.mkEnableOption ''
-      SOPS-backed email account provisioning for this user.
-      Mail settings and secrets sync from `trivnixPrivate`.
-    '';
+    enable = lib.mkEnableOption "SOPS-backed email account provisioning for this user";
 
     exclude = lib.mkOption {
       type = lib.types.listOf (

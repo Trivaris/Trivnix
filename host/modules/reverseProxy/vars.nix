@@ -12,7 +12,7 @@ in
           options = {
             name = lib.mkOption {
               type = lib.types.str;
-              description = "Name of the active service registered with the reverse proxy.";
+              description = "Name of the active service registered with the reverse proxy";
             };
           };
         }
@@ -22,6 +22,6 @@ in
     default =
       prefs.reverseProxy.extraServices
       ++ (servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs));
-    description = "Services collected from enabled reverse-proxy registrations.";
+    description = "Services collected from enabled reverse-proxy registrations";
   };
 }

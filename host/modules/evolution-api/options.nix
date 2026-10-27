@@ -4,7 +4,7 @@
 }:
 {
   options.hostPrefs.evolution = {
-    enable = lib.mkEnableOption "the Evolution API service";
+    enable = lib.mkEnableOption "Evolution API service";
     reverseProxy = lib.mkReverseProxyOption;
   };
 }

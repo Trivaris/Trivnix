@@ -3,10 +3,7 @@
   options.hostPrefs.collabora = {
     reverseProxy = lib.mkReverseProxyOption;
 
-    enable = lib.mkEnableOption ''
-      Collabora Online for browser-based document editing.
-      It is exposed through the configured reverse proxy.
-    '';
+    enable = lib.mkEnableOption "Collabora Online for browser-based document editing";
 
     nextcloudFQDNs = lib.mkOption {
       type = lib.types.nullOr (lib.types.listOf lib.types.str);

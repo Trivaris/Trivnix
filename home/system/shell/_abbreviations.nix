@@ -1,5 +1,5 @@
 {
-  ".." = "cd ..";
+  ".." = "cd .";
   "..." = "cd ../../";
 
   "gstat" = "git status --short";

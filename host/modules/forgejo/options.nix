@@ -3,14 +3,8 @@
   options.hostPrefs.forgejo = {
     reverseProxy = lib.mkReverseProxyOption;
 
-    enable = lib.mkEnableOption ''
-      the Forgejo Git hosting service.
-      It is exposed through the configured reverse proxy.
-    '';
+    enable = lib.mkEnableOption "Forgejo Git hosting service";
 
-    sendMails = lib.mkEnableOption ''
-      mail delivery through the integrated mailserver.
-      Configure `hostPrefs.mailserver` separately.
-    '';
+    sendMails = lib.mkEnableOption "Mail delivery through the integrated mailserver";
   };
 }

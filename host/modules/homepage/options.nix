@@ -26,9 +26,6 @@
       '';
     };
 
-    enable = lib.mkEnableOption ''
-      the self-hosted Homepage service behind a reverse proxy.
-      It provides a dashboard for the other configured services.
-    '';
+    enable = lib.mkEnableOption "Homepage service";
   };
 }

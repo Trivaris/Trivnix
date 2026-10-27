@@ -47,15 +47,15 @@ in
       options = {
         regex = lib.mkOption {
           type = lib.types.str;
-          description = "Regular expression matched against an application identifier.";
+          description = "Regular expression matched against an application identifier";
         };
         text = lib.mkOption {
           type = lib.types.str;
-          description = "Icon text displayed for matching applications.";
+          description = "Icon text displayed for matching applications";
         };
         color = lib.mkOption {
           type = lib.types.str;
-          description = "Color applied to the displayed icon.";
+          description = "Color applied to the displayed icon";
         };
       };
     });

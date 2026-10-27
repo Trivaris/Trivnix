@@ -5,10 +5,7 @@
 }:
 {
   options.userPrefs.git = {
-    enableSigning = lib.mkEnableOption ''
-      commit and tag signing in Git using an SSH key configured through sops-nix.
-      This marks commits as verified on platforms such as GitHub and GitLab.
-    '';
+    enableSigning = lib.mkEnableOption "Commit and Tag signing in Git using an SSH key configured through sops-nix";
 
     name = lib.mkOption {
       type = lib.types.str;
