@@ -8,7 +8,7 @@ let
   syncthingPrefs = config.userPrefs.syncthing;
 in
 {
-  options.userPrefs.syncthing.enable = lib.mkEnableOption "Syncthing, a file sync service";
+  options.userPrefs.syncthing.enable = lib.mkEnableOption "Syncthing, a file synchronization service";
   config = lib.mkIf syncthingPrefs.enable {
     services.syncthing = {
       enable = true;

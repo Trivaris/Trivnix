@@ -4,16 +4,16 @@
     reverseProxy = lib.mkReverseProxyOption;
 
     enable = lib.mkEnableOption ''
-      Run the Forgejo git hosting service locally.
-      Enable to provide a self-hosted Forgejo instance behind the reverse proxy.
+      Collabora Online for browser-based document editing.
+      It is exposed through the configured reverse proxy.
     '';
 
     nextcloudFQDNs = lib.mkOption {
       type = lib.types.nullOr (lib.types.listOf lib.types.str);
-      example = "nextcloud.example.com";
+      example = [ "nextcloud.example.com" ];
       description = ''
-        The FQDN of your nextcloud server.
-        Set to null if you do not want to use this service with nextcloud.
+        Fully qualified domain names of Nextcloud instances allowed to use this
+        Collabora Online service. Set to null when Nextcloud integration is not used.
       '';
     };
   };

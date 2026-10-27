@@ -4,13 +4,13 @@
     reverseProxy = lib.mkReverseProxyOption;
 
     enable = lib.mkEnableOption ''
-      Run the Forgejo git hosting service locally.
-      Enable to provide a self-hosted Forgejo instance behind the reverse proxy.
+      the Forgejo Git hosting service.
+      It is exposed through the configured reverse proxy.
     '';
 
     sendMails = lib.mkEnableOption ''
-      Send mails via the integrated mailserver.
-      Also enable and configure hostPrefs.mailserver.
+      mail delivery through the integrated mailserver.
+      Configure `hostPrefs.mailserver` separately.
     '';
   };
 }

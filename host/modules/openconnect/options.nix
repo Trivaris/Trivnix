@@ -4,27 +4,27 @@
 }:
 {
   options.hostPrefs.openconnectClient = {
-    enable = lib.mkEnableOption "Enable Openconnect VPN Client";
+    enable = lib.mkEnableOption "a VPN connection with the OpenConnect client";
 
     user = lib.mkOption {
       type = lib.types.str;
-      description = "The username for the vpn";
+      description = "Username used to authenticate with the VPN gateway.";
     };
 
     gateway = lib.mkOption {
       type = lib.types.str;
-      description = "The FQDN of the vpn";
+      description = "Fully qualified domain name of the VPN gateway.";
     };
 
     cafile = lib.mkOption {
       type = lib.types.nullOr lib.types.path;
-      description = "Path to the server cert";
+      description = "Optional path to a CA certificate used to verify the VPN server.";
       default = null;
     };
 
     authgroup = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
-      description = "The authgroup you want to authenticate with";
+      description = "Optional authentication group selected on the VPN gateway.";
       default = null;
     };
   };

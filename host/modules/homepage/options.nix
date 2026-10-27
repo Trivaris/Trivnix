@@ -20,11 +20,15 @@
           }) config.vars.activeServices;
         }
       ];
+      description = ''
+        Homepage service groups written to the generated dashboard configuration.
+        The default lists services registered with the shared reverse proxy.
+      '';
     };
 
     enable = lib.mkEnableOption ''
-      Run the hompage service.
-      Enable to provide a self-hosted Homepage instance behind a reverse proxy to manage all other services.
+      the self-hosted Homepage service behind a reverse proxy.
+      It provides a dashboard for the other configured services.
     '';
   };
 }

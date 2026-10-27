@@ -45,10 +45,22 @@ in
     default = wsIconOverrides;
     type = lib.types.listOf (lib.types.submodule {
       options = {
-        regex = lib.mkOption { type = lib.types.str; };
-        text = lib.mkOption { type = lib.types.str; };
-        color = lib.mkOption { type = lib.types.str; };
+        regex = lib.mkOption {
+          type = lib.types.str;
+          description = "Regular expression matched against an application identifier.";
+        };
+        text = lib.mkOption {
+          type = lib.types.str;
+          description = "Icon text displayed for matching applications.";
+        };
+        color = lib.mkOption {
+          type = lib.types.str;
+          description = "Color applied to the displayed icon.";
+        };
       };
     });
+    description = ''
+      Rules that override the icon, text, and color used for matching application identifiers.
+    '';
   };
 }

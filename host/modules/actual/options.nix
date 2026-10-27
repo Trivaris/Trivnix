@@ -2,6 +2,6 @@
 {
   options.hostPrefs.actual = {
     reverseProxy = lib.mkReverseProxyOption;
-    enable = lib.mkEnableOption "Enable the private financing and budgeting tool Actual";
+    enable = lib.mkEnableOption "the private financing and budgeting tool Actual";
   };
 }

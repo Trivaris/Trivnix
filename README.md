@@ -1,12 +1,24 @@
 ## Trivnix
 
-> IMPORTANT: This is a WIP and changes are made every day!
+Opinionated, reusable NixOS and Home Manager modules for the Trivnix configuration stack.
 
-Flake-based NixOS and Home Manager modules powering my machines. This repo provides common modules, overlays, and utilities that work together with:
+This flake provides:
 
-- `trivnixLib` - helper library (modules like `themePrefs`, `private`)
-- `trivnixConfigs` - per-host and per-user configuration
-- `trivnixOverlays` - extra packages and overrides
-- `trivnixPrivate` - private inputs and secrets
+- `nixosModules.default` - host and service modules from `host/`
+- `nixosModules.dependencies` - upstream NixOS modules used by those modules
+- `homeModules.default` - Home Manager modules from `home/`
+- `homeModules.dependencies` - upstream Home Manager modules used by those modules
+- `overlays.hyprqt6engine` - the Hyprland Qt6 engine overlay
 
-This README is an overview. Detailed guides live under `docs/` (TODO).
+The companion `trivnixconfig` flake composes these modules into concrete hosts and users. It also supplies the private library, secrets, metadata, and local overlay choices that this public module flake should not contain.
+
+### Documentation
+
+- [Architecture](docs/architecture.md) - flake boundaries and exported interfaces
+- [Getting started](docs/getting-started.md) - consume the modules from another flake
+- [Module catalog](docs/modules.md) - features grouped by host and home use
+- [Private integration](docs/private-integration.md) - public contracts with the companion flakes
+- [Development](docs/development.md) - checks, formatting, and local workflows
+- [Option reference](docs/reference/README.md) - generated option reference workflow
+
+The modules provide sensible defaults, but remain configurable through the `hostPrefs`, `userPrefs`, and related options documented in the option reference.

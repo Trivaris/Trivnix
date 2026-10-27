@@ -4,7 +4,7 @@
 }:
 {
   options.hostPrefs.paperless = {
-    enable = lib.mkEnableOption "Paperless, a document management software";
+    enable = lib.mkEnableOption "Paperless, a document management service";
     reverseProxy = lib.mkReverseProxyOption;
   };
 }

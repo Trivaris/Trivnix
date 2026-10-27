@@ -2,8 +2,8 @@
 {
   options.hostPrefs.openssh = {
     enable = lib.mkEnableOption ''
-      Enable the OpenSSH service and expose it through the firewall.
-      Turn this on when the host should accept incoming SSH connections.
+      the OpenSSH service and expose it through the firewall.
+      Use it when the host should accept incoming SSH connections.
     '';
 
     ports = lib.mkOption {

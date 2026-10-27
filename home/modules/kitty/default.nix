@@ -11,6 +11,7 @@ in
     type = lib.types.str;
     default = "kitty";
     readOnly = true;
+    description = "Terminal emulator selected by the desktop configuration.";
   };
 
   config.programs.kitty = {

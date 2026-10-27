@@ -3,8 +3,8 @@
   options.hostPrefs.tandoor = {
     reverseProxy = lib.mkReverseProxyOption;
     enable = lib.mkEnableOption ''
-      Run the hompage service.
-      Enable to provide a self-hosted Homepage instance behind a reverse proxy to manage all other services.
+      Tandoor Recipes locally.
+      It provides a self-hosted recipe manager behind the reverse proxy.
     '';
   };
 }

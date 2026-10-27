@@ -9,8 +9,8 @@ let
 in
 {
   options.hostPrefs.steam.enable = lib.mkEnableOption ''
-    Install Steam with bundled compatibility tooling on this host.
-    Toggle this when the machine should support gaming workloads.
+    Steam with bundled compatibility tooling on this host.
+    Use it when the machine should support gaming workloads.
   '';
 
   config = lib.mkIf steamPrefs.enable {

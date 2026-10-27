@@ -31,7 +31,7 @@ in
     };
 
     headless = lib.mkEnableOption {
-      description = "Disable GUI features";
+      description = "a headless host without GUI features";
     };
   };
 

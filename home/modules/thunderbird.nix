@@ -24,7 +24,7 @@ let
   );
 in
 {
-  options.userPrefs.thunderbird.enable = lib.mkEnableOption "Enable Thunderbird configuration.";
+  options.userPrefs.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
   config = lib.mkIf thunderbirdPrefs.enable {
     programs.thunderbird = {
       enable = true;

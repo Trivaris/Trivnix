@@ -8,7 +8,7 @@ let
 in
 {
   options.userPrefs.remmina.enable = lib.mkEnableOption ''
-    Enable Remmina remote desktop client.
+    the Remmina remote desktop client.
   '';
 
   config = lib.mkIf remminaPrefs.enable {

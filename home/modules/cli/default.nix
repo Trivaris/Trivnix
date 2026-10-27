@@ -1,4 +1,6 @@
 { lib, ... }:
 {
-  options.userPrefs.cli.enable = lib.mkEnableOption "Wether to replace default cli utils with better variants";
+  options.userPrefs.cli.enable = lib.mkEnableOption ''
+    Replace selected default CLI utilities with the configured alternatives.
+  '';
 }

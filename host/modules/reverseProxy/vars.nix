@@ -10,7 +10,10 @@ in
       lib.types.submodule (
         lib.recursiveUpdate lib.reverseProxyOptions {
           options = {
-            name = lib.mkOption { type = lib.types.str; };
+            name = lib.mkOption {
+              type = lib.types.str;
+              description = "Name of the active service registered with the reverse proxy.";
+            };
           };
         }
       )
@@ -19,5 +22,6 @@ in
     default =
       prefs.reverseProxy.extraServices
       ++ (servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs));
+    description = "Services collected from enabled reverse-proxy registrations.";
   };
 }

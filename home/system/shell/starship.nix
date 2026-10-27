@@ -14,7 +14,7 @@ in
       fill.symbol = " ";
 
       format = ''
-        [┌─](bold ${theme.base0C}) $username $directory $git_branch $git_status $all$fill$time
+        [┌─](bold ${theme.base0C}) $username $directory $git_branch$git_status$all$fill$time
         [╰─](bold ${theme.base0C})$character'';
 
       character = {
@@ -36,12 +36,12 @@ in
 
       git_branch = {
         style = "${theme.base0E}";
-        format = "on [$branch]($style)";
+        format = "on [$branch]($style) ";
       };
 
       git_status = {
         style = "${theme.base08}";
-        format = "([\\[$all_status$ahead_behind\\]]($style))";
+        format = "([\\[$all_status$ahead_behind\\]]($style) )";
       };
 
       time = {
