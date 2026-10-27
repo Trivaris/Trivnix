@@ -13,6 +13,7 @@
     # Extras and ecosystem modules
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     importTree.url = "github:vic/import-tree";
+    epicGamesLauncher.url = "github:kjetteren/epic-games-launcher-flake";
 
     hyprqt6engine.url = "github:hyprwm/hyprqt6engine";
     hyprland.url = "github:hyprwm/Hyprland";

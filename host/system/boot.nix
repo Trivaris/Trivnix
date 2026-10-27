@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -8,15 +7,10 @@
   boot = lib.mkIf (!config.hostPrefs.headless) {
     plymouth = {
       enable = true;
-      theme = "spin";
-      themePackages = [ (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "spin" ]; }) ];
-      extraConfig = ''
-        [Daemon]
-        DeviceScale=2
-      '';
+      theme = "bgrt";
     };
+
     consoleLogLevel = 3;
-    initrd.verbose = false;
     loader.timeout = 0;
     kernelParams = [
       "quiet"

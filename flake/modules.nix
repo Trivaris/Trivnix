@@ -7,6 +7,7 @@
       inputs.nur.modules.nixos.default
       inputs.sops-nix.nixosModules.sops
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.epicGamesLauncher.nixosModules.default
     ];
   };
 

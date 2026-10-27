@@ -6,19 +6,6 @@
 }:
 let
   cliPrefs = config.userPrefs.cli;
-  starshipTheme =
-    lib.pipe
-      {
-        url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
-        sha256 = "sha256:1rwcdcffwr7iry1anqfj69phx81ghscaivysl56gpd0gv9s16a9n";
-      }
-      [
-        builtins.fetchurl
-        builtins.readFile
-        fromTOML
-        removeAttrs
-      ]
-      [ "maven" ];
 in
 {
   options.vars = {
@@ -36,11 +23,6 @@ in
   };
 
   config = {
-    programs.starship = {
-      enable = true;
-      settings = starshipTheme;
-    };
-
     programs.zsh = {
       enable = true;
       autocd = true;
