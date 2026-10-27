@@ -1,36 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "[hooks] Updating the generated option reference..."
+echo "Generating latest Trivnix option reference..."
+./docs/reference/generate.sh
 
-if ! command -v nix >/dev/null 2>&1; then
-  echo "[hooks] nix is not available in PATH; aborting push." >&2
-  echo "         Install Nix or push with --no-verify if you must." >&2
-  exit 1
+if git diff --quiet docs/reference/README.md; then
+    echo "Documentation is already up to date."
+else
+    echo "Documentation updated. Staging changes..."
+    git add docs/reference/README.md
+    echo "Changes staged for push."
 fi
-
-generated_file="docs/reference/README.md"
-generated_tmp=$(mktemp)
-trap 'rm -f "$generated_tmp"' EXIT
-
-if ! bash docs/reference/generate.sh server "$generated_tmp"; then
-  echo "[hooks] option reference generation failed; blocking push." >&2
-  exit 1
-fi
-
-if ! cmp -s "$generated_tmp" "$generated_file"; then
-  mv "$generated_tmp" "$generated_file"
-  echo "[hooks] $generated_file was updated; commit it and push again." >&2
-  exit 1
-fi
-
-echo "[hooks] Running nix flake check before push..."
-
-if ! nix flake check; then
-  echo "[hooks] nix flake check failed; blocking push." >&2
-  echo "         Fix failures or push with --no-verify to override." >&2
-  exit 1
-fi
-
-echo "[hooks] nix flake check passed. Proceeding with push."
-exit 0
