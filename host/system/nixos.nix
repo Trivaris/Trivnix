@@ -6,9 +6,7 @@
 }:
 let
   themePrefs = config.themingPrefs;
-  allUserInfos = builtins.attrNames (
-    builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users
-  );
+  allUserInfos = builtins.attrNames config.home-manager.users;
 in
 {
   options.hostPrefs = {
@@ -23,7 +21,8 @@ in
 
     mainUser = lib.mkOption {
       type = lib.types.str;
-      default = builtins.head allUserInfos;
+      default = if (builtins.length allUserInfos > 0) then (builtins.head allUserInfos) else "";
+      defaultText = lib.literalExpression "builtins.head allUserInfos";
       description = ''
         Primary user account considered owner of the host configuration.
         Used by modules such as autologin and service defaults needing a username.
