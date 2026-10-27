@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   ...
 }:
@@ -9,7 +8,7 @@
     reverseProxy = lib.mkReverseProxyOption;
     name = lib.mkOption {
       type = lib.types.str;
-      default = config.hostPrefs.matrix.reverseProxy.domain;
+      default = "matrix-server";
       description = "Public Matrix server name, defaulting to the reverse-proxy domain";
     };
   };
