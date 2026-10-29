@@ -36,6 +36,7 @@ in
     time.timeZone = "Europe/Berlin";
     networking.networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
     programs.nix-ld.enable = true;
+    qt.enable = true;
 
     fonts = {
       enableDefaultPackages = true;
@@ -50,12 +51,6 @@ in
           serif = [ themePrefs.font.propoName ];
         };
       };
-    };
-
-    qt = {
-      enable = true;
-      platformTheme = "gnome";
-      style = "adwaita-dark";
     };
 
     nix = {

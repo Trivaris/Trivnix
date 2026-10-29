@@ -29,7 +29,6 @@
       '';
     };
 
-    home.sessionVariables.QT_QPA_PLATFORMTHEME = "hyprqt6engine";
     home.packages = [
       pkgs.python313
       pkgs.playerctl

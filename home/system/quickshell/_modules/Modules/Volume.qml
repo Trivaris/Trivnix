@@ -50,7 +50,7 @@ Item {
             Layout.alignment: Qt.AlignVCenter
             font.pixelSize: 14
             font.family: "JetBrains Mono Nerd Font"
-            color: root.isMuted ? scheme.base03 : scheme.base0A
+            color: (root.isMuted || root.volumeLevel == 0.0) ? scheme.base03 : scheme.base0A
 
             text: {
                 if (root.isMuted) return "󰝟"
@@ -78,7 +78,7 @@ Item {
                 width: parent.width
                 height: parent.height * root.volumeLevel
                 radius: 3
-                color: root.isMuted ? scheme.base03 : scheme.base0A
+                color: (root.isMuted || root.volumeLevel == 0.0) ? scheme.base03 : scheme.base0A
 
                 Behavior on height {
                     NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
@@ -93,7 +93,7 @@ Item {
         Text {
             Layout.alignment: Qt.AlignVCenter
             text: root.isMuted ? "MUT" : root.volumeLevel == 1 ? "MAX" : `${Math.round(root.volumeLevel * 100)}`
-            color: root.isMuted ? scheme.base03 : scheme.base05
+            color: (root.isMuted || root.volumeLevel == 0.0) ? scheme.base03 : scheme.base05
             font.pixelSize: 12
             font.weight: Font.DemiBold
             font.family: "JetBrains Mono Nerd Font"

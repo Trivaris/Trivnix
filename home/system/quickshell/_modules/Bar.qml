@@ -54,6 +54,7 @@ PanelWindow {
             Bluetooth    { scheme: root.scheme; Layout.fillHeight: true }
             Weather      { scheme: root.scheme; Layout.fillHeight: true }
             ActiveWindow { scheme: root.scheme; Layout.fillHeight: true }
+            TrayBar      { scheme: root.scheme; Layout.fillHeight: true }
         }
 
 
@@ -96,7 +97,6 @@ PanelWindow {
             visible: opacity > 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
-            TrayBar     { scheme: root.scheme; Layout.fillHeight: true }
             Media       { scheme: root.scheme; Layout.fillHeight: true }
             Volume      { scheme: root.scheme; Layout.fillHeight: true }
             Resources   { scheme: root.scheme; Layout.fillHeight: true }

@@ -22,18 +22,20 @@ let
   ];
 
   qtTheme = pkgs.writeText "base16-qt6ct.conf" ''
-    [Appearance]
-    custom_palette=true
-
-    [Palette]
-    active=${paletteStr}
-    inactive=${paletteStr}
-    disabled=${disabledStr}
+    [ColorScheme]
+    active_colors=${paletteStr}
+    inactive_colors=${paletteStr}
+    disabled_colors=${disabledStr}
   '';
 in
 {
   config = lib.mkIf (!osConfig.hostPrefs.headless) {
-    home.sessionVariables.QT_QPA_PLATFORMTHEME = lib.mkForce "hyprqt6engine";
+    home.sessionVariables = {
+      QT_QPA_PLATFORMTHEME = "hyprqt6engine";
+      QT_QUICK_CONTROLS_STYLE = "Fusion";
+      QT_PLUGIN_PATH = "${pkgs.hyprqt6engine}/${pkgs.qt6.qtbase.qtPluginPrefix}";
+    };
+    
     xdg.configFile."hypr/hyprqt6engine.conf".text = ''
       theme {
         style = Fusion
@@ -53,7 +55,6 @@ in
     '';
 
     wayland.windowManager.hyprland.settings = {
-      env = [ { _args = [ "QT_QPA_PLATFORMTHEME" "hyprqt6engine"]; } ];
       animation = map lib.generators.mkLuaInline [  
         ''{ leaf = "windows", enabled = true, speed = 4, bezier = "easeOutExpo", style = "slide" }''
         ''{ leaf = "windowsOut", enabled = true, speed = 4, bezier = "easeOutExpo", style = "slide" }''

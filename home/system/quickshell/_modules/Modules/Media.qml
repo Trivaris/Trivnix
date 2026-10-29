@@ -32,20 +32,20 @@ MouseArea {
         anchors.fill: parent
         spacing: 8
         
-        // Image {
-        //     visible: hasMedia && activePlayer.trackArtUrl !== ""
-        //     source: hasMedia ? (activePlayer.trackArtUrl || "") : ""
-        //     Layout.preferredWidth: 32
-        //     Layout.preferredHeight: 32
-        //     fillMode: Image.PreserveAspectCrop
-        //     
-        //     Rectangle {
-        //         anchors.fill: parent
-        //         color: "transparent"
-        //         border.color: scheme.base03
-        //         border.width: 1
-        //     }
-        // }
+        Image {
+            visible: hasMedia && activePlayer.trackArtUrl !== ""
+            source: hasMedia ? (activePlayer.trackArtUrl || "") : ""
+            Layout.preferredWidth: 32
+            Layout.preferredHeight: 32
+            fillMode: Image.PreserveAspectCrop
+            
+            Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+                border.color: scheme.base03
+                border.width: 2
+            }
+        }
 
         Text {
             color: scheme.base08
