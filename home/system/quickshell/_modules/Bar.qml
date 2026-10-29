@@ -33,52 +33,76 @@ PanelWindow {
         radius: 8
 
         // --- LEFT SECTION ---
-        Row {
+        RowLayout {
             id: modulesLeft
-            anchors { left: parent.left; top: parent.top; bottom: parent.bottom; leftMargin: 20; topMargin: 8; bottomMargin: 12 }
             spacing: 35
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                leftMargin: 20
+                topMargin: 4
+                bottomMargin: parent.radius
+            }
 
             opacity: root.isActiveMonitor ? 1 : 0
             visible: opacity > 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
-            Launcher     { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            PowerMenu    { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            Bluetooth    { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            Weather      { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            ActiveWindow { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
+            Launcher     { scheme: root.scheme; Layout.fillHeight: true }
+            PowerMenu    { scheme: root.scheme; Layout.fillHeight: true }
+            Bluetooth    { scheme: root.scheme; Layout.fillHeight: true }
+            Weather      { scheme: root.scheme; Layout.fillHeight: true }
+            ActiveWindow { scheme: root.scheme; Layout.fillHeight: true }
         }
 
+
         // --- CENTER SECTION ---
-        Row {
+        RowLayout {
             id: modulesCenter
-            anchors.centerIn: parent
             spacing: 5
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: parent.top
+                bottom: parent.bottom
+                topMargin: 8
+                bottomMargin: parent.radius
+            }
 
             Workspaces { 
                 scheme: root.scheme
                 wsIconOverrides: root.wsIconOverrides
                 monitorName: root.screen.name 
                 monitorsMap: root.monitors
-                anchors.verticalCenter: parent.verticalCenter
+                Layout.fillHeight: true
             }
         }
 
+
         // --- RIGHT SECTION ---
-        Row {
+        RowLayout {
             id: modulesRight
-            anchors { right: parent.right; top: parent.top; bottom: parent.bottom; rightMargin: 20; topMargin: 8; bottomMargin: 12 }
             spacing: 35
+            anchors {
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+                rightMargin: 20
+                topMargin: 4
+                bottomMargin: parent.radius
+            }
 
             opacity: root.isActiveMonitor ? 1 : 0
             visible: opacity > 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
-            Media       { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            Volume      { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            Resources   { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            Network     { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
-            Clock       { scheme: root.scheme; anchors.verticalCenter: parent.verticalCenter }
+            TrayBar     { scheme: root.scheme; Layout.fillHeight: true }
+            Media       { scheme: root.scheme; Layout.fillHeight: true }
+            Volume      { scheme: root.scheme; Layout.fillHeight: true }
+            Resources   { scheme: root.scheme; Layout.fillHeight: true }
+            Network     { scheme: root.scheme; Layout.fillHeight: true }
+            Clock       { scheme: root.scheme; Layout.fillHeight: true }
+            Date        { scheme: root.scheme; Layout.fillHeight: true }
         }
     }
 }

@@ -1,11 +1,12 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
-Row {
+RowLayout {
     spacing: 5
     property var scheme
-
+ 
     Process { id: shutdownCmd; command: ["systemctl", "poweroff"] }
     Process { id: rebootCmd; command: ["systemctl", "reboot"] }
 

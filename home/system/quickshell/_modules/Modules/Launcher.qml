@@ -7,15 +7,16 @@ Item {
 
     implicitWidth: launcherText.implicitWidth
     implicitHeight: launcherText.implicitHeight
-
+ 
     Text {
         id: launcherText
         anchors.centerIn: parent
+
         text: ""
+        color: mouseArea.containsMouse ? (mouseArea.pressed ? "#fff" : scheme.base0D) : scheme.base0C
         font.pixelSize: 30
         font.family: "JetBrains Mono Nerd Font"
-        color: mouseArea.containsMouse ? scheme.base0D : scheme.base0C
-        scale: mouseArea.pressed ? 0.92 : 1.0
+        font.weight: Font.Bold
         verticalAlignment: Text.AlignVCenter
 
         Behavior on color {

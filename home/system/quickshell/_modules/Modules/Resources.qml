@@ -12,6 +12,8 @@ Item {
 
     property real cpuLoad: 0.0 // 0.0 to 1.0
     property real memLoad: 0.0 // 0.0 to 1.0
+    property real batLoad: 0.0 // 0.0 to 1.0
+    property bool hasBattery: false
 
     property var prevIdle: 0
     property var prevTotal: 0
@@ -24,6 +26,7 @@ Item {
         onTriggered: {
             cpuProc.running = true
             memProc.running = true
+            batProc.running = true
         }
     }
 
@@ -67,6 +70,23 @@ Item {
                 }
                 if (total > 0 && available > 0) {
                     root.memLoad = Math.max(0.0, Math.min(1.0, (total - available) / total))
+                }
+            }
+        }
+    }
+
+    // Battery capacity reader via sysfs
+    Process {
+        id: batProc
+        command: ["sh", "-c", "cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -n1"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const capStr = this.text.trim()
+                if (capStr.length > 0 && !isNaN(capStr)) {
+                    root.hasBattery = true
+                    root.batLoad = Math.max(0.0, Math.min(1.0, parseInt(capStr, 10) / 100))
+                } else {
+                    root.hasBattery = false
                 }
             }
         }
@@ -129,6 +149,32 @@ Item {
                     }
                 }
             }
+
+            // Battery Bar Track (Green / base0B)
+            Rectangle {
+                visible: root.hasBattery
+                width: 6
+                height: 26
+                radius: 3
+                color: scheme.base02
+                clip: true
+
+                Rectangle {
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: parent.height * root.batLoad
+                    radius: 3
+                    // Turns warning red (base08) if battery drops below 15%
+                    color: root.batLoad < 0.15 ? scheme.base08 : scheme.base0B
+
+                    Behavior on height {
+                        NumberAnimation { duration: 350; easing.type: Easing.OutCubic }
+                    }
+                    Behavior on color {
+                        ColorAnimation { duration: 200 }
+                    }
+                }
+            }
         }
 
         // Scaled Stacked Readout
@@ -147,6 +193,15 @@ Item {
             Text {
                 text: `${Math.round(root.memLoad * 100)}`
                 color: root.memLoad > 0.85 ? scheme.base08 : scheme.base0E
+                font.pixelSize: 12
+                font.weight: Font.DemiBold
+                font.family: "JetBrains Mono Nerd Font"
+            }
+
+            Text {
+                visible: root.hasBattery
+                text: `${Math.round(root.batLoad * 100)}`
+                color: root.batLoad < 0.15 ? scheme.base08 : scheme.base0B
                 font.pixelSize: 12
                 font.weight: Font.DemiBold
                 font.family: "JetBrains Mono Nerd Font"

@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
@@ -6,8 +7,11 @@ Item {
     id: root
     property var scheme
 
-    implicitWidth: btText.implicitWidth
-    implicitHeight: btText.implicitHeight
+    implicitWidth: 30
+    implicitHeight: 30
+
+    Layout.preferredWidth: 30
+    Layout.preferredHeight: 30
 
     property bool isPowered: false
     property bool isConnected: false
@@ -37,10 +41,9 @@ Item {
         id: btText
         anchors.centerIn: parent
 
-        // Context glyphs: Off (󰂲), Idle (), Connected (󰂱)
         text: !root.isPowered ? "󰂲" : (root.isConnected ? "󰂱" : "")
         color: !root.isPowered ? scheme.base03 : (root.isConnected ? scheme.base0B : scheme.base0D)
-        font.pixelSize: 20
+        font.pixelSize: 24
         font.family: "JetBrains Mono Nerd Font"
         font.weight: Font.Bold
         verticalAlignment: Text.AlignVCenter

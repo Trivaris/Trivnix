@@ -23,8 +23,7 @@ ColumnLayout {
     Text {
         Layout.alignment: Qt.AlignHCenter
         color: scheme.base05
-        opacity: 0.75
-        font.pixelSize: 18
+        font.pixelSize: 16
         font.weight: Font.DemiBold
         font.family: "JetBrains Mono Nerd Font"
         text: String(clock.minutes).padStart(2, "0")
