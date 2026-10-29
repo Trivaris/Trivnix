@@ -1,6 +1,6 @@
 {
   description = ''
-    Trivaris' NixOS Config.
+    Trivaris' NixOS Config
   '';
 
   inputs = {
