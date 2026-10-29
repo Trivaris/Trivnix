@@ -20,13 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 1. Setup SSH credentials for private repositories
       - name: Setup SSH Key
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # 2. Automatically trust your self-hosted Gitea fingerprint
       - name: Add known_hosts
         run: |
           mkdir -p ~/.ssh
