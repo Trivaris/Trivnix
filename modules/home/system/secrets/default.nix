@@ -10,7 +10,7 @@
         validateSopsFiles = true;
 
         age = {
-          keyFile = "/home/${config.user-infos.name}/.config/sops/age/key.txt";
+          keyFile = "/home/${config.home.username}/.config/sops/age/key.txt";
           generateKey = false;
         };
       };

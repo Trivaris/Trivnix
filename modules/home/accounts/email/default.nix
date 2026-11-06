@@ -33,7 +33,7 @@
               passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
               thunderbird = lib.mkIf (thunderbird-prefs.enable && email-prefs.enableThunderbirdIntegration) {
                 enable = true;
-                profiles = [ config.user-infos.name ];
+                profiles = [ config.home.username ];
               };
             }
             // account

@@ -38,12 +38,12 @@
         home.sessionVariables.MOZ_ENABLE_WAYLAND = 1;
 
         home.file = {
-          ".librewolf/${config.user-infos.name}/search.json.mozlz4".force = lib.mkForce true;
+          ".librewolf/${config.home.username}/search.json.mozlz4".force = lib.mkForce true;
 
-          ".librewolf/${config.user-infos.name}/user.js".text =
+          ".librewolf/${config.home.username}/user.js".text =
             builtins.readFile betterfox + " \n" + builtins.readFile smoothfox + " \n" + overrides;
 
-          # ".librewolf/${config.user-infos.name}/chrome/userChrome.css".text = ''
+          # ".librewolf/${config.home.username}/chrome/userChrome.css".text = ''
           #   :root {
           #     --lwt-accent-color: ${theme.base00} !important;
           #     --lwt-text-color: ${theme.base05} !important;
@@ -52,7 +52,7 @@
           #     --tab-selected-bgcolor: ${theme.base01} !important;
           #   }
           # '';
-          # ".librewolf/${config.user-infos.name}/chrome/userContent.css".text = ''
+          # ".librewolf/${config.home.username}/chrome/userContent.css".text = ''
           #   body {
           #     background: transparent !important;
           #   }
@@ -63,7 +63,7 @@
           enable = true;
           package = pkgs.librewolf-bin;
 
-          profiles.${config.user-infos.name} = {
+          profiles.${config.home.username} = {
             isDefault = true;
 
             search = {

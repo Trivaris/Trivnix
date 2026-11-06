@@ -31,7 +31,7 @@
         programs.thunderbird = {
           enable = true;
           package = pkgs.thunderbird-bin;
-          profiles.${config.user-infos.name} = {
+          profiles.${config.home.username} = {
             isDefault = true;
             # settings = (builtins.listToAttrs calendarSettings) // {
             #   "calendar.registry.defaultprovider" = "caldav";

@@ -63,7 +63,7 @@
 
       home.file.${allowedSignersFile}.text = lib.mkIf git-prefs.enableSigning ''
         ${git-prefs.email} ${
-          osConfig.private.public-keys.common.${config.user-infos.name}."id_git_signing.pub"
+          osConfig.private.public-keys.common.${config.home.username}."id_git_signing.pub"
         }
       '';
     };

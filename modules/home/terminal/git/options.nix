@@ -11,7 +11,7 @@
 
         name = lib.mkOption {
           type = lib.types.str;
-          default = config.user-infos.name;
+          default = config.home.username;
           example = "trivaris";
           description = ''
             Name written to the global Git config as `user.name`.

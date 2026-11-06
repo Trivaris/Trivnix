@@ -7,16 +7,17 @@
     }:
     let
       host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
-      allUserInfos = builtins.mapAttrs (_: cfg: cfg.user-infos) config.home-manager.users;
+      normalUsers = lib.filterAttrs (name: userCfg: userCfg.isNormalUser) config.users.users;
     in
     {
-      config.sops.secrets = lib.mapAttrs' (
-        user: _:
-        lib.nameValuePair "sops-keys/${user}" {
+      sops.secrets = lib.mapAttrs' (
+        username: userconfig:
+        lib.nameValuePair "sops-keys/${username}" {
           sopsFile = host-secrets;
-          path = "/home/${user}/.config/sops/age/key.txt";
-          owner = user;
+
+          path = "${userconfig.home}/.config/sops/age/key.txt";
+          owner = username;
         }
-      ) (lib.filterAttrs (user: _: user != "root") (allUserInfos // { root = { }; }));
+      ) normalUsers;
     };
 }

@@ -15,8 +15,7 @@ contains shared helpers such as `mkReverseProxyOption`.
 
 ## Data boundary
 
-Modules may consume shared values such as `config.private`, `host-infos`,
-`user-infos`, and `theme-prefs`. Supply those contracts from the private input
+Modules may consume shared values such as `config.private`, `host-infos`, and `theme-prefs`. Supply those contracts from the private input
 or the composing configuration layer.
 
 Keep secret values, SOPS files, private keys, account data, and machine-specific

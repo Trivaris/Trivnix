@@ -1,7 +1,6 @@
 {
   imports = [
     ./theming.nix
-    ./user-infos.nix
   ];
 
   flake.homeModules.system-core =
@@ -13,8 +12,8 @@
     {
       config.home = {
         inherit (osConfig.host-infos) stateVersion;
-        username = config.user-infos.name;
-        homeDirectory = "/home/${config.user-infos.name}";
+        username = config.home.username;
+        homeDirectory = "/home/${config.home.username}";
         shell.enableZshIntegration = true;
 
         sessionVariables = {
