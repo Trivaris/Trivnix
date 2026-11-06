@@ -16,7 +16,7 @@
       ];
 
       powerManagement.enable = true;
-      powerManagement.powertop.enable = true;
+powerManagement.powertop.enable = true;
 
       networking.hostName = config.hostInfos.name;
       networking.networkmanager.enable = true;
