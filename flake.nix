@@ -21,6 +21,7 @@
     hyprqt6engine.url = "github:hyprwm/hyprqt6engine";
     hyprland.url = "github:hyprwm/Hyprland";
     epic-games-launcher.url = "github:kjetteren/epic-games-launcher-flake";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     # mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
   };
 

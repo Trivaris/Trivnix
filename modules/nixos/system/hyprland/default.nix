@@ -12,19 +12,12 @@
         nixpkgs.overlays = [ inputs.hyprqt6engine.overlays.default ];
         environment.systemPackages = [ pkgs.sbctl ];
         security.pam.services.hyprlock = { };
-
-        programs.hyprland = {
-          enable = true;
-          portalPackage = pkgs.xdg-desktop-portal-hyprland;
-          package = pkgs.hyprland;
-        };
+        programs.hyprland.enable = true;
 
         xdg.portal = {
           enable = true;
-          extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
           config.common.default = "*";
         };
-
       };
     };
 }

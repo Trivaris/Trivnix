@@ -1,5 +1,5 @@
 {
   perSystem = { pkgs, ... }: {
-    devShells.default = import ./shell.nix { inherit pkgs; };
+    devShells.default = import ./_shell.nix { inherit pkgs; };
   };
 }

@@ -11,14 +11,25 @@
     in
     {
       options.themingPrefs = {
-        darkmode = lib.mkEnableOption "Enable Dark Mode";
+        # mkEnableOption automatically generates the description: "Whether to enable Dark Mode."
+        darkmode = lib.mkEnableOption "Dark Mode";
+
         schemeName = lib.mkOption {
           type = lib.types.str;
           default = "catppuccin-frappe";
+          description = ''
+            The base16 color scheme name to use for system theming. 
+            This must match a valid yaml file name in the `base16-schemes` package.
+          '';
         };
 
         scheme = lib.mkOption {
           type = lib.types.attrsOf (lib.types.strMatching "^#[a-f|A-F|0-9]{6,6}$");
+          description = ''
+            The evaluated base16 palette generated from the specified `schemeName`. 
+            This is automatically derived using `yq` and the `base16-schemes` package, 
+            providing a set of hex colors (e.g., base00, base01) to be used across configurations.
+          '';
           default = builtins.fromJSON (
             builtins.readFile (
               pkgs.runCommand "load-scheme" {
@@ -32,20 +43,28 @@
         };
 
         themeOverrides = lib.mkOption {
+          description = ''
+            Application-specific theme overrides that deviate from the global base16 scheme.
+            Useful when an application has a dedicated theme package (like Catppuccin) that 
+            looks better than a procedurally generated base16 template.
+          '';
           type = lib.types.nullOr (
             lib.types.submodule {
               options = {
                 spicetify = lib.mkOption {
+                  description = "Spicetify specific theme configuration.";
                   type = lib.types.nullOr (
                     lib.types.submodule {
                       options = {
                         package = lib.mkOption {
                           type = lib.types.nullOr lib.types.attrs;
                           default = pkgs.spicePkgs.themes.catppuccin;
+                          description = "The Spicetify theme package to use.";
                         };
                         scheme = lib.mkOption {
                           type = lib.types.str;
                           default = "mocha";
+                          description = "The specific color scheme variant (e.g., mocha, macchiato) for the selected Spicetify theme.";
                         };
                       };
                     }
@@ -56,9 +75,11 @@
                   };
                   default = null;
                 };
+                
                 kitty = lib.mkOption {
                   type = lib.types.nullOr lib.types.str;
-                  example = "${pkgs.kitty-themes}/share/kitty-themes/themes/Catppuccin-Mocha.conf";
+                  description = "Absolute path to the Kitty terminal theme configuration file.";
+                  example = "\${pkgs.kitty-themes}/share/kitty-themes/themes/Catppuccin-Mocha.conf";
                   default = null;
                 };
               };
@@ -68,6 +89,7 @@
         };
 
         font = lib.mkOption {
+          description = "Global font configuration applied across the system and GUI applications.";
           type = lib.types.submodule {
             options = {
               package = lib.mkPackageOption pkgs "Font" {
@@ -76,17 +98,24 @@
                   "roboto-mono"
                 ];
               };
+              
               monoName = lib.mkOption {
                 type = lib.types.str;
                 default = "RobotoMono Nerd Font Mono";
+                description = "The exact font family name to use for monospace text (terminals, code editors).";
               };
+              
               propoName = lib.mkOption {
                 type = lib.types.str;
                 default = "RobotoMono Nerd Font Propo";
+                description = "The exact font family name to use for proportional text (UI elements, web browsing).";
               };
+              
               extraFonts = lib.mkOption {
                 type = lib.types.listOf lib.types.package;
                 default = [ ];
+                description = "A list of additional font packages to install system-wide.";
+                example = lib.literalExpression "[ pkgs.noto-fonts-emoji ]";
               };
             };
           };

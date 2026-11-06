@@ -1,11 +1,6 @@
 {
   flake.nixosModules.system-core =
-    { lib, config, ... }:
-    let
-      allUserInfos = builtins.attrNames (
-        builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users
-      );
-    in
+    { lib, ... }:
     {
       options.hostPrefs = {
         oldProfileDeleteInterval = lib.mkOption {
@@ -19,16 +14,13 @@
 
         mainUser = lib.mkOption {
           type = lib.types.str;
-          default = builtins.head allUserInfos;
           description = ''
             Primary user account considered owner of the host configuration.
             Used by modules such as autologin and service defaults needing a username.
           '';
         };
 
-        headless = lib.mkEnableOption {
-          description = "Disable GUI features";
-        };
+        headless = lib.mkEnableOption "This host as a headless host without GUI features";
       };
     };
 }

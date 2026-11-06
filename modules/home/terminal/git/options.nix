@@ -7,10 +7,7 @@
     }:
     {
       options.userPrefs.git = {
-        enableSigning = lib.mkEnableOption ''
-          Enables commit and tag signing in Git using a configured ssh key defined via sops-nix.
-          Ensures authenticity of your commits, marking them as verified on platforms like GitHub/GitLab.
-        '';
+        enableSigning = lib.mkEnableOption "Commit and Tag signing in Git using an SSH key configured through sops-nix";
 
         name = lib.mkOption {
           type = lib.types.str;
@@ -37,6 +34,10 @@
           example = {
             "git@github.com:example/" = "example:";
           };
+          description = ''
+            Git URL rewrite rules applied to the global Git configuration.
+            Each attribute maps a source prefix to its replacement prefix.
+          '';
         };
       };
     };

@@ -7,7 +7,7 @@
     }:
     {
       options.hostPrefs.piHole = {
-        enable = lib.mkEnableOption "Pi Hole, a DNS Sink";
+        enable = lib.mkEnableOption "Pi-hole as a DNS sinkhole";
         reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
       };
     };

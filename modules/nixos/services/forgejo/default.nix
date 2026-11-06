@@ -8,7 +8,7 @@
     let
       forgejoPrefs = config.hostPrefs.forgejo;
       # mailserverPrefs = config.hostPrefs.mailserver;
-      secrets = config.sops.secrets;
+      # secrets = config.sops.secrets;
     in
     {
       config = lib.mkIf forgejoPrefs.enable {

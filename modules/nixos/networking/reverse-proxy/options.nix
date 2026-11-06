@@ -3,15 +3,8 @@
     { lib, trivnixLib, ... }:
     {
       options.hostPrefs.reverseProxy = {
-        enable = lib.mkEnableOption ''
-          Turn on the shared Nginx reverse proxy for modules exposing web services.
-          When enabled, any service defining `reverseProxy` will register here.
-        '';
-
-        enableDDClient = lib.mkEnableOption ''
-          Enable ddclient to update dynamic DNS records for the configured zone.
-          Useful when public IPs change and Cloudflare or other providers must sync.
-        '';
+        enable = lib.mkEnableOption "Nginx reverse proxy, shared for web services";
+        enableDDClient = lib.mkEnableOption "ddclient for dynamic DNS updates for the configured zone";
 
         email = lib.mkOption {
           type = lib.types.str;
@@ -79,55 +72,74 @@
             lib.types.submodule (
               lib.recursiveUpdate trivnixLib.trivnix.reverseProxyOptions {
                 options = {
-                  name = lib.mkOption { type = lib.types.str; };
+                  name = lib.mkOption {
+                    type = lib.types.str;
+                    description = "Name used to identify the additional reverse-proxy service";
+                  };
                 };
               }
             )
           );
+          default = [ ];
+          description = ''
+            Additional services to register with the shared reverse proxy.
+            Each entry extends the standard reverse-proxy service options with a name.
+          '';
         };
 
         dumbPipes = {
-          enable = lib.mkEnableOption "Dumb forwarding";
-
+          enable = lib.mkEnableOption "non-HTTP forwarding rules handled by the shared reverse proxy";
           upstreams = lib.mkOption {
             type = lib.types.attrsOf (
               lib.types.submodule {
                 options = {
-                  address = lib.mkOption { type = lib.types.str; };
+                  address = lib.mkOption {
+                    type = lib.types.str;
+                    description = "Address of the upstream service";
+                  };
                   port = lib.mkOption {
                     type = lib.types.port;
                     default = 443;
+                    description = "Port of the upstream service";
                   };
                 };
               }
             );
             default = { };
+            description = "Named upstream addresses used by dumb forwarding rules";
           };
 
           fallbackPort = lib.mkOption {
             type = lib.types.port;
             default = 8443;
+            description = "Port used when a dumb forwarding rule does not specify another target";
           };
 
           pipes = lib.mkOption {
-            description = "TCP Forwarding with SNI";
             type = lib.types.attrsOf lib.types.str;
             default = { };
+            description = "TCP forwarding rules selected by the requested SNI hostname";
           };
 
           portForwards = lib.mkOption {
-            description = "Raw TCP port forwarding for protocols without SNI (like SSH).";
             type = lib.types.attrsOf (
               lib.types.submodule {
                 options = {
-                  listenPort = lib.mkOption { type = lib.types.port; };
-                  upstream = lib.mkOption { type = lib.types.str; };
-                  enableTCP = lib.mkEnableOption "TCP Port Forwarding";
-                  enableUDP = lib.mkEnableOption "UDP Port Forwarding";
+                  enableTCP = lib.mkEnableOption "TCP port forwarding";
+                  enableUDP = lib.mkEnableOption "UDP port forwarding";
+                  listenPort = lib.mkOption {
+                    type = lib.types.port;
+                    description = "Local port that accepts forwarded connections";
+                  };
+                  upstream = lib.mkOption {
+                    type = lib.types.str;
+                    description = "Address and port of the forwarding destination";
+                  };
                 };
               }
             );
             default = { };
+            description = "Raw TCP port forwarding for protocols without SNI, such as SSH";
           };
         };
       };

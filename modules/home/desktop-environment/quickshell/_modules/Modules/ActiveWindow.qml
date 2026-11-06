@@ -61,7 +61,6 @@ RowLayout {
         font.family: "JetBrains Mono Nerd Font"
         elide: Text.ElideRight
         Layout.maximumWidth: 180
-        Layout.alignment: Qt.AlignVCenter
 
         Behavior on opacity { NumberAnimation { duration: 150 } }
         Behavior on color { ColorAnimation { duration: 150 } }

@@ -17,7 +17,10 @@
           lib.types.submodule (
             lib.recursiveUpdate trivnixLib.trivnix.reverseProxyOptions {
               options = {
-                name = lib.mkOption { type = lib.types.str; };
+                name = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Name of the active service registered with the reverse proxy";
+                };
               };
             }
           )
@@ -26,6 +29,7 @@
         default =
           prefs.reverseProxy.extraServices
           ++ (servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs));
+        description = "Services collected from enabled reverse-proxy registrations";
       };
     };
 }

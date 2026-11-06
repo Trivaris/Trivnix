@@ -14,68 +14,34 @@
       paletteStr =
         with scheme;
         builtins.concatStringsSep "," [
-          base05
-          base01
-          base02
-          base03
-          base00
-          base01
-          base05
-          base06
-          base05
-          base00
-          base00
-          base00
-          base0D
-          base00
-          base0D
-          base0E
-          base01
-          base00
-          base01
-          base05
-          base03
+          base05 base01 base02 base03 base00 base01 base05
+          base06 base05 base00 base00 base00 base0D base00
+          base0D base0E base01 base00 base01 base05 base03
         ];
 
       disabledStr =
         with scheme;
         builtins.concatStringsSep "," [
-          base03
-          base01
-          base02
-          base03
-          base00
-          base01
-          base03
-          base04
-          base03
-          base00
-          base00
-          base00
-          base02
-          base00
-          base03
-          base03
-          base01
-          base00
-          base01
-          base03
-          base03
+          base03 base01 base02 base03 base00 base01 base03
+          base04 base03 base00 base00 base00 base02 base00
+          base03 base03 base01 base00 base01 base03 base03
         ];
 
       qtTheme = pkgs.writeText "base16-qt6ct.conf" ''
-        [Appearance]
-        custom_palette=true
-
-        [Palette]
-        active=${paletteStr}
-        inactive=${paletteStr}
-        disabled=${disabledStr}
+        [ColorScheme]
+        active_colors=${paletteStr}
+        inactive_colors=${paletteStr}
+        disabled_colors=${disabledStr}
       '';
     in
     {
       config = lib.mkIf (!osConfig.hostPrefs.headless) {
-        home.sessionVariables.QT_QPA_PLATFORMTHEME = lib.mkForce "hyprqt6engine";
+        home.sessionVariables = {
+          QT_QPA_PLATFORMTHEME = "hyprqt6engine";
+          QT_QUICK_CONTROLS_STYLE = "Fusion";
+          QT_PLUGIN_PATH = "${pkgs.hyprqt6engine}/${pkgs.qt6.qtbase.qtPluginPrefix}";
+        };
+
         xdg.configFile."hypr/hyprqt6engine.conf".text = ''
           theme {
             style = Fusion
@@ -95,14 +61,6 @@
         '';
 
         wayland.windowManager.hyprland.settings = {
-          env = [
-            {
-              _args = [
-                "QT_QPA_PLATFORMTHEME"
-                "hyprqt6engine"
-              ];
-            }
-          ];
           animation = map lib.generators.mkLuaInline [
             ''{ leaf = "windows", enabled = true, speed = 4, bezier = "easeOutExpo", style = "slide" }''
             ''{ leaf = "windowsOut", enabled = true, speed = 4, bezier = "easeOutExpo", style = "slide" }''
@@ -114,38 +72,18 @@
 
           curve = [
             {
-              _args = [
-                "easeOutExpo"
+              _args = [ "easeOutExpo"
                 {
                   type = "bezier";
-                  points = [
-                    [
-                      0.16
-                      1
-                    ]
-                    [
-                      0.3
-                      1
-                    ]
-                  ];
+                  points = [ [ 0.16 1 ] [ 0.3 1 ] ];
                 }
               ];
             }
             {
-              _args = [
-                "easeOutCirc"
+              _args = [ "easeOutCirc"
                 {
                   type = "bezier";
-                  points = [
-                    [
-                      0.075
-                      0.82
-                    ]
-                    [
-                      0.165
-                      1
-                    ]
-                  ];
+                  points = [ [ 0.075 0.82 ] [ 0.165 1 ] ];
                 }
               ];
             }

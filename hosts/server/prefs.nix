@@ -19,6 +19,7 @@
 
       hostPrefs = {
         headless = true;
+        mainUser = "trivaris";
         openssh = {
           enable = true;
           ports = [ 222 ];

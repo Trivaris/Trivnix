@@ -2,6 +2,6 @@
   flake.homeModules.terminal-cli =
     { lib, ... }:
     {
-      options.userPrefs.cli.enable = lib.mkEnableOption "Wether to replace default cli utils with better variants";
+      options.userPrefs.cli.enable = lib.mkEnableOption "Replacement of selected default CLI utilities with the configured alternatives";
     };
 }

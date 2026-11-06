@@ -8,19 +8,6 @@
     }:
     let
       cliPrefs = config.userPrefs.cli;
-      starshipTheme =
-        lib.pipe
-          {
-            url = "https://starship.rs/presets/toml/nerd-font-symbols.toml";
-            sha256 = "sha256:1rwcdcffwr7iry1anqfj69phx81ghscaivysl56gpd0gv9s16a9n";
-          }
-          [
-            builtins.fetchurl
-            builtins.readFile
-            fromTOML
-            removeAttrs
-          ]
-          [ "maven" ];
     in
     {
       options.vars = {
@@ -28,21 +15,18 @@
           type = lib.types.attrsOf lib.types.anything;
           readOnly = true;
           default = import ./_abbreviations.nix;
+          description = "Shell abbreviations made available to the configured Zsh session";
         };
 
         shellFunctions = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
           readOnly = true;
           default = import ./_functions.nix osConfig.hostInfos.configname;
+          description = "Shell functions, including local check and rebuild helpers";
         };
       };
 
       config = {
-        programs.starship = {
-          enable = true;
-          settings = starshipTheme;
-        };
-
         programs.zsh = {
           enable = true;
           autocd = true;
