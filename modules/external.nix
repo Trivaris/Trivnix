@@ -8,6 +8,7 @@
       inputs.nur.modules.nixos.default
       inputs.epic-games-launcher.nixosModules.default
       inputs.spicetify-nix.nixosModules.default
+      inputs.disko.nixosModules.default
     ];
   };
 }

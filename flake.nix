@@ -12,10 +12,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,11 +55,11 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.home-manager.flakeModules.home-manager
-        inputs.flake-parts.flakeModules.easyOverlay
+        inputs.disko.flakeModules.disko
         ./lib
         ./modules/home
         ./modules/nixos
-        ./modules/nixos/external.nix
+        ./modules/external.nix
         ./overlays
         ./packages
         ./shells
