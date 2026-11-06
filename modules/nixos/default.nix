@@ -5,6 +5,7 @@
     ./networking
     ./services
     ./system
+    ./external.nix
   ];
 
   flake.nixosModules.default = {
