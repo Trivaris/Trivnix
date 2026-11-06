@@ -1,0 +1,61 @@
+{
+  flake.nixosModules.networking-wireguard =
+    { lib, ... }:
+    let
+      keyCollectionType = lib.types.submodule {
+        options = {
+          key = lib.mkOption { type = lib.types.path; };
+          id = lib.mkOption { type = lib.types.int; };
+          endpoint = lib.mkOption { type = lib.types.nullOr lib.types.str; };
+        };
+      };
+    in
+    {
+      options.hostPrefs.wireguard = {
+        enable = lib.mkEnableOption "Wireguard client connection";
+
+        port = lib.mkOption {
+          type = lib.types.port;
+          default = 51820;
+        };
+
+        address = lib.mkOption {
+          type = lib.types.str;
+          default = "10.0.0.1/24";
+        };
+
+        interfaceName = lib.mkOption {
+          type = lib.types.str;
+          default = "wg0";
+        };
+
+        peers = lib.mkOption {
+          type = lib.types.listOf (
+            lib.types.submodule {
+              options = {
+                publicKey = lib.mkOption { type = lib.types.str; };
+                allowedIPs = lib.mkOption { type = lib.types.listOf lib.types.str; };
+                endpoint = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                };
+                persistentKeepalive = lib.mkOption {
+                  type = lib.types.nullOr lib.types.int;
+                  default = null;
+                };
+              };
+            }
+          );
+        };
+      };
+
+      options.private.wgPeers = {
+        guests = lib.mkOption {
+          type = lib.types.attrsOf keyCollectionType;
+        };
+        hosts = lib.mkOption {
+          type = lib.types.attrsOf keyCollectionType;
+        };
+      };
+    };
+}

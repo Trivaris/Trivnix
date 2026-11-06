@@ -1,0 +1,27 @@
+[advanced]
+host = '127.0.0.1'
+port = 5037
+auto_player_host = '127.0.0.1'
+auto_player_port = 62121
+streaming_fps = 30
+
+[device]
+ID = 'e1d3d93b'
+wm_size = true
+streaming = true
+hardware_decoding = true
+
+[update]
+auto_updates = true
+enable_alpha_updates = true
+
+[logging]
+level = 'INFO'
+debug_save_screenshots = 60
+action_log_limit = 5
+
+[ui]
+theme = 'catppuccin'
+locale = 'en'
+close_should_minimize = false
+notifications_enabled = true

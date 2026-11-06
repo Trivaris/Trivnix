@@ -1,0 +1,20 @@
+{
+  flake.homeModules.terminal-git =
+    {
+      lib,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      gitPrefs = config.userPrefs.git;
+      commonSecrets = "${osConfig.private.secrets}/home/${config.userInfos.name}/common.yaml";
+    in
+    {
+      config.sops.secrets = lib.mkIf gitPrefs.enableSigning {
+        git-signing-key = {
+          sopsFile = commonSecrets;
+        };
+      };
+    };
+}

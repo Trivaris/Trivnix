@@ -1,0 +1,13 @@
+{
+  flake.nixosModules.services-code-server =
+    { lib, trivnixLib, ... }:
+    {
+      options.hostPrefs.codeServer = {
+        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        enable = lib.mkEnableOption ''
+          Launch code-server to provide VS Code over HTTPS.
+          Enable when you want remote development through the reverse proxy.
+        '';
+      };
+    };
+}

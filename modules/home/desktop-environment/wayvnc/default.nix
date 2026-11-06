@@ -1,0 +1,28 @@
+{
+  flake.homeModules.desktop-environment-wayvnc =
+    {
+      config,
+      lib,
+      ...
+    }:
+    let
+      wayvncPrefs = config.userPrefs.wayvnc;
+    in
+    {
+      options.userPrefs.wayvnc.enable = lib.mkEnableOption ''
+        Enable remote desktop access via WayVNC.
+        Requires a Wayland session (e.g., Sway, Hyprland).
+      '';
+
+      config = lib.mkIf wayvncPrefs.enable {
+        services.wayvnc = {
+          enable = true;
+          autoStart = true;
+          settings = {
+            address = "0.0.0.0";
+            port = 5900;
+          };
+        };
+      };
+    };
+}
