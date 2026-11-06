@@ -6,18 +6,18 @@
       ...
     }:
     let
-      evolutionPrefs = config.hostPrefs.evolution;
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
+      evolution-prefs = config.host-prefs.evolution;
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf evolutionPrefs.enable {
+      config.sops.secrets = lib.mkIf evolution-prefs.enable {
         evolution-api-env = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "evolution-api";
           group = "evolution-api";
         };
         evolution-api-postgres-env = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "evolution-api";
           group = "evolution-api";
         };

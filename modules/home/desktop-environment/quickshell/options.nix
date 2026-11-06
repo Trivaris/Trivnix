@@ -2,7 +2,7 @@
   flake.homeModules.desktop-environment-quickshell =
     { osConfig, lib, ... }:
     let
-      scheme = osConfig.themingPrefs.scheme;
+      scheme = osConfig.theme-prefs.scheme;
 
       wsIconOverrides = [
         {
@@ -43,24 +43,26 @@
       ];
     in
     {
-      options.userPrefs.quickshell.wsIconOverrides = lib.mkOption {
+      options.user-prefs.quickshell.wsIconOverrides = lib.mkOption {
         default = wsIconOverrides;
-        type = lib.types.listOf (lib.types.submodule {
-          options = {
-            regex = lib.mkOption {
-              type = lib.types.str;
-              description = "Regular expression matched against an application identifier";
+        type = lib.types.listOf (
+          lib.types.submodule {
+            options = {
+              regex = lib.mkOption {
+                type = lib.types.str;
+                description = "Regular expression matched against an application identifier";
+              };
+              text = lib.mkOption {
+                type = lib.types.str;
+                description = "Icon text displayed for matching applications";
+              };
+              color = lib.mkOption {
+                type = lib.types.str;
+                description = "Color applied to the displayed icon";
+              };
             };
-            text = lib.mkOption {
-              type = lib.types.str;
-              description = "Icon text displayed for matching applications";
-            };
-            color = lib.mkOption {
-              type = lib.types.str;
-              description = "Color applied to the displayed icon";
-            };
-          };
-        });
+          }
+        );
         description = "Rules that override the icon, text, and color used for matching application identifiers.";
       };
     };

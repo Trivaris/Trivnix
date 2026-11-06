@@ -2,12 +2,12 @@
   flake.nixosModules.networking-openconnect =
     { lib, ... }:
     {
-      options.hostPrefs.openconnectClient = {
+      options.host-prefs.openconnect = {
         enable = lib.mkEnableOption "VPN connection with the OpenConnect client";
 
         user = lib.mkOption {
           type = lib.types.str;
-           description = "Username used to authenticate with the VPN gateway";
+          description = "Username used to authenticate with the VPN gateway";
         };
 
         gateway = lib.mkOption {

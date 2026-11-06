@@ -6,7 +6,7 @@
       ...
     }:
     {
-      boot = lib.mkIf (!config.hostPrefs.headless) {
+      boot = lib.mkIf (!config.host-prefs.headless) {
         plymouth = {
           enable = true;
           theme = "bgrt";

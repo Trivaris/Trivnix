@@ -1,5 +1,11 @@
 { self, ... }:
 {
+  imports = [
+    ./core
+    ./secrets
+    ./ssh
+  ];
+
   flake.homeModules.system = {
     imports = [
       self.homeModules.system-core

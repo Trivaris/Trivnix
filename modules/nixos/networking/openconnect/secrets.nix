@@ -7,18 +7,18 @@
       ...
     }:
     let
-      ocClientPrefs = config.hostPrefs.openconnectClient;
-      commonSecrets = "${osConfig.private.secrets}/host/common.yaml";
+      openconnect-prefs = config.host-prefs.openconnect;
+      common-secrets = "${osConfig.private.secrets}/host/common.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf ocClientPrefs.enable {
+      config.sops.secrets = lib.mkIf openconnect-prefs.enable {
         openconnect-vpn-password = {
-          sopsFile = commonSecrets;
+          sopsFile = common-secrets;
           owner = "root";
           group = "root";
         };
         openconnect-vpn-otp-secret = {
-          sopsFile = commonSecrets;
+          sopsFile = common-secrets;
           owner = "root";
           group = "root";
         };

@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.homeModules.terminal-git =
     {
       osConfig,
@@ -7,7 +12,7 @@
       ...
     }:
     let
-      gitPrefs = config.userPrefs.git;
+      git-prefs = config.user-prefs.git;
       allowedSignersFile = ".config/git/allowed_signers";
     in
     {
@@ -17,13 +22,13 @@
 
           settings = {
             user = {
-              inherit (gitPrefs) name email;
+              inherit (git-prefs) name email;
             };
 
             credential.helper = "store";
             init.defaultBranch = "main";
             gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
-            url = lib.mapAttrs (_: value: { insteadOf = value; }) gitPrefs.urlAliases;
+            url = lib.mapAttrs (_: value: { insteadOf = value; }) git-prefs.urlAliases;
 
             color.diff = {
               meta = "black bold";
@@ -42,7 +47,7 @@
             core.autocrlf = "input";
           };
 
-          signing = lib.mkIf gitPrefs.enableSigning {
+          signing = lib.mkIf git-prefs.enableSigning {
             format = "ssh";
             signByDefault = true;
             key = "${config.sops.secrets.git-signing-key.path}";
@@ -56,8 +61,10 @@
         };
       };
 
-      home.file.${allowedSignersFile}.text = lib.mkIf gitPrefs.enableSigning ''
-        ${gitPrefs.email} ${osConfig.private.pubKeys.common.${config.userInfos.name}."id_git_signing.pub"}
+      home.file.${allowedSignersFile}.text = lib.mkIf git-prefs.enableSigning ''
+        ${git-prefs.email} ${
+          osConfig.private.public-keys.common.${config.user-infos.name}."id_git_signing.pub"
+        }
       '';
     };
 }

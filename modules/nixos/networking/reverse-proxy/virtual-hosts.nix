@@ -2,10 +2,10 @@
   flake.nixosModules.networking-reverse-proxy =
     { config, lib, ... }:
     let
-      reverseProxyPrefs = config.hostPrefs.reverseProxy;
+      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
     in
     {
-      config = lib.mkIf reverseProxyPrefs.enable {
+      config = lib.mkIf reverse-proxy-prefs.enable {
         services.nginx.virtualHosts =
           builtins.listToAttrs (
             map (
@@ -25,30 +25,30 @@
                   };
                 };
 
-                forceSSL = !reverseProxyPrefs.dumbPipes.enable;
-                addSSL = reverseProxyPrefs.dumbPipes.enable;
+                forceSSL = !reverse-proxy-prefs.dumbPipes.enable;
+                addSSL = reverse-proxy-prefs.dumbPipes.enable;
                 useACMEHost = service.domain;
 
                 listen = [
                   {
-                    addr = if reverseProxyPrefs.dumbPipes.enable then "127.0.0.1" else "0.0.0.0";
+                    addr = if reverse-proxy-prefs.dumbPipes.enable then "127.0.0.1" else "0.0.0.0";
                     port =
-                      if reverseProxyPrefs.dumbPipes.enable then
-                        reverseProxyPrefs.dumbPipes.fallbackPort
+                      if reverse-proxy-prefs.dumbPipes.enable then
+                        reverse-proxy-prefs.dumbPipes.fallbackPort
                       else
                         service.externalPort;
                     ssl = true;
                   }
                 ]
-                ++ lib.optional (!reverseProxyPrefs.dumbPipes.enable) {
+                ++ lib.optional (!reverse-proxy-prefs.dumbPipes.enable) {
                   addr = "[::]";
                   port = service.externalPort;
                   ssl = true;
                 };
               }
-            ) config.vars.activeServices
+            ) config.vars.active-services
           )
-          // lib.optionalAttrs reverseProxyPrefs.dumbPipes.enable {
+          // lib.optionalAttrs reverse-proxy-prefs.dumbPipes.enable {
             "default-http-redirect" = {
               serverName = "_";
               default = true;

@@ -7,18 +7,18 @@
       ...
     }:
     let
-      syncthingPrefs = config.userPrefs.syncthing;
+      syncthing-prefs = config.user-prefs.syncthing;
     in
     {
-      options.userPrefs.syncthing.enable = lib.mkEnableOption "Syncthing, a file synchronization service";
-      config = lib.mkIf syncthingPrefs.enable {
+      options.user-prefs.syncthing.enable = lib.mkEnableOption "Syncthing, a file synchronization service";
+      config = lib.mkIf syncthing-prefs.enable {
         services.syncthing = {
           enable = true;
           guiAddress = "127.0.0.1:8384";
           overrideDevices = false;
           overrideFolders = false;
           settings.gui = {
-            user = osConfig.hostPrefs.mainUser;
+            user = osConfig.host-prefs.mainUser;
             authMode = "static";
             sendBasicAuthPrompt = true;
             insecureAdminAccess = false;

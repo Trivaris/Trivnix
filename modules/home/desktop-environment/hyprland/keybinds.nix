@@ -9,7 +9,7 @@
     }:
     let
       mkLua = lib.generators.mkLuaInline;
-      term = config.vars.terminalEmulator;
+      term = config.vars.terminal-emulator;
       main_mod = "SUPER";
       alt_mod = "ALT";
       wsKeys = [
@@ -31,7 +31,7 @@
           ${lib.concatStringsSep "\n" (
             lib.mapAttrsToList (name: m: ''
               "${name}") offset=$(( ${toString m.workspaceIndex} * 10 ));;
-            '') osConfig.hostInfos.monitors
+            '') osConfig.host-infos.monitors
           )}
         esac
 
@@ -46,7 +46,7 @@
 
     in
     {
-      config = lib.mkIf (!osConfig.hostPrefs.headless) {
+      config = lib.mkIf (!osConfig.host-prefs.headless) {
         wayland.windowManager.hyprland.settings = {
           config.binds.drag_threshold = 10;
           config.input = {

@@ -1,6 +1,6 @@
 # Getting Started
 
-Use this flake from a separate NixOS or Home Manager configuration.
+Use the exported NixOS modules from another flake or configuration.
 
 ## Add the input
 
@@ -8,31 +8,26 @@ Use this flake from a separate NixOS or Home Manager configuration.
 trivnix.url = "github:<owner>/<repository>";
 ```
 
-Pass the flake input to the module system used by your configuration.
-
-## Import the module sets
+Pass the flake input to your NixOS module system and import the aggregate module
+set:
 
 ```nix
 {
   imports = [
     trivnix.nixosModules.default
-    trivnix.nixosModules.dependencies
   ];
 }
 ```
 
-For Home Manager, use the corresponding `homeModules` exports:
+Individual module groups and features are also available as named
+`trivnix.nixosModules.*` outputs. Inspect the available outputs with:
 
-```nix
-{
-  imports = [
-    trivnix.homeModules.default
-    trivnix.homeModules.dependencies
-  ];
-}
+```sh
+nix flake show github:<owner>/<repository>
 ```
 
-Use the dependency bundle when enabling modules that depend on the upstream inputs listed in [Architecture](architecture.md). Apply `trivnix.overlays.hyprqt6engine` through your system's normal overlay configuration when using the Hyprland Qt6 engine.
+The repository's Home Manager modules are currently wired into its NixOS host
+configurations and are not exported as a separate `homeModules` output.
 
 ## Configure features
 
@@ -40,14 +35,17 @@ Enable a feature in the configuration layer and set its options under the releva
 
 ```nix
 {
-  hostPrefs.reverseProxy.enable = true;
-  hostPrefs.homepage.enable = true;
-  userPrefs.git.enable = true;
+  host-prefs.reverse-proxy.enable = true;
+  host-prefs.homepage.enable = true;
+  user-prefs.git.enable = true;
 }
 ```
 
-The complete option names, types, defaults, and examples are listed in the [option reference](reference/README.md).
+The complete option names, types, defaults, and examples are listed in the
+generated option reference described in [Development](development.md#option-reference).
 
 ## Keep secrets outside this flake
 
-Secret values and machine-specific metadata belong in the composing configuration and private inputs. Follow [Private integration](private-integration.md) for the supported boundary.
+Secret values and machine-specific metadata belong in the private input and
+configuration layer. Follow [Private integration](private-integration.md) for
+the supported boundary.

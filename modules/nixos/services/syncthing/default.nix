@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.services-syncthing =
     {
       config,
@@ -6,32 +11,32 @@
       ...
     }:
     let
-      syncthingPrefs = config.hostPrefs.syncthing;
+      syncthing-prefs = config.host-prefs.syncthing;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf syncthingPrefs.enable {
+      config = lib.mkIf syncthing-prefs.enable {
         services.syncthing = {
           enable = true;
-          guiAddress = "127.0.0.1:${toString syncthingPrefs.reverseProxy.port}";
+          guiAddress = "127.0.0.1:${toString syncthing-prefs.reverseProxy.port}";
           guiPasswordFile = secrets.syncthing-gui-password.path;
           openDefaultPorts = true;
           overrideDevices = false;
           overrideFolders = false;
           settings.gui = {
-            user = config.hostPrefs.mainUser;
+            user = config.host-prefs.mainUser;
             authMode = "static";
             sendBasicAuthPrompt = true;
             insecureAdminAccess = false;
           };
         };
 
-        services.nginx.virtualHosts."${syncthingPrefs.reverseProxy.domain}".locations =
-          lib.mkIf syncthingPrefs.reverseProxy.enable
+        services.nginx.virtualHosts."${syncthing-prefs.reverseProxy.domain}".locations =
+          lib.mkIf syncthing-prefs.reverseProxy.enable
             (
               lib.mkForce {
                 "/" = {
-                  proxyPass = "http://127.0.0.1:${toString syncthingPrefs.reverseProxy.port}/";
+                  proxyPass = "http://127.0.0.1:${toString syncthing-prefs.reverseProxy.port}/";
                   recommendedProxySettings = false;
                   extraConfig = ''
                     proxy_set_header X-Real-IP $remote_addr;

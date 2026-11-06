@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.services-evolution-api =
     {
       config,
@@ -7,18 +12,18 @@
       ...
     }:
     let
-      evolutionPrefs = config.hostPrefs.evolution;
+      evolution-prefs = config.host-prefs.evolution;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf evolutionPrefs.enable {
+      config = lib.mkIf evolution-prefs.enable {
         virtualisation.docker.enable = true;
         virtualisation.oci-containers = {
           backend = "docker";
           containers.evolution-api = {
             image = "atendai/evolution-api:latest";
             ports = [
-              "${toString evolutionPrefs.reverseProxy.port}:${toString evolutionPrefs.reverseProxy.port}"
+              "${toString evolution-prefs.reverseProxy.port}:${toString evolution-prefs.reverseProxy.port}"
             ];
             environmentFiles = [ secrets.evolution-api-env.path ];
             extraOptions = [ "--network=evolution-api-network" ];
@@ -27,8 +32,8 @@
               "evolution_instances:/evolution/instances"
             ];
             environment = {
-              SERVER_URL = "https://${evolutionPrefs.reverseProxy.domain}";
-              SERVER_PORT = toString evolutionPrefs.reverseProxy.port;
+              SERVER_URL = "https://${evolution-prefs.reverseProxy.domain}";
+              SERVER_PORT = toString evolution-prefs.reverseProxy.port;
               SERVER_TYPE = "http";
 
               AUTHENTICATION_TYPE = "apikey";

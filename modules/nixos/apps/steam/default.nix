@@ -7,12 +7,12 @@
       ...
     }:
     let
-      steamPrefs = config.hostPrefs.steam;
+      steam-prefs = config.host-prefs.steam;
     in
     {
-      options.hostPrefs.steam.enable = lib.mkEnableOption "Steam with bundled compatibility tooling on this host";
+      options.host-prefs.steam.enable = lib.mkEnableOption "Steam with bundled compatibility tooling on this host";
 
-      config = lib.mkIf steamPrefs.enable {
+      config = lib.mkIf steam-prefs.enable {
         environment.systemPackages = [
           pkgs.heroic
           pkgs.r2modman

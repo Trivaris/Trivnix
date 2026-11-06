@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.homeModules.apps-librewolf =
     {
       config,
@@ -8,8 +12,8 @@
       ...
     }:
     let
-      librewolfPrefs = config.userPrefs.librewolf;
-      # theme = osConfig.themingPrefs.scheme;
+      librewolf-prefs = config.user-prefs.librewolf;
+      # scheme = osConfig.theme-prefs.scheme;
 
       overrides = ''
         /** OVERRIDES ***/
@@ -19,27 +23,27 @@
         user_pref("sidebar.verticalTabs", true);
       '';
 
-      betterFox = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/yokoffing/Betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/user.js";
+      betterfox = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/yokoffing/betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/user.js";
         sha256 = "sha256-Xo3NJ8BL/Px0neuYagxZpdKc3qRA0M3q95fKMNu8ruE=";
       };
 
-      smoothFox = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/yokoffing/Betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/Smoothfox.js";
+      smoothfox = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/yokoffing/betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/smoothfox.js";
         sha256 = "sha256-S1zDXctpV1jNlV9DCua4fYMHfR7T34V3gQi780ShFpk=";
       };
     in
     {
-      config = lib.mkIf librewolfPrefs.enable {
+      config = lib.mkIf librewolf-prefs.enable {
         home.sessionVariables.MOZ_ENABLE_WAYLAND = 1;
 
         home.file = {
-          ".librewolf/${config.userInfos.name}/search.json.mozlz4".force = lib.mkForce true;
+          ".librewolf/${config.user-infos.name}/search.json.mozlz4".force = lib.mkForce true;
 
-          ".librewolf/${config.userInfos.name}/user.js".text =
-            builtins.readFile betterFox + " \n" + builtins.readFile smoothFox + " \n" + overrides;
+          ".librewolf/${config.user-infos.name}/user.js".text =
+            builtins.readFile betterfox + " \n" + builtins.readFile smoothfox + " \n" + overrides;
 
-          # ".librewolf/${config.userInfos.name}/chrome/userChrome.css".text = ''
+          # ".librewolf/${config.user-infos.name}/chrome/userChrome.css".text = ''
           #   :root {
           #     --lwt-accent-color: ${theme.base00} !important;
           #     --lwt-text-color: ${theme.base05} !important;
@@ -48,7 +52,7 @@
           #     --tab-selected-bgcolor: ${theme.base01} !important;
           #   }
           # '';
-          # ".librewolf/${config.userInfos.name}/chrome/userContent.css".text = ''
+          # ".librewolf/${config.user-infos.name}/chrome/userContent.css".text = ''
           #   body {
           #     background: transparent !important;
           #   }
@@ -59,7 +63,7 @@
           enable = true;
           package = pkgs.librewolf-bin;
 
-          profiles.${config.userInfos.name} = {
+          profiles.${config.user-infos.name} = {
             isDefault = true;
 
             search = {
@@ -99,7 +103,7 @@
                     {
                       template = "https://search.nixos.org/packages";
                       params = [
-                        (lib.nameValuePair "channel" osConfig.hostInfos.stateVersion)
+                        (lib.nameValuePair "channel" osConfig.host-infos.stateVersion)
                         (lib.nameValuePair "query" "{searchTerms}")
                       ];
                     }
@@ -114,7 +118,7 @@
           policies = {
             DisableTelemetry = true;
             DisableFirefoxStudies = true;
-            Cookies.Allow = librewolfPrefs.allowedCookies;
+            Cookies.Allow = librewolf-prefs.allowedCookies;
 
             SanitizeOnShutdown = {
               cache = true;

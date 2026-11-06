@@ -6,13 +6,13 @@
       ...
     }:
     let
-      matrixPrefs = config.hostPrefs.matrix;
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
+      matrix-prefs = config.host-prefs.matrix;
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf matrixPrefs.enable {
+      config.sops.secrets = lib.mkIf matrix-prefs.enable {
         matrix-secrets = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "root";
           group = "root";
         };

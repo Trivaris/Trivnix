@@ -1,6 +1,6 @@
 osConfig:
 let
-  scheme = osConfig.themingPrefs.scheme;
+  scheme = osConfig.theme-prefs.scheme;
 in
 ''
   # The basic colors

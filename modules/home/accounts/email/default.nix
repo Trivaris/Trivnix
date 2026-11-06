@@ -1,4 +1,10 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+    ./vars.nix
+  ];
+
   flake.homeModules.accounts-email =
     {
       config,
@@ -6,8 +12,8 @@
       ...
     }:
     let
-      emailPrefs = config.userPrefs.email;
-      thunderbirdPrefs = config.userPrefs.thunderbird;
+      email-prefs = config.user-prefs.email;
+      thunderbird-prefs = config.user-prefs.thunderbird;
 
       getSecurity =
         tlsEnabled: useStartTls:
@@ -19,22 +25,22 @@
           "ssl";
     in
     {
-      config = lib.mkIf emailPrefs.enable {
+      config = lib.mkIf email-prefs.enable {
         accounts.email.accounts = lib.mapAttrs (
           accountName: account:
           (
             {
               passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
-              thunderbird = lib.mkIf (thunderbirdPrefs.enable && emailPrefs.enableThunderbirdIntegration) {
+              thunderbird = lib.mkIf (thunderbird-prefs.enable && email-prefs.enableThunderbirdIntegration) {
                 enable = true;
-                profiles = [ config.userInfos.name ];
+                profiles = [ config.user-infos.name ];
               };
             }
             // account
           )
-        ) config.vars.filteredEmailAccounts;
+        ) config.vars.filtered-email-accounts;
 
-        xdg.configFile = lib.mkIf emailPrefs.generateAccountsFile {
+        xdg.configFile = lib.mkIf email-prefs.generateAccountsFile {
           "mailaccounts.json".text = builtins.toJSON (
             lib.mapAttrs (
               accountName: account:

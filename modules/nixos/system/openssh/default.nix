@@ -1,15 +1,20 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.system-openssh =
     { config, lib, ... }:
     let
-      opensshPrefs = config.hostPrefs.openssh;
+      openssh-prefs = config.host-prefs.openssh;
     in
     {
-      config = lib.mkIf opensshPrefs.enable {
-        networking.firewall.allowedTCPPorts = opensshPrefs.ports;
+      config = lib.mkIf openssh-prefs.enable {
+        networking.firewall.allowedTCPPorts = openssh-prefs.ports;
         services = {
           openssh = {
-            inherit (opensshPrefs) ports;
+            inherit (openssh-prefs) ports;
             enable = true;
             openFirewall = true;
 

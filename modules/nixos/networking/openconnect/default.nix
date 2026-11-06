@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.networking-openconnect =
     {
       config,
@@ -7,7 +12,7 @@
       ...
     }:
     let
-      ocClientPrefs = config.hostPrefs.openconnectClient;
+      ocClientPrefs = config.host-prefs.openconnect;
       secrets = config.sops.secrets;
     in
     {

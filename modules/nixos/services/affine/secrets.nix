@@ -6,25 +6,25 @@
       ...
     }:
     let
-      affinePrefs = config.hostPrefs.affine;
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
+      affine-prefs = config.host-prefs.affine;
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf affinePrefs.enable {
+      config.sops.secrets = lib.mkIf affine-prefs.enable {
         affine-db-password-env = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "affine";
           group = "affine";
         };
 
         affine-postgres-password-env = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "affine";
           group = "affine";
         };
 
         mail-affine-password = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "affine";
           group = "affine";
         };

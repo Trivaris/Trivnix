@@ -7,11 +7,11 @@
       ...
     }:
     let
-      cliPrefs = config.userPrefs.cli;
-      theme = osConfig.themingPrefs.scheme;
+      cli-prefs = config.user-prefs.cli;
+      scheme = osConfig.theme-prefs.scheme;
     in
     {
-      config = lib.mkIf cliPrefs.enable {
+      config = lib.mkIf cli-prefs.enable {
         programs.fastfetch = {
           enable = true;
           settings = {
@@ -25,9 +25,9 @@
               hideCursor = true;
 
               color = {
-                keys = theme.base0D;
-                title = theme.base0D;
-                separator = theme.base03;
+                keys = scheme.base0D;
+                title = scheme.base0D;
+                separator = scheme.base03;
               };
 
               key = {

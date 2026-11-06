@@ -6,11 +6,8 @@
       config,
       ...
     }:
-    let
-      prefs = config.themingPrefs;
-    in
     {
-      options.themingPrefs = {
+      options.theme-prefs = {
         # mkEnableOption automatically generates the description: "Whether to enable Dark Mode."
         darkmode = lib.mkEnableOption "Dark Mode";
 
@@ -37,7 +34,7 @@
                   pkgs.yq
                   pkgs.base16-schemes
                 ];
-              } "yq '.palette' ${pkgs.base16-schemes}/share/themes/${prefs.schemeName}.yaml > $out"
+              } "yq '.palette' ${pkgs.base16-schemes}/share/themes/${config.theme-prefs.schemeName}.yaml > $out"
             )
           );
         };
@@ -58,7 +55,7 @@
                       options = {
                         package = lib.mkOption {
                           type = lib.types.nullOr lib.types.attrs;
-                          default = pkgs.spicePkgs.themes.catppuccin;
+                          default = pkgs.spicetify-packages.themes.catppuccin;
                           description = "The Spicetify theme package to use.";
                         };
                         scheme = lib.mkOption {
@@ -70,12 +67,12 @@
                     }
                   );
                   example = {
-                    package = pkgs.spicePkgs.themes.catppuccin;
+                    package = pkgs.spicetify-packages.themes.catppuccin;
                     scheme = "mocha";
                   };
                   default = null;
                 };
-                
+
                 kitty = lib.mkOption {
                   type = lib.types.nullOr lib.types.str;
                   description = "Absolute path to the Kitty terminal theme configuration file.";
@@ -98,19 +95,19 @@
                   "roboto-mono"
                 ];
               };
-              
+
               monoName = lib.mkOption {
                 type = lib.types.str;
                 default = "RobotoMono Nerd Font Mono";
                 description = "The exact font family name to use for monospace text (terminals, code editors).";
               };
-              
+
               propoName = lib.mkOption {
                 type = lib.types.str;
                 default = "RobotoMono Nerd Font Propo";
                 description = "The exact font family name to use for proportional text (UI elements, web browsing).";
               };
-              
+
               extraFonts = lib.mkOption {
                 type = lib.types.listOf lib.types.package;
                 default = [ ];

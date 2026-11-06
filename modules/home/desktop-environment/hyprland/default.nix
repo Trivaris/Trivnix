@@ -1,4 +1,10 @@
 {
+  imports = [
+    ./keybinds.nix
+    ./monitor.nix
+    ./visual.nix
+  ];
+
   flake.homeModules.desktop-environment-hyprland =
     {
       lib,
@@ -7,7 +13,7 @@
       ...
     }:
     {
-      config = lib.mkIf (!osConfig.hostPrefs.headless) {
+      config = lib.mkIf (!osConfig.host-prefs.headless) {
         wayland.windowManager.hyprland = {
           enable = true;
           portalPackage = null;

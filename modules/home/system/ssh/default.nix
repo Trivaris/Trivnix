@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./secrets.nix
+  ];
+
   flake.homeModules.system-ssh =
     {
       config,

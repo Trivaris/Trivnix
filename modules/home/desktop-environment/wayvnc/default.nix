@@ -6,12 +6,12 @@
       ...
     }:
     let
-      wayvncPrefs = config.userPrefs.wayvnc;
+      wayvnc-prefs = config.user-prefs.wayvnc;
     in
     {
-      options.userPrefs.wayvnc.enable = lib.mkEnableOption "Remote desktop access via WayVNC";
+      options.user-prefs.wayvnc.enable = lib.mkEnableOption "Remote desktop access via WayVNC";
 
-      config = lib.mkIf wayvncPrefs.enable {
+      config = lib.mkIf wayvnc-prefs.enable {
         services.wayvnc = {
           enable = true;
           autoStart = true;

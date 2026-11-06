@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.services-paperless =
     {
       config,
@@ -6,15 +11,15 @@
       ...
     }:
     let
-      paperlessPrefs = config.hostPrefs.paperless;
+      paperless-prefs = config.host-prefs.paperless;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf paperlessPrefs.enable {
+      config = lib.mkIf paperless-prefs.enable {
         services.paperless = {
           enable = true;
-          domain = paperlessPrefs.reverseProxy.domain;
-          port = paperlessPrefs.reverseProxy.port;
+          domain = paperless-prefs.reverseProxy.domain;
+          port = paperless-prefs.reverseProxy.port;
           passwordFile = secrets.paperless-admin-password.path;
           configureNginx = false;
           configureTika = true;

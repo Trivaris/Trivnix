@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.networking-cfddns =
     {
       config,
@@ -6,16 +10,16 @@
       ...
     }:
     let
-      cfddnsPrefs = config.hostPrefs.cfddns;
+      cfddns-prefs = config.host-prefs.cfddns;
     in
     {
-      config = lib.mkIf cfddnsPrefs.enable {
+      config = lib.mkIf cfddns-prefs.enable {
         virtualisation.oci-containers.backend = "docker";
         virtualisation.oci-containers.containers."cfddns" = {
           image = "ghcr.io/l480/cloudflare-dyndns:latest";
 
           ports = [
-            "${toString cfddnsPrefs.reverseProxy.port}:80"
+            "${toString cfddns-prefs.reverseProxy.port}:80"
           ];
 
           extraOptions = [

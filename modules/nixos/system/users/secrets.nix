@@ -6,14 +6,14 @@
       ...
     }:
     let
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
-      allUserInfos = builtins.mapAttrs (_: cfg: cfg.userInfos) config.home-manager.users;
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
+      allUserInfos = builtins.mapAttrs (_: cfg: cfg.user-infos) config.home-manager.users;
     in
     {
       config.sops.secrets = lib.mapAttrs' (
         user: _:
         lib.nameValuePair "sops-keys/${user}" {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           path = "/home/${user}/.config/sops/age/key.txt";
           owner = user;
         }

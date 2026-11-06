@@ -1,17 +1,21 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.system-keymap =
     { config, lib, ... }:
     let
-      languagePrefs = config.hostPrefs.language;
+      language-prefs = config.host-prefs.language;
     in
     {
       config = {
-        console.keyMap = languagePrefs.keyMap;
+        console.keyMap = language-prefs.keyMap;
 
         i18n =
           let
-            language = "${languagePrefs.locale}.${languagePrefs.charset}";
-            unitLanguage = "${languagePrefs.units}.${languagePrefs.charset}";
+            language = "${language-prefs.locale}.${language-prefs.charset}";
+            unitLanguage = "${language-prefs.units}.${language-prefs.charset}";
             unitTypes = [
               "LC_ADDRESS"
               "LC_IDENTIFICATION"
@@ -32,7 +36,7 @@
           };
 
         services.xserver.xkb = {
-          layout = languagePrefs.keyMap;
+          layout = language-prefs.keyMap;
           variant = "";
         };
       };

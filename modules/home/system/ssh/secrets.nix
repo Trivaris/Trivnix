@@ -6,11 +6,11 @@
       ...
     }:
     let
-      hostSecrets = "${osConfig.private.secrets}/home/${config.userInfos.name}/${osConfig.hostInfos.configname}.yaml";
+      host-secrets = "${osConfig.private.secrets}/home/${config.user-infos.name}/${osConfig.host-infos.configname}.yaml";
     in
     {
       config.sops.secrets.ssh-private-key = {
-        sopsFile = hostSecrets;
+        sopsFile = host-secrets;
       };
     };
 }

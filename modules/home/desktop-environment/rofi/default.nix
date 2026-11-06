@@ -9,7 +9,7 @@
     }:
     let
       inherit (config.lib.formats.rasi) mkLiteral;
-      scheme = osConfig.themingPrefs.scheme;
+      scheme = osConfig.theme-prefs.scheme;
     in
     {
       home.packages = [
@@ -22,7 +22,7 @@
 
         settings = {
           show-icons = true;
-          terminal = config.vars.terminalEmulator;
+          terminal = config.vars.terminal-emulator;
           display-drun = "Apps";
           display-run = "Run";
           display-window = "Windows";

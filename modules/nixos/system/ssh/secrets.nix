@@ -2,11 +2,11 @@
   flake.nixosModules.system-ssh =
     { config, ... }:
     let
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
     in
     {
       config.sops.secrets.ssh-root-key = {
-        sopsFile = hostSecrets;
+        sopsFile = host-secrets;
         path = "/root/.ssh/id_ed25519";
         owner = "root";
         group = "root";

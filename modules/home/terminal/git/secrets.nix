@@ -7,13 +7,13 @@
       ...
     }:
     let
-      gitPrefs = config.userPrefs.git;
-      commonSecrets = "${osConfig.private.secrets}/home/${config.userInfos.name}/common.yaml";
+      git-prefs = config.user-prefs.git;
+      common-secrets = "${osConfig.private.secrets}/home/${config.user-infos.name}/common.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf gitPrefs.enableSigning {
+      config.sops.secrets = lib.mkIf git-prefs.enableSigning {
         git-signing-key = {
-          sopsFile = commonSecrets;
+          sopsFile = common-secrets;
         };
       };
     };

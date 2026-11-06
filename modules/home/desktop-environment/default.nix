@@ -1,5 +1,12 @@
 { self, ... }:
 {
+  imports = [
+    ./hyprland
+    ./quickshell
+    ./rofi
+    ./wayvnc
+  ];
+
   flake.homeModules.desktop-environment = {
     imports = [
       self.homeModules.desktop-environment-hyprland

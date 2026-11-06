@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.services-forgejo =
     {
       config,
@@ -6,12 +11,12 @@
       ...
     }:
     let
-      forgejoPrefs = config.hostPrefs.forgejo;
-      # mailserverPrefs = config.hostPrefs.mailserver;
+      forgejo-prefs = config.host-prefs.forgejo;
+      # mailserver-prefs = config.host-prefs.mailserver;
       # secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf forgejoPrefs.enable {
+      config = lib.mkIf forgejo-prefs.enable {
         services.forgejo = {
           enable = true;
           lfs.enable = true;
@@ -27,25 +32,25 @@
             };
 
             server = {
-              DOMAIN = forgejoPrefs.reverseProxy.domain;
-              ROOT_URL = "https://${forgejoPrefs.reverseProxy.domain}/";
+              DOMAIN = forgejo-prefs.reverseProxy.domain;
+              ROOT_URL = "https://${forgejo-prefs.reverseProxy.domain}/";
               HTTP_ADDR = "127.0.0.1";
-              HTTP_PORT = forgejoPrefs.reverseProxy.port;
+              HTTP_PORT = forgejo-prefs.reverseProxy.port;
             };
 
-            # mailer = lib.optionalAttrs forgejoPrefs.sendMails {
+            # mailer = lib.optionalAttrs forgejo-prefs.sendMails {
             #   ENABLED = true;
             #   PROTOCOL = "smtp";
             #   SMTP_ADDR = "127.0.0.1";
             #   SMTP_PORT = 25;
-            #   FROM = "no-reply@forgejo.${mailserverPrefs.domain}";
+            #   FROM = "no-reply@forgejo.${mailserver-prefs.domain}";
             # };
           };
         };
 
-        # hostPrefs.mailserver = {
-        #   extraDomains = lib.mkIf forgejoPrefs.sendMails [ "forgejo" ];
-        #   accounts."no-reply@forgejo.${mailserverPrefs.domain}".passwordFile =
+        # host-prefs.mailserver = {
+        #   extraDomains = lib.mkIf forgejo-prefs.sendMails [ "forgejo" ];
+        #   accounts."no-reply@forgejo.${mailserver-prefs.domain}".passwordFile =
         #     secrets.mail-forgejo-password.path;
         # };
       };

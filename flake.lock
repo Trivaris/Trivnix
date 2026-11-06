@@ -48,26 +48,6 @@
         "type": "github"
       }
     },
-    "disko": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1792526520,
-        "narHash": "sha256-3hSJlv8mUVnZPMWK2+CM7a9O+nR6Z4mCh27NfLCmTPc=",
-        "owner": "nix-community",
-        "repo": "disko",
-        "rev": "cedd626e11b635470fa6f9fdb8ad79b0075dd7f9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "disko",
-        "type": "github"
-      }
-    },
     "epic-games-launcher": {
       "inputs": {
         "nixpkgs": [
@@ -570,21 +550,6 @@
         "type": "github"
       }
     },
-    "import-tree": {
-      "locked": {
-        "lastModified": 1788467110,
-        "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
-        "owner": "denful",
-        "repo": "import-tree",
-        "rev": "eb1b52eaecc57f7c136d07ae8a93e724dfecac46",
-        "type": "github"
-      },
-      "original": {
-        "owner": "denful",
-        "repo": "import-tree",
-        "type": "github"
-      }
-    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane",
@@ -752,19 +717,16 @@
     },
     "root": {
       "inputs": {
-        "disko": "disko",
         "epic-games-launcher": "epic-games-launcher",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprqt6engine": "hyprqt6engine",
-        "import-tree": "import-tree",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs_3",
         "nur": "nur",
         "sops-nix": "sops-nix",
-        "spicetify-nix": "spicetify-nix",
-        "trivnixPrivate": "trivnixPrivate"
+        "spicetify-nix": "spicetify-nix"
       }
     },
     "rust-overlay": {
@@ -872,26 +834,6 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
-      }
-    },
-    "trivnixPrivate": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793928981,
-        "narHash": "sha256-NQdV9Ucp5ybsm1kkOpRcpT2MN8/B2hhIW0qBZWd4XIo=",
-        "ref": "refs/heads/main",
-        "rev": "9fd4914607fa6a4897966211d38a8a19e071cf5b",
-        "revCount": 88,
-        "type": "git",
-        "url": "ssh://git@git.trivaris.org/Trivaris/TrivnixPrivate"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@git.trivaris.org/Trivaris/TrivnixPrivate"
       }
     },
     "xdph": {

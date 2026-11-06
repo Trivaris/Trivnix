@@ -4,13 +4,15 @@ Opinionated, reusable NixOS and Home Manager modules for the Trivnix configurati
 
 This flake provides:
 
-- `nixosModules.default` - host and service modules from `host/`
-- `nixosModules.dependencies` - upstream NixOS modules used by those modules
-- `homeModules.default` - Home Manager modules from `home/`
-- `homeModules.dependencies` - upstream Home Manager modules used by those modules
-- `overlays.hyprqt6engine` - the Hyprland Qt6 engine overlay
+- `nixosModules.default` - the aggregate NixOS module set
+- named `nixosModules.*` exports for individual module groups and features
+- `nixosConfigurations.desktop`, `nixosConfigurations.laptop`, and `nixosConfigurations.server`
+- `diskoConfigurations.desktop`, `diskoConfigurations.laptop`, and `diskoConfigurations.server`
+- `lib` and `overlays.default`
 
-The companion `trivnixconfig` flake composes these modules into concrete hosts and users. It also supplies the private library, secrets, metadata, and local overlay choices that this public module flake should not contain.
+The host configurations use the private `trivnixPrivate` input for secrets and private
+metadata. The `modules/home` tree is consumed by the repository's NixOS host
+configurations; it is not currently exposed as a `homeModules` flake output.
 
 ### Documentation
 
@@ -19,6 +21,6 @@ The companion `trivnixconfig` flake composes these modules into concrete hosts a
 - [Module catalog](docs/modules.md) - features grouped by host and home use
 - [Private integration](docs/private-integration.md) - public contracts with the companion flakes
 - [Development](docs/development.md) - checks, formatting, and local workflows
-- [Option reference](docs/reference/README.md) - generated option reference workflow
+- [Development](docs/development.md#option-reference) - generate the option reference
 
-The modules provide sensible defaults, but remain configurable through the `hostPrefs`, `userPrefs`, and related options documented in the option reference.
+The modules provide sensible defaults, but remain configurable through the `host-prefs`, `user-prefs`, and related options documented in the option reference.

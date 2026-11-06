@@ -1,13 +1,17 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.services-glances =
     { config, lib, ... }:
     let
-      glancesPrefs = config.hostPrefs.glances;
+      glances-prefs = config.host-prefs.glances;
     in
     {
-      config = lib.mkIf glancesPrefs.enable {
+      config = lib.mkIf glances-prefs.enable {
         services.glances = {
-          inherit (glancesPrefs) port;
+          inherit (glances-prefs) port;
           enable = true;
           extraArgs = [
             "--webserver"

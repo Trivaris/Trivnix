@@ -2,10 +2,10 @@
   perSystem = { pkgs, ... }: {
     packages = {
       # qml-language-server = qml-language-server.packages."${system}".default;
-      cfddns-middleware = pkgs.callPackage ./_cfddns-middleware.nix { };
-      jtegranx = pkgs.callPackage ./_jtegranx { };
-      minecraft-server-fabric = pkgs.callPackage ./_minecraft-server-fabric.nix { };
-      quartz = pkgs.callPackage ./_quartz.nix { };
+      cfddns-middleware = pkgs.callPackage ./cfddns-middleware.nix { };
+      jtegranx = pkgs.callPackage ./jtegranx { };
+      minecraft-server-fabric = pkgs.callPackage ./minecraft-server-fabric.nix { };
+      quartz = pkgs.callPackage ./quartz.nix { };
     };
   };
 }

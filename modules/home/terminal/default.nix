@@ -1,5 +1,14 @@
 { self, ... }:
 {
+  imports = [
+    ./cli
+    ./direnv
+    ./git
+    ./kitty
+    ./nvim
+    ./shell
+  ];
+
   flake.homeModules.terminal = {
     imports = [
       self.homeModules.terminal-cli

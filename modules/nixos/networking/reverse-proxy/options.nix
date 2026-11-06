@@ -2,7 +2,7 @@
   flake.nixosModules.networking-reverse-proxy =
     { lib, trivnixLib, ... }:
     {
-      options.hostPrefs.reverseProxy = {
+      options.host-prefs.reverse-proxy = {
         enable = lib.mkEnableOption "Nginx reverse proxy, shared for web services";
         enableDDClient = lib.mkEnableOption "ddclient for dynamic DNS updates for the configured zone";
 

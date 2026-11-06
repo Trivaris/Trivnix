@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.services-actual =
     {
       config,
@@ -6,16 +10,16 @@
       ...
     }:
     let
-      actualPrefs = config.hostPrefs.actual;
+      actual-prefs = config.host-prefs.actual;
     in
     {
-      config = lib.mkIf actualPrefs.enable {
+      config = lib.mkIf actual-prefs.enable {
         services.actual = {
           enable = true;
-          openFirewall = !actualPrefs.reverseProxy.enable;
+          openFirewall = !actual-prefs.reverseProxy.enable;
           settings = {
-            inherit (actualPrefs.reverseProxy) port;
-            hostname = actualPrefs.reverseProxy.domain;
+            inherit (actual-prefs.reverseProxy) port;
+            hostname = actual-prefs.reverseProxy.domain;
           };
         };
       };

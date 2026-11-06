@@ -2,7 +2,7 @@
   flake.homeModules.apps-librewolf =
     { lib, ... }:
     {
-      options.userPrefs.librewolf = {
+      options.user-prefs.librewolf = {
         enable = lib.mkEnableOption "LibreWolf, a privacy focused Browser";
         allowedCookies = lib.mkOption {
           type = lib.types.listOf lib.types.str;

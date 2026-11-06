@@ -7,9 +7,9 @@
       ...
     }:
     let
-      themePrefs = config.themingPrefs;
-      allUserPrefs = builtins.attrValues (
-        builtins.mapAttrs (_: cfg: cfg.userPrefs) config.home-manager.users
+      theme-prefs = config.theme-prefs;
+      all-user-prefs = builtins.attrValues (
+        builtins.mapAttrs (_: cfg: cfg.user-prefs) config.home-manager.users
       );
     in
     {
@@ -21,22 +21,22 @@
 
         networking = {
           networkmanager.plugins = [ pkgs.networkmanager-strongswan ];
-          firewall.allowedTCPPorts = lib.mkIf (lib.any (prefs: prefs.wayvnc.enable or false) allUserPrefs) [
+          firewall.allowedTCPPorts = lib.mkIf (lib.any (prefs: prefs.wayvnc.enable or false) all-user-prefs) [
             5900
           ];
         };
 
         fonts = {
           enableDefaultPackages = true;
-          packages = [ themePrefs.font.package ] ++ themePrefs.font.extraFonts;
+          packages = [ theme-prefs.font.package ] ++ theme-prefs.font.extraFonts;
           fontconfig = {
             enable = true;
             useEmbeddedBitmaps = true;
             defaultFonts = {
               emoji = [ "Noto Color Emoji" ];
-              monospace = [ themePrefs.font.monoName ];
-              sansSerif = [ themePrefs.font.propoName ];
-              serif = [ themePrefs.font.propoName ];
+              monospace = [ theme-prefs.font.monoName ];
+              sansSerif = [ theme-prefs.font.propoName ];
+              serif = [ theme-prefs.font.propoName ];
             };
           };
         };
@@ -48,7 +48,7 @@
           gc = {
             automatic = true;
             dates = "daily";
-            options = "--delete-older-than ${config.hostPrefs.oldProfileDeleteInterval}";
+            options = "--delete-older-than ${config.host-prefs.oldProfileDeleteInterval}";
           };
 
           settings = {

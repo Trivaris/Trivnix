@@ -1,22 +1,27 @@
 # Private Integration
 
-This repository is public module infrastructure. The companion `trivnixconfig` flake supplies the private composition layer.
+This repository contains public module infrastructure. The host configurations
+use the private `trivnixPrivate` flake input for values that must not be stored
+in this repository.
 
-## Companion inputs
+## Private input
 
-The local configuration workflow wires these inputs into the composing flake:
+`trivnixPrivate.nixosModules.default` is imported by each of the
+`desktop`, `laptop`, and `server` configurations. It supplies private NixOS
+module data such as SOPS configuration, accounts, keys, and machine metadata.
 
-- `trivnixConfigs` - concrete host and user configurations
-- `trivnixLib` - shared helpers and option contracts such as host, user, and theme metadata
-- `trivnixPrivate` - SOPS data, accounts, keys, and other private values
-- `trivnixOverlays` - local package overlays and overrides
-
-These names are implementation details of the companion configuration workflow, not inputs that this flake evaluates by itself.
+The host configurations also pass this repository's `lib` as `trivnixLib`, which
+contains shared helpers such as `mkReverseProxyOption`.
 
 ## Data boundary
 
-Modules may consume shared values such as `config.private`, `hostInfos`, `userInfos`, and `themingPrefs`. They may also use helpers such as `lib.mkReverseProxyOption`. Supply those contracts from the composing configuration layer.
+Modules may consume shared values such as `config.private`, `host-infos`,
+`user-infos`, and `theme-prefs`. Supply those contracts from the private input
+or the composing configuration layer.
 
-Keep secret values, SOPS files, private keys, account data, and machine-specific metadata out of this repository and out of generated documentation. Options that require private data are documented by their public shape and integration point only.
+Keep secret values, SOPS files, private keys, account data, and machine-specific
+metadata out of this repository and out of generated documentation. Options that
+require private data are documented by their public shape and integration point
+only.
 
 For the local development workflow, see [Development](development.md).

@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.services-affine =
     {
       config,
@@ -7,12 +12,12 @@
       ...
     }:
     let
-      affinePrefs = config.hostPrefs.affine;
-      # mailserverPrefs = config.hostPrefs.mailserver;
+      affine-prefs = config.host-prefs.affine;
+      # mailserver-prefs = config.host-prefs.mailserver;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf affinePrefs.enable {
+      config = lib.mkIf affine-prefs.enable {
         virtualisation.docker.enable = true;
         virtualisation.oci-containers = {
           backend = "docker";
@@ -22,13 +27,13 @@
               "affine-postgres"
               "affine-redis"
             ];
-            ports = [ "${toString affinePrefs.reverseProxy.port}:${toString affinePrefs.reverseProxy.port}" ];
+            ports = [ "${toString affine-prefs.reverseProxy.port}:${toString affine-prefs.reverseProxy.port}" ];
             environment = {
               AFFINE_REVISION = "stable";
-              AFFINE_SERVER_HOST = affinePrefs.reverseProxy.domain;
+              AFFINE_SERVER_HOST = affine-prefs.reverseProxy.domain;
               AFFINE_SERVER_HTTPS = "true";
               REDIS_SERVER_HOST = "affine-redis";
-              PORT = toString affinePrefs.reverseProxy.port;
+              PORT = toString affine-prefs.reverseProxy.port;
               DB_DATA_LOCATION = "/var/lib/affine/postgres";
               UPLOAD_LOCATION = "/var/lib/affine/storage";
               CONFIG_LOCATION = "/var/lib/affine/config";
@@ -87,9 +92,9 @@
           };
         };
 
-        # hostPrefs.mailserver = lib.mkIf affinePrefs.sendMails {
+        # host-prefs.mailserver = lib.mkIf affine-prefs.sendMails {
         #   extraDomains = [ "affine" ];
-        #   accounts."no-reply@affine.${mailserverPrefs.domain}".passwordFile =
+        #   accounts."no-reply@affine.${mailserver-prefs.domain}".passwordFile =
         #     secrets.mail-affine-password.path;
         # };
       };

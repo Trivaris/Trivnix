@@ -5,7 +5,7 @@
       ...
     }:
     {
-      options.userInfos = {
+      options.user-infos = {
         name = lib.mkOption {
           type = lib.types.str;
           description = "The name of the user.";

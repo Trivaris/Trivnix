@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.networking-pihole =
     {
       config,
@@ -6,12 +10,12 @@
       ...
     }:
     let
-      piHolePrefs = config.hostPrefs.piHole;
-      wireguardPrefs = config.hostPrefs.wireguard;
-      wgIp = builtins.head (lib.splitString "/" wireguardPrefs.address);
+      pihole-prefs = config.host-prefs.pihole;
+      wireguard-prefs = config.host-prefs.wireguard;
+      wgIp = builtins.head (lib.splitString "/" wireguard-prefs.address);
     in
     {
-      config = lib.mkIf piHolePrefs.enable {
+      config = lib.mkIf pihole-prefs.enable {
         services = {
           pihole-ftl = {
             enable = true;
@@ -24,7 +28,7 @@
               ];
 
               misc.dnsmasq_lines = [
-                "interface=${wireguardPrefs.interfaceName}"
+                "interface=${wireguard-prefs.interfaceName}"
                 "except-interface=lo"
                 "bind-interfaces"
               ];
@@ -33,18 +37,18 @@
 
           pihole-web = {
             enable = true;
-            hostName = piHolePrefs.reverseProxy.domain;
-            ports = [ (if piHolePrefs.reverseProxy.enable then piHolePrefs.reverseProxy.port else 80) ];
+            hostName = pihole-prefs.reverseProxy.domain;
+            ports = [ (if pihole-prefs.reverseProxy.enable then pihole-prefs.reverseProxy.port else 80) ];
           };
 
-          nginx = lib.mkIf piHolePrefs.reverseProxy.enable {
+          nginx = lib.mkIf pihole-prefs.reverseProxy.enable {
             streamConfig = ''
               server {
                 listen 853 ssl;
                 proxy_pass ${wgIp}:53;
 
-                ssl_certificate /var/lib/acme/${piHolePrefs.reverseProxy.domain}/fullchain.pem;
-                ssl_certificate_key /var/lib/acme/${piHolePrefs.reverseProxy.domain}/key.pem;
+                ssl_certificate /var/lib/acme/${pihole-prefs.reverseProxy.domain}/fullchain.pem;
+                ssl_certificate_key /var/lib/acme/${pihole-prefs.reverseProxy.domain}/key.pem;
 
                 ssl_protocols TLSv1.2 TLSv1.3;
                 ssl_ciphers HIGH:!aNULL:!MD5;
@@ -55,7 +59,7 @@
         };
 
         networking.firewall.allowedTCPPorts = [ 853 ];
-        networking.firewall.interfaces."${wireguardPrefs.interfaceName}" = {
+        networking.firewall.interfaces."${wireguard-prefs.interfaceName}" = {
           allowedUDPPorts = [ 53 ];
           allowedTCPPorts = [ 53 ];
         };

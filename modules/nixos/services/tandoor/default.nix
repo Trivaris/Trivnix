@@ -1,21 +1,25 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.services-tandoor =
     { config, lib, ... }:
     let
-      tandoorPrefs = config.hostPrefs.tandoor;
+      tandoor-prefs = config.host-prefs.tandoor;
     in
     {
-      config = lib.mkIf tandoorPrefs.enable {
+      config = lib.mkIf tandoor-prefs.enable {
         services.tandoor-recipes = {
-          inherit (tandoorPrefs.reverseProxy) port;
+          inherit (tandoor-prefs.reverseProxy) port;
           enable = true;
           address =
-            if tandoorPrefs.reverseProxy.enable then "localhost" else tandoorPrefs.reverseProxy.domain;
+            if tandoor-prefs.reverseProxy.enable then "localhost" else tandoor-prefs.reverseProxy.domain;
           extraConfig = {
             MEDIA_ROOT = "/var/lib/tandoor-recipes/media/";
             DEBUG = "1";
             ALLOWED_HOSTS =
-              if tandoorPrefs.reverseProxy.enable then tandoorPrefs.reverseProxy.domain else "localhost";
+              if tandoor-prefs.reverseProxy.enable then tandoor-prefs.reverseProxy.domain else "localhost";
           };
         };
       };

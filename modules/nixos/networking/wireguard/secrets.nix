@@ -6,13 +6,13 @@
       ...
     }:
     let
-      wireguardPrefs = config.hostPrefs.wireguard;
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
+      wireguard-prefs = config.host-prefs.wireguard;
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf wireguardPrefs.enable {
+      config.sops.secrets = lib.mkIf wireguard-prefs.enable {
         wireguard-key = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "root";
           group = "root";
         };

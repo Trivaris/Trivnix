@@ -87,18 +87,16 @@
       };
     in
     {
-      options.userPrefs.email = {
+      options.user-prefs.email = {
         enable = lib.mkEnableOption "SOPS-backed email account provisioning for this user";
 
         exclude = lib.mkOption {
-          type = lib.types.listOf (
-            lib.types.enum (builtins.attrNames config.private.emailAccounts.${config.userInfos.name} or { })
-          );
+          type = lib.types.listOf (lib.types.enum (builtins.attrNames config.private.email-accounts or { }));
 
           default = [ ];
           description = ''
             Email account identifiers to ignore when provisioning profiles.
-            Filter names listed under `config.private.emailAccounts.<user>`.
+            Filter names listed under `config.private.email-accounts`.
           '';
         };
 
@@ -121,16 +119,16 @@
         };
       };
 
-      options.private.calendarAccounts = lib.mkOption {
-        type = lib.types.attrsOf (lib.types.attrsOf calendarSubmodule);
+      options.private.calendar-accounts = lib.mkOption {
+        type = lib.types.attrsOf calendarSubmodule;
         default = { };
-        description = "Calendar accounts per user.";
+        description = "Calendar accounts";
       };
 
-      options.private.emailAccounts = lib.mkOption {
-        type = lib.types.attrsOf (lib.types.attrsOf accountSubmodule);
+      options.private.email-accounts = lib.mkOption {
+        type = lib.types.attrsOf accountSubmodule;
         default = { };
-        description = "Email accounts per user.";
+        description = "Email accounts";
       };
     };
 }

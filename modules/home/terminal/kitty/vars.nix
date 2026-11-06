@@ -2,7 +2,7 @@
   flake.homeModules.terminal-direnv =
     { lib, ... }:
     {
-      options.vars.terminalEmulator = lib.mkOption {
+      options.vars.terminal-emulator = lib.mkOption {
         type = lib.types.str;
         default = "kitty";
         readOnly = true;

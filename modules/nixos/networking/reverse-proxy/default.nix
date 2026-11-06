@@ -1,18 +1,28 @@
 {
+  imports = [
+    ./acme.nix
+    ./anubis.nix
+    ./dumb-pipes.nix
+    ./options.nix
+    ./secrets.nix
+    ./vars.nix
+    ./virtual-hosts.nix
+  ];
+
   flake.nixosModules.networking-reverse-proxy =
     { config, lib, ... }:
     let
-      reverseProxyPrefs = config.hostPrefs.reverseProxy;
+      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
       allowedTCPPorts =
-        (map (service: service.externalPort) config.vars.activeServices)
-        ++ lib.optionals reverseProxyPrefs.dumbPipes.enable (
+        (map (service: service.externalPort) config.vars.active-services)
+        ++ lib.optionals reverse-proxy-prefs.dumbPipes.enable (
           map (tcpForward: tcpForward.listenPort) (
-            builtins.attrValues reverseProxyPrefs.dumbPipes.portForwards
+            builtins.attrValues reverse-proxy-prefs.dumbPipes.portForwards
           )
         );
     in
     {
-      config = lib.mkIf reverseProxyPrefs.enable {
+      config = lib.mkIf reverse-proxy-prefs.enable {
         networking.firewall.allowedTCPPorts = allowedTCPPorts;
 
         users.users.nginx.extraGroups = [ "acme" ];

@@ -1,23 +1,28 @@
 {
-  flake.nixosModules.services-matrixr =
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
+  flake.nixosModules.services-matrix =
     {
       config,
       lib,
       ...
     }:
     let
-      matrixPrefs = config.hostPrefs.matrix;
+      matrix-prefs = config.host-prefs.matrix;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf matrixPrefs.enable {
+      config = lib.mkIf matrix-prefs.enable {
         services.matrix-conduit = {
           enable = true;
           secretFile = secrets.matrix-secrets.path;
           settings.global = {
-            address = if matrixPrefs.reverseProxy.enable then "0.0.0.0" else matrixPrefs.reverseProxy.domain;
-            port = matrixPrefs.reverseProxy.port;
-            server_name = matrixPrefs.name;
+            address = if matrix-prefs.reverseProxy.enable then "0.0.0.0" else matrix-prefs.reverseProxy.domain;
+            port = matrix-prefs.reverseProxy.port;
+            server_name = matrix-prefs.name;
             allow_registration = true;
             database_backend = "rocksdb";
             extraConfig = ''

@@ -8,7 +8,7 @@
       ...
     }:
     let
-      vscodePrefs = config.userPrefs.vscode;
+      vscode-prefs = config.user-prefs.vscode;
       rawSettings = pkgs.writeText "settings.json" (
         builtins.toJSON {
           "files.autoSave" = "afterDelay";
@@ -19,8 +19,8 @@
           "nix.serverSettings".nixd = {
             formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
             options = {
-              nixos.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.hostInfos.configname}.options";
-              home-manager.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.hostInfos.configname}.options.home-manager.users.type.getSubOptions []";
+              nixos.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.host-infos.configname}.options";
+              home-manager.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.host-infos.configname}.options.home-manager.users.type.getSubOptions []";
             };
           };
           "explorer.confirmDragAndDrop" = false;
@@ -31,7 +31,7 @@
           "editor.stickyScroll.enabled" = false;
           "java.import.gradle.arguments" = [
             "--project-cache-dir"
-            "/home/${osConfig.hostPrefs.mainUser}/.gradle-cache"
+            "/home/${osConfig.host-prefs.mainUser}/.gradle-cache"
           ];
           "github.copilot.enable" = {
             "*" = false;
@@ -41,13 +41,13 @@
     in
     {
 
-      options.userPrefs.vscode.enable = lib.mkEnableOption "VSCode, a lightweight code editor";
+      options.user-prefs.vscode.enable = lib.mkEnableOption "VSCode, a lightweight code editor";
 
-      config = lib.mkIf vscodePrefs.enable {
+      config = lib.mkIf vscode-prefs.enable {
         home.packages = [ pkgs.vscode ];
         home.activation.setupVSCodeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           mkdir -p "$HOME/.config/Code/User"
-          ${lib.getExe pkgs.jq} . ${rawSettings} > "/home/${config.userInfos.name}/.config/Code/User/settings.json"
+          ${lib.getExe pkgs.jq} . ${rawSettings} > "/home/${config.user-infos.name}/.config/Code/User/settings.json"
         '';
       };
 

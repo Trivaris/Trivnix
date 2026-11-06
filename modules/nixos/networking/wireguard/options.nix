@@ -11,7 +11,7 @@
       };
     in
     {
-      options.hostPrefs.wireguard = {
+      options.host-prefs.wireguard = {
         enable = lib.mkEnableOption "WireGuard client connection";
 
         port = lib.mkOption {
@@ -61,7 +61,7 @@
         };
       };
 
-      options.private.wgPeers = {
+      options.private.wg-peers = {
         guests = lib.mkOption {
           type = lib.types.attrsOf keyCollectionType;
         };

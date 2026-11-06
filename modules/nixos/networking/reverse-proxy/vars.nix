@@ -7,12 +7,12 @@
       ...
     }:
     let
-      prefs = config.hostPrefs;
+      prefs = config.host-prefs;
       servicesToList = lib.mapAttrsToList (name: service: service.reverseProxy // { inherit name; });
       isService = pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false;
     in
     {
-      options.vars.activeServices = lib.mkOption {
+      options.vars.active-services = lib.mkOption {
         type = lib.types.listOf (
           lib.types.submodule (
             lib.recursiveUpdate trivnixLib.trivnix.reverseProxyOptions {
@@ -27,7 +27,7 @@
         );
         readOnly = true;
         default =
-          prefs.reverseProxy.extraServices
+          prefs.reverse-proxy.extraServices
           ++ (servicesToList ((lib.filterAttrs (_: pref: isService pref)) prefs));
         description = "Services collected from enabled reverse-proxy registrations";
       };

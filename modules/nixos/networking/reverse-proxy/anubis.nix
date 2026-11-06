@@ -2,13 +2,13 @@
   flake.nixosModules.networking-reverse-proxy =
     { config, lib, ... }:
     let
-      reverseProxyPrefs = config.hostPrefs.reverseProxy;
+      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
       anubisServices = builtins.filter (
         service: service.enableAnubis or false
-      ) config.vars.activeServices;
+      ) config.vars.active-services;
     in
     {
-      config = lib.mkIf reverseProxyPrefs.enable {
+      config = lib.mkIf reverse-proxy-prefs.enable {
         services.anubis.instances = builtins.listToAttrs (
           map (
             service:
@@ -20,7 +20,7 @@
                 TARGET = "${
                   if service.https then "https" else "http"
                 }://${service.address}:${toString service.port}";
-                COOKIE_DOMAIN = reverseProxyPrefs.zone;
+                COOKIE_DOMAIN = reverse-proxy-prefs.zone;
                 PUBLIC_URL = "https://${service.domain}";
                 DIFFICULTY = 4;
               };

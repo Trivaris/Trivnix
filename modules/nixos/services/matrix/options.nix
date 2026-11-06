@@ -6,7 +6,7 @@
       ...
     }:
     {
-      options.hostPrefs.matrix = {
+      options.host-prefs.matrix = {
         enable = lib.mkEnableOption "Matrix Conduit server";
         reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
         name = lib.mkOption {

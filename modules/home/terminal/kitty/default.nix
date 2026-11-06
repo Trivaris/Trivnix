@@ -1,8 +1,12 @@
 {
+  imports = [
+    ./vars.nix
+  ];
+
   flake.homeModules.terminal-kitty =
     { osConfig, ... }:
     let
-      themePrefs = osConfig.themingPrefs;
+      theme-prefs = osConfig.theme-prefs;
     in
     {
       config.programs.kitty = {
@@ -21,8 +25,8 @@
 
         extraConfig = ''
           ${
-            if (themePrefs.themeOverrides.kitty != null) then
-              "include ${themePrefs.themeOverrides.kitty}"
+            if (theme-prefs.themeOverrides.kitty != null) then
+              "include ${theme-prefs.themeOverrides.kitty}"
             else
               (import ./_theme.nix osConfig)
           }

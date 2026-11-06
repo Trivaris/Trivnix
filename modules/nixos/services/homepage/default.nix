@@ -1,16 +1,20 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.services-homepage =
     { config, lib, ... }:
     let
-      homepagePrefs = config.hostPrefs.homepage;
+      homepage-prefs = config.host-prefs.homepage;
     in
     {
-      config = lib.mkIf homepagePrefs.enable {
+      config = lib.mkIf homepage-prefs.enable {
         services.homepage-dashboard = {
           enable = true;
-          openFirewall = !homepagePrefs.reverseProxy.enable;
-          allowedHosts = homepagePrefs.reverseProxy.domain;
-          listenPort = homepagePrefs.reverseProxy.port;
+          openFirewall = !homepage-prefs.reverseProxy.enable;
+          allowedHosts = homepage-prefs.reverseProxy.domain;
+          listenPort = homepage-prefs.reverseProxy.port;
         };
       };
     };

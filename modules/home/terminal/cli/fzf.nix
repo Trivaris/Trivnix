@@ -2,10 +2,10 @@
   flake.homeModules.terminal-cli =
     { config, lib, ... }:
     let
-      cliPrefs = config.userPrefs.cli;
+      cli-prefs = config.user-prefs.cli;
     in
     {
-      config = lib.mkIf cliPrefs.enable {
+      config = lib.mkIf cli-prefs.enable {
         programs.fzf = {
           enable = true;
           defaultCommand = "fd --type f --exclude .git --follow --hidden";

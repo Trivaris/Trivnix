@@ -6,13 +6,13 @@
       ...
     }:
     let
-      forgejoPrefs = config.hostPrefs.forgejo;
-      hostSecrets = "${config.private.secrets}/host/${config.hostInfos.configname}.yaml";
+      forgejo-prefs = config.host-prefs.forgejo;
+      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf forgejoPrefs.enable {
+      config.sops.secrets = lib.mkIf forgejo-prefs.enable {
         mail-forgejo-password = {
-          sopsFile = hostSecrets;
+          sopsFile = host-secrets;
           owner = "forgejo";
           group = "forgejo";
         };

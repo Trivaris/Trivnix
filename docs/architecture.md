@@ -1,32 +1,37 @@
 # Architecture
 
-Trivnix is the reusable module layer. A separate `trivnixconfig` flake selects hosts, users, and enabled features.
+Trivnix is a reusable NixOS module layer. The repository also defines desktop,
+laptop, and server configurations that compose those modules with private input
+data.
 
 ## Public flake
 
-`flake.nix` declares upstream inputs and delegates its outputs to `flake/outputs.nix`.
+`flake.nix` declares upstream inputs and imports the repository's Nix files
+through `import-tree`. The imported files define the flake outputs.
 
 | Export | Source | Purpose |
 | --- | --- | --- |
-| `nixosModules.default` | `host/` | Host, service, and system modules |
-| `nixosModules.dependencies` | `flake/modules.nix` | Upstream NixOS modules required by the host tree |
-| `homeModules.default` | `home/` | Home Manager and desktop modules |
-| `homeModules.dependencies` | `flake/modules.nix` | Upstream Home Manager modules required by the home tree |
-| `overlays.hyprqt6engine` | `flake/overlays.nix` | Hyprland Qt6 engine package overlay |
+| `nixosModules.default` | `modules/nixos/default.nix` | Aggregate NixOS module set |
+| `nixosModules.*` | `modules/nixos/` and `hosts/` | Individual module groups and host modules |
+| `nixosConfigurations.*` | `hosts/` | `desktop`, `laptop`, and `server` systems |
+| `diskoConfigurations.*` | `disko/` | Disko configurations for the three hosts |
+| `lib` | `lib/` | Shared Nix helpers |
+| `overlays.default` | `overlays/` | The repository's package overlay |
 
-The module trees are loaded with `import-tree`, so nested module files are part of the exported default module set.
+The `modules/home` tree is wired into the repository's host configurations. It
+is not currently exposed as a `homeModules` flake output.
 
 ## Composition boundary
 
-The companion configuration flake normally provides:
+The host configurations use the companion private input:
 
-- host and user configurations
-- `trivnixLib` helpers and shared option definitions
-- `trivnixPrivate` secrets and private metadata
-- `trivnixOverlays` local package overrides
+- `trivnixPrivate` provides SOPS data, accounts, keys, and other private values.
 
-Those inputs are intentionally not part of this repository's public source. See [Private integration](private-integration.md).
+The public repository defines the host configurations and passes its own `lib`
+to them as `trivnixLib`. See [Private integration](private-integration.md).
 
-## Dependency bundles
+## External modules
 
-Import `nixosModules.dependencies` or `homeModules.dependencies` when a configuration uses modules that rely on the upstream inputs listed in `flake/modules.nix`. The bundles currently include Disko, the mailserver, NUR, sops-nix, Lanzaboote, the Epic Games Launcher module, and the Home Manager sops-nix module.
+`nixosModules.external-modules` imports the external NixOS modules used by the
+host configurations, including Home Manager, SOPS, Lanzaboote, Disko, NUR, the
+Epic Games Launcher, and Spicetify. 

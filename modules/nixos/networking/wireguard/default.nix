@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.networking-wireguard =
     {
       lib,
@@ -6,21 +11,21 @@
       ...
     }:
     let
-      wireguardPrefs = config.hostPrefs.wireguard;
+      wireguard-prefs = config.host-prefs.wireguard;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf wireguardPrefs.enable {
+      config = lib.mkIf wireguard-prefs.enable {
         networking.firewall = {
-          allowedUDPPorts = [ wireguardPrefs.port ];
+          allowedUDPPorts = [ wireguard-prefs.port ];
           trustedInterfaces = [ "wg0" ];
         };
 
-        networking.wireguard.interfaces."${wireguardPrefs.interfaceName}" = {
-          ips = [ wireguardPrefs.address ];
-          listenPort = wireguardPrefs.port;
+        networking.wireguard.interfaces."${wireguard-prefs.interfaceName}" = {
+          ips = [ wireguard-prefs.address ];
+          listenPort = wireguard-prefs.port;
           privateKeyFile = secrets.wireguard-key.path;
-          peers = wireguardPrefs.peers;
+          peers = wireguard-prefs.peers;
         };
       };
     };

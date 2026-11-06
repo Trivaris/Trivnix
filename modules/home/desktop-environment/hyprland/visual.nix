@@ -7,7 +7,7 @@
       ...
     }:
     let
-      scheme = osConfig.themingPrefs.scheme;
+      scheme = osConfig.theme-prefs.scheme;
       toARGB = color: "0xff${lib.removePrefix "#" color}";
       withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
 
@@ -35,7 +35,7 @@
       '';
     in
     {
-      config = lib.mkIf (!osConfig.hostPrefs.headless) {
+      config = lib.mkIf (!osConfig.host-prefs.headless) {
         home.sessionVariables = {
           QT_QPA_PLATFORMTHEME = "hyprqt6engine";
           QT_QUICK_CONTROLS_STYLE = "Fusion";
@@ -47,9 +47,9 @@
             style = Fusion
             color_scheme = ${qtTheme}
             icon_theme = Papirus-Dark
-            font = ${osConfig.themingPrefs.font.propoName}
+            font = ${osConfig.theme-prefs.font.propoName}
             font_size = 11
-            font_fixed = ${osConfig.themingPrefs.font.monoName}
+            font_fixed = ${osConfig.theme-prefs.font.monoName}
             font_fixed_size = 11
           }
 

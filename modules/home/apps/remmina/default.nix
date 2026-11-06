@@ -6,12 +6,12 @@
       ...
     }:
     let
-      remminaPrefs = config.userPrefs.remmina;
+      remmina-prefs = config.user-prefs.remmina;
     in
     {
-      options.userPrefs.remmina.enable = lib.mkEnableOption "Remmina remote desktop client";
+      options.user-prefs.remmina.enable = lib.mkEnableOption "Remmina remote desktop client";
 
-      config = lib.mkIf remminaPrefs.enable {
+      config = lib.mkIf remmina-prefs.enable {
         services.remmina = {
           enable = true;
           addRdpMimeTypeAssoc = true;

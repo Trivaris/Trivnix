@@ -6,7 +6,7 @@
       ...
     }:
     let
-      themingPrefs = osConfig.themingPrefs;
+      theme-prefs = osConfig.theme-prefs;
     in
     {
       home = {
@@ -28,7 +28,7 @@
       };
 
       dconf.settings."org/gnome/desktop/interface".color-scheme =
-        if themingPrefs.darkmode then "prefer-dark" else "prefer-light";
+        if theme-prefs.darkmode then "prefer-dark" else "prefer-light";
 
       gtk = {
         enable = true;
@@ -41,8 +41,8 @@
           package = pkgs.adwaita-icon-theme;
         };
         gtk2.enable = false;
-        gtk3.extraConfig.gtk-application-prefer-dark-theme = if themingPrefs.darkmode then 1 else 0;
-        gtk4.extraConfig.gtk-application-prefer-dark-theme = if themingPrefs.darkmode then 1 else 0;
+        gtk3.extraConfig.gtk-application-prefer-dark-theme = if theme-prefs.darkmode then 1 else 0;
+        gtk4.extraConfig.gtk-application-prefer-dark-theme = if theme-prefs.darkmode then 1 else 0;
       };
     };
 }

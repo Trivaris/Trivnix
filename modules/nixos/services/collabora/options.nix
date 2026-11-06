@@ -2,7 +2,7 @@
   flake.nixosModules.services-collabora =
     { lib, trivnixLib, ... }:
     {
-      options.hostPrefs.collabora = {
+      options.host-prefs.collabora = {
         reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
         enable = lib.mkEnableOption "Collabora Online for browser-based document editing";
 

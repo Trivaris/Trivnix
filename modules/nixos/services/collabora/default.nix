@@ -1,20 +1,24 @@
 {
+  imports = [
+    ./options.nix
+  ];
+
   flake.nixosModules.services-collabora =
     { config, lib, ... }:
     let
-      collaboraPrefs = config.hostPrefs.collabora;
+      collabora-prefs = config.host-prefs.collabora;
     in
     {
-      config = lib.mkIf collaboraPrefs.enable {
+      config = lib.mkIf collabora-prefs.enable {
         services.collabora-online = {
-          inherit (collaboraPrefs.reverseProxy) port;
+          inherit (collabora-prefs.reverseProxy) port;
           enable = true;
           settings =
             let
-              rPEnabled = collaboraPrefs.reverseProxy.enable;
+              rPEnabled = collabora-prefs.reverseProxy.enable;
             in
             {
-              server_name = collaboraPrefs.reverseProxy.domain;
+              server_name = collabora-prefs.reverseProxy.domain;
 
               ssl = {
                 enable = !rPEnabled;
@@ -26,9 +30,9 @@
                 post_allow.host = [ "127.0.0.1" ];
               };
 
-              storage.wopi = lib.mkIf (collaboraPrefs.nextcloudFQDNs != null) {
+              storage.wopi = lib.mkIf (collabora-prefs.nextcloudFQDNs != null) {
                 "@allow" = true;
-                host = collaboraPrefs.nextcloudFQDNs;
+                host = collabora-prefs.nextcloudFQDNs;
               };
             };
         };

@@ -11,7 +11,7 @@
         };
     in
     {
-      options.hostInfos = {
+      options.host-infos = {
         name = mkStrOption "The name of the host.";
         configname = mkStrOption "The configuration name of the host.";
         stateVersion = mkStrOption "The NixOS state version for this host.";

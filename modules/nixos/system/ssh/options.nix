@@ -34,7 +34,7 @@
       };
     in
     {
-      options.private.pubKeys = {
+      options.private.public-keys = {
         common = lib.mkOption {
           type = commonSubmodule;
         };

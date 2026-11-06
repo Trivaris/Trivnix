@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./starship.nix
+  ];
+
   flake.homeModules.terminal-shell =
     {
       config,
@@ -7,21 +11,21 @@
       ...
     }:
     let
-      cliPrefs = config.userPrefs.cli;
+      cli-prefs = config.user-prefs.cli;
     in
     {
       options.vars = {
-        shellAbbreviations = lib.mkOption {
+        shell-abbreviations = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
           readOnly = true;
           default = import ./_abbreviations.nix;
           description = "Shell abbreviations made available to the configured Zsh session";
         };
 
-        shellFunctions = lib.mkOption {
+        shell-functions = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
           readOnly = true;
-          default = import ./_functions.nix osConfig.hostInfos.configname;
+          default = import ./_functions.nix osConfig.host-infos.configname;
           description = "Shell functions, including local check and rebuild helpers";
         };
       };
@@ -30,7 +34,7 @@
         programs.zsh = {
           enable = true;
           autocd = true;
-          shellAliases = config.vars.shellAbbreviations;
+          shellAliases = config.vars.shell-abbreviations;
           syntaxHighlighting.enable = true;
 
           autosuggestion = {
@@ -46,7 +50,7 @@
             bindkey "^[[1;5D" backward-word
             bindkey "^[[1;5C" forward-word
 
-            ${lib.optionalString cliPrefs.enable "fastfetch"}
+            ${lib.optionalString cli-prefs.enable "fastfetch"}
           '';
         };
       };

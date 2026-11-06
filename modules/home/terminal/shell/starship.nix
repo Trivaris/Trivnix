@@ -1,7 +1,8 @@
 {
-  flake.homeModules.terminal-shell = { osConfig, ... }:
+  flake.homeModules.terminal-shell =
+    { osConfig, ... }:
     let
-      theme = osConfig.themingPrefs.scheme;
+      scheme = osConfig.theme-prefs.scheme;
     in
     {
       programs.starship = {
@@ -15,8 +16,8 @@
           fill.symbol = " ";
 
           format = ''
-            [┌─](bold ${theme.base0C}) $username $directory $git_branch$git_status$all$fill$time
-            [╰─](bold ${theme.base0C})$character'';
+            [┌─](bold ${scheme.base0C}) $username $directory $git_branch$git_status$all$fill$time
+            [╰─](bold ${scheme.base0C})$character'';
 
           character = {
             success_symbol = "[┤](bold green)";
@@ -25,29 +26,29 @@
 
           username = {
             show_always = true;
-            style_user = "${theme.base0B}";
-            style_root = "${theme.base08}";
+            style_user = "${scheme.base0B}";
+            style_root = "${scheme.base08}";
             format = "[$user]($style) in";
           };
 
           directory = {
-            style = "${theme.base0D}";
+            style = "${scheme.base0D}";
             format = "[$path]($style)";
           };
 
           git_branch = {
-            style = "${theme.base0E}";
+            style = "${scheme.base0E}";
             format = "on [$branch]($style) ";
           };
 
           git_status = {
-            style = "${theme.base08}";
+            style = "${scheme.base08}";
             format = "([\\[$all_status$ahead_behind\\]]($style) )";
           };
 
           time = {
             disabled = false;
-            format = "[$time](${theme.base05})";
+            format = "[$time](${scheme.base05})";
           };
         };
       };

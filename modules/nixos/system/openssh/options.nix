@@ -2,7 +2,7 @@
   flake.nixosModules.system-openssh =
     { lib, ... }:
     {
-      options.hostPrefs.openssh = {
+      options.host-prefs.openssh = {
         enable = lib.mkEnableOption "OpenSSH service and Exposure through firewall";
         ports = lib.mkOption {
           type = lib.types.listOf lib.types.port;

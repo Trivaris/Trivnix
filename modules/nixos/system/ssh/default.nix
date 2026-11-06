@@ -1,4 +1,9 @@
 {
+  imports = [
+    ./options.nix
+    ./secrets.nix
+  ];
+
   flake.nixosModules.system-ssh =
     {
       config,
@@ -25,7 +30,7 @@
       // (lib.mapAttrs (hostname: pubKeys: {
         hostNames = [ hostname ];
         publicKey = builtins.readFile pubKeys."host.pub";
-      }) config.private.pubKeys.hosts);
+      }) config.private.public-keys.hosts);
     in
     {
       programs.ssh = {

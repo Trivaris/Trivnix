@@ -6,7 +6,7 @@
       ...
     }:
     {
-      options.hostPrefs.evolution = {
+      options.host-prefs.evolution = {
         enable = lib.mkEnableOption "Evolution API service";
         reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
       };

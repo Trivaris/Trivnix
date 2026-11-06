@@ -1,5 +1,23 @@
 { self, ... }:
 {
+  imports = [
+    ./actual
+    ./affine
+    ./codeserver
+    ./collabora
+    ./evolution-api
+    ./forgejo
+    ./glances
+    ./homepage
+    # ./mailserver
+    ./matrix
+    ./n8n
+    ./paperless
+    ./syncthing
+    ./tandoor
+    ./vaultwarden
+  ];
+
   flake.nixosModules.services = {
     imports = [
       self.nixosModules.services-actual

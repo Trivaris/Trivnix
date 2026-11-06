@@ -7,7 +7,7 @@
       ...
     }:
     let
-      thunderbirdPrefs = config.userPrefs.thunderbird;
+      thunderbird-prefs = config.user-prefs.thunderbird;
 
       # calendarSettings = lib.flatten (
       #   lib.mapAttrsToList (
@@ -22,16 +22,16 @@
       #       (lib.nameValuePair "${prefix}.color" account.color)
       #       (lib.nameValuePair "${prefix}.disabled" false)
       #     ]
-      #   ) config.private.calendarAccounts.${config.userInfos.name}
+      #   ) config.private.calendar-accounts or { }
       # );
     in
     {
-      options.userPrefs.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
-      config = lib.mkIf thunderbirdPrefs.enable {
+      options.user-prefs.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
+      config = lib.mkIf thunderbird-prefs.enable {
         programs.thunderbird = {
           enable = true;
           package = pkgs.thunderbird-bin;
-          profiles.${config.userInfos.name} = {
+          profiles.${config.user-infos.name} = {
             isDefault = true;
             # settings = (builtins.listToAttrs calendarSettings) // {
             #   "calendar.registry.defaultprovider" = "caldav";
