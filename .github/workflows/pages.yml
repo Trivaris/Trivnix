@@ -15,10 +15,6 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -43,12 +39,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs/
+          destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './docs'
+          path: './_site' 
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
