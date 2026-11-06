@@ -39,10 +39,7 @@
               showUntrackedFiles = true;
             };
 
-            core = {
-              autocrlf = "input";
-              hooksPath = ".githooks";
-            };
+            core.autocrlf = "input";
           };
 
           signing = lib.mkIf gitPrefs.enableSigning {
