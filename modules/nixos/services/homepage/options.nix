@@ -1,9 +1,9 @@
 {
   flake.nixosModules.services-homepage =
-    { lib, trivnixLib, ... }:
+    { lib, ... }:
     {
       options.host-prefs.homepage = {
-        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
         enable = lib.mkEnableOption "Homepage service";
       };
     };

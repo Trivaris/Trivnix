@@ -1,17 +1,4 @@
 {
-  imports = [
-    ./auto-login.nix
-    ./boot.nix
-    ./finger-print.nix
-    ./home-manager.nix
-    ./host-infos.nix
-    ./nixpkgs.nix
-    ./options.nix
-    ./pipewire.nix
-    ./shell.nix
-    ./theming.nix
-  ];
-
   flake.nixosModules.system-core =
     { lib, ... }:
     {

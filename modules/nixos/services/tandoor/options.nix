@@ -1,9 +1,9 @@
 {
   flake.nixosModules.services-tandoor =
-    { lib, trivnixLib, ... }:
+    { lib, ... }:
     {
       options.host-prefs.tandoor = {
-        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
         enable = lib.mkEnableOption "Tandoor Recipes, a self-hosted recipe manager";
       };
     };

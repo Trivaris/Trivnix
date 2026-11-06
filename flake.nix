@@ -53,6 +53,7 @@
         ./lib
         ./modules/home
         ./modules/nixos
+        ./modules/nixos/external.nix
         ./overlays
         ./packages
         ./shells

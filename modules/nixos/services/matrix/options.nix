@@ -2,13 +2,12 @@
   flake.nixosModules.services-matrix =
     {
       lib,
-      trivnixLib,
       ...
     }:
     {
       options.host-prefs.matrix = {
         enable = lib.mkEnableOption "Matrix Conduit server";
-        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
         name = lib.mkOption {
           type = lib.types.str;
           default = "matrix-server";

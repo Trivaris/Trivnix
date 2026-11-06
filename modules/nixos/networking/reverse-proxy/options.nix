@@ -1,6 +1,6 @@
 {
   flake.nixosModules.networking-reverse-proxy =
-    { lib, trivnixLib, ... }:
+    { lib, ... }:
     {
       options.host-prefs.reverse-proxy = {
         enable = lib.mkEnableOption "Nginx reverse proxy, shared for web services";
@@ -70,7 +70,7 @@
         extraServices = lib.mkOption {
           type = lib.types.listOf (
             lib.types.submodule (
-              lib.recursiveUpdate trivnixLib.trivnix.reverseProxyOptions {
+              lib.recursiveUpdate lib.trivnix.reverseProxyOptions {
                 options = {
                   name = lib.mkOption {
                     type = lib.types.str;

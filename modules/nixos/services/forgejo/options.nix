@@ -1,9 +1,9 @@
 {
   flake.nixosModules.services-forgejo =
-    { lib, trivnixLib, ... }:
+    { lib, ... }:
     {
       options.host-prefs.forgejo = {
-        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
         enable = lib.mkEnableOption "Forgejo Git hosting service";
         sendMails = lib.mkEnableOption "Mail delivery through the integrated mailserver";
       };

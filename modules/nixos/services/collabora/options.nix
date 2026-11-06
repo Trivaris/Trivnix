@@ -1,9 +1,9 @@
 {
   flake.nixosModules.services-collabora =
-    { lib, trivnixLib, ... }:
+    { lib, ... }:
     {
       options.host-prefs.collabora = {
-        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
         enable = lib.mkEnableOption "Collabora Online for browser-based document editing";
 
         nextcloudFQDNs = lib.mkOption {

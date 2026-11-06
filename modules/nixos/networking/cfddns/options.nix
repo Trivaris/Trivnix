@@ -1,10 +1,10 @@
 {
   flake.nixosModules.networking-cfddns =
-    { lib, trivnixLib, ... }:
+    { lib, ... }:
     {
       options.host-prefs.cfddns = {
         enable = lib.mkEnableOption "Cloudflare DDNS service";
-        reverseProxy = trivnixLib.trivnix.mkReverseProxyOption;
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
       };
     };
 }
