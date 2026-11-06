@@ -18,7 +18,7 @@
           overrideDevices = false;
           overrideFolders = false;
           settings.gui = {
-            user = osConfig.host-prefs.mainUser;
+            user = config.home.username;
             authMode = "static";
             sendBasicAuthPrompt = true;
             insecureAdminAccess = false;

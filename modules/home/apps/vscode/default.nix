@@ -31,7 +31,7 @@
           "editor.stickyScroll.enabled" = false;
           "java.import.gradle.arguments" = [
             "--project-cache-dir"
-            "/home/${osConfig.host-prefs.mainUser}/.gradle-cache"
+            "${config.home.homeDirectory}/.gradle-cache"
           ];
           "github.copilot.enable" = {
             "*" = false;

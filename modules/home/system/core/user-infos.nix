@@ -14,10 +14,6 @@
           type = lib.types.str;
           description = "The hashed password for the user.";
         };
-        uid = lib.mkOption {
-          type = lib.types.int;
-          description = "The user ID (UID) for the user.";
-        };
       };
     };
 }

@@ -24,7 +24,7 @@
           overrideDevices = false;
           overrideFolders = false;
           settings.gui = {
-            user = config.host-prefs.mainUser;
+            user = config.home.username;
             authMode = "static";
             sendBasicAuthPrompt = true;
             insecureAdminAccess = false;

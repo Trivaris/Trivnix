@@ -15,7 +15,6 @@
         inherit (osConfig.host-infos) stateVersion;
         username = config.user-infos.name;
         homeDirectory = "/home/${config.user-infos.name}";
-        uid = config.user-infos.uid;
         shell.enableZshIntegration = true;
 
         sessionVariables = {
