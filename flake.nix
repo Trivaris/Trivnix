@@ -55,7 +55,7 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.home-manager.flakeModules.home-manager
-        inputs.disko.flakeModules.disko
+        # inputs.disko.flakeModules.disko
         ./lib
         ./modules/home
         ./modules/nixos

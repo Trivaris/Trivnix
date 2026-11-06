@@ -1,14 +1,10 @@
 { inputs, ... }:
 {
-  perSystem = { config, final, ... }: {
-    overlayAttrs = {
-      spicetify-packages = inputs.spicetify-nix.legacyPackages.${final.stdenv.hostPlatform.system};
-      inherit (config.packages)
-        cfddns-middleware
-        jtegranx
-        minecraft-server-fabric
-        quartz
-        ;
-    };
+  flake.overlays.default = final: prev: {
+    spicetify-packages = inputs.spicetify-nix.legacyPackages.${final.stdenv.hostPlatform.system};
+    cfddns-middleware = prev.callPackage ../packages/cfddns-middleware.nix { };
+    jtegranx = prev.callPackage ../packages/jtegranx.nix { };
+    minecraft-server-fabric = prev.callPackage ../packages/minecraft-server-fabric.nix { };
+    quartz = prev.callPackage ../packages/quartz.nix { };
   };
 }
