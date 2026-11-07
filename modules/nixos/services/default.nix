@@ -16,6 +16,7 @@
     ./syncthing
     ./tandoor
     ./vaultwarden
+    ./wayvnc
   ];
 
   flake.nixosModules.services = {
@@ -35,6 +36,7 @@
       self.nixosModules.services-syncthing
       self.nixosModules.services-tandoor
       self.nixosModules.services-vaultwarden
+      self.nixosModules.services-wayvnc
     ];
   };
 }
