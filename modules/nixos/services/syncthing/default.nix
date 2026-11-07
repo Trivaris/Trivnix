@@ -1,9 +1,4 @@
 {
-  imports = [
-    ./options.nix
-    ./secrets.nix
-  ];
-
   flake.nixosModules.services-syncthing =
     {
       config,

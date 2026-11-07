@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./vars.nix
-  ];
-
   flake.homeModules.terminal-kitty =
     { osConfig, ... }:
     let

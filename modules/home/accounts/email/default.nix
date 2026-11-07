@@ -1,10 +1,4 @@
 {
-  imports = [
-    ./options.nix
-    ./secrets.nix
-    ./vars.nix
-  ];
-
   flake.homeModules.accounts-email =
     {
       config,

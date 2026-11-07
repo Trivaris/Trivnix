@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./options.nix
-  ];
-
   flake.nixosModules.services-homepage =
     { config, lib, ... }:
     let

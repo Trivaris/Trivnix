@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./options.nix
-  ];
-
   flake.homeModules.desktop-environment-quickshell =
     {
       osConfig,

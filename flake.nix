@@ -29,6 +29,7 @@
 
     # Framework tools
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:denful/import-tree";
     nur.url = "github:nix-community/NUR";
 
     hyprqt6engine.url = "github:hyprwm/hyprqt6engine";
@@ -52,17 +53,17 @@
 
   outputs =
     inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      inputs.import-tree [
         inputs.home-manager.flakeModules.home-manager
         # inputs.disko.flakeModules.disko
-        ./lib
+        ./lib/default.nix
         ./modules/home
         ./modules/nixos
         ./modules/external.nix
         ./overlays
-        ./packages
-        ./shells
-      ];
-    };
+        ./packages/default.nix
+        ./shells/default.nix
+      ]
+    );
 }

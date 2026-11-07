@@ -1,9 +1,4 @@
 {
-  imports = [
-    ./options.nix
-    ./secrets.nix
-  ];
-
   flake.homeModules.terminal-git =
     {
       osConfig,

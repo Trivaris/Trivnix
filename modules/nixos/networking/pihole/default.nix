@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./options.nix
-  ];
-
   flake.nixosModules.networking-pihole =
     {
       config,

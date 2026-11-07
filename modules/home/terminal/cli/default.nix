@@ -1,12 +1,4 @@
 {
-  imports = [
-    ./bat.nix
-    ./eza.nix
-    ./fastfetch.nix
-    ./fzf.nix
-    ./zoxide.nix
-  ];
-
   flake.homeModules.terminal-cli =
     { lib, ... }:
     {

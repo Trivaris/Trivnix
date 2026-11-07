@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./theming.nix
-  ];
-
   flake.homeModules.system-core =
     { config, osConfig, ... }:
     {

@@ -1,9 +1,4 @@
 {
-  imports = [
-    ./options.nix
-    ./secrets.nix
-  ];
-
   flake.nixosModules.networking-wireguard =
     {
       lib,

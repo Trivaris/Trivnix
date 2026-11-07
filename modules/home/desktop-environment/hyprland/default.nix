@@ -1,10 +1,4 @@
 {
-  imports = [
-    ./keybinds.nix
-    ./monitor.nix
-    ./visual.nix
-  ];
-
   flake.homeModules.desktop-environment-hyprland =
     {
       lib,

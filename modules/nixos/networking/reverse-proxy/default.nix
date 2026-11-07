@@ -1,14 +1,4 @@
 {
-  imports = [
-    ./acme.nix
-    ./anubis.nix
-    ./dumb-pipes.nix
-    ./options.nix
-    ./secrets.nix
-    ./vars.nix
-    ./virtual-hosts.nix
-  ];
-
   flake.nixosModules.networking-reverse-proxy =
     { config, lib, ... }:
     let

@@ -1,13 +1,6 @@
 {
-  imports = [
-    ./secrets.nix
-  ];
-
   flake.homeModules.system-ssh =
-    {
-      config,
-      ...
-    }:
+    { config, ... }:
     {
       programs.ssh = {
         enable = true;

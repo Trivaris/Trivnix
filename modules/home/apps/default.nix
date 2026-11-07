@@ -1,13 +1,5 @@
 { self, ... }:
 {
-  imports = [
-    ./librewolf
-    ./prismlauncher
-    ./remmina
-    ./thunderbird
-    ./vscode
-  ];
-
   flake.homeModules.apps = {
     imports = [
       self.homeModules.apps-librewolf

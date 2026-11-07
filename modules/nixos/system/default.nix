@@ -1,15 +1,5 @@
 { self, ... }:
 {
-  imports = [
-    ./core
-    ./hyprland
-    ./keymap
-    ./openssh
-    ./secrets
-    ./ssh
-    ./users
-  ];
-
   flake.nixosModules.system = {
     imports = [
       self.nixosModules.system-core

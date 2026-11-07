@@ -1,14 +1,5 @@
 { self, ... }:
 {
-  imports = [
-    ./accounts
-    ./apps
-    ./desktop-environment
-    ./services
-    ./system
-    ./terminal
-  ];
-
   flake.homeModules.default = {
     imports = [
       self.homeModules.accounts

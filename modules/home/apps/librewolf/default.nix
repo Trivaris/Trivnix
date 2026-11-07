@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./options.nix
-  ];
-
   flake.homeModules.apps-librewolf =
     {
       config,

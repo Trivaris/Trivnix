@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./secrets.nix
-  ];
-
   flake.nixosModules.system-users =
     { pkgs, ... }:
     {
