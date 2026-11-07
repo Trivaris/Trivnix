@@ -14,6 +14,7 @@
       options.host-infos = {
         name = mkStrOption "The name of the host.";
         configname = mkStrOption "The configuration name of the host.";
+        loginUser = mkStrOption "the User to be automatically logged into.";
         stateVersion = mkStrOption "The NixOS state version for this host.";
         architecture = mkStrOption "The system architecture of this host.";
         primaryMonitor = mkStrOption "The primary monitor identifier for this host.";

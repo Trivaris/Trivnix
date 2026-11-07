@@ -5,7 +5,7 @@
       services.greetd =
         let
           session = {
-            user = config.home.username;
+            user = config.host-infos.loginUser;
             command = "sh -c 'start-hyprland > /dev/null 2>&1'";
           };
         in
