@@ -91,7 +91,7 @@
         enable = lib.mkEnableOption "SOPS-backed email account provisioning for this user";
 
         exclude = lib.mkOption {
-          type = lib.types.listOf (lib.types.enum (builtins.attrNames config.private.email-accounts or { }));
+          type = lib.types.listOf lib.types.str;
 
           default = [ ];
           description = ''
