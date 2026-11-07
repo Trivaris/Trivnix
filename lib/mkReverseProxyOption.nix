@@ -4,7 +4,7 @@
   ...
 }@lib:
 let
-  reverseProxyOptions = import ./_reverseProxyOptions.nix lib;
+  reverseProxyOptions = import ./reverseProxyOptions.nix lib;
 in
 mkOption {
   description = "List of services with name, ports, and domain.";

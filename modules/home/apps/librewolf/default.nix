@@ -20,13 +20,13 @@
       '';
 
       betterfox = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/yokoffing/betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/user.js";
-        sha256 = "sha256-Xo3NJ8BL/Px0neuYagxZpdKc3qRA0M3q95fKMNu8ruE=";
+        url = "https://raw.githubusercontent.com/yokoffing/Betterfox/7558fdc9c5aa4483d3010584fd0c2ea9f7e47c5e/user.js";
+        sha256 = "sha256-prmJFuPkfVsAN23oP1apQZHpqFoVrpQrWasqgTAha3w=";
       };
 
       smoothfox = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/yokoffing/betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/Smoothfox.js";
-        sha256 = "sha256-S1zDXctpV1jNlV9DCua4fYMHfR7T34V3gQi780ShFpk=";
+        url = "https://raw.githubusercontent.com/yokoffing/Betterfox/7558fdc9c5aa4483d3010584fd0c2ea9f7e47c5e/Smoothfox.js";
+        sha256 = "sha256-h3eZp18vYr8DCB21LhkoGH67Yrx3xkpSOMuWcbo1w+A=";
       };
     in
     {
