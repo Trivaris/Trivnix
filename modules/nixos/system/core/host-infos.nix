@@ -15,9 +15,7 @@
         name = mkStrOption "The name of the host.";
         configname = mkStrOption "The configuration name of the host.";
         stateVersion = mkStrOption "The NixOS state version for this host.";
-        ip = mkStrOption "The static IP address assigned to this host.";
         architecture = mkStrOption "The system architecture of this host.";
-        hashedRootPassword = mkStrOption "The hashed root password for this host.";
         primaryMonitor = mkStrOption "The primary monitor identifier for this host.";
         monitors = lib.mkOption {
           type = lib.types.attrsOf (

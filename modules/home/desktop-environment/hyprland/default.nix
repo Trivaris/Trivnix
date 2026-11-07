@@ -35,8 +35,6 @@
           pkgs.nmgui
           pkgs.brightnessctl
           pkgs.networkmanagerapplet
-          pkgs.networkmanager-strongswan
-          pkgs.strongswan
           pkgs.wtype
           pkgs.nautilus
           pkgs.loupe

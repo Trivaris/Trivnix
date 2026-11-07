@@ -6,6 +6,9 @@
       config,
       ...
     }:
+    let
+      theme-prefs = config.theme-prefs;
+    in
     {
       options.theme-prefs = {
         # mkEnableOption automatically generates the description: "Whether to enable Dark Mode."
@@ -119,6 +122,25 @@
           default = {
             package = pkgs.nerd-fonts.jetbrains-mono;
             name = "JetBrains Mono";
+          };
+        };
+      };
+
+      config = {
+        qt.enable = true;
+
+        fonts = {
+          enableDefaultPackages = true;
+          packages = [ theme-prefs.font.package ] ++ theme-prefs.font.extraFonts;
+          fontconfig = {
+            enable = true;
+            useEmbeddedBitmaps = true;
+            defaultFonts = {
+              emoji = [ "Noto Color Emoji" ];
+              monospace = [ theme-prefs.font.monoName ];
+              sansSerif = [ theme-prefs.font.propoName ];
+              serif = [ theme-prefs.font.propoName ];
+            };
           };
         };
       };

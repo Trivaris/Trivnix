@@ -1,16 +1,14 @@
 {
   flake.homeModules.desktop-environment-wayvnc =
     {
-      config,
+      osConfig,
       lib,
       ...
     }:
     let
-      wayvnc-prefs = config.user-prefs.wayvnc;
+      wayvnc-prefs = osConfig.host-prefs.wayvnc;
     in
     {
-      options.user-prefs.wayvnc.enable = lib.mkEnableOption "Remote desktop access via WayVNC";
-
       config = lib.mkIf wayvnc-prefs.enable {
         services.wayvnc = {
           enable = true;
