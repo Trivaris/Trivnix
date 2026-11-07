@@ -4,17 +4,10 @@
   ];
 
   flake.homeModules.system-core =
+    { config, osConfig, ... }:
     {
-      config,
-      osConfig,
-      ...
-    }:
-    {
-      config.home = {
+      home = {
         inherit (osConfig.host-infos) stateVersion;
-        username = config.home.username;
-        homeDirectory = "/home/${config.home.username}";
-        shell.enableZshIntegration = true;
 
         sessionVariables = {
           TERMINAL = config.vars.terminal-emulator;
