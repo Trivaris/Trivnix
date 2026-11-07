@@ -25,7 +25,7 @@
       };
 
       smoothfox = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/yokoffing/betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/smoothfox.js";
+        url = "https://raw.githubusercontent.com/yokoffing/betterfox/a9b4b8803aebd3a87492f0936db5a3c8513ae522/Smoothfox.js";
         sha256 = "sha256-S1zDXctpV1jNlV9DCua4fYMHfR7T34V3gQi780ShFpk=";
       };
     in
