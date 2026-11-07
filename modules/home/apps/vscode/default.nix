@@ -19,8 +19,8 @@
           "nix.serverSettings".nixd = {
             formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
             options = {
-              nixos.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.host-infos.configname}.options";
-              home-manager.expr = "(builtins.getFlake github:trivaris/trivnixConfigs).nixosConfigurations.${osConfig.host-infos.configname}.options.home-manager.users.type.getSubOptions []";
+              nixos.expr = "(builtins.getFlake git+ssh://git@github.com/Trivaris/TrivnixPrivate).nixosConfigurations.${osConfig.host-infos.configname}.options";
+              home-manager.expr = "(builtins.getFlake git+ssh://git@github.com/Trivaris/TrivnixPrivate).nixosConfigurations.${osConfig.host-infos.configname}.options.home-manager.users.type.getSubOptions []";
             };
           };
           "explorer.confirmDragAndDrop" = false;
