@@ -7,9 +7,10 @@
       config.home.packages = [
         (pkgs.prismlauncher.override {
           jdks = [
-            pkgs.zulu8
-            pkgs.zulu17
-            pkgs.zulu21
+            pkgs.jre8
+            pkgs.jre17_minimal
+            pkgs.jre21_minimal
+            pkgs.jre25_minimal
           ];
         })
       ];

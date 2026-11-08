@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.nixosModules.system-hyprland =
     {
@@ -9,7 +8,6 @@
     }:
     {
       config = lib.mkIf (!config.host.preferences.headless) {
-        nixpkgs.overlays = [ inputs.hyprqt6engine.overlays.default ];
         environment.systemPackages = [ pkgs.sbctl ];
         security.pam.services.hyprlock = { };
         programs.hyprland.enable = true;

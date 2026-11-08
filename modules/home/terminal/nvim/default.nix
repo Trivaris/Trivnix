@@ -4,7 +4,6 @@
     {
       home.packages = [
         pkgs.neovim
-        pkgs.neovim-qt
       ];
       xdg.configFile = {
         "nvim/lua/preferences.lua".text = ''

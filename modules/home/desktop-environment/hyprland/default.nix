@@ -32,7 +32,6 @@
           pkgs.wtype
           pkgs.nautilus
           pkgs.loupe
-          pkgs.hyprqt6engine
         ];
 
         programs.hyprshot = {
