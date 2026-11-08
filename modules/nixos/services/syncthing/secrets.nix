@@ -11,7 +11,7 @@
     {
       config.sops.secrets = lib.mkIf syncthingPreferences.enable {
         syncthing-gui-password = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "syncthing";
           group = "syncthing";
         };

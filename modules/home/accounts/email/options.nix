@@ -116,7 +116,7 @@
           };
         };
 
-        private.email = {
+        private = {
           calendarAccounts = lib.mkOption {
             type = lib.types.attrsOf calendarSubmodule;
             default = { };

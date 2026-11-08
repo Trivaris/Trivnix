@@ -11,7 +11,7 @@
     {
       config.sops.secrets = lib.mkIf paperlessPreferences.enable {
         paperless-admin-password = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "paperless";
           group = "paperless";
         };

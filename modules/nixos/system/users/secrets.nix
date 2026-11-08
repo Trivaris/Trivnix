@@ -13,13 +13,13 @@
         (lib.mapAttrsToList (
           username: userconfig: [
             (lib.nameValuePair "sops-keys/${username}" {
-              sopsFile = config.host.secrets.hostSecretsFile;
+              sopsFile = config.host.private.secrets.hostSecretsFile;
 
               path = "${userconfig.home}/.config/sops/age/key.txt";
               owner = username;
             })
             (lib.nameValuePair "hashed-passwords/${username}" {
-              sopsFile = config.host.secrets.commonSecretsFile;
+              sopsFile = config.host.private.secrets.commonSecretsFile;
               owner = username;
             })
           ]

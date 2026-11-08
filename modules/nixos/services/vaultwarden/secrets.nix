@@ -11,13 +11,13 @@
     {
       config.sops.secrets = lib.mkIf vaultwardenPreferences.enable {
         vaultwarden-admin-token = {
-          sopsFile = config.host.secrets.commonSecretsFile;
+          sopsFile = config.host.private.secrets.commonSecretsFile;
           owner = "vaultwarden";
           group = "vaultwarden";
         };
 
         mail-vaultwarden-password = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "vaultwarden";
           group = "vaultwarden";
         };

@@ -11,7 +11,7 @@
     {
       config.sops.secrets = lib.mkIf wgPrefs.enable {
         wireguard-key = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "root";
           group = "root";
         };

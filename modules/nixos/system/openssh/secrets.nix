@@ -11,7 +11,7 @@
     {
       config.sops.secrets = lib.mkIf opensshPreferences.enable {
         ssh-host-key = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           path = "/etc/ssh/ssh_host_ed25519_key";
           owner = "root";
           group = "root";

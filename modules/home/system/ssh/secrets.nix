@@ -3,7 +3,7 @@
     { config, ... }:
     {
       config.sops.secrets.ssh-private-key = {
-        sopsFile = config.user.secrets.userSecretsFile;
+        sopsFile = config.user.private.secrets.userSecretsFile;
       };
     };
 }

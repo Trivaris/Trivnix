@@ -11,7 +11,7 @@
     {
       config.sops.secrets = lib.mkIf gitPreferences.enableSigning {
         git-signing-key = {
-          sopsFile = config.user.secrets.commonSecretsFile;
+          sopsFile = config.user.private.secrets.commonSecretsFile;
         };
       };
     };

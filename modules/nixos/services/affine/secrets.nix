@@ -11,19 +11,19 @@
     {
       config.sops.secrets = lib.mkIf affinePreferences.enable {
         affine-db-password-env = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "affine";
           group = "affine";
         };
 
         affine-postgres-password-env = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "affine";
           group = "affine";
         };
 
         mail-affine-password = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "affine";
           group = "affine";
         };

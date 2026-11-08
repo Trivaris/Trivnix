@@ -11,12 +11,12 @@
     {
       config.sops.secrets = lib.mkIf openconnectPreferences.enable {
         openconnect-vpn-password = {
-          sopsFile = config.host.secrets.commonSecretsFile;
+          sopsFile = config.host.private.secrets.commonSecretsFile;
           owner = "root";
           group = "root";
         };
         openconnect-vpn-otp-secret = {
-          sopsFile = config.host.secrets.commonSecretsFile;
+          sopsFile = config.host.private.secrets.commonSecretsFile;
           owner = "root";
           group = "root";
         };

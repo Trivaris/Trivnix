@@ -11,7 +11,7 @@
     {
       config.sops.secrets = lib.mkIf forgejoPreferences.enable {
         mail-forgejo-password = {
-          sopsFile = config.host.secrets.hostSecretsFile;
+          sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "forgejo";
           group = "forgejo";
         };

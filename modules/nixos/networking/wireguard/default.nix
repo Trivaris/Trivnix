@@ -9,8 +9,8 @@
       wgPreferences = config.host.preferences.wireguard;
       secrets = config.sops.secrets;
       myNode = wgPreferences.nodes.${config.host.info.configName};
-      peers = lib.filterAttrs (name: node: !node.isServer) wgPreferences.nodes;
-      server = lib.filterAttrs (name: node: node.isServer) wgPreferences.nodes;
+      peers = lib.filterAttrs (_: node: !node.isServer) wgPreferences.nodes;
+      server = lib.filterAttrs (_: node: node.isServer) wgPreferences.nodes;
 
       readKey = file: lib.removeSuffix "\n" (builtins.readFile file);
       pow2 = n: if n == 0 then 1 else 2 * (pow2 (n - 1));
@@ -32,7 +32,12 @@
           o2 = builtins.elemAt octets 2;
           o3 = builtins.elemAt octets 3;
         in
-        lib.throwIfNot (builtins.length octets == 4) (o0 * 16777216) + (o1 * 65536) + (o2 * 256) + o3;
+        lib.throwIfNot (
+          builtins.length octets == 4
+        ) "${ipStr} is not a valid ip string, must be of form '0.0.0.0'" (o0 * 16777216)
+        + (o1 * 65536)
+        + (o2 * 256)
+        + o3;
 
       # Convert the subnet string to a 32-bit integer
       subnetInt = ipToInt wgPreferences.subnet;
