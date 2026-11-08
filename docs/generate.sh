@@ -16,7 +16,7 @@ let
   pkgs = eval.pkgs;
   lib = pkgs.lib;
 
-  publicNamespaces = [ "host-prefs" "user-prefs" "vars" "theme-prefs" ];
+  publicNamespaces = [ "host" "user" "vars" "theme" ];
   
   filterPublic = lib.filterAttrs (name: _: builtins.elem name publicNamespaces);
 
@@ -55,7 +55,7 @@ Read more about this Repo:
 
 Generated standalone reference from the local trivnix module tree.
 
-This reference covers the public Trivnix namespaces: `host-prefs`, `user-prefs`, `themingPref` and derived `vars` values.
+This reference covers the public Trivnix namespaces: `host.preferences`, `user.preferences`, `host.theming` and derived `vars` values.
 
 ## NixOS and host options
 INNER_EOF

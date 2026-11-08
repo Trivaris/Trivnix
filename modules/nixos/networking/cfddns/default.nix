@@ -6,16 +6,16 @@
       ...
     }:
     let
-      cfddns-prefs = config.host-prefs.cfddns;
+      cfddnsPreferences = config.host.preferences.cfddns;
     in
     {
-      config = lib.mkIf cfddns-prefs.enable {
+      config = lib.mkIf cfddnsPreferences.enable {
         virtualisation.oci-containers.backend = "docker";
         virtualisation.oci-containers.containers."cfddns" = {
           image = "ghcr.io/l480/cloudflare-dyndns:latest";
 
           ports = [
-            "${toString cfddns-prefs.reverseProxy.port}:80"
+            "${toString cfddnsPreferences.reverseProxy.port}:80"
           ];
 
           extraOptions = [

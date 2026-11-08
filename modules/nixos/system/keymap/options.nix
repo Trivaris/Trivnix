@@ -2,7 +2,7 @@
   flake.nixosModules.system-keymap =
     { lib, ... }:
     {
-      options.host-prefs.language = {
+      options.host.preferences.language = {
         keyMap = lib.mkOption {
           type = lib.types.str;
           default = "us";

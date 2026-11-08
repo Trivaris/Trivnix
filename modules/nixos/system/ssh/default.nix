@@ -25,7 +25,7 @@
       // (lib.mapAttrs (hostname: pubKeys: {
         hostNames = [ hostname ];
         publicKey = builtins.readFile pubKeys."host.pub";
-      }) config.private.public-keys.hosts);
+      }) config.private.publicKeys.hosts);
     in
     {
       programs.ssh = {

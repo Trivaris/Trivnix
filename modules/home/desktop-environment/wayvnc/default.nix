@@ -6,10 +6,10 @@
       ...
     }:
     let
-      wayvnc-prefs = osConfig.host-prefs.wayvnc;
+      wayvncPreferences = osConfig.host.preferences.wayvnc;
     in
     {
-      config = lib.mkIf wayvnc-prefs.enable {
+      config = lib.mkIf wayvncPreferences.enable {
         services.wayvnc = {
           enable = true;
           autoStart = true;

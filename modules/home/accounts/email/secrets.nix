@@ -7,15 +7,15 @@
       ...
     }:
     let
-      common-secrets = "${osConfig.private.secrets}/home/${config.home.username}/common.yaml";
+      commonSecrets = "${osConfig.private.secrets}/home/${config.home.username}/common.yaml";
     in
     {
-      config.sops.secrets = lib.pipe config.vars.filtered-email-accounts [
+      config.sops.secrets = lib.pipe config.vars.filteredEmailAccounts [
         builtins.attrNames
         (map (
           account:
           lib.nameValuePair "email-passwords/${account}" {
-            sopsFile = common-secrets;
+            sopsFile = commonSecrets;
           }
         ))
         builtins.listToAttrs

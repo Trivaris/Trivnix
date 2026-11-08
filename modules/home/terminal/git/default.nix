@@ -7,7 +7,7 @@
       ...
     }:
     let
-      git-prefs = config.user-prefs.git;
+      gitPreferences = config.user.preferences.git;
       allowedSignersFile = ".config/git/allowed_signers";
     in
     {
@@ -17,13 +17,13 @@
 
           settings = {
             user = {
-              inherit (git-prefs) name email;
+              inherit (gitPreferences) name email;
             };
 
             credential.helper = "store";
             init.defaultBranch = "main";
             gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/${allowedSignersFile}";
-            url = lib.mapAttrs (_: value: { insteadOf = value; }) git-prefs.urlAliases;
+            url = lib.mapAttrs (_: value: { insteadOf = value; }) gitPreferences.urlAliases;
 
             color.diff = {
               meta = "black bold";
@@ -42,7 +42,7 @@
             core.autocrlf = "input";
           };
 
-          signing = lib.mkIf git-prefs.enableSigning {
+          signing = lib.mkIf gitPreferences.enableSigning {
             format = "ssh";
             signByDefault = true;
             key = "${config.sops.secrets.git-signing-key.path}";
@@ -56,9 +56,9 @@
         };
       };
 
-      home.file.${allowedSignersFile}.text = lib.mkIf git-prefs.enableSigning ''
-        ${git-prefs.email} ${
-          osConfig.private.public-keys.common.${config.home.username}."id_git_signing.pub"
+      home.file.${allowedSignersFile}.text = lib.mkIf gitPreferences.enableSigning ''
+        ${gitPreferences.email} ${
+          osConfig.private.publicKeys.common.${config.home.username}."id_git_signing.pub"
         }
       '';
     };

@@ -7,7 +7,7 @@
       ...
     }:
     {
-      config = lib.mkIf (!osConfig.host-prefs.headless) {
+      config = lib.mkIf (!osConfig.host.preferences.headless) {
         home.packages = [
           pkgs.waypaper
           pkgs.awww
@@ -41,7 +41,7 @@
                 scale = toString details.scaling;
               }
             ];
-          }) osConfig.host-infos.monitors;
+          }) osConfig.host.info.monitors;
 
           workspace_rule =
             (lib.flatten (
@@ -55,7 +55,7 @@
                     }
                   ];
                 }) (lib.range 1 5)
-              ) osConfig.host-infos.monitors
+              ) osConfig.host.info.monitors
             ))
             ++ [
               {

@@ -2,7 +2,7 @@
   flake.nixosModules.services-glances =
     { lib, ... }:
     {
-      options.host-prefs.glances = {
+      options.host.preferences.glances = {
         enable = lib.mkEnableOption "Glances system monitoring API";
         port = lib.mkOption {
           type = lib.types.port;

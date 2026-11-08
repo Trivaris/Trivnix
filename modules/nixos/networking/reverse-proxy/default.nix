@@ -2,17 +2,17 @@
   flake.nixosModules.networking-reverse-proxy =
     { config, lib, ... }:
     let
-      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
+      reverseProxyPreferences = config.host.preferences.reverseProxy;
       allowedTCPPorts =
-        (map (service: service.externalPort) config.vars.active-services)
-        ++ lib.optionals reverse-proxy-prefs.dumbPipes.enable (
+        (map (service: service.externalPort) config.vars.activeServices)
+        ++ lib.optionals reverseProxyPreferences.dumbPipes.enable (
           map (tcpForward: tcpForward.listenPort) (
-            builtins.attrValues reverse-proxy-prefs.dumbPipes.portForwards
+            builtins.attrValues reverseProxyPreferences.dumbPipes.portForwards
           )
         );
     in
     {
-      config = lib.mkIf reverse-proxy-prefs.enable {
+      config = lib.mkIf reverseProxyPreferences.enable {
         networking.firewall.allowedTCPPorts = allowedTCPPorts;
 
         users.users.nginx.extraGroups = [ "acme" ];

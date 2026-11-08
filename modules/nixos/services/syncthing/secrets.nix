@@ -6,13 +6,13 @@
       ...
     }:
     let
-      syncthing-prefs = config.host-prefs.syncthing;
-      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
+      syncthingPreferences = config.host.preferences.syncthing;
+      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf syncthing-prefs.enable {
+      config.sops.secrets = lib.mkIf syncthingPreferences.enable {
         syncthing-gui-password = {
-          sopsFile = host-secrets;
+          sopsFile = hostSecrets;
           owner = "syncthing";
           group = "syncthing";
         };

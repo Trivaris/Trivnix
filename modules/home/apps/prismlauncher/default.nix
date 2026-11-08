@@ -2,7 +2,7 @@
   flake.homeModules.apps-prismlauncher =
     { pkgs, lib, ... }:
     {
-      options.user-prefs.prismlauncher.enable = lib.mkEnableOption "Prism Launcher configuration";
+      options.user.preferences.prismlauncher.enable = lib.mkEnableOption "Prism Launcher configuration";
 
       config.home.packages = [
         (pkgs.prismlauncher.override {

@@ -2,7 +2,7 @@
   flake.homeModules.desktop-environment-quickshell =
     { osConfig, lib, ... }:
     let
-      scheme = osConfig.theme-prefs.scheme;
+      scheme = osConfig.host.theming.scheme;
 
       wsIconOverrides = [
         {
@@ -43,7 +43,7 @@
       ];
     in
     {
-      options.user-prefs.quickshell.wsIconOverrides = lib.mkOption {
+      options.user.preferences.quickshell.wsIconOverrides = lib.mkOption {
         default = wsIconOverrides;
         type = lib.types.listOf (
           lib.types.submodule {

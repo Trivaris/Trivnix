@@ -6,18 +6,28 @@
       ...
     }:
     let
-      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
+      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
+      commonSecrets = "${config.private.secrets}/host/common.yaml";
       normalUsers = lib.filterAttrs (name: userCfg: userCfg.isNormalUser) config.users.users;
     in
     {
-      sops.secrets = lib.mapAttrs' (
-        username: userconfig:
-        lib.nameValuePair "sops-keys/${username}" {
-          sopsFile = host-secrets;
+      sops.secrets = lib.pipe normalUsers [
+        (lib.mapAttrsToList (
+          username: userconfig: [
+            (lib.nameValuePair "sops-keys/${username}" {
+              sopsFile = hostSecrets;
 
-          path = "${userconfig.home}/.config/sops/age/key.txt";
-          owner = username;
-        }
-      ) normalUsers;
+              path = "${userconfig.home}/.config/sops/age/key.txt";
+              owner = username;
+            })
+            (lib.nameValuePair "hashed-passwords/${username}" {
+              sopsFile = commonSecrets;
+              owner = username;
+            })
+          ]
+        ))
+        lib.flatten
+        builtins.listToAttrs
+      ];
     };
 }

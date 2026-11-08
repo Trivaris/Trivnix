@@ -6,20 +6,20 @@
       ...
     }:
     let
-      vaultwarden-prefs = config.host-prefs.vaultwarden;
-      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
-      common-secrets = "${config.private.secrets}/host/common.yaml";
+      vaultwardenPreferences = config.host.preferences.vaultwarden;
+      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
+      commonSecrets = "${config.private.secrets}/host/common.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf vaultwarden-prefs.enable {
+      config.sops.secrets = lib.mkIf vaultwardenPreferences.enable {
         vaultwarden-admin-token = {
-          sopsFile = common-secrets;
+          sopsFile = commonSecrets;
           owner = "vaultwarden";
           group = "vaultwarden";
         };
 
         mail-vaultwarden-password = {
-          sopsFile = host-secrets;
+          sopsFile = hostSecrets;
           owner = "vaultwarden";
           group = "vaultwarden";
         };

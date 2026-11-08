@@ -2,12 +2,13 @@
   flake.nixosModules.services-collabora =
     { lib, ... }:
     {
-      options.host-prefs.collabora = {
+      options.host.preferences.collabora = {
         reverseProxy = lib.trivnix.mkReverseProxyOption;
         enable = lib.mkEnableOption "Collabora Online for browser-based document editing";
 
         nextcloudFQDNs = lib.mkOption {
           type = lib.types.nullOr (lib.types.listOf lib.types.str);
+          default = null;
           example = [ "nextcloud.example.com" ];
           description = ''
             Fully qualified domain names of Nextcloud instances allowed to use this

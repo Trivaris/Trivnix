@@ -2,17 +2,17 @@
   flake.nixosModules.system-core =
     { lib, ... }:
     {
-      options.host-prefs = {
+      options.host.preferences = {
         oldProfileDeleteInterval = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nonEmptyStr;
           default = "3d";
           description = ''
-            Maximum age for system profiles before garbage collection removes them.
-            Passed directly to `nix-collect-garbage --delete-older-than`.
+            Maximum age of system profiles before garbage collection removes them.
+            This value is passed to `nix-collect-garbage --delete-older-than`.
           '';
         };
 
-        headless = lib.mkEnableOption "This host as a headless host without GUI features";
+        headless = lib.mkEnableOption "headless operation without graphical features";
       };
     };
 }

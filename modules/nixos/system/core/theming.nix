@@ -7,12 +7,12 @@
       ...
     }:
     let
-      theme-prefs = config.theme-prefs;
+      hostTheming = config.host.theming;
     in
     {
-      options.theme-prefs = {
+      options.host.theming = {
         # mkEnableOption automatically generates the description: "Whether to enable Dark Mode."
-        darkmode = lib.mkEnableOption "Dark Mode";
+        darkMode = lib.mkEnableOption "Dark Mode";
 
         schemeName = lib.mkOption {
           type = lib.types.str;
@@ -24,7 +24,7 @@
         };
 
         scheme = lib.mkOption {
-          type = lib.types.attrsOf (lib.types.strMatching "^#[a-f|A-F|0-9]{6,6}$");
+          type = lib.types.attrsOf (lib.types.strMatching "^#[a-fA-F0-9]{6}$");
           description = ''
             The evaluated base16 palette generated from the specified `schemeName`. 
             This is automatically derived using `yq` and the `base16-schemes` package, 
@@ -37,7 +37,7 @@
                   pkgs.yq
                   pkgs.base16-schemes
                 ];
-              } "yq '.palette' ${pkgs.base16-schemes}/share/themes/${config.theme-prefs.schemeName}.yaml > $out"
+              } "yq '.palette' ${pkgs.base16-schemes}/share/themes/${config.host.theming.schemeName}.yaml > $out"
             )
           );
         };
@@ -121,7 +121,6 @@
           };
           default = {
             package = pkgs.nerd-fonts.jetbrains-mono;
-            name = "JetBrains Mono";
           };
         };
       };
@@ -131,15 +130,15 @@
 
         fonts = {
           enableDefaultPackages = true;
-          packages = [ theme-prefs.font.package ] ++ theme-prefs.font.extraFonts;
+          packages = [ hostTheming.font.package ] ++ hostTheming.font.extraFonts;
           fontconfig = {
             enable = true;
             useEmbeddedBitmaps = true;
             defaultFonts = {
               emoji = [ "Noto Color Emoji" ];
-              monospace = [ theme-prefs.font.monoName ];
-              sansSerif = [ theme-prefs.font.propoName ];
-              serif = [ theme-prefs.font.propoName ];
+              monospace = [ hostTheming.font.monoName ];
+              sansSerif = [ hostTheming.font.propoName ];
+              serif = [ hostTheming.font.propoName ];
             };
           };
         };

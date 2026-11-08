@@ -23,4 +23,4 @@ configurations; it is not currently exposed as a `homeModules` flake output.
 - [Development](docs/development.md) - checks, formatting, and local workflows
 - [Development](docs/development.md#option-reference) - generate the option reference
 
-The modules provide sensible defaults, but remain configurable through the `host-prefs`, `user-prefs`, and related options documented in the option reference.
+The modules provide sensible defaults, but remain configurable through the `host.preferences`, `user.preferences`, and related options documented in the option reference.

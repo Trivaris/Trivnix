@@ -2,7 +2,7 @@
   flake.nixosModules.networking-reverse-proxy =
     { lib, ... }:
     {
-      options.host-prefs.reverse-proxy = {
+      options.host.preferences.reverseProxy = {
         enable = lib.mkEnableOption "Nginx reverse proxy, shared for web services";
         enableDDClient = lib.mkEnableOption "ddclient for dynamic DNS updates for the configured zone";
 
@@ -74,7 +74,7 @@
                 options = {
                   name = lib.mkOption {
                     type = lib.types.str;
-                    description = "Name used to identify the additional reverse-proxy service";
+                    description = "Name used to identify the additional reverse proxy service";
                   };
                 };
               }
@@ -83,7 +83,7 @@
           default = [ ];
           description = ''
             Additional services to register with the shared reverse proxy.
-            Each entry extends the standard reverse-proxy service options with a name.
+            Each entry extends the standard reverse proxy service options with a name.
           '';
         };
 

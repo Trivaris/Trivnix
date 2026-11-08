@@ -8,7 +8,7 @@
       ...
     }:
     {
-      config = lib.mkIf (!osConfig.host-prefs.headless) {
+      config = lib.mkIf (!osConfig.host.preferences.headless) {
         systemd.user.services.quickshell.Service.Environment =
           "QSG_RHI_BACKEND=vulkan QML_XHR_ALLOW_FILE_READ=1";
         home.packages = [ pkgs.quickshell ];
@@ -49,9 +49,9 @@
 
         xdg.configFile = {
           "quickshell/wsIconOverrides.json".text =
-            builtins.toJSON config.user-prefs.quickshell.wsIconOverrides;
-          "quickshell/scheme.json".text = builtins.toJSON osConfig.theme-prefs.scheme;
-          "quickshell/monitors.json".text = builtins.toJSON osConfig.host-infos.monitors;
+            builtins.toJSON config.user.preferences.quickshell.wsIconOverrides;
+          "quickshell/scheme.json".text = builtins.toJSON osConfig.host.theming.scheme;
+          "quickshell/monitors.json".text = builtins.toJSON osConfig.host.info.monitors;
           "quickshell/weather.sh" = {
             executable = true;
             text = import ./_scripts/weather.nix pkgs;

@@ -3,10 +3,10 @@
     { config, osConfig, ... }:
     {
       home = {
-        inherit (osConfig.host-infos) stateVersion;
+        inherit (osConfig.host.info) stateVersion;
 
         sessionVariables = {
-          TERMINAL = config.vars.terminal-emulator;
+          TERMINAL = config.vars.terminalEmulator;
           NIX_LOG = "info";
           NIXOS_OZONE_WL = "1";
         };

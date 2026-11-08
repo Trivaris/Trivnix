@@ -7,9 +7,9 @@
       ...
     }:
     {
-      options.host-prefs.fingerPrintAuth = lib.mkEnableOption "Fingerprint authentication for sudo";
+      options.host.preferences.fingerPrintAuth = lib.mkEnableOption "Fingerprint authentication for sudo";
 
-      config = lib.mkIf config.host-prefs.fingerPrintAuth {
+      config = lib.mkIf config.host.preferences.fingerPrintAuth {
         services.fprintd = {
           enable = true;
           tod.enable = true;

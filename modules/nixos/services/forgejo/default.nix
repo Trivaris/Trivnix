@@ -6,12 +6,12 @@
       ...
     }:
     let
-      forgejo-prefs = config.host-prefs.forgejo;
-      # mailserver-prefs = config.host-prefs.mailserver;
+      forgejoPreferences = config.host.preferences.forgejo;
+      # mailServerPreferences = config.host.preferences.mailServer;
       # secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf forgejo-prefs.enable {
+      config = lib.mkIf forgejoPreferences.enable {
         services.forgejo = {
           enable = true;
           lfs.enable = true;
@@ -27,25 +27,25 @@
             };
 
             server = {
-              DOMAIN = forgejo-prefs.reverseProxy.domain;
-              ROOT_URL = "https://${forgejo-prefs.reverseProxy.domain}/";
+              DOMAIN = forgejoPreferences.reverseProxy.domain;
+              ROOT_URL = "https://${forgejoPreferences.reverseProxy.domain}/";
               HTTP_ADDR = "127.0.0.1";
-              HTTP_PORT = forgejo-prefs.reverseProxy.port;
+              HTTP_PORT = forgejoPreferences.reverseProxy.port;
             };
 
-            # mailer = lib.optionalAttrs forgejo-prefs.sendMails {
+            # mailer = lib.optionalAttrs forgejoPreferences.sendMails {
             #   ENABLED = true;
             #   PROTOCOL = "smtp";
             #   SMTP_ADDR = "127.0.0.1";
             #   SMTP_PORT = 25;
-            #   FROM = "no-reply@forgejo.${mailserver-prefs.domain}";
+            #   FROM = "no-reply@forgejo.${mailServerPreferences.domain}";
             # };
           };
         };
 
-        # host-prefs.mailserver = {
-        #   extraDomains = lib.mkIf forgejo-prefs.sendMails [ "forgejo" ];
-        #   accounts."no-reply@forgejo.${mailserver-prefs.domain}".passwordFile =
+        # host.preferences.mailServer = {
+        #   extraDomains = lib.mkIf forgejoPreferences.sendMails [ "forgejo" ];
+        #   accounts."no-reply@forgejo.${mailServerPreferences.domain}".passwordFile =
         #     secrets.mail-forgejo-password.path;
         # };
       };

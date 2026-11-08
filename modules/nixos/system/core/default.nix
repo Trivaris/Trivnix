@@ -18,7 +18,7 @@
           gc = {
             automatic = true;
             dates = "daily";
-            options = "--delete-older-than ${config.host-prefs.oldProfileDeleteInterval}";
+            options = "--delete-older-than ${config.host.preferences.oldProfileDeleteInterval}";
           };
 
           settings = {
@@ -33,7 +33,7 @@
             ];
             auto-optimise-store = true;
             substituters = [ "https://hyprland.cachix.org" ];
-            trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+            trusted-publicKeys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
           };
         };
       };

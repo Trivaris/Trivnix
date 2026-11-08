@@ -7,18 +7,18 @@
       ...
     }:
     let
-      evolution-prefs = config.host-prefs.evolution;
+      evolutionPreferences = config.host.preferences.evolution;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf evolution-prefs.enable {
+      config = lib.mkIf evolutionPreferences.enable {
         virtualisation.docker.enable = true;
         virtualisation.oci-containers = {
           backend = "docker";
           containers.evolution-api = {
             image = "atendai/evolution-api:latest";
             ports = [
-              "${toString evolution-prefs.reverseProxy.port}:${toString evolution-prefs.reverseProxy.port}"
+              "${toString evolutionPreferences.reverseProxy.port}:${toString evolutionPreferences.reverseProxy.port}"
             ];
             environmentFiles = [ secrets.evolution-api-env.path ];
             extraOptions = [ "--network=evolution-api-network" ];
@@ -27,8 +27,8 @@
               "evolution_instances:/evolution/instances"
             ];
             environment = {
-              SERVER_URL = "https://${evolution-prefs.reverseProxy.domain}";
-              SERVER_PORT = toString evolution-prefs.reverseProxy.port;
+              SERVER_URL = "https://${evolutionPreferences.reverseProxy.domain}";
+              SERVER_PORT = toString evolutionPreferences.reverseProxy.port;
               SERVER_TYPE = "http";
 
               AUTHENTICATION_TYPE = "apikey";

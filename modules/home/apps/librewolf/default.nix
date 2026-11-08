@@ -8,8 +8,8 @@
       ...
     }:
     let
-      librewolf-prefs = config.user-prefs.librewolf;
-      # scheme = osConfig.theme-prefs.scheme;
+      librewolfPreferences = config.user.preferences.librewolf;
+      # scheme = osConfig.host.theming.scheme;
 
       overrides = ''
         /** OVERRIDES ***/
@@ -30,7 +30,7 @@
       };
     in
     {
-      config = lib.mkIf librewolf-prefs.enable {
+      config = lib.mkIf librewolfPreferences.enable {
         home.sessionVariables.MOZ_ENABLE_WAYLAND = 1;
 
         home.file = {
@@ -99,7 +99,7 @@
                     {
                       template = "https://search.nixos.org/packages";
                       params = [
-                        (lib.nameValuePair "channel" osConfig.host-infos.stateVersion)
+                        (lib.nameValuePair "channel" osConfig.host.info.stateVersion)
                         (lib.nameValuePair "query" "{searchTerms}")
                       ];
                     }
@@ -114,7 +114,7 @@
           policies = {
             DisableTelemetry = true;
             DisableFirefoxStudies = true;
-            Cookies.Allow = librewolf-prefs.allowedCookies;
+            Cookies.Allow = librewolfPreferences.allowedCookies;
 
             SanitizeOnShutdown = {
               cache = true;

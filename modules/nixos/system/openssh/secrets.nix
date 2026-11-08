@@ -6,13 +6,13 @@
       ...
     }:
     let
-      openssh-prefs = config.host-prefs.openssh;
-      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
+      opensshPreferences = config.host.preferences.openssh;
+      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf openssh-prefs.enable {
+      config.sops.secrets = lib.mkIf opensshPreferences.enable {
         ssh-host-key = {
-          sopsFile = host-secrets;
+          sopsFile = hostSecrets;
           path = "/etc/ssh/ssh_host_ed25519_key";
           owner = "root";
           group = "root";

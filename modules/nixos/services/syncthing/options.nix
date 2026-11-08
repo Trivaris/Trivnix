@@ -5,7 +5,7 @@
       ...
     }:
     {
-      options.host-prefs.syncthing = {
+      options.host.preferences.syncthing = {
         enable = lib.mkEnableOption "Syncthing, a file synchronization service";
         reverseProxy = lib.trivnix.mkReverseProxyOption;
       };

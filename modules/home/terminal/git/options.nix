@@ -6,7 +6,7 @@
       ...
     }:
     {
-      options.user-prefs.git = {
+      options.user.preferences.git = {
         enableSigning = lib.mkEnableOption "Commit and Tag signing in Git using an SSH key configured through sops-nix";
 
         name = lib.mkOption {

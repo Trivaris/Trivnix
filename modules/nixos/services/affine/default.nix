@@ -7,12 +7,12 @@
       ...
     }:
     let
-      affine-prefs = config.host-prefs.affine;
-      # mailserver-prefs = config.host-prefs.mailserver;
+      affinePreferences = config.host.preferences.affine;
+      # mailServerPreferences = config.host.preferences.mailServer;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf affine-prefs.enable {
+      config = lib.mkIf affinePreferences.enable {
         virtualisation.docker.enable = true;
         virtualisation.oci-containers = {
           backend = "docker";
@@ -22,13 +22,15 @@
               "affine-postgres"
               "affine-redis"
             ];
-            ports = [ "${toString affine-prefs.reverseProxy.port}:${toString affine-prefs.reverseProxy.port}" ];
+            ports = [
+              "${toString affinePreferences.reverseProxy.port}:${toString affinePreferences.reverseProxy.port}"
+            ];
             environment = {
               AFFINE_REVISION = "stable";
-              AFFINE_SERVER_HOST = affine-prefs.reverseProxy.domain;
+              AFFINE_SERVER_HOST = affinePreferences.reverseProxy.domain;
               AFFINE_SERVER_HTTPS = "true";
               REDIS_SERVER_HOST = "affine-redis";
-              PORT = toString affine-prefs.reverseProxy.port;
+              PORT = toString affinePreferences.reverseProxy.port;
               DB_DATA_LOCATION = "/var/lib/affine/postgres";
               UPLOAD_LOCATION = "/var/lib/affine/storage";
               CONFIG_LOCATION = "/var/lib/affine/config";
@@ -87,9 +89,9 @@
           };
         };
 
-        # host-prefs.mailserver = lib.mkIf affine-prefs.sendMails {
+        # host.preferences.mailServer = lib.mkIf affinePreferences.sendMails {
         #   extraDomains = [ "affine" ];
-        #   accounts."no-reply@affine.${mailserver-prefs.domain}".passwordFile =
+        #   accounts."no-reply@affine.${mailServerPreferences.domain}".passwordFile =
         #     secrets.mail-affine-password.path;
         # };
       };

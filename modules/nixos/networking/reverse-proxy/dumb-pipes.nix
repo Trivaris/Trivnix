@@ -2,14 +2,16 @@
   flake.nixosModules.networking-reverse-proxy =
     { lib, config, ... }:
     let
-      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
+      reverseProxyPreferences = config.host.preferences.reverseProxy;
     in
     {
-      config = lib.mkIf reverse-proxy-prefs.enable {
-        services.nginx.streamConfig = lib.mkIf reverse-proxy-prefs.dumbPipes.enable ''
+      config = lib.mkIf reverseProxyPreferences.enable {
+        services.nginx.streamConfig = lib.mkIf reverseProxyPreferences.dumbPipes.enable ''
           map $ssl_preread_server_name $backend {
             ${lib.concatStringsSep "\n        " (
-              lib.mapAttrsToList (domain: upstream: "${domain} ${upstream};") reverse-proxy-prefs.dumbPipes.pipes
+              lib.mapAttrsToList (
+                domain: upstream: "${domain} ${upstream};"
+              ) reverseProxyPreferences.dumbPipes.pipes
             )}
             default local_http;
           }
@@ -19,11 +21,11 @@
               upstream ${name} {
                 server ${upstream.address}:${toString upstream.port};
               }
-            '') reverse-proxy-prefs.dumbPipes.upstreams
+            '') reverseProxyPreferences.dumbPipes.upstreams
           )}
 
           upstream local_http {
-            server 127.0.0.1:${toString reverse-proxy-prefs.dumbPipes.fallbackPort};
+            server 127.0.0.1:${toString reverseProxyPreferences.dumbPipes.fallbackPort};
           }
 
           server {
@@ -42,7 +44,7 @@
                 ${lib.optionalString fwd.enableUDP "listen [::]:${toString fwd.listenPort} udp;"}
                 proxy_pass ${fwd.upstream};
               }
-            '') reverse-proxy-prefs.dumbPipes.portForwards
+            '') reverseProxyPreferences.dumbPipes.portForwards
           )}
         '';
       };

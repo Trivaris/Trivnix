@@ -5,7 +5,7 @@
       ...
     }:
     {
-      options.host-prefs.n8n = {
+      options.host.preferences.n8n = {
         enable = lib.mkEnableOption "n8n, the automation platform";
         reverseProxy = lib.trivnix.mkReverseProxyOption;
       };

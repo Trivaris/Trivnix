@@ -7,11 +7,11 @@
       ...
     }:
     let
-      cli-prefs = config.user-prefs.cli;
-      scheme = osConfig.theme-prefs.scheme;
+      cliPreferences = config.user.preferences.cli;
+      scheme = osConfig.host.theming.scheme;
     in
     {
-      config = lib.mkIf cli-prefs.enable {
+      config = lib.mkIf cliPreferences.enable {
         programs.fastfetch = {
           enable = true;
           settings = {

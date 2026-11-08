@@ -7,7 +7,7 @@
       ...
     }:
     {
-      config = lib.mkIf (!osConfig.host-prefs.headless) {
+      config = lib.mkIf (!osConfig.host.preferences.headless) {
         wayland.windowManager.hyprland = {
           enable = true;
           portalPackage = null;

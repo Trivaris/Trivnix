@@ -34,13 +34,15 @@
       };
     in
     {
-      options.private.public-keys = {
+      options.private.publicKeys = {
         common = lib.mkOption {
           type = commonSubmodule;
+          description = "Public SSH keys shared by hosts.";
         };
 
         hosts = lib.mkOption {
           type = lib.types.attrsOf hostSubmodule;
+          description = "Public SSH keys associated with each host.";
         };
       };
     };

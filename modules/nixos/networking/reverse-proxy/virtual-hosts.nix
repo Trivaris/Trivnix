@@ -2,10 +2,10 @@
   flake.nixosModules.networking-reverse-proxy =
     { config, lib, ... }:
     let
-      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
+      reverseProxyPreferences = config.host.preferences.reverseProxy;
     in
     {
-      config = lib.mkIf reverse-proxy-prefs.enable {
+      config = lib.mkIf reverseProxyPreferences.enable {
         services.nginx.virtualHosts =
           builtins.listToAttrs (
             map (
@@ -25,30 +25,30 @@
                   };
                 };
 
-                forceSSL = !reverse-proxy-prefs.dumbPipes.enable;
-                addSSL = reverse-proxy-prefs.dumbPipes.enable;
+                forceSSL = !reverseProxyPreferences.dumbPipes.enable;
+                addSSL = reverseProxyPreferences.dumbPipes.enable;
                 useACMEHost = service.domain;
 
                 listen = [
                   {
-                    addr = if reverse-proxy-prefs.dumbPipes.enable then "127.0.0.1" else "0.0.0.0";
+                    addr = if reverseProxyPreferences.dumbPipes.enable then "127.0.0.1" else "0.0.0.0";
                     port =
-                      if reverse-proxy-prefs.dumbPipes.enable then
-                        reverse-proxy-prefs.dumbPipes.fallbackPort
+                      if reverseProxyPreferences.dumbPipes.enable then
+                        reverseProxyPreferences.dumbPipes.fallbackPort
                       else
                         service.externalPort;
                     ssl = true;
                   }
                 ]
-                ++ lib.optional (!reverse-proxy-prefs.dumbPipes.enable) {
+                ++ lib.optional (!reverseProxyPreferences.dumbPipes.enable) {
                   addr = "[::]";
                   port = service.externalPort;
                   ssl = true;
                 };
               }
-            ) config.vars.active-services
+            ) config.vars.activeServices
           )
-          // lib.optionalAttrs reverse-proxy-prefs.dumbPipes.enable {
+          // lib.optionalAttrs reverseProxyPreferences.dumbPipes.enable {
             "default-http-redirect" = {
               serverName = "_";
               default = true;

@@ -6,15 +6,15 @@
       ...
     }:
     let
-      paperless-prefs = config.host-prefs.paperless;
+      paperlessPreferences = config.host.preferences.paperless;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf paperless-prefs.enable {
+      config = lib.mkIf paperlessPreferences.enable {
         services.paperless = {
           enable = true;
-          domain = paperless-prefs.reverseProxy.domain;
-          port = paperless-prefs.reverseProxy.port;
+          domain = paperlessPreferences.reverseProxy.domain;
+          port = paperlessPreferences.reverseProxy.port;
           passwordFile = secrets.paperless-admin-password.path;
           configureNginx = false;
           configureTika = true;

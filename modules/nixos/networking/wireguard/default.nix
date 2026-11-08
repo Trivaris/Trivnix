@@ -6,21 +6,21 @@
       ...
     }:
     let
-      wireguard-prefs = config.host-prefs.wireguard;
+      wireguardPreferences = config.host.preferences.wireguard;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf wireguard-prefs.enable {
+      config = lib.mkIf wireguardPreferences.enable {
         networking.firewall = {
-          allowedUDPPorts = [ wireguard-prefs.port ];
-          trustedInterfaces = [ "wg0" ];
+          allowedUDPPorts = [ wireguardPreferences.port ];
+          trustedInterfaces = [ wireguardPreferences.interfaceName ];
         };
 
-        networking.wireguard.interfaces."${wireguard-prefs.interfaceName}" = {
-          ips = [ wireguard-prefs.address ];
-          listenPort = wireguard-prefs.port;
+        networking.wireguard.interfaces."${wireguardPreferences.interfaceName}" = {
+          ips = [ wireguardPreferences.address ];
+          listenPort = wireguardPreferences.port;
           privateKeyFile = secrets.wireguard-key.path;
-          peers = wireguard-prefs.peers;
+          peers = wireguardPreferences.peers;
         };
       };
     };

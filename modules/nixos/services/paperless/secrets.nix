@@ -6,13 +6,13 @@
       ...
     }:
     let
-      paperless-prefs = config.host-prefs.paperless;
-      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
+      paperlessPreferences = config.host.preferences.paperless;
+      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf paperless-prefs.enable {
+      config.sops.secrets = lib.mkIf paperlessPreferences.enable {
         paperless-admin-password = {
-          sopsFile = host-secrets;
+          sopsFile = hostSecrets;
           owner = "paperless";
           group = "paperless";
         };

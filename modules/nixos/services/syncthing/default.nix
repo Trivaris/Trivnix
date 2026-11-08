@@ -6,14 +6,14 @@
       ...
     }:
     let
-      syncthing-prefs = config.host-prefs.syncthing;
+      syncthingPreferences = config.host.preferences.syncthing;
       secrets = config.sops.secrets;
     in
     {
-      config = lib.mkIf syncthing-prefs.enable {
+      config = lib.mkIf syncthingPreferences.enable {
         services.syncthing = {
           enable = true;
-          guiAddress = "127.0.0.1:${toString syncthing-prefs.reverseProxy.port}";
+          guiAddress = "127.0.0.1:${toString syncthingPreferences.reverseProxy.port}";
           guiPasswordFile = secrets.syncthing-gui-password.path;
           openDefaultPorts = true;
           overrideDevices = false;
@@ -26,12 +26,12 @@
           };
         };
 
-        services.nginx.virtualHosts."${syncthing-prefs.reverseProxy.domain}".locations =
-          lib.mkIf syncthing-prefs.reverseProxy.enable
+        services.nginx.virtualHosts."${syncthingPreferences.reverseProxy.domain}".locations =
+          lib.mkIf syncthingPreferences.reverseProxy.enable
             (
               lib.mkForce {
                 "/" = {
-                  proxyPass = "http://127.0.0.1:${toString syncthing-prefs.reverseProxy.port}/";
+                  proxyPass = "http://127.0.0.1:${toString syncthingPreferences.reverseProxy.port}/";
                   recommendedProxySettings = false;
                   extraConfig = ''
                     proxy_set_header X-Real-IP $remote_addr;

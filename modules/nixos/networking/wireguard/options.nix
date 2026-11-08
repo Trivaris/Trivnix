@@ -1,17 +1,8 @@
 {
   flake.nixosModules.networking-wireguard =
     { lib, ... }:
-    let
-      keyCollectionType = lib.types.submodule {
-        options = {
-          key = lib.mkOption { type = lib.types.path; };
-          id = lib.mkOption { type = lib.types.int; };
-          endpoint = lib.mkOption { type = lib.types.nullOr lib.types.str; };
-        };
-      };
-    in
     {
-      options.host-prefs.wireguard = {
+      options.host.preferences.wireguard = {
         enable = lib.mkEnableOption "WireGuard client connection";
 
         port = lib.mkOption {
@@ -57,16 +48,8 @@
               };
             }
           );
+          default = [ ];
           description = "WireGuard peers and the traffic routed through each peer";
-        };
-      };
-
-      options.private.wg-peers = {
-        guests = lib.mkOption {
-          type = lib.types.attrsOf keyCollectionType;
-        };
-        hosts = lib.mkOption {
-          type = lib.types.attrsOf keyCollectionType;
         };
       };
     };

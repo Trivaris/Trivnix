@@ -6,13 +6,13 @@
       ...
     }:
     let
-      n8n-prefs = config.host-prefs.n8n;
-      host-secrets = "${config.private.secrets}/host/${config.host-infos.configname}.yaml";
+      n8nPreferences = config.host.preferences.n8n;
+      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf n8n-prefs.enable {
+      config.sops.secrets = lib.mkIf n8nPreferences.enable {
         n8n-runner-auth-token = {
-          sopsFile = host-secrets;
+          sopsFile = hostSecrets;
           owner = "root";
           group = "root";
         };

@@ -6,20 +6,20 @@
       ...
     }:
     let
-      reverse-proxy-prefs = config.host-prefs.reverse-proxy;
-      cfddns-prefs = config.host-prefs.cfddns;
-      common-secrets = "${config.private.secrets}/host/common.yaml";
+      reverseProxyPreferences = config.host.preferences.reverseProxy;
+      cfddnsPreferences = config.host.preferences.cfddns;
+      commonSecrets = "${config.private.secrets}/host/common.yaml";
     in
     {
-      config.sops.secrets = lib.mkIf (reverse-proxy-prefs.enable || cfddns-prefs.enable) {
+      config.sops.secrets = lib.mkIf (reverseProxyPreferences.enable || cfddnsPreferences.enable) {
         cloudflare-zone-api-token = {
-          sopsFile = common-secrets;
+          sopsFile = commonSecrets;
           owner = "root";
           group = "root";
         };
 
         cloudflare-dns-api-token = {
-          sopsFile = common-secrets;
+          sopsFile = commonSecrets;
           owner = "root";
           group = "root";
         };

@@ -2,7 +2,7 @@
   flake.homeModules.terminal-shell =
     { osConfig, ... }:
     let
-      scheme = osConfig.theme-prefs.scheme;
+      scheme = osConfig.host.theming.scheme;
     in
     {
       programs.starship = {

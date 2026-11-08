@@ -8,7 +8,7 @@
       ...
     }:
     let
-      vscode-prefs = config.user-prefs.vscode;
+      vscodePreferences = config.user.preferences.vscode;
       rawSettings = pkgs.writeText "settings.json" (
         builtins.toJSON {
           "files.autoSave" = "afterDelay";
@@ -19,8 +19,8 @@
           "nix.serverSettings".nixd = {
             formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
             options = {
-              nixos.expr = "(builtins.getFlake git+ssh://git@github.com/Trivaris/TrivnixPrivate).nixosConfigurations.${osConfig.host-infos.configname}.options";
-              home-manager.expr = "(builtins.getFlake git+ssh://git@github.com/Trivaris/TrivnixPrivate).nixosConfigurations.${osConfig.host-infos.configname}.options.home-manager.users.type.getSubOptions []";
+              nixos.expr = "(builtins.getFlake git+ssh://git@github.com/Trivaris/TrivnixPrivate).nixosConfigurations.${osConfig.host.info.configName}.options";
+              home-manager.expr = "(builtins.getFlake git+ssh://git@github.com/Trivaris/TrivnixPrivate).nixosConfigurations.${osConfig.host.info.configName}.options.home-manager.users.type.getSubOptions []";
             };
           };
           "explorer.confirmDragAndDrop" = false;
@@ -41,9 +41,9 @@
     in
     {
 
-      options.user-prefs.vscode.enable = lib.mkEnableOption "VSCode, a lightweight code editor";
+      options.user.preferences.vscode.enable = lib.mkEnableOption "VSCode, a lightweight code editor";
 
-      config = lib.mkIf vscode-prefs.enable {
+      config = lib.mkIf vscodePreferences.enable {
         home.packages = [ pkgs.vscode ];
         home.activation.setupVSCodeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           mkdir -p "$HOME/.config/Code/User"

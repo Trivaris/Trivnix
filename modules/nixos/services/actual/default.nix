@@ -6,16 +6,16 @@
       ...
     }:
     let
-      actual-prefs = config.host-prefs.actual;
+      actualPreferences = config.host.preferences.actual;
     in
     {
-      config = lib.mkIf actual-prefs.enable {
+      config = lib.mkIf actualPreferences.enable {
         services.actual = {
           enable = true;
-          openFirewall = !actual-prefs.reverseProxy.enable;
+          openFirewall = !actualPreferences.reverseProxy.enable;
           settings = {
-            inherit (actual-prefs.reverseProxy) port;
-            hostname = actual-prefs.reverseProxy.domain;
+            inherit (actualPreferences.reverseProxy) port;
+            hostname = actualPreferences.reverseProxy.domain;
           };
         };
       };

@@ -7,11 +7,12 @@
       ...
     }:
     let
-      syncthing-prefs = config.user-prefs.syncthing;
+      syncthingPreferences = config.user.preferences.syncthing;
     in
     {
-      options.user-prefs.syncthing.enable = lib.mkEnableOption "Syncthing, a file synchronization service";
-      config = lib.mkIf syncthing-prefs.enable {
+      options.user.preferences.syncthing.enable =
+        lib.mkEnableOption "Syncthing, a file synchronization service";
+      config = lib.mkIf syncthingPreferences.enable {
         services.syncthing = {
           enable = true;
           guiAddress = "127.0.0.1:8384";

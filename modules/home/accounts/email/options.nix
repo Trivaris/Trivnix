@@ -87,7 +87,7 @@
       };
     in
     {
-      options.user-prefs.email = {
+      options.user.preferences.email = {
         enable = lib.mkEnableOption "SOPS-backed email account provisioning for this user";
 
         exclude = lib.mkOption {
@@ -96,7 +96,7 @@
           default = [ ];
           description = ''
             Email account identifiers to ignore when provisioning profiles.
-            Filter names listed under `config.private.email-accounts`.
+            Filter names listed under `config.private.emailAccounts`.
           '';
         };
 
@@ -119,13 +119,13 @@
         };
       };
 
-      options.private.calendar-accounts = lib.mkOption {
+      options.private.calendarAccounts = lib.mkOption {
         type = lib.types.attrsOf calendarSubmodule;
         default = { };
         description = "Calendar accounts";
       };
 
-      options.private.email-accounts = lib.mkOption {
+      options.private.emailAccounts = lib.mkOption {
         type = lib.types.attrsOf accountSubmodule;
         default = { };
         description = "Email accounts";

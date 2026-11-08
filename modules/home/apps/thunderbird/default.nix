@@ -7,7 +7,7 @@
       ...
     }:
     let
-      thunderbird-prefs = config.user-prefs.thunderbird;
+      thunderbirdPreferences = config.user.preferences.thunderbird;
 
       # calendarSettings = lib.flatten (
       #   lib.mapAttrsToList (
@@ -22,12 +22,12 @@
       #       (lib.nameValuePair "${prefix}.color" account.color)
       #       (lib.nameValuePair "${prefix}.disabled" false)
       #     ]
-      #   ) config.private.calendar-accounts or { }
+      #   ) config.private.calendarAccounts or { }
       # );
     in
     {
-      options.user-prefs.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
-      config = lib.mkIf thunderbird-prefs.enable {
+      options.user.preferences.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
+      config = lib.mkIf thunderbirdPreferences.enable {
         programs.thunderbird = {
           enable = true;
           package = pkgs.thunderbird-bin;

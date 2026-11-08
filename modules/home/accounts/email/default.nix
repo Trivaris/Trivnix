@@ -6,8 +6,8 @@
       ...
     }:
     let
-      email-prefs = config.user-prefs.email;
-      thunderbird-prefs = config.user-prefs.thunderbird;
+      emailPreferences = config.user.preferences.email;
+      thunderbirdPreferences = config.user.preferences.thunderbird;
 
       getSecurity =
         tlsEnabled: useStartTls:
@@ -19,22 +19,24 @@
           "ssl";
     in
     {
-      config = lib.mkIf email-prefs.enable {
+      config = lib.mkIf emailPreferences.enable {
         accounts.email.accounts = lib.mapAttrs (
           accountName: account:
           (
             {
               passwordCommand = "cat ${config.sops.secrets."email-passwords/${accountName}".path}";
-              thunderbird = lib.mkIf (thunderbird-prefs.enable && email-prefs.enableThunderbirdIntegration) {
-                enable = true;
-                profiles = [ config.home.username ];
-              };
+              thunderbird =
+                lib.mkIf (thunderbirdPreferences.enable && emailPreferences.enableThunderbirdIntegration)
+                  {
+                    enable = true;
+                    profiles = [ config.home.username ];
+                  };
             }
             // account
           )
-        ) config.vars.filtered-email-accounts;
+        ) config.vars.filteredEmailAccounts;
 
-        xdg.configFile = lib.mkIf email-prefs.generateAccountsFile {
+        xdg.configFile = lib.mkIf emailPreferences.generateAccountsFile {
           "mailaccounts.json".text = builtins.toJSON (
             lib.mapAttrs (
               accountName: account:

@@ -7,24 +7,60 @@
       ...
     }:
     let
-      scheme = osConfig.theme-prefs.scheme;
+      scheme = osConfig.host.theming.scheme;
       toARGB = color: "0xff${lib.removePrefix "#" color}";
       withAlpha = alpha: color: "0x${alpha}${lib.removePrefix "#" color}";
 
       paletteStr =
         with scheme;
         builtins.concatStringsSep "," [
-          base05 base01 base02 base03 base00 base01 base05
-          base06 base05 base00 base00 base00 base0D base00
-          base0D base0E base01 base00 base01 base05 base03
+          base05
+          base01
+          base02
+          base03
+          base00
+          base01
+          base05
+          base06
+          base05
+          base00
+          base00
+          base00
+          base0D
+          base00
+          base0D
+          base0E
+          base01
+          base00
+          base01
+          base05
+          base03
         ];
 
       disabledStr =
         with scheme;
         builtins.concatStringsSep "," [
-          base03 base01 base02 base03 base00 base01 base03
-          base04 base03 base00 base00 base00 base02 base00
-          base03 base03 base01 base00 base01 base03 base03
+          base03
+          base01
+          base02
+          base03
+          base00
+          base01
+          base03
+          base04
+          base03
+          base00
+          base00
+          base00
+          base02
+          base00
+          base03
+          base03
+          base01
+          base00
+          base01
+          base03
+          base03
         ];
 
       qtTheme = pkgs.writeText "base16-qt6ct.conf" ''
@@ -35,7 +71,7 @@
       '';
     in
     {
-      config = lib.mkIf (!osConfig.host-prefs.headless) {
+      config = lib.mkIf (!osConfig.host.preferences.headless) {
         home.sessionVariables = {
           QT_QPA_PLATFORMTHEME = "hyprqt6engine";
           QT_QUICK_CONTROLS_STYLE = "Fusion";
@@ -47,9 +83,9 @@
             style = Fusion
             color_scheme = ${qtTheme}
             icon_theme = Papirus-Dark
-            font = ${osConfig.theme-prefs.font.propoName}
+            font = ${osConfig.host.theming.font.propoName}
             font_size = 11
-            font_fixed = ${osConfig.theme-prefs.font.monoName}
+            font_fixed = ${osConfig.host.theming.font.monoName}
             font_fixed_size = 11
           }
 
@@ -72,18 +108,38 @@
 
           curve = [
             {
-              _args = [ "easeOutExpo"
+              _args = [
+                "easeOutExpo"
                 {
                   type = "bezier";
-                  points = [ [ 0.16 1 ] [ 0.3 1 ] ];
+                  points = [
+                    [
+                      0.16
+                      1
+                    ]
+                    [
+                      0.3
+                      1
+                    ]
+                  ];
                 }
               ];
             }
             {
-              _args = [ "easeOutCirc"
+              _args = [
+                "easeOutCirc"
                 {
                   type = "bezier";
-                  points = [ [ 0.075 0.82 ] [ 0.165 1 ] ];
+                  points = [
+                    [
+                      0.075
+                      0.82
+                    ]
+                    [
+                      0.165
+                      1
+                    ]
+                  ];
                 }
               ];
             }
