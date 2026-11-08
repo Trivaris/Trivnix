@@ -2,10 +2,15 @@
   flake.nixosModules.system-secrets =
     { lib, ... }:
     {
-      options.private.secrets = lib.mkOption {
-        type = lib.types.path;
-        description = "Path to the secrets directory.";
-        readOnly = true;
+      options.host.private.secrets = {
+        commonSecretsFile = lib.mkOption {
+          type = lib.types.pathInStore;
+          description = "";
+        };
+        hostSecretsFile = lib.mkOption {
+          type = lib.types.pathInStore;
+          description = "";
+        };
       };
     };
 }

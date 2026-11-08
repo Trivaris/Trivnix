@@ -7,8 +7,8 @@
     }:
     let
       piholePreferences = config.host.preferences.pihole;
-      wireguardPreferences = config.host.preferences.wireguard;
-      wgIp = builtins.head (lib.splitString "/" wireguardPreferences.address);
+      wgPrefs = config.host.preferences.wireguard;
+      wgIp = builtins.head (lib.splitString "/" wgPrefs.address);
     in
     {
       config = lib.mkIf piholePreferences.enable {
@@ -24,7 +24,7 @@
               ];
 
               misc.dnsmasq_lines = [
-                "interface=${wireguardPreferences.interfaceName}"
+                "interface=${wgPrefs.interfaceName}"
                 "except-interface=lo"
                 "bind-interfaces"
               ];
@@ -57,7 +57,7 @@
         };
 
         networking.firewall.allowedTCPPorts = [ 853 ];
-        networking.firewall.interfaces."${wireguardPreferences.interfaceName}" = {
+        networking.firewall.interfaces."${wgPrefs.interfaceName}" = {
           allowedUDPPorts = [ 53 ];
           allowedTCPPorts = [ 53 ];
         };

@@ -1,16 +1,9 @@
 {
   flake.homeModules.system-ssh =
-    {
-      config,
-      osConfig,
-      ...
-    }:
-    let
-      hostSecrets = "${osConfig.private.secrets}/home/${config.home.username}/${osConfig.host.info.configName}.yaml";
-    in
+    { config, ... }:
     {
       config.sops.secrets.ssh-private-key = {
-        sopsFile = hostSecrets;
+        sopsFile = config.user.secrets.userSecretsFile;
       };
     };
 }

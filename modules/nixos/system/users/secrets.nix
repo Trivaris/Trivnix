@@ -6,8 +6,6 @@
       ...
     }:
     let
-      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
-      commonSecrets = "${config.private.secrets}/host/common.yaml";
       normalUsers = lib.filterAttrs (name: userCfg: userCfg.isNormalUser) config.users.users;
     in
     {
@@ -15,13 +13,13 @@
         (lib.mapAttrsToList (
           username: userconfig: [
             (lib.nameValuePair "sops-keys/${username}" {
-              sopsFile = hostSecrets;
+              sopsFile = config.host.secrets.hostSecretsFile;
 
               path = "${userconfig.home}/.config/sops/age/key.txt";
               owner = username;
             })
             (lib.nameValuePair "hashed-passwords/${username}" {
-              sopsFile = commonSecrets;
+              sopsFile = config.host.secrets.commonSecretsFile;
               owner = username;
             })
           ]

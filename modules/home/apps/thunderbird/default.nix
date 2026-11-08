@@ -22,7 +22,7 @@
       #       (lib.nameValuePair "${prefix}.color" account.color)
       #       (lib.nameValuePair "${prefix}.disabled" false)
       #     ]
-      #   ) config.private.calendarAccounts or { }
+      #   ) config.user.private.calendarAccounts or { }
       # );
     in
     {

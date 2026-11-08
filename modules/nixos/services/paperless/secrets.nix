@@ -7,12 +7,11 @@
     }:
     let
       paperlessPreferences = config.host.preferences.paperless;
-      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
       config.sops.secrets = lib.mkIf paperlessPreferences.enable {
         paperless-admin-password = {
-          sopsFile = hostSecrets;
+          sopsFile = config.host.secrets.hostSecretsFile;
           owner = "paperless";
           group = "paperless";
         };

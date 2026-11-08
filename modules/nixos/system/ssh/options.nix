@@ -34,7 +34,7 @@
       };
     in
     {
-      options.private.publicKeys = {
+      options.host.private.publicKeys = {
         common = lib.mkOption {
           type = commonSubmodule;
           description = "Public SSH keys shared by hosts.";

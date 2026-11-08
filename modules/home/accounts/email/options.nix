@@ -1,10 +1,6 @@
 {
   flake.homeModules.accounts-email =
-    {
-      config,
-      lib,
-      ...
-    }:
+    { lib, ... }:
     let
       tlsSubmodule = lib.types.submodule {
         options = {
@@ -87,48 +83,51 @@
       };
     in
     {
-      options.user.preferences.email = {
-        enable = lib.mkEnableOption "SOPS-backed email account provisioning for this user";
+      options.user = {
+        preferences.email = {
+          enable = lib.mkEnableOption "SOPS-backed email account provisioning for this user";
 
-        exclude = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
+          exclude = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
 
-          default = [ ];
-          description = ''
-            Email account identifiers to ignore when provisioning profiles.
-            Filter names listed under `config.private.emailAccounts`.
-          '';
+            default = [ ];
+            description = ''
+              Email account identifiers to ignore when provisioning profiles.
+              Filter names listed under `config.user.private.emailAccounts`.
+            '';
+          };
+
+          generateAccountsFile = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = ''
+              Control whether a JSON summary of filtered accounts is written.
+              Set to false when an external tool manages `mailaccounts.json`.
+            '';
+          };
+
+          enableThunderbirdIntegration = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = ''
+              Allow this module to auto-configure Thunderbird profiles from secrets.
+              Disable if you prefer to manage Thunderbird settings manually.
+            '';
+          };
         };
 
-        generateAccountsFile = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = ''
-            Control whether a JSON summary of filtered accounts is written.
-            Set to false when an external tool manages `mailaccounts.json`.
-          '';
+        private.email = {
+          calendarAccounts = lib.mkOption {
+            type = lib.types.attrsOf calendarSubmodule;
+            default = { };
+            description = "Calendar accounts";
+          };
+          emailAccounts = lib.mkOption {
+            type = lib.types.attrsOf accountSubmodule;
+            default = { };
+            description = "Email accounts";
+          };
         };
-
-        enableThunderbirdIntegration = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = ''
-            Allow this module to auto-configure Thunderbird profiles from secrets.
-            Disable if you prefer to manage Thunderbird settings manually.
-          '';
-        };
-      };
-
-      options.private.calendarAccounts = lib.mkOption {
-        type = lib.types.attrsOf calendarSubmodule;
-        default = { };
-        description = "Calendar accounts";
-      };
-
-      options.private.emailAccounts = lib.mkOption {
-        type = lib.types.attrsOf accountSubmodule;
-        default = { };
-        description = "Email accounts";
       };
     };
 }

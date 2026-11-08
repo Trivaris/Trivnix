@@ -7,12 +7,11 @@
     }:
     let
       matrixPreferences = config.host.preferences.matrix;
-      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
       config.sops.secrets = lib.mkIf matrixPreferences.enable {
         matrix-secrets = {
-          sopsFile = hostSecrets;
+          sopsFile = config.host.secrets.hostSecretsFile;
           owner = "root";
           group = "root";
         };

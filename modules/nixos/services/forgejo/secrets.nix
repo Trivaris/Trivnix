@@ -7,12 +7,11 @@
     }:
     let
       forgejoPreferences = config.host.preferences.forgejo;
-      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
       config.sops.secrets = lib.mkIf forgejoPreferences.enable {
         mail-forgejo-password = {
-          sopsFile = hostSecrets;
+          sopsFile = config.host.secrets.hostSecretsFile;
           owner = "forgejo";
           group = "forgejo";
         };

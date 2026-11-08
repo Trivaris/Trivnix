@@ -7,12 +7,11 @@
     }:
     let
       opensshPreferences = config.host.preferences.openssh;
-      hostSecrets = "${config.private.secrets}/host/${config.host.info.configName}.yaml";
     in
     {
       config.sops.secrets = lib.mkIf opensshPreferences.enable {
         ssh-host-key = {
-          sopsFile = hostSecrets;
+          sopsFile = config.host.secrets.hostSecretsFile;
           path = "/etc/ssh/ssh_host_ed25519_key";
           owner = "root";
           group = "root";

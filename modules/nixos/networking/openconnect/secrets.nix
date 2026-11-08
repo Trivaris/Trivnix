@@ -3,22 +3,20 @@
     {
       lib,
       config,
-      osConfig,
       ...
     }:
     let
       openconnectPreferences = config.host.preferences.openconnect;
-      commonSecrets = "${osConfig.private.secrets}/host/common.yaml";
     in
     {
       config.sops.secrets = lib.mkIf openconnectPreferences.enable {
         openconnect-vpn-password = {
-          sopsFile = commonSecrets;
+          sopsFile = config.host.secrets.commonSecretsFile;
           owner = "root";
           group = "root";
         };
         openconnect-vpn-otp-secret = {
-          sopsFile = commonSecrets;
+          sopsFile = config.host.secrets.commonSecretsFile;
           owner = "root";
           group = "root";
         };
