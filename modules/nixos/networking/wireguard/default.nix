@@ -65,10 +65,22 @@
           (lib.concatStringsSep ".")
         ];
 
-      mapNodeToPeer = _: node: {
+      networkAddress = lib.pipe subnetId [
+        idToOctets
+        (map toString)
+        (lib.concatStringsSep ".")
+      ];
+
+      mapNodeToPeer = name: node: {
+        inherit name;
         publicKey = readKey node.publicKeyFile;
         allowedIPs = [
-          "${getNodeAddress node}/${if node.isServer then toString wgPreferences.subnetMask else "32"}"
+          (
+            if node.isServer then
+              "${networkAddress}/${toString wgPreferences.subnetMask}"
+            else
+              "${getNodeAddress node}/32"
+          )
         ];
         endpoint = node.endpoint;
         persistentKeepalive = 25;
