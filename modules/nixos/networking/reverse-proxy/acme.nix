@@ -4,7 +4,7 @@
     let
       reverseProxyPreferences = config.host.preferences.reverseProxy;
       secrets = config.sops.secrets;
-      acmeUnits = map (service: "acme-${service.domain}.service") config.vars.activeServices;
+      acmeUnits = map (service: "acme-${service.domain}.service") config.user.vars.activeServices;
     in
     {
       config = lib.mkIf reverseProxyPreferences.enable {
@@ -21,7 +21,7 @@
 
           certs = builtins.listToAttrs (
             [ (lib.nameValuePair reverseProxyPreferences.zone { }) ]
-            ++ (map (service: lib.nameValuePair service.domain { }) config.vars.activeServices)
+            ++ (map (service: lib.nameValuePair service.domain { }) config.user.vars.activeServices)
             ++ (map (
               extraCertDomain: lib.nameValuePair extraCertDomain { }
             ) reverseProxyPreferences.extraCertDomains)

@@ -21,6 +21,10 @@
                     proxyWebsockets = true;
                     extraConfig = ''
                       proxy_set_header Accept-Encoding gzip;
+                    ''
+                    + lib.optionalString (service.allowFrom != [ ]) ''
+                      ${lib.concatMapStrings (net: "allow ${net};\n") service.allowFrom}
+                      deny all;
                     '';
                   };
                 };
@@ -38,6 +42,7 @@
                       else
                         service.externalPort;
                     ssl = true;
+                    proxyProtocol = reverseProxyPreferences.dumbPipes.enable;
                   }
                 ]
                 ++ lib.optional (!reverseProxyPreferences.dumbPipes.enable) {
@@ -46,7 +51,7 @@
                   ssl = true;
                 };
               }
-            ) config.vars.activeServices
+            ) config.user.vars.activeServices
           )
           // lib.optionalAttrs reverseProxyPreferences.dumbPipes.enable {
             "default-http-redirect" = {

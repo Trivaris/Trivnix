@@ -8,6 +8,7 @@
   options = {
     enable = mkEnableOption "Reverse Proxy";
     enableAnubis = mkEnableOption "Anubis";
+    https = mkEnableOption "Routing through https behind the reverse proxy for service";
 
     address = mkOption {
       type = types.str;
@@ -32,6 +33,10 @@
       description = "External port for the service.";
     };
 
-    https = mkEnableOption "Routing through https behind the reverse proxy for service";
+    allowFrom = mkOption {
+      type = types.nullOr (types.nonEmptyListOf types.str);
+      default = null;
+      description = "CIDR addresses to allow";
+    };
   };
 }

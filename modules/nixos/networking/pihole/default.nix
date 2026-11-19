@@ -8,26 +8,29 @@
     let
       piholePreferences = config.host.preferences.pihole;
       wgPrefs = config.host.preferences.wireguard;
-      wgIp = builtins.head (lib.splitString "/" wgPrefs.address);
+      wgIp = config.host.vars.wireguard-address;
     in
     {
       config = lib.mkIf piholePreferences.enable {
+        host.preferences.pihole.reverseProxy.allowFrom =
+          if piholePreferences.wireguardOnly then
+            lib.mkForce [ "${wgPrefs.subnet}/${toString wgPrefs.subnetMask}" ]
+          else
+            [ ];
+
         services = {
           pihole-ftl = {
             enable = true;
-            useDnsmasqConfig = true;
-            settings = {
-              dns.listeningMode = "bind";
-              dns.upstreams = [
+            settings.dns = {
+              hosts = lib.mkIf piholePreferences.wireguardOnly [
+                "${wgIp} ${piholePreferences.reverseProxy.domain}"
+              ];
+              upstreams = [
                 "9.9.9.9"
                 "149.112.112.112"
               ];
-
-              misc.dnsmasq_lines = [
-                "interface=${wgPrefs.interfaceName}"
-                "except-interface=lo"
-                "bind-interfaces"
-              ];
+              interface = lib.mkIf piholePreferences.wireguardOnly wgPrefs.interfaceName;
+              listeningMode = lib.mkIf piholePreferences.wireguardOnly "BIND";
             };
           };
 
@@ -35,31 +38,26 @@
             enable = true;
             hostName = piholePreferences.reverseProxy.domain;
             ports = [
-              (if piholePreferences.reverseProxy.enable then piholePreferences.reverseProxy.port else 80)
+              (
+                if piholePreferences.wireguardOnly then
+                  "${wgIp}:${toString piholePreferences.reverseProxy.port}"
+                else
+                  piholePreferences.reverseProxy.port
+              )
             ];
           };
 
           nginx = lib.mkIf piholePreferences.reverseProxy.enable {
             streamConfig = ''
               server {
-                listen 853 ssl;
-                proxy_pass ${wgIp}:53;
+                listen ${if piholePreferences.wireguardOnly then wgIp else "127.0.0.1"}:853 ssl;
+                proxy_pass ${if piholePreferences.wireguardOnly then wgIp else "127.0.0.1"}:53;
 
                 ssl_certificate /var/lib/acme/${piholePreferences.reverseProxy.domain}/fullchain.pem;
                 ssl_certificate_key /var/lib/acme/${piholePreferences.reverseProxy.domain}/key.pem;
-
-                ssl_protocols TLSv1.2 TLSv1.3;
-                ssl_ciphers HIGH:!aNULL:!MD5;
-                ssl_handshake_timeout 10s;
               }
             '';
           };
-        };
-
-        networking.firewall.allowedTCPPorts = [ 853 ];
-        networking.firewall.interfaces."${wgPrefs.interfaceName}" = {
-          allowedUDPPorts = [ 53 ];
-          allowedTCPPorts = [ 53 ];
         };
       };
     };

@@ -5,7 +5,7 @@
       reverseProxyPreferences = config.host.preferences.reverseProxy;
       anubisServices = builtins.filter (
         service: service.enableAnubis or false
-      ) config.vars.activeServices;
+      ) config.user.vars.activeServices;
     in
     {
       config = lib.mkIf reverseProxyPreferences.enable {

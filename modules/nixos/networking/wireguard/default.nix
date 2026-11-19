@@ -88,6 +88,7 @@
     in
     {
       config = lib.mkIf wgPreferences.enable {
+        host.vars.wireguard-address = getNodeAddress myNode;
         networking.firewall = {
           allowedUDPPorts = [ wgPreferences.port ];
           trustedInterfaces = [ wgPreferences.interfaceName ];

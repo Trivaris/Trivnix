@@ -6,7 +6,7 @@
       ...
     }:
     {
-      config.sops.secrets = lib.pipe config.vars.filteredEmailAccounts [
+      config.sops.secrets = lib.pipe config.user.vars.filteredEmailAccounts [
         builtins.attrNames
         (map (
           account:

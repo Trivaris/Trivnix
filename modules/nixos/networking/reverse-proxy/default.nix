@@ -4,7 +4,7 @@
     let
       reverseProxyPreferences = config.host.preferences.reverseProxy;
       allowedTCPPorts =
-        (map (service: service.externalPort) config.vars.activeServices)
+        (map (service: service.externalPort) config.user.vars.activeServices)
         ++ lib.optionals reverseProxyPreferences.dumbPipes.enable (
           map (tcpForward: tcpForward.listenPort) (
             builtins.attrValues reverseProxyPreferences.dumbPipes.portForwards
@@ -23,6 +23,10 @@
           recommendedProxySettings = true;
           recommendedTlsSettings = true;
           sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+          commonHttpConfig = lib.mkIf reverseProxyPreferences.dumbPipes.enable ''
+            set_real_ip_from 127.0.0.1;
+            real_ip_header proxy_protocol;
+          '';
           appendHttpConfig = lib.mkAfter ''
             map $http_upgrade $connection_upgrade {
               default upgrade;

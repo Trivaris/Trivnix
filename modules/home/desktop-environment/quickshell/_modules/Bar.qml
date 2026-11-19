@@ -7,100 +7,115 @@ import "Modules"
 
 PanelWindow {
     id: root
-    
-    function loadJson(filename: string): string {
-        var xhr = new XMLHttpRequest();
-        var configDir = StandardPaths.standardLocations(StandardPaths.ConfigLocation)[0];
-        xhr.open("GET", `${configDir}/quickshell/${filename}`, false);
-        xhr.send();
-        return xhr.responseText;
-    }
 
     property bool isActiveMonitor
-    property var scheme: JSON.parse(loadJson("scheme.json"))
-    property var monitors: JSON.parse(loadJson("monitors.json"))
-    property var wsIconOverrides: JSON.parse(loadJson("wsIconOverrides.json"))
+    property var scheme: Config.scheme
+    property var monitors: Config.monitors
+    property var wsIconOverrides: Config.wsIconOverrides
+
+    property bool autoHide: true
+    property int collapsedHeight: 12
+    readonly property bool expanded: !autoHide || hover.hovered || collapseDelay.running
+    property real reveal: expanded ? 1 : 0
+    Behavior on reveal { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
+
+    property real monitorFade: isActiveMonitor ? 1 : 0
+    Behavior on monitorFade { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     anchors { left: true; right: true; bottom: true }
     implicitHeight: 50
     color: "transparent"
 
-    // Base background styling
+    exclusiveZone: autoHide ? collapsedHeight : implicitHeight
+    mask: Region { item: background }
+
+    Timer { id: collapseDelay; interval: 350 }
+
+    HoverHandler {
+        id: hover
+        onHoveredChanged: if (!hovered) collapseDelay.restart()
+    }
+
     Rectangle {
-        anchors { fill: parent; leftMargin: 10; rightMargin: 10; bottomMargin: -radius }
+        id: background
+        y: (1 - root.reveal) * (root.height - root.collapsedHeight)
+        anchors {
+            left: parent.left
+            right: parent.right
+            leftMargin: 10
+            rightMargin: 10
+        }
+        height: parent.height + radius
         border { width: 2; color: scheme.base03 }
-        color: scheme.base01
+        color: Qt.alpha(scheme.base01, 0.5)
         radius: 8
+    }
 
-        // --- LEFT SECTION ---
-        RowLayout {
-            id: modulesLeft
-            spacing: 35
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                leftMargin: 20
-                topMargin: 4
-                bottomMargin: parent.radius
-            }
-
-            opacity: root.isActiveMonitor ? 1 : 0
-            visible: opacity > 0
-            Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-
-            Launcher     { scheme: root.scheme; Layout.fillHeight: true }
-            PowerMenu    { scheme: root.scheme; Layout.fillHeight: true }
-            Bluetooth    { scheme: root.scheme; Layout.fillHeight: true }
-            Weather      { scheme: root.scheme; Layout.fillHeight: true }
-            ActiveWindow { scheme: root.scheme; Layout.fillHeight: true }
-            TrayBar      { scheme: root.scheme; Layout.fillHeight: true }
+    // --- LEFT SECTION ---
+    RowLayout {
+        id: modulesLeft
+        spacing: 35
+        anchors {
+            left: background.left
+            top: background.top
+            bottom: background.bottom
+            leftMargin: 20
+            topMargin: 4
+            bottomMargin: background.radius
         }
 
-        // --- CENTER SECTION ---
-        RowLayout {
-            id: modulesCenter
-            spacing: 5
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: parent.top
-                bottom: parent.bottom
-                topMargin: 8
-                bottomMargin: parent.radius
-            }
+        opacity: root.monitorFade * root.reveal
+        visible: opacity > 0
 
-            Workspaces { 
-                scheme: root.scheme
-                wsIconOverrides: root.wsIconOverrides
-                monitorName: root.screen.name 
-                monitorsMap: root.monitors
-                Layout.fillHeight: true
-            }
+        Launcher     { scheme: root.scheme; Layout.fillHeight: true }
+        PowerMenu    { scheme: root.scheme; Layout.fillHeight: true }
+        Bluetooth    { scheme: root.scheme; Layout.fillHeight: true }
+        Weather      { scheme: root.scheme; Layout.fillHeight: true }
+        ActiveWindow { scheme: root.scheme; Layout.fillHeight: true }
+        TrayBar      { scheme: root.scheme; Layout.fillHeight: true }
+    }
+
+    // --- CENTER SECTION ---
+    RowLayout {
+        id: modulesCenter
+        spacing: 5
+        anchors {
+            horizontalCenter: background.horizontalCenter
+            top: background.top
+            topMargin: 4
         }
 
-        // --- RIGHT SECTION ---
-        RowLayout {
-            id: modulesRight
-            spacing: 35
-            anchors {
-                right: parent.right
-                top: parent.top
-                bottom: parent.bottom
-                rightMargin: 20
-                topMargin: 4
-                bottomMargin: parent.radius
-            }
-
-            opacity: root.isActiveMonitor ? 1 : 0
-            visible: opacity > 0
-            Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-
-            Media       { scheme: root.scheme; Layout.fillHeight: true }
-            Volume      { scheme: root.scheme; Layout.fillHeight: true }
-            Resources   { scheme: root.scheme; Layout.fillHeight: true }
-            Network     { scheme: root.scheme; Layout.fillHeight: true }
-            Clock       { scheme: root.scheme; Layout.fillHeight: true }
-            Date        { scheme: root.scheme; Layout.fillHeight: true }
+        Workspaces {
+            id: workspaces
+            scheme: root.scheme
+            wsIconOverrides: root.wsIconOverrides
+            monitorName: root.screen.name
+            monitorsMap: root.monitors
+            expansionProgress: root.reveal
         }
+    }
+
+    // --- RIGHT SECTION ---
+    RowLayout {
+        id: modulesRight
+        spacing: 35
+        anchors {
+            right: background.right
+            top: background.top
+            bottom: background.bottom
+            rightMargin: 20
+            topMargin: 4
+            bottomMargin: background.radius
+        }
+
+        opacity: root.monitorFade * root.reveal
+        visible: opacity > 0
+
+        Media       { scheme: root.scheme; Layout.fillHeight: true }
+        Volume      { scheme: root.scheme; Layout.fillHeight: true }
+        Resources   { scheme: root.scheme; Layout.fillHeight: true }
+        Network     { scheme: root.scheme; Layout.fillHeight: true }
+        Clock       { scheme: root.scheme; Layout.fillHeight: true }
+        Date        { scheme: root.scheme; Layout.fillHeight: true }
     }
 }

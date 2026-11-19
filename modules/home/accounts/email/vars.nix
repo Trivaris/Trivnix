@@ -6,7 +6,7 @@
       ...
     }:
     {
-      options.vars.filteredEmailAccounts = lib.mkOption {
+      options.user.vars.filteredEmailAccounts = lib.mkOption {
         type = lib.types.attrs;
         readOnly = true;
         default = lib.filterAttrs (

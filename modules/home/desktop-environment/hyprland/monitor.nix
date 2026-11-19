@@ -1,17 +1,8 @@
 {
   flake.homeModules.desktop-environment-hyprland =
-    {
-      lib,
-      osConfig,
-      pkgs,
-      ...
-    }:
+    { lib, osConfig, ... }:
     {
       config = lib.mkIf (!osConfig.host.preferences.headless) {
-        home.packages = [
-          pkgs.waypaper
-          pkgs.awww
-        ];
         wayland.windowManager.hyprland.settings = {
           on = [
             {
@@ -19,12 +10,11 @@
                 "hyprland.start"
                 (lib.generators.mkLuaInline ''
                   function()
-                    hl.exec_cmd("${lib.getExe pkgs.waypaper} --restore")
-                    hl.exec_cmd("librewolf",   { workspace =  "1 silent" })
+                    hl.exec_cmd("librewolf",      { workspace =  "1 silent" })
                     -- hl.exec_cmd("code",        { workspace =  "2 silent" })
-                    hl.exec_cmd("kitty",       { workspace =  "2 silent" })
-                    hl.exec_cmd("thunderbird", { workspace =  "3 silent" })
-                    hl.exec_cmd("spotify",     { workspace = "11 silent" })
+                    hl.exec_cmd("kitty",          { workspace =  "2 silent" })
+                    hl.exec_cmd("thunderbird",    { workspace =  "3 silent" })
+                    hl.exec_cmd("spotify",        { workspace = "11 silent" })
                     -- hl.exec_cmd("vesktop",     { workspace = "12 silent" })
                   end
                 '')

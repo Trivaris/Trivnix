@@ -13,7 +13,7 @@
           message = "host.preferences.wireguard.nodes must contain at least one routed peer when WireGuard is enabled";
         }
         {
-          assertion = wgPreferences.enable -> lib.any (node: node.isServer -> node.endpoint != null) nodes;
+          assertion = wgPreferences.enable -> lib.all (node: node.isServer -> node.endpoint != null) nodes;
           message = "any server (peer.isServer = true) in host.preferences.wireguard.nodes must have a publically reachable endpoint";
         }
         {

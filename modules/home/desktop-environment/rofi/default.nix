@@ -22,7 +22,7 @@
 
         settings = {
           show-icons = true;
-          terminal = config.vars.terminalEmulator;
+          terminal = config.user.vars.terminalEmulator;
           display-drun = "Apps";
           display-run = "Run";
           display-window = "Windows";

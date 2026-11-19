@@ -9,7 +9,7 @@
     }:
     let
       mkLua = lib.generators.mkLuaInline;
-      term = config.vars.terminalEmulator;
+      term = config.user.vars.terminalEmulator;
       main_mod = "SUPER";
       alt_mod = "ALT";
       wsKeys = [
@@ -160,14 +160,14 @@
             }
             {
               _args = [
-                "${main_mod} + ${alt_mod} + E"
+                "${main_mod} + E"
                 (mkLua ''hl.dsp.exec_cmd("nautilus")'')
               ];
             }
             {
               _args = [
-                "${main_mod} + ${alt_mod} + C"
-                (mkLua ''hl.dsp.exec_cmd("hyprlock")'')
+                "${main_mod} + L"
+                (mkLua ''hl.dsp.exec_cmd("qs ipc call lock lock")'')
               ];
             }
             {

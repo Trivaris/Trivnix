@@ -34,7 +34,7 @@
             }
             // account
           )
-        ) config.vars.filteredEmailAccounts;
+        ) config.user.vars.filteredEmailAccounts;
 
         xdg.configFile = lib.mkIf emailPreferences.generateAccountsFile {
           "mailaccounts.json".text = builtins.toJSON (

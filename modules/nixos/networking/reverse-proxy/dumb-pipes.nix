@@ -33,6 +33,7 @@
             listen [::]:443;
             ssl_preread on;
             proxy_pass $backend;
+            proxy_protocol on;
           }
 
           ${lib.concatStringsSep "\n      " (

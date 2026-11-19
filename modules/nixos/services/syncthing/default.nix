@@ -19,7 +19,7 @@
           overrideDevices = false;
           overrideFolders = false;
           settings.gui = {
-            user = config.home.username;
+            user = "syncthing";
             authMode = "static";
             sendBasicAuthPrompt = true;
             insecureAdminAccess = false;

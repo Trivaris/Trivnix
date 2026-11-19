@@ -34,6 +34,7 @@
 
     hyprqt6engine.url = "github:hyprwm/hyprqt6engine";
     hyprland.url = "github:hyprwm/Hyprland";
+    nix-colors.url = "github:misterio77/nix-colors";
 
     epic-games-launcher = {
       url = "github:kjetteren/epic-games-launcher-flake";

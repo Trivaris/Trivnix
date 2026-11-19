@@ -11,7 +11,7 @@
       isService = pref: builtins.isAttrs pref && (pref.reverseProxy or { }).enable or false;
     in
     {
-      options.vars.activeServices = lib.mkOption {
+      options.user.vars.activeServices = lib.mkOption {
         type = lib.types.listOf (
           lib.types.submodule (
             lib.recursiveUpdate lib.trivnix.reverseProxyOptions {

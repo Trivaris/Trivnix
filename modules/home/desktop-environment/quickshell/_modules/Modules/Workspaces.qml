@@ -9,6 +9,9 @@ Item {
     property var monitorsMap: ({})
     property string monitorName: ""
     property string isActiveMonitor
+    property real expansionProgress: 1
+    property bool showPills: false
+    readonly property bool pillsVisible: expansionProgress > 0.01 || showPills
 
     property int workspaceIndex: (monitorsMap && monitorName && monitorsMap[monitorName]) 
         ? (monitorsMap[monitorName].workspaceIndex || 0) : 0
@@ -55,6 +58,12 @@ Item {
         return m && m.activeWorkspace ? m.activeWorkspace.id : -1;
     }
 
+    Timer {
+        id: pillVisibilityTimer
+        interval: 1500
+        onTriggered: wsRoot.showPills = false
+    }
+
     Row {
         id: wsRow
         spacing: 6
@@ -67,6 +76,12 @@ Item {
                 width: 35
                 height: 35
                 radius: 4
+                color: {
+                    if (wsRoot.expansionProgress < 0.5) return "transparent"
+                    if (mouseArea.containsMouse && isActive) return "rgba(255, 255, 255, 0.12)"
+                    if (mouseArea.containsMouse) return "rgba(255, 255, 255, 0.08)"
+                    return "transparent"
+                }
 
                 property int    wsId: modelData
                 property var    wsData: wsRoot.getWsData(wsId)
@@ -76,12 +91,25 @@ Item {
                 property color  displayedColor: displayedColorStr
 
                 onWsDataChanged: if (wsData.text !== displayedText || wsData.color !== displayedColorStr) iconAnim.restart()
-                color: {
-                    if (mouseArea.containsMouse && isActive) return "rgba(255, 255, 255, 0.12)"
-                    if (mouseArea.containsMouse) return "rgba(255, 255, 255, 0.08)"
-                    return "transparent"
+
+                Rectangle {
+                    id: pill
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        right: parent.right
+                    }
+                    height: 4 + (31 * wsRoot.expansionProgress)
+                    radius: 2 + (2 * wsRoot.expansionProgress)
+                    color: wsButton.displayedColor
+                    opacity: wsRoot.pillsVisible
+                        ? (wsRoot.expansionProgress > 0.01
+                        ? (1 - wsRoot.expansionProgress) * (wsButton.isActive ? 1 : 0.45)
+                        : (wsButton.isActive ? 1 : 0.45))
+                        : 0
+
+                    Behavior on opacity { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
                 }
-                Behavior on color { ColorAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
                 Text {
                     id: iconText
@@ -90,8 +118,12 @@ Item {
                     color: wsButton.displayedColor
                     font.pixelSize: 25
                     font.family: "JetBrains Mono Nerd Font"
+                    opacity: wsRoot.expansionProgress
+                    scale: 0.8 + (0.2 * wsRoot.expansionProgress)
                     
                     Behavior on color { ColorAnimation { duration: 250; easing.type: Easing.OutCubic } }
+                    Behavior on opacity { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                    Behavior on scale { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
                 }
 
                 SequentialAnimation {
@@ -129,7 +161,13 @@ Item {
         property int activeIndex: wsRoot.persistentIds.indexOf(activeId)
         property var activeWsData: activeIndex >= 0 ? wsRoot.getWsData(wsRoot.persistentIds[activeIndex]) : null
 
+        onActiveIdChanged: {
+            wsRoot.showPills = true
+            pillVisibilityTimer.restart()
+        }
+
         visible: activeIndex >= 0
+        opacity: wsRoot.expansionProgress
         color: activeWsData ? activeWsData.color : "transparent"
         x: activeIndex >= 0 ? activeIndex * (35 + wsRow.spacing) : 0
         width: 35
@@ -140,5 +178,6 @@ Item {
 
         Behavior on x     { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
         Behavior on color { ColorAnimation { duration: 300; easing.type: Easing.OutCubic } }
+        Behavior on opacity { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
     }
 }
