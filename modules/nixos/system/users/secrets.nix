@@ -20,6 +20,7 @@
             })
             (lib.nameValuePair "hashed-passwords/${username}" {
               sopsFile = config.host.private.secrets.commonSecretsFile;
+              neededForUsers = true;
               owner = username;
             })
           ]

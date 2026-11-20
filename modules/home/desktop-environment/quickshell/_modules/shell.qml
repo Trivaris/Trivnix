@@ -14,12 +14,11 @@ ShellRoot {
         }
     }
 
-    Lock { id: screenLock }
+    // Lock { id: screenLock }
 
     // qs ipc call lock lock
-    IpcHandler {
-        target: "lock"
-
-        function lock(): void { screenLock.lock() }
-    }
+    // IpcHandler {
+    //     target: "lock"
+    //     function lock(): void { screenLock.lock() }
+    // }
 }

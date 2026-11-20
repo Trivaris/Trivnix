@@ -331,17 +331,3 @@ Scope {
         }
     }
 }
-
-
-
-
-
-
-public void Main(String[] args) {
-    []Stirng liste = { "A", "B", "C" }
-    for(int i = 0; i < 3;i++; ) {
-
-    }
-
-
-}
