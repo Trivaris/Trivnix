@@ -8,16 +8,17 @@
     }:
     {
       config = lib.mkIf (!config.host.preferences.headless) {
-        environment.systemPackages = [ pkgs.sbctl ];
-        security.pam.services.hyprlock = { };
-        security.pam.services.quickshell = {
-          fprintAuth = false;
-        };
-        security.pam.services."quickshell-fingerprint" = {
-          fprintAuth = config.host.preferences.fingerPrintAuth;
-          unixAuth = false;
-        };
         programs.hyprland.enable = true;
+        services.gvfs.enable = true;
+        environment.systemPackages = [ pkgs.sbctl ];
+        security.pam.services = {
+          hyprlock = { };
+          quickshell.fprintAuth = false;
+          "quickshell-fingerprint" = {
+            fprintAuth = config.host.preferences.fingerPrintAuth;
+            unixAuth = false;
+          };
+        };
 
         xdg.portal = {
           enable = true;
