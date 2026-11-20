@@ -27,7 +27,7 @@
   {
     options.user.preferences.hyprland.wallpaperDir = lib.mkOption {
       type = lib.types.str;
-      default = "${config.home.homeDirectory}/Pictures/Wallpaper";
+      default = "${config.home.homeDirectory}/Pictures/Wallpapers";
       description = "Directory to pick a random wallpaper from.";
     };
 
