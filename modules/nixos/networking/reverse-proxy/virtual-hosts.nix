@@ -22,7 +22,7 @@
                     extraConfig = ''
                       proxy_set_header Accept-Encoding gzip;
                     ''
-                    + lib.optionalString (service.allowFrom != [ ]) ''
+                    + lib.optionalString (service.allowFrom != null) ''
                       ${lib.concatMapStrings (net: "allow ${net};\n") service.allowFrom}
                       deny all;
                     '';
