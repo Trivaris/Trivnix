@@ -9,7 +9,7 @@
       wgPrefs = config.host.preferences.wireguard;
     in
     {
-      config.sops.secrets = lib.mkIf wgPrefs.enable {
+      sops.secrets = lib.mkIf wgPrefs.enable {
         wireguard-key = {
           sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = "root";
