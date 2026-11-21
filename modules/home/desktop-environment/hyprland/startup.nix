@@ -48,7 +48,7 @@
       awww-wallpaper = {
         Unit = {
           Description = "Set random wallpaper";
-          After = [ "awww-daemon.service" ];
+          After = [ "awww-daemon.service" "awww-daemon.service" ];
           Requires = [ "awww-daemon.service" ];
           PartOf = [ "graphical-session.target" ];
         };
