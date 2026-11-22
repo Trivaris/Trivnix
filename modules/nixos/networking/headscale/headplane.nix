@@ -23,6 +23,7 @@
             client_id = oicdPreferences.clientId;
             client_secret_path = config.sops.secrets.headplane-oidc-secret.path;
             use_pkce = true;
+            disable_api_key_login = true;
           };
           headscale = {
             public_url = config.services.headscale.settings.server_url;
