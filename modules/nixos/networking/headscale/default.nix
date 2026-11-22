@@ -81,7 +81,12 @@
               cookie_secret_path = config.sops.secrets.headplane-cookie.path;
             };
             headscale = {
-              url = config.services.headscale.settings.server_url;
+              url =
+                if hsPreferences.reverseProxy.enable then
+                  "http://127.0.0.1:${toString config.services.headscale.port}"
+                else
+                  config.services.headscale.settings.server_url;
+              public_url = config.services.headscale.settings.server_url;
               config_path = "/etc/headscale/config.yaml";
             };
           };
@@ -90,6 +95,7 @@
           sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = config.systemd.services.headplane.serviceConfig.User;
           group = config.systemd.services.headplane.serviceConfig.Group;
+          mode = "0400";
         };
       };
     };
