@@ -76,7 +76,7 @@
                 else
                   config.services.headscale.settings.server_url;
               public_url = config.services.headscale.settings.server_url;
-              config_path = "/etc/headscale/config.yaml";
+              config_path = config.services.headscale.configFile;
             };
           };
         };
