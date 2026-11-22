@@ -15,7 +15,7 @@
           address = if hsPreferences.reverseProxy.enable then "127.0.0.1" else "0.0.0.0";
           settings = {
             log.level = "info";
-            ephemeral_node_inactivity_timeout = "30m";
+            node.ephemeral.inactivity_timeout = "30m";
             policy.mode = "database";
             server_url = "https://${hsPreferences.reverseProxy.domain}:${
               if hsPreferences.reverseProxy.enable then
