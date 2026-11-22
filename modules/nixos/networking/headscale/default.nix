@@ -32,7 +32,7 @@
               nameservers.global = [
                 "1.1.1.1"
                 "9.9.9.9"
-              ];
+              ] ++ hsPreferences.dns.nameservers;
               extra_records = hsPreferences.dns.records;
             };
 

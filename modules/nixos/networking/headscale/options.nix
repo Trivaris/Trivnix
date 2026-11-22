@@ -8,6 +8,11 @@
           type = lib.types.str;
           description = "FQDN for the DNS Server";
         };
+        nameservers = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          description = "Additional nameservers";
+          default = [ ];
+        };
         records = lib.mkOption {
           type = lib.types.listOf (
             lib.types.submodule {
