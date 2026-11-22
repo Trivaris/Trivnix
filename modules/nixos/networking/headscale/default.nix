@@ -77,7 +77,7 @@
           settings = {
             server = {
               host = "127.0.0.1";
-              port = 3000;
+              port = 3010;
               cookie_secret_path = config.sops.secrets.headplane-cookie.path;
             };
             headscale = {
@@ -88,8 +88,8 @@
         };
         sops.secrets.headplane-cookie = {
           sopsFile = config.host.private.secrets.hostSecretsFile;
-          owner = "root";
-          group = "root";
+          owner = config.systemd.services.headplane.serviceConfig.User;
+          group = config.systemd.services.headplane.serviceConfig.Group;
         };
       };
     };
