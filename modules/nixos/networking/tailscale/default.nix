@@ -11,6 +11,10 @@
           type = lib.types.str;
           description = "URL of the Headscale server";
         };
+        operator = lib.mkOption {
+          type = lib.types.str;
+          description = "Username of the operator";
+        };
       };
 
       config = lib.mkIf tsPreferences.enable {
@@ -27,8 +31,11 @@
           openFirewall = true;
           useRoutingFeatures = "client";
           authKeyFile = config.sops.secrets.tailscale-auth-key.path;
-          extraUpFlags = [ "--login-server=${tsPreferences.loginServer}" ];
-          extraSetFlags = [ "--accept-routes" ];
+          extraUpFlags = [
+            "--login-server=${tsPreferences.loginServer}"
+            "--accept-routes"
+            "--operator=${tsPreferences.operator}"  
+          ];
         };
       };
     };
