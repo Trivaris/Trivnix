@@ -3,6 +3,7 @@
     { lib, config, ... }:
     let
       hsPreferences = config.host.preferences.headscale;
+      hpPreferences = config.host.preferences.headplane;
       oicdPreferences = config.host.preferences.oicd;
     in
     {
@@ -30,7 +31,7 @@
             dns = {
               magic_dns = true;
               base_domain = hsPreferences.dns.domain;
-              extra_records = hsPreferences.dns.records;
+              extra_records = (lib.optionals [ { name = hpPreferences.reverseProxy.domain; type = "A"; value = "100.64.0.1"; } ]) ++ hsPreferences.dns.records;
               nameservers = {
                 split = hsPreferences.dns.nameservers;
                 global = [
