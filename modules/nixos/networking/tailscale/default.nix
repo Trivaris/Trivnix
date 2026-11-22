@@ -28,6 +28,7 @@
           useRoutingFeatures = "client";
           authKeyFile = config.sops.secrets.tailscale-auth-key.path;
           extraUpFlags = [ "--login-server=${tsPreferences.loginServer}" ];
+          extraSetFlags = [ "--accept-routes" ];
         };
       };
     };
