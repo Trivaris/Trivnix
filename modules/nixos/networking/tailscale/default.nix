@@ -24,7 +24,7 @@
           enable = true;
           openFirewall = true;
           useRoutingFeatures = "client";
-          authKeyFile = tsPreferences.authKeyFile;
+          authKeyFile = config.sops.secrets.tailscale-auth-key.path;
           extraUpFlags = [ "--login-server=${tsPreferences.loginServer}" ];
         };
 
