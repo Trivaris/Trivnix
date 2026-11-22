@@ -10,6 +10,7 @@
         APP_URL = "https://${oicdPreferences.reverseProxy.domain}";
         TRUST_PROXY = oicdPreferences.reverseProxy.enable;
         PORT = oicdPreferences.reverseProxy.port;
+        ENCRYPTION_KEY_FILE = config.sops.secrets.pocket-id-encryption-key.path;
       };
     };
   };
