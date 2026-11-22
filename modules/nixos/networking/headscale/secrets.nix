@@ -21,7 +21,7 @@
           mode = "0400";
         };
       })
-      (lib.mkIf (hsPreferences.enable && oidcPreferences.enable) {
+      (lib.mkIf (hsPreferences.enable && oidcPreferences.enable && oidcPreferences.clientId != null) {
         headscale-oidc-secret = {
           sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = config.services.headscale.user;
@@ -29,7 +29,7 @@
           mode = "0400";
         };
       })
-      (lib.mkIf (hpPreferences.enable && oidcPreferences.enable) {
+      (lib.mkIf (hpPreferences.enable && oidcPreferences.enable && oidcPreferences.clientId != null) {
         headplane-oidc-secret = {
           sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = config.services.headscale.user;
