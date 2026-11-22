@@ -9,9 +9,9 @@
           description = "FQDN for the DNS Server";
         };
         nameservers = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          description = "Additional nameservers";
-          default = [ ];
+          type = lib.types.attrsOf lib.types.str;
+          description = "Additional nameservers for specific domains";
+          default = { };
         };
         records = lib.mkOption {
           type = lib.types.listOf (

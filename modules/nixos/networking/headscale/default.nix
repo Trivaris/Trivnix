@@ -29,11 +29,14 @@
             dns = {
               magic_dns = true;
               base_domain = hsPreferences.dns.domain;
-              nameservers.global = [
-                "1.1.1.1"
-                "9.9.9.9"
-              ] ++ hsPreferences.dns.nameservers;
               extra_records = hsPreferences.dns.records;
+              nameservers = {
+                split = hsPreferences.dns.nameservers;
+                global = [
+                  "1.1.1.1"
+                  "9.9.9.9"
+                ];
+              };
             };
 
             prefixes = {
