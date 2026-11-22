@@ -10,15 +10,6 @@
       config = lib.mkIf hsPreferences.enable {
         networking.firewall.allowedUDPPorts = [ stunPort ];
         environment.systemPackages = [ config.services.headscale.package ];
-        environment.etc."${hsaclFile}".text = builtins.toJSON {
-          acls = [
-            {
-              action = "accept";
-              src = [ "*" ];
-              dst = [ "*:*" ];
-            }
-          ];
-        };
         services.headscale = {
           enable = true;
           port = hsPreferences.reverseProxy.port;
@@ -26,6 +17,7 @@
           settings = {
             log.level = "info";
             ephemeral_node_inactivity_timeout = "30m";
+            policy.mode = "database";
             server_url = "https://${hsPreferences.reverseProxy.domain}:${
               if hsPreferences.reverseProxy.enable then
                 "443"
@@ -64,11 +56,6 @@
 
               urls = [ "https://controlplane.tailscale.com/derpmap/default" ];
               auto_update_enabled = true;
-            };
-
-            policy = {
-              mode = "file";
-              path = "/etc/${hsaclFile}";
             };
           };
         };
