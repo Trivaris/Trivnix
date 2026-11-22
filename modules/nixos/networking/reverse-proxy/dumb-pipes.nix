@@ -9,17 +9,22 @@
         services.nginx.streamConfig = lib.mkIf reverseProxyPreferences.dumbPipes.enable ''
           map $ssl_preread_server_name $backend {
             ${lib.concatStringsSep "\n        " (
-              lib.mapAttrsToList (
-                domain: upstream: "${domain} ${upstream};"
+              lib.mapAttrsToList (domain: upstream:
+                let u = reverseProxyPreferences.dumbPipes.upstreams.${upstream};
+                in "${domain} ${if u.proxyProtocol then upstream else "${upstream}_relay"};"
               ) reverseProxyPreferences.dumbPipes.pipes
             )}
             default local_http;
           }
 
           ${lib.concatStringsSep "\n      " (
-            lib.mapAttrsToList (name: upstream: ''
-              upstream ${name} {
-                server ${upstream.address}:${toString upstream.port};
+            lib.mapAttrsToList (name: u: lib.optionalString (!u.proxyProtocol) ''
+              upstream ${name}_relay {
+                server 127.0.0.1:${toString u.relayPort};
+              }
+              server {
+                listen 127.0.0.1:${toString u.relayPort} proxy_protocol;
+                proxy_pass ${name};
               }
             '') reverseProxyPreferences.dumbPipes.upstreams
           )}

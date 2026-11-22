@@ -102,6 +102,16 @@
                     default = 443;
                     description = "Port of the upstream service";
                   };
+                  proxyProtocol = lib.mkOption {
+                    type = lib.types.bool;
+                    default = true;
+                    description = "Send the PROXY protocol header to this upstream";
+                  };
+                  relayPort = lib.mkOption {
+                    type = lib.types.port;
+                    default = 8444;
+                    description = "Local relay port used when proxyProtocol is false";
+                  };
                 };
               }
             );
