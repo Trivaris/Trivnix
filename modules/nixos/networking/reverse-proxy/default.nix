@@ -26,6 +26,7 @@
           commonHttpConfig = lib.mkIf reverseProxyPreferences.dumbPipes.enable ''
             set_real_ip_from 127.0.0.1;
             real_ip_header proxy_protocol;
+            absolute_redirect off;
           '';
           appendHttpConfig = lib.mkAfter ''
             map $http_upgrade $connection_upgrade {
