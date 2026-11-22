@@ -1,6 +1,6 @@
 {
   flake.nixosModules.networking-tailscale =
-    { lib, config, ... }:
+    { pkgs, lib, config, ... }:
     let
       tsPreferences = config.host.preferences.tailscale;
     in
@@ -14,6 +14,8 @@
       };
 
       config = lib.mkIf tsPreferences.enable {
+        environment.systemPackages = [ pkgs.trayscale ];
+        networking.firewall.trustedInterfaces = [ "tailscale0" ];
         sops.secrets.tailscale-auth-key = {
           sopsFile = config.host.private.secrets.commonSecretsFile;
           owner = "root";
@@ -27,8 +29,6 @@
           authKeyFile = config.sops.secrets.tailscale-auth-key.path;
           extraUpFlags = [ "--login-server=${tsPreferences.loginServer}" ];
         };
-
-        networking.firewall.trustedInterfaces = [ "tailscale0" ];
       };
     };
 }
