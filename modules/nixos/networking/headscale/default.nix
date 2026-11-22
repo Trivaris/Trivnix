@@ -31,19 +31,16 @@
             dns = {
               magic_dns = true;
               base_domain = hsPreferences.dns.domain;
-              extra_records = (lib.optionals hpPreferences.enable [ { name = hpPreferences.reverseProxy.domain; type = "A"; value = "100.64.0.1"; } ]) ++ hsPreferences.dns.records;
+              extra_records = (lib.optionals hpPreferences.enable [ { name = hpPreferences.reverseProxy.domain; type = "A"; value = hpPreferences.ipAddr; } ]) ++ hsPreferences.dns.records;
               nameservers = {
                 split = hsPreferences.dns.nameservers;
-                global = [
-                  "1.1.1.1"
-                  "9.9.9.9"
-                ];
+                global = hsPreferences.dns.globalNameservers;
               };
             };
 
             prefixes = {
-              v4 = "100.64.0.0/10";
-              v6 = "fd7a:115c:a1e0::/48";
+              v4 = hsPreferences.ipv4Subnet;
+              v6 = hsPreferences.ipv6Subnet;
               allocation = "sequential";
             };
 
@@ -53,7 +50,6 @@
               client_secret_path = config.sops.secrets.headscale-oidc-secret.path;
               scope = [ "openid" "profile" "email" ];
               pkce.enabled = true;
-              # allowed_users = [ "you@example.com" ];
             };
 
             derp = {

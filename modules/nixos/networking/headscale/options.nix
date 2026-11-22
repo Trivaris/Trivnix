@@ -9,6 +9,16 @@
           default = 3478;
           description = "The port of the STUN/DERP server";
         };
+        ipv4Subnet = lib.mkOption {
+          type = lib.types.str;
+          default = "100.64.0.0/10";
+          description = "The ipv4 subnet used by tailscale vpn";
+        };
+        ipv6Subnet = lib.mkOption {
+          type = lib.types.str;
+          default = "fd7a:115c:a1e0::/48";
+          description = "The ipv6 subnet used by tailscale vpn";
+        };
         dns = {
           domain = lib.mkOption {
             type = lib.types.str;
@@ -16,8 +26,16 @@
           };
           nameservers = lib.mkOption {
             type = lib.types.attrsOf (lib.types.listOf lib.types.str);
-            description = "Additional nameservers for specific domains";
             default = { };
+            description = "Additional nameservers for specific domains";
+          };
+          globalNameservers = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [
+              "1.1.1.1"
+              "9.9.9.9"
+            ];
+            description = "Additional nameservers for any domains";
           };
           records = lib.mkOption {
             type = lib.types.listOf (
@@ -47,6 +65,10 @@
       };
       headplane = {
         enable = lib.mkEnableOption "Headplane, a frontend for headtail";
+        ipAddr = lib.mkOption {
+          type = lib.types.str;
+          description = "The Tailscale ip address of headplane";
+        };
         reverseProxy = lib.trivnix.mkReverseProxyOption;
       };
       oicd = {
