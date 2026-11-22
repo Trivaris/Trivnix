@@ -3,7 +3,6 @@
     { lib, config, ... }:
     let
       hsPreferences = config.host.preferences.headscale;
-      hsaclFile = "headscale/acl.hujson";
       stunPort = 3478;
     in
     {
@@ -63,7 +62,7 @@
           enable = true;
           settings = {
             server = {
-              host = "127.0.0.1";
+              host = "0.0.0.0";
               port = 3010;
               cookie_secret_path = config.sops.secrets.headplane-cookie.path;
             };
