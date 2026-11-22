@@ -3,11 +3,11 @@
     { lib, config, ... }:
     let
       hsPreferences = config.host.preferences.headscale;
-      stunPort = 3478;
+      oicdPreferences = config.host.preferences.oicd;
     in
     {
       config = lib.mkIf hsPreferences.enable {
-        networking.firewall.allowedUDPPorts = [ stunPort ];
+        networking.firewall.allowedUDPPorts = [ hsPreferences.stunPort ];
         environment.systemPackages = [ config.services.headscale.package ];
         services.headscale = {
           enable = true;
@@ -46,13 +46,22 @@
               allocation = "sequential";
             };
 
+            oidc = lib.mkIf (oicdPreferences.enable && oicdPreferences.clientId != null) {
+              issuer = "https://${oicdPreferences.reverseProxy.domain}";
+              client_id = oicdPreferences.clientId;
+              client_secret_path = config.sops.secrets.headscale-oidc-secret.path;
+              scope = [ "openid" "profile" "email" ];
+              pkce.enabled = true;
+              # allowed_users = [ "you@example.com" ];
+            };
+
             derp = {
               server = {
                 enabled = lib.mkDefault true;
                 region_id = 999;
                 region_code = "headscale";
                 region_name = "Headscale Embedded DERP";
-                stun_listen_addr = "0.0.0.0:${toString stunPort}";
+                stun_listen_addr = "0.0.0.0:${toString hsPreferences.stunPort}";
                 automatically_add_embedded_derp_region = true;
                 verify_clients = true;
               };
@@ -60,41 +69,6 @@
               urls = [ "https://controlplane.tailscale.com/derpmap/default" ];
               auto_update_enabled = true;
             };
-          };
-        };
-        services.headplane = {
-          enable = true;
-          settings = {
-            integration.agent.enabled = true;
-            server = {
-              host = "127.0.0.1";
-              port = 3010;
-              cookie_secret_path = config.sops.secrets.headplane-cookie.path;
-            };
-            headscale = {
-              public_url = config.services.headscale.settings.server_url;
-              config_path = config.services.headscale.configFile;
-              api_key_path = config.sops.secrets.headscale-api-key.path;
-              url =
-                if hsPreferences.reverseProxy.enable then
-                  "http://127.0.0.1:${toString config.services.headscale.port}"
-                else
-                  config.services.headscale.settings.server_url;
-            };
-          };
-        };
-        sops.secrets = {
-          headplane-cookie = {
-            sopsFile = config.host.private.secrets.hostSecretsFile;
-            owner = config.systemd.services.headplane.serviceConfig.User;
-            group = config.systemd.services.headplane.serviceConfig.Group;
-            mode = "0400";
-          };
-          headscale-api-key = {
-            sopsFile = config.host.private.secrets.commonSecretsFile;
-            owner = config.systemd.services.headplane.serviceConfig.User;
-            group = config.systemd.services.headplane.serviceConfig.Group;
-            mode = "0400";
           };
         };
       };
