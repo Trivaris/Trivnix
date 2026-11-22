@@ -72,6 +72,25 @@
             };
           };
         };
+        services.headplane = {
+          enable = true;
+          settings = {
+            server = {
+              host = "127.0.0.1";
+              port = 3000;
+              cookie_secret_path = config.sops.secrets.headplane-cookie.path;
+            };
+            headscale = {
+              url = config.services.headscale.settings.server_url;
+              config_path = "/etc/headscale/config.yaml";
+            };
+          };
+        };
+        sops.secrets.headplane-cookie = {
+          sopsFile = config.host.private.secrets.hostSecretsFile;
+          owner = "root";
+          group = "root";
+        };
       };
     };
 }
