@@ -237,6 +237,12 @@
                 (mkLua ''hl.dsp.focus({ window = "class:librewolf"})'')
               ];
             }
+            {
+              _args = [
+                "${main_mod} + CTRL + M"
+                (mkLua ''hl.dsp.exec_cmd("hyprctl output remove SUNSHINE; hyprctl reload")'')
+              ];
+            }
 
             # screenshot
             {
