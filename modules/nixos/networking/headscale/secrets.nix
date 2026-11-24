@@ -3,7 +3,7 @@
   let
     hsPreferences = config.host.preferences.headscale;
     hpPreferences = config.host.preferences.headplane;
-    oidcPreferences = config.host.preferences.oicd;
+    piPreferences = config.host.preferences.pocket-id;
   in
   {
     sops.secrets = lib.mkMerge [
@@ -21,15 +21,7 @@
           mode = "0400";
         };
       })
-      (lib.mkIf oidcPreferences.enable {
-        pocket-id-encryption-key = {
-          sopsFile = config.host.private.secrets.hostSecretsFile;
-          owner = config.services.pocket-id.user;
-          group = config.services.pocket-id.group;
-          mode = "0400";
-        };
-      })
-      (lib.mkIf (hsPreferences.enable && oidcPreferences.enable && oidcPreferences.clientId != null) {
+      (lib.mkIf (hsPreferences.enable && piPreferences.enable && piPreferences.clientId != null) {
         headscale-oidc-secret = {
           sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = config.services.headscale.user;
@@ -37,7 +29,7 @@
           mode = "0400";
         };
       })
-      (lib.mkIf (hpPreferences.enable && oidcPreferences.enable && oidcPreferences.clientId != null) {
+      (lib.mkIf (hpPreferences.enable && piPreferences.enable && piPreferences.clientId != null) {
         headplane-oidc-secret = {
           sopsFile = config.host.private.secrets.hostSecretsFile;
           owner = config.services.headscale.user;

@@ -4,7 +4,7 @@
     let
       hsPreferences = config.host.preferences.headscale;
       hpPreferences = config.host.preferences.headplane;
-      oicdPreferences = config.host.preferences.oicd;
+      piPreferences = config.host.preferences.pocket-id;
     in
     {
       config = lib.mkIf hsPreferences.enable {
@@ -44,9 +44,9 @@
               allocation = "sequential";
             };
 
-            oidc = lib.mkIf (oicdPreferences.enable && oicdPreferences.clientId != null) {
-              issuer = "https://${oicdPreferences.reverseProxy.domain}";
-              client_id = oicdPreferences.clientId;
+            oidc = lib.mkIf (piPreferences.enable && piPreferences.clientId != null) {
+              issuer = "https://${piPreferences.reverseProxy.domain}";
+              client_id = piPreferences.clientId;
               client_secret_path = config.sops.secrets.headscale-oidc-secret.path;
               scope = [ "openid" "profile" "email" ];
               pkce.enabled = true;

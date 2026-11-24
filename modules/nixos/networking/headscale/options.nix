@@ -65,19 +65,10 @@
       };
       headplane = {
         enable = lib.mkEnableOption "Headplane, a frontend for headtail";
+        reverseProxy = lib.trivnix.mkReverseProxyOption;
         ipAddr = lib.mkOption {
           type = lib.types.str;
           description = "The Tailscale ip address of headplane";
-        };
-        reverseProxy = lib.trivnix.mkReverseProxyOption;
-      };
-      oicd = {
-        enable = lib.mkEnableOption "OICD auth and service via pocket-id";
-        reverseProxy = lib.trivnix.mkReverseProxyOption;
-        clientId = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-          description = "Pocket ID client ID; OIDC stays off in Headscale/Headplane until set";
         };
       };
     };

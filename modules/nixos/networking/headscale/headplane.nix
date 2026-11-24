@@ -3,7 +3,7 @@
   let 
     hpPreferences = config.host.preferences.headplane;
     hsPreferences = config.host.preferences.headscale;
-    oicdPreferences = config.host.preferences.oicd;
+    piPreferences = config.host.preferences.pocket-id;
   in
   {
     config = lib.mkIf hpPreferences.enable {
@@ -18,9 +18,9 @@
             port = hpPreferences.reverseProxy.port;
             cookie_secret_path = config.sops.secrets.headplane-cookie.path;
           };
-          oidc = lib.mkIf (oicdPreferences.enable && oicdPreferences.clientId != null) {
-            issuer = "https://${oicdPreferences.reverseProxy.domain}";
-            client_id = oicdPreferences.clientId;
+          oidc = lib.mkIf (piPreferences.enable && piPreferences.clientId != null) {
+            issuer = "https://${piPreferences.reverseProxy.domain}";
+            client_id = piPreferences.clientId;
             client_secret_path = config.sops.secrets.headplane-oidc-secret.path;
             use_pkce = true;
             disable_api_key_login = true;
