@@ -14,6 +14,7 @@
       self.nixosModules.services-matrix
       self.nixosModules.services-n8n
       self.nixosModules.services-paperless
+      self.nixosModules.services-pocket-id
       self.nixosModules.services-syncthing
       self.nixosModules.services-tandoor
       self.nixosModules.services-vaultwarden
