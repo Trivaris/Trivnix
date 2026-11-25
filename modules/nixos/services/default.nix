@@ -15,6 +15,7 @@
       self.nixosModules.services-n8n
       self.nixosModules.services-paperless
       self.nixosModules.services-pocket-id
+      self.nixosModules.services-resume
       self.nixosModules.services-snapotter
       self.nixosModules.services-syncthing
       self.nixosModules.services-tandoor
