@@ -38,9 +38,9 @@
           snapotter-postgres = {
             image = "postgres:17-alpine";
             environment = {
-              POSTGRES_USER = "snapotter";
-              POSTGRES_PASSWORD = "snapotter";
-              POSTGRES_DB = "snapotter";
+              POSTGRES_USER = db.user;
+              POSTGRES_PASSWORD = db.passwd;
+              POSTGRES_DB = db.name;
             };
             volumes = ["snapotter-pgdata:/var/lib/postgresql/data"];
             extraOptions = [ "--network=${networkName}" ];
