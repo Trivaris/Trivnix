@@ -215,7 +215,7 @@
             group = "root";
             mode = "0400";
           };
-          secret.sresume-encryption-secret = {
+          secrets.resume-encryption-secret = {
             sopsFile = config.host.private.secrets.hostSecretsFile;
             owner = "root";
             group = "root";
